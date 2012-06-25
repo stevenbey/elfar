@@ -1,0 +1,48 @@
+﻿@model dynamic
+Content-Type: text/html
+
+<html>
+	<head>
+		<title>@Model.Subject</title>
+		<style type="text/css">
+            body { font-family: verdana, arial, helvetic; font-size: x-small; } 
+            td, th, pre { font-size: x-small; } 
+            #errorDetail { padding: 1em; background-color: #FFFFCC; } 
+            #errorMessage { font-size: medium; font-style: italic; color: maroon; }
+            h1 { font-size: small; }
+        </style>
+	</head>
+	<body>
+		<p id="errorMessage">@Model.Subject</p>
+    @if (Model.Time > DateTime.MinValue)
+    {
+        <p>Generated: @Model.Time.ToString("r")</p>
+    }
+        <pre id="errorDetail">
+@Model.Detail
+        </pre>
+        <h1>Server Variables</h1>
+		<table cellspacing="0" cellpadding="5" border="0" width="100%">
+            <thead>
+                <tr valign="top">
+                    <th align="left">Name</th>
+                    <th align="left">Value</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach(var pair in Model.ServerVariables)
+            {
+                <tr valign="top">
+                    <td>@HttpUtility.HtmlEncode(pair.Key)</td>
+                    <td>@HttpUtility.HtmlEncode(pair.Value ?? "&nbsp;")</td>
+                </tr>
+            }
+            </tbody>
+		</table>
+		<p id="Footer">
+            Powered by Error Logging Filter and Route (ELFAR) for ASP.NET MVC, Copyright &#169; 2012, Steven Bey. All rights reserved.
+            Licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>. Inspired by and based
+            on the awesome <a href="http://elmah.googlecode.com/">ELMAH</a>.
+        </p>
+	</body>
+</html>

@@ -1,0 +1,5 @@
+﻿@model Elfar.Models.StackTrace
+@Html.Raw(Model.Lines.First().ToString())
+@foreach(var line in Model.Lines.Skip(1)) {
+@:@Html.Raw(line.ToString())
+}

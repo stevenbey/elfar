@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1784AF7D-5CEF-4074-BC65-B2EC3DFA0677}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Elfar</RootNamespace>
+    <AssemblyName>Elfar</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="ActionResults\CsvResult.cs" />
+    <Compile Include="ActionResults\DefaultResult.cs" />
+    <Compile Include="ActionResults\IndexResult.cs" />
+    <Compile Include="ActionResults\RssResult.cs" />
+    <Compile Include="ErrorLogController.cs" />
+    <Compile Include="ErrorLogFilter.cs" />
+    <Compile Include="ErrorLogRoute.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="Handler.cs" />
+    <Compile Include="MvcErrorLog.cs" />
+    <Compile Include="RouteConstraints\AdminConstraint.cs" />
+    <Compile Include="RouteConstraints\DeveloperConstraint.cs" />
+    <Compile Include="RouteConstraints\GuidConstraint.cs" />
+    <Compile Include="RouteConstraints\IPConstraint.cs" />
+    <Compile Include="RouteConstraints\LocalConstraint.cs" />
+    <Compile Include="Models\Csv.cs" />
+    <Compile Include="Models\Default.cs" />
+    <Compile Include="Models\Index.cs" />
+    <Compile Include="Models\StackTrace.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RouteHandler.cs" />
+    <Compile Include="Views\ErrorLog\Default.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Default.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ErrorLog\StackTrace.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StackTrace.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\View.cs" />
+    <Compile Include="Views\Engine.cs" />
+    <Compile Include="Views\ErrorLog\Digest.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Digest.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ErrorLog\Footer.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Footer.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ErrorLog\Index.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Index.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ErrorLog\Pagination.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Pagination.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ErrorLog\Rss.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Rss.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ErrorLog\Stylesheet.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Stylesheet.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="ActionResults\XmlResult.cs" />
+    <Compile Include="__Package__.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Views\ErrorLog\Default.cshtml">
+      <LastGenOutput>Default.generated.cs</LastGenOutput>
+      <Generator>RazorGenerator</Generator>
+    </None>
+    <None Include="Views\ErrorLog\Digest.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Digest.generated.cs</LastGenOutput>
+    </None>
+    <None Include="Views\ErrorLog\Footer.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Footer.generated.cs</LastGenOutput>
+    </None>
+    <None Include="Views\ErrorLog\Index.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Index.generated.cs</LastGenOutput>
+    </None>
+    <None Include="Views\ErrorLog\Pagination.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Pagination.generated.cs</LastGenOutput>
+    </None>
+    <None Include="Views\ErrorLog\Rss.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Rss.generated.cs</LastGenOutput>
+    </None>
+    <None Include="Views\ErrorLog\StackTrace.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>StackTrace.generated.cs</LastGenOutput>
+    </None>
+    <None Include="Views\ErrorLog\Stylesheet.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Stylesheet.generated.cs</LastGenOutput>
+    </None>
+    <Content Include="Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Elfar.Core\Elfar.Core.csproj">
+      <Project>{41B3A539-7A37-48FA-AF45-C214C3BBE6B0}</Project>
+      <Name>Elfar.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

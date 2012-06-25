@@ -1,0 +1,16 @@
+﻿@model Elfar.Models.Index
+@{
+    var pages = Model.Pages;
+    var size = Model.Size == 15 ? "" : "&size=" + Model.Size;
+}
+        <p>
+            @if(Model.Number > 2) { <a href="@Url.Action("Index")?page=1@(size)" rel="first" title="First page (#1)">[&lt;&lt;]</a> }
+            else { <a rel="first">[&lt;&lt;]</a> }
+            @if(Model.Number > 1) { <a href="@Url.Action("Index")?page=@Model.Previous@size" rel="previous" title="Previous page (#@Model.Previous)">[&lt;]</a> }
+            else { <a rel="previous">[&lt;]</a> }
+            Errors @Model.From to @Model.To of @Model.Total (page @Model.Number of @pages)
+            @if(Model.Number < pages) { <a href="@Url.Action("Index")?page=@Model.Next@size" rel="next" title="Next page (#@Model.Next)">[&gt;]</a> }
+            else { <a rel="next">[&gt;]</a> }
+            @if(Model.Number < pages - 1) { <a href="@Url.Action("Index")?page=@pages@size" rel="last" title="Last page (#@Model.Pages)">[&gt;&gt;]</a> }
+            else { <a rel="last">[&gt;&gt;]</a> }
+        </p>
