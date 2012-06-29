@@ -10,7 +10,7 @@ namespace Elfar.WebApi
     public class ErrorLogController
         : ApiController
     {
-        public IEnumerable<ErrorLog> GetAll()
+        public IEnumerable<ErrorLog> Get()
         {
             try { return Execute(p => p.List()).Select(errorLog => (ErrorLog)errorLog); }
             catch(Exception e) { throw new ErrorLogException(e); }
