@@ -259,12 +259,12 @@ WriteLiteral("                        <tr class=\"");
 
             
             #line 48 "..\..\Views\ErrorLog\Default.cshtml"
-                               Write(i++ % 2 == 0 ? "even" : "odd");
+                               Write(i++ % 2 == 0 ? "odd" : "even");
 
             
             #line default
             #line hidden
-WriteLiteral("-row\">\r\n                            <td class=\"key-col\">");
+WriteLiteral("\">\r\n                            <td class=\"key-col\">");
 
 
             

@@ -79,26 +79,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Index.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ErrorLog\Pagination.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Pagination.cshtml</DependentUpon>
-    </Compile>
     <Compile Include="Views\ErrorLog\Rss.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Rss.cshtml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ErrorLog\Stylesheet.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Stylesheet.cshtml</DependentUpon>
     </Compile>
     <Compile Include="ActionResults\XmlResult.cs" />
     <Compile Include="__Package__.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -121,10 +112,6 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Index.generated.cs</LastGenOutput>
     </None>
-    <None Include="Views\ErrorLog\Pagination.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>Pagination.generated.cs</LastGenOutput>
-    </None>
     <None Include="Views\ErrorLog\Rss.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Rss.generated.cs</LastGenOutput>
@@ -133,10 +120,21 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>StackTrace.generated.cs</LastGenOutput>
     </None>
-    <None Include="Views\ErrorLog\Stylesheet.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>Stylesheet.generated.cs</LastGenOutput>
-    </None>
+    <EmbeddedResource Include="Resources\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <EmbeddedResource Include="Resources\ui-bg_flat_75_ffffff_40x100.png" />
+    <EmbeddedResource Include="Resources\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <EmbeddedResource Include="Resources\ui-bg_glass_65_ffffff_1x400.png" />
+    <EmbeddedResource Include="Resources\ui-bg_glass_75_dadada_1x400.png" />
+    <EmbeddedResource Include="Resources\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <EmbeddedResource Include="Resources\ui-bg_glass_95_fef1ec_1x400.png" />
+    <EmbeddedResource Include="Resources\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <EmbeddedResource Include="Resources\ui-icons_222222_256x240.png" />
+    <EmbeddedResource Include="Resources\ui-icons_2e83ff_256x240.png" />
+    <EmbeddedResource Include="Resources\ui-icons_454545_256x240.png" />
+    <EmbeddedResource Include="Resources\ui-icons_888888_256x240.png" />
+    <EmbeddedResource Include="Resources\ui-icons_cd0a0a_256x240.png" />
+    <EmbeddedResource Include="Resources\Stylesheet.css" />
+    <EmbeddedResource Include="Resources\JavaScript.js" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>

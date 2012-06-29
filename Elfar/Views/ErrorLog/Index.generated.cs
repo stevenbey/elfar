@@ -54,37 +54,27 @@ WriteLiteral(@"<!DOCTYPE html PUBLIC ""-//W3C//DTD XHTML 1.0 Transitional//EN"" 
 <html xmlns=""http://www.w3.org/1999/xhtml"">
     <head>
         <meta http-equiv=""X-UA-Compatible"" content=""IE=EmulateIE7"" />
-        <title>Error log for ");
+        <title>Error log for '");
 
 
             
             #line 8 "..\..\Views\ErrorLog\Index.cshtml"
-                        Write(Model.Application);
+                         Write(Model.Application);
 
             
             #line default
             #line hidden
-WriteLiteral(" on ");
+WriteLiteral("\' on \'");
 
 
             
             #line 8 "..\..\Views\ErrorLog\Index.cshtml"
-                                              Write(Server.MachineName);
+                                                 Write(Server.MachineName);
 
             
             #line default
             #line hidden
-WriteLiteral(" (Page #");
-
-
-            
-            #line 8 "..\..\Views\ErrorLog\Index.cshtml"
-                                                                         Write(Model.Number);
-
-            
-            #line default
-            #line hidden
-WriteLiteral(")</title>\r\n        <link rel=\"stylesheet\" type=\"text/css\" href=\"");
+WriteLiteral("\'</title>\r\n        <link rel=\"stylesheet\" type=\"text/css\" href=\"");
 
 
             
@@ -105,33 +95,33 @@ WriteLiteral("\" />\r\n        <link rel=\"alternate\" type=\"application/rss+xm
             
             #line default
             #line hidden
-WriteLiteral("\" />\r\n        <meta http-equiv=\"refresh\" content=\"60\" />\r\n    </head>\r\n    <body>" +
-"\r\n        <h1>Error Log for <span>");
+WriteLiteral("\" />\r\n        <meta http-equiv=\"refresh\" content=\"10\">\r\n    </head>\r\n    <body>\r\n" +
+"        <h1>Error Log for <span>\'");
 
 
             
             #line 14 "..\..\Views\ErrorLog\Index.cshtml"
-                           Write(Model.Application);
+                            Write(Model.Application);
 
             
             #line default
             #line hidden
-WriteLiteral(" on ");
+WriteLiteral("\' on \'");
 
 
             
             #line 14 "..\..\Views\ErrorLog\Index.cshtml"
-                                                 Write(Server.MachineName);
+                                                    Write(Server.MachineName);
 
             
             #line default
             #line hidden
-WriteLiteral("</span></h1>\r\n");
+WriteLiteral("\'</span></h1>\r\n");
 
 
             
             #line 15 "..\..\Views\ErrorLog\Index.cshtml"
-         if(Model.Total != 0)
+         if(Model.Errors.Count() != 0)
         {
 
             
@@ -173,28 +163,7 @@ WriteLiteral("\" title=\"Download the entire log as CSV\">Download</a></li>\r\n 
 
 
 
-WriteLiteral(@"            <p id=""sizes"">
-                Show
-                <a href=""?page=1&amp;size=10"" rel=""start"">10</a>,
-                <a href=""?page=1&amp;size=15"" rel=""start"">15</a>,
-                <a href=""?page=1&amp;size=20"" rel=""start"">20</a>,
-                <a href=""?page=1&amp;size=25"" rel=""start"">25</a>,
-                <a href=""?page=1&amp;size=30"" rel=""start"">30</a>,
-                <a href=""?page=1&amp;size=50"" rel=""start"">50</a> or
-                <a href=""?page=1&amp;size=100"" rel=""start"">100</a>
-                errors per page.
-            </p>
-");
-
-
-            
-            #line 33 "..\..\Views\ErrorLog\Index.cshtml"
-            Html.RenderPartial("Pagination");
-
-            
-            #line default
-            #line hidden
-WriteLiteral(@"            <table cellspacing=""0"">
+WriteLiteral(@"            <table>
                 <thead>
                     <tr>
                         <th title=""Number"">#</th>
@@ -204,8 +173,7 @@ WriteLiteral(@"            <table cellspacing=""0"">
                         <th>Type</th>
                         <th>Error</th>
                         <th>User</th>
-                        <th>Date</th>
-                        <th>Time (Local)</th>
+                        <th>Date &amp; Time</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -213,37 +181,27 @@ WriteLiteral(@"            <table cellspacing=""0"">
 
 
             
-            #line 49 "..\..\Views\ErrorLog\Index.cshtml"
-                       var i = 0; 
+            #line 36 "..\..\Views\ErrorLog\Index.cshtml"
+                       var i = 1; 
 
             
             #line default
             #line hidden
 
             
-            #line 50 "..\..\Views\ErrorLog\Index.cshtml"
-                     foreach(var errorLog in Model.Errors)
+            #line 37 "..\..\Views\ErrorLog\Index.cshtml"
+                     foreach (var errorLog in Model.Errors)
                     {
 
             
             #line default
             #line hidden
-WriteLiteral("                        <tr class=\"");
+WriteLiteral("                        <tr>\r\n                            <td>");
 
 
             
-            #line 52 "..\..\Views\ErrorLog\Index.cshtml"
-                               Write((i % 2) == 0 ? "even" : "odd");
-
-            
-            #line default
-            #line hidden
-WriteLiteral("-row\">\r\n                            <td>");
-
-
-            
-            #line 53 "..\..\Views\ErrorLog\Index.cshtml"
-                            Write(Model.From + i++);
+            #line 40 "..\..\Views\ErrorLog\Index.cshtml"
+                            Write(i++);
 
             
             #line default
@@ -252,7 +210,7 @@ WriteLiteral("</td>\r\n                            <td>");
 
 
             
-            #line 54 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 41 "..\..\Views\ErrorLog\Index.cshtml"
                            Write(errorLog.Host);
 
             
@@ -262,7 +220,7 @@ WriteLiteral("</td>\r\n                            <td>");
 
 
             
-            #line 55 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 42 "..\..\Views\ErrorLog\Index.cshtml"
                            Write(errorLog.Application);
 
             
@@ -272,7 +230,7 @@ WriteLiteral("</td>\r\n                            <td class=\"code-col\"><span 
 
 
             
-            #line 56 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 43 "..\..\Views\ErrorLog\Index.cshtml"
                                                          Write(HttpWorkerRequest.GetStatusDescription(errorLog.Code.GetValueOrDefault()));
 
             
@@ -282,7 +240,7 @@ WriteLiteral("\">");
 
 
             
-            #line 56 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 43 "..\..\Views\ErrorLog\Index.cshtml"
                                                                                                                                      Write(errorLog.Code);
 
             
@@ -292,7 +250,7 @@ WriteLiteral("</span></td>\r\n                            <td class=\"type-col\"
 
 
             
-            #line 57 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 44 "..\..\Views\ErrorLog\Index.cshtml"
                                                          Write(errorLog.Type);
 
             
@@ -302,7 +260,7 @@ WriteLiteral("\">");
 
 
             
-            #line 57 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 44 "..\..\Views\ErrorLog\Index.cshtml"
                                                                          Write(errorLog.Type.ShortName());
 
             
@@ -312,7 +270,7 @@ WriteLiteral("</span></td>\r\n                            <td><span>");
 
 
             
-            #line 58 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 45 "..\..\Views\ErrorLog\Index.cshtml"
                                  Write(errorLog.Message);
 
             
@@ -322,7 +280,7 @@ WriteLiteral("</span> ");
 
 
             
-            #line 58 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 45 "..\..\Views\ErrorLog\Index.cshtml"
                                                           Write(Html.ActionLink("Details…", "Default", "ErrorLog", new { id = errorLog.ID }, null));
 
             
@@ -332,38 +290,19 @@ WriteLiteral("</td>\r\n                            <td>");
 
 
             
-            #line 59 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 46 "..\..\Views\ErrorLog\Index.cshtml"
                            Write(errorLog.User);
 
             
             #line default
             #line hidden
-WriteLiteral("</td>\r\n                            <td class=\"date-col\"><span title=\"");
+WriteLiteral("</td>\r\n                            <td class=\"date-col\" nowrap=\"nowrap\"><span tit" +
+"le=\"");
 
 
             
-            #line 60 "..\..\Views\ErrorLog\Index.cshtml"
-                                                         Write(errorLog.Time.ToLongDateString());
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\">");
-
-
-            
-            #line 60 "..\..\Views\ErrorLog\Index.cshtml"
-                                                                                            Write(errorLog.Time.ToShortDateString());
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</span></td>\r\n                            <td class=\"time-col\"><span title=\"");
-
-
-            
-            #line 61 "..\..\Views\ErrorLog\Index.cshtml"
-                                                         Write(errorLog.Time.ToShortTimeString());
+            #line 47 "..\..\Views\ErrorLog\Index.cshtml"
+                                                                         Write(errorLog.Time);
 
             
             #line default
@@ -372,8 +311,8 @@ WriteLiteral("\">");
 
 
             
-            #line 61 "..\..\Views\ErrorLog\Index.cshtml"
-                                                                                             Write(errorLog.Time.ToShortTimeString());
+            #line 47 "..\..\Views\ErrorLog\Index.cshtml"
+                                                                                         Write(errorLog.Time);
 
             
             #line default
@@ -382,7 +321,7 @@ WriteLiteral("</span></td>\r\n                        </tr>\r\n");
 
 
             
-            #line 63 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 49 "..\..\Views\ErrorLog\Index.cshtml"
                     }
 
             
@@ -392,8 +331,7 @@ WriteLiteral("                </tbody>\r\n            </table>\r\n");
 
 
             
-            #line 66 "..\..\Views\ErrorLog\Index.cshtml"
-            Html.RenderPartial("Pagination");
+            #line 52 "..\..\Views\ErrorLog\Index.cshtml"
         }
         else
         {
@@ -405,7 +343,7 @@ WriteLiteral("            <p>No errors found.</p> \r\n");
 
 
             
-            #line 71 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 56 "..\..\Views\ErrorLog\Index.cshtml"
         }
 
             
@@ -413,13 +351,23 @@ WriteLiteral("            <p>No errors found.</p> \r\n");
             #line hidden
 
             
-            #line 72 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 57 "..\..\Views\ErrorLog\Index.cshtml"
            Html.RenderPartial("Footer"); 
 
             
             #line default
             #line hidden
-WriteLiteral("    </body>\r\n</html>");
+WriteLiteral("        <script type=\"text/javascript\" src=\"");
+
+
+            
+            #line 58 "..\..\Views\ErrorLog\Index.cshtml"
+                                       Write(Url.Action("JavaScript"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\"></script>\r\n    </body>\r\n</html>");
 
 
         }

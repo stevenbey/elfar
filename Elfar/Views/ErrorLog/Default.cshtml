@@ -45,7 +45,7 @@
                      }
                     @foreach(var key in variables.Keys)
                     {
-                        <tr class="@(i++ % 2 == 0 ? "even" : "odd")-row">
+                        <tr class="@(i++ % 2 == 0 ? "odd" : "even")">
                             <td class="key-col">@key</td>
                             <td>@variables[key]</td>
                         </tr>

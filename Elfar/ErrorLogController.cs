@@ -41,9 +41,17 @@ namespace Elfar
         {
             return new DefaultResult(id, provider, e => Content(e.Html));
         }
-        public IndexResult Index(int page = 1, int size = 15)
+        public FileStreamResult Image(string name)
         {
-            return new IndexResult(page, size, provider, RedirectToAction);
+            return ResourceFile(name, "png", "image/png");
+        }
+        public IndexResult Index()
+        {
+            return new IndexResult(1, int.MaxValue, provider, RedirectToAction);
+        }
+        public FileStreamResult JavaScript()
+        {
+            return ResourceFile("JavaScript", "js", "text/javascript");
         }
         public DefaultResult Json(Guid id)
         {
@@ -53,9 +61,9 @@ namespace Elfar
         {
             return new RssResult(15, provider);
         }
-        public ViewResult Stylesheet()
+        public FileStreamResult Stylesheet()
         {
-            return View();
+            return ResourceFile("Stylesheet", "css", "text/css");
         }
         public void Test()
         {
@@ -64,6 +72,11 @@ namespace Elfar
         public DefaultResult Xml(Guid id)
         {
             return new DefaultResult(id, provider, e => new XmlResult { Data = e });
+        }
+
+        FileStreamResult ResourceFile(string name, string ext, string contentType)
+        {
+            return File(GetType().Assembly.GetManifestResourceStream("Elfar.Resources." + name + "." + ext), contentType);
         }
 
         readonly IErrorLogProvider provider;

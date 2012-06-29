@@ -5,33 +5,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
-        <title>Error log for @Model.Application on @Server.MachineName (Page #@Model.Number)</title>
+        <title>Error log for '@Model.Application' on '@Server.MachineName'</title>
         <link rel="stylesheet" type="text/css" href="@Url.Action("Stylesheet")" />
         <link rel="alternate" type="application/rss+xml" title="RSS" href="@Url.Action("Rss")" />
-        <meta http-equiv="refresh" content="60" />
+        <meta http-equiv="refresh" content="10">
     </head>
     <body>
-        <h1>Error Log for <span>@Model.Application on @Server.MachineName</span></h1>
-        @if(Model.Total != 0)
+        <h1>Error Log for <span>'@Model.Application' on '@Server.MachineName'</span></h1>
+        @if(Model.Errors.Count() != 0)
         {
             <ul id="navigation">
                 <li><a href="@Url.Action("Rss")" title="RSS feed of recent errors">RSS Feed</a></li>
                 <li><a href="@Url.Action("Digest")" title="RSS feed of errors within recent days">RSS Digest</a></li>
                 <li><a href="@Url.Action("Download")" title="Download the entire log as CSV">Download</a></li>
             </ul>
-            <p id="sizes">
-                Show
-                <a href="?page=1&amp;size=10" rel="start">10</a>,
-                <a href="?page=1&amp;size=15" rel="start">15</a>,
-                <a href="?page=1&amp;size=20" rel="start">20</a>,
-                <a href="?page=1&amp;size=25" rel="start">25</a>,
-                <a href="?page=1&amp;size=30" rel="start">30</a>,
-                <a href="?page=1&amp;size=50" rel="start">50</a> or
-                <a href="?page=1&amp;size=100" rel="start">100</a>
-                errors per page.
-            </p>
-            Html.RenderPartial("Pagination");
-            <table cellspacing="0">
+            <table>
                 <thead>
                     <tr>
                         <th title="Number">#</th>
@@ -41,34 +29,32 @@
                         <th>Type</th>
                         <th>Error</th>
                         <th>User</th>
-                        <th>Date</th>
-                        <th>Time (Local)</th>
+                        <th>Date &amp; Time</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @{ var i = 0; }
-                    @foreach(var errorLog in Model.Errors)
+                    @{ var i = 1; }
+                    @foreach (var errorLog in Model.Errors)
                     {
-                        <tr class="@((i % 2) == 0 ? "even" : "odd")-row">
-                            <td>@(Model.From + i++)</td>
+                        <tr>
+                            <td>@(i++)</td>
                             <td>@errorLog.Host</td>
                             <td>@errorLog.Application</td>
                             <td class="code-col"><span title="@HttpWorkerRequest.GetStatusDescription(errorLog.Code.GetValueOrDefault())">@errorLog.Code</span></td>
                             <td class="type-col"><span title="@errorLog.Type">@errorLog.Type.ShortName()</span></td>
                             <td><span>@errorLog.Message</span> @Html.ActionLink("Details…", "Default", "ErrorLog", new { id = errorLog.ID }, null)</td>
                             <td>@errorLog.User</td>
-                            <td class="date-col"><span title="@errorLog.Time.ToLongDateString()">@errorLog.Time.ToShortDateString()</span></td>
-                            <td class="time-col"><span title="@errorLog.Time.ToShortTimeString()">@errorLog.Time.ToShortTimeString()</span></td>
+                            <td class="date-col" nowrap="nowrap"><span title="@errorLog.Time">@errorLog.Time</span></td>
                         </tr>
                     }
                 </tbody>
             </table>
-            Html.RenderPartial("Pagination");
         }
         else
         {
             <p>No errors found.</p> 
         }
         @{ Html.RenderPartial("Footer"); }
+        <script type="text/javascript" src="@Url.Action("JavaScript")"></script>
     </body>
 </html>
