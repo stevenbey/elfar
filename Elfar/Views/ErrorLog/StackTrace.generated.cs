@@ -40,34 +40,21 @@ namespace Elfar.Views.ErrorLog
 
             
             #line 2 "..\..\Views\ErrorLog\StackTrace.cshtml"
-Write(Html.Raw(Model.Lines.First().ToString()));
+ foreach(var line in Model.Lines) {
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
-
-
             
             #line 3 "..\..\Views\ErrorLog\StackTrace.cshtml"
- foreach(var line in Model.Lines.Skip(1)) {
-
-            
-            #line default
-            #line hidden
-
-            
-            #line 4 "..\..\Views\ErrorLog\StackTrace.cshtml"
 Write(Html.Raw(line.ToString()));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
-
-
             
-            #line 5 "..\..\Views\ErrorLog\StackTrace.cshtml"
+            #line 3 "..\..\Views\ErrorLog\StackTrace.cshtml"
+                          
 }
             
             #line default
