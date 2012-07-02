@@ -1,4 +1,4 @@
 ﻿@model Elfar.Models.StackTrace
 @foreach(var line in Model.Lines) {
-@Html.Raw(line.ToString())
+@:@Html.Raw(line.ToString())
 }

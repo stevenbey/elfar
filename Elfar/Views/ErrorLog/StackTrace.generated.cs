@@ -45,6 +45,7 @@ namespace Elfar.Views.ErrorLog
             
             #line default
             #line hidden
+
             
             #line 3 "..\..\Views\ErrorLog\StackTrace.cshtml"
 Write(Html.Raw(line.ToString()));
@@ -52,9 +53,11 @@ Write(Html.Raw(line.ToString()));
             
             #line default
             #line hidden
+WriteLiteral("\r\n");
+
+
             
-            #line 3 "..\..\Views\ErrorLog\StackTrace.cshtml"
-                          
+            #line 4 "..\..\Views\ErrorLog\StackTrace.cshtml"
 }
             
             #line default
