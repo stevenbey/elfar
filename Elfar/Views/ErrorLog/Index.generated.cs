@@ -95,7 +95,7 @@ WriteLiteral("\" />\r\n        <link rel=\"alternate\" type=\"application/rss+xm
             
             #line default
             #line hidden
-WriteLiteral("\" />\r\n        <meta http-equiv=\"refresh\" content=\"10\">\r\n    </head>\r\n    <body>\r\n" +
+WriteLiteral("\" />\r\n        <meta http-equiv=\"refresh\" content=\"60\">\r\n    </head>\r\n    <body>\r\n" +
 "        <h1>Error Log for <span>\'");
 
 
