@@ -117,14 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Count" xml:space="preserve">
-    <value>SELECT COUNT(0) as [Total] FROM Errors WHERE [Application] = @Application OR (@Application IS NULL AND [Application] IS NULL)</value>
-  </data>
   <data name="Elfar" xml:space="preserve">
     <value>Elfar</value>
   </data>
   <data name="Get" xml:space="preserve">
     <value>SELECT [Application],[Code],[Cookies],[Detail],[Form],[Host],[Html],[ID],[Message],[QueryString],[ServerVariables],[Source],[Time],[Type],[User] FROM [Errors] WHERE [ID]=@ID</value>
+  </data>
+  <data name="List" xml:space="preserve">
+    <value>SELECT * FROM [Errors] WHERE @Application IS NULL OR [Application] = @Application ORDER BY [Time] DESC</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>INSERT INTO [Errors]([Application],[Code],[Cookies],[Detail],[Form],[Host],[Html],[ID],[Message],[QueryString],[ServerVariables],[Source],[Time],[Type],[User])

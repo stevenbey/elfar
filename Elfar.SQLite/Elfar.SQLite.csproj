@@ -39,7 +39,6 @@
     </Compile>
     <Compile Include="SQLiteErrorLog.cs" />
     <Compile Include="SQLiteErrorLogProvider.cs" />
-    <Compile Include="SQLiteQueries.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

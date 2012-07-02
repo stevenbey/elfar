@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using System.Web.Mvc;
 using Elfar.ActionResults;
 using Elfar.Models;
@@ -20,7 +21,7 @@ namespace Elfar
         }
         public RssResult Digest()
         {
-            return new RssResult(900, provider);
+            return new RssResult(provider);
         }
         public void DownloadAsync()
         {
@@ -47,7 +48,7 @@ namespace Elfar
         }
         public IndexResult Index()
         {
-            return new IndexResult(1, int.MaxValue, provider, RedirectToAction);
+            return new IndexResult(provider);
         }
         public FileStreamResult JavaScript()
         {
@@ -59,7 +60,7 @@ namespace Elfar
         }
         public RssResult Rss()
         {
-            return new RssResult(15, provider);
+            return new RssResult(provider);
         }
         public FileStreamResult Stylesheet()
         {

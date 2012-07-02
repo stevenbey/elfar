@@ -124,13 +124,6 @@
     [Sequence]		DESC
 )</value>
   </data>
-  <data name="List" xml:space="preserve">
-    <value>SELECT [Application],[Code],[Host],[ID],[Message],[Source],[Time],[Type],[User]
-FROM Errors
-WHERE [Application] = @Application OR (@Application IS NULL AND [Application] IS NULL)
-ORDER BY [Sequence] DESC
-OFFSET @Page * @Size ROWS FETCH NEXT @Size ROWS ONLY</value>
-  </data>
   <data name="Table" xml:space="preserve">
     <value>CREATE TABLE [Errors]
 (

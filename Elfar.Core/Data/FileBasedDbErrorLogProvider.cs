@@ -6,14 +6,17 @@ using System.Web.Hosting;
 
 namespace Elfar.Data
 {
-    public abstract class FileBasedDbErrorLogProvider<TConnection, TQueries>
-            : DbErrorLogProvider<TConnection, TQueries>
+    public abstract class FileBasedDbErrorLogProvider<TConnection>
+            : DbErrorLogProvider<TConnection>
               where TConnection : class, IDbConnection, new()
-              where TQueries : IDbQueries, new()
     {
         protected FileBasedDbErrorLogProvider(
             string connectionString)
-            : base(null, connectionString) {}
+            : base(null, connectionString)
+        {
+            if (connectionString.StartsWith(dataDirectoryMacroString))
+                ConnectionString = "Data Source=" + ConnectionString;
+        }
 
         protected string DataDirectory
         {

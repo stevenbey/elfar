@@ -31,9 +31,9 @@ namespace Elfar.Xml
         {
             return ErrorLog(File(id));
         }
-        public IList<ErrorLog> List(int page = 0, int size = int.MaxValue)
+        public IList<ErrorLog> List()
         {
-            return new List<ErrorLog>(Files.OrderByDescending(f => f.Name, StringComparer.OrdinalIgnoreCase).Skip(page * size).Take(size).Select(ErrorLog));
+            return new List<ErrorLog>(Files.OrderByDescending(f => f.Name, StringComparer.OrdinalIgnoreCase).Select(ErrorLog));
         }
         public void Save(ErrorLog errorLog)
         {

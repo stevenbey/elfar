@@ -7,7 +7,7 @@ namespace Elfar.SqlClient
     using Properties;
 
     public sealed class SqlErrorLogProvider
-        : DbErrorLogProvider<SqlConnection, SqlQueries>
+        : DbErrorLogProvider<SqlConnection>
     {
         public SqlErrorLogProvider(
             string application = null,
@@ -16,9 +16,14 @@ namespace Elfar.SqlClient
         {
             try
             {
-                using (var conn = Connection)
+                var builder = new SqlConnectionStringBuilder(ConnectionString);
+                builder["Initial Catalog"] = "master";
+                using(var conn = new SqlConnection(builder.ToString()))
                 {
-                    conn.Open();
+                    conn.Execute(Resources.Database);
+                }
+                using(var conn = Connection)
+                {
                     conn.Execute(Resources.Table);
                     conn.Execute(Resources.Index);
                 }

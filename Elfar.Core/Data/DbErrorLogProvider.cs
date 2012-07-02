@@ -6,10 +6,9 @@ using System.Linq;
 
 namespace Elfar.Data
 {
-    public abstract class DbErrorLogProvider<TConnection, TQueries>
+    public abstract class DbErrorLogProvider<TConnection>
         : IErrorLogProvider
           where TConnection: class, IDbConnection, new()
-          where TQueries: IDbQueries, new()
     {
         protected DbErrorLogProvider(
             string application = null,
@@ -28,53 +27,25 @@ namespace Elfar.Data
         {
             using(var conn = Connection)
             {
-                conn.Open();
-                return conn.Query<DbErrorLog>(Queries.Get, new
-                {
-                    ID = id
-                }).SingleOrDefault();
+                return conn.Query<DbErrorLog>(Queries.Get, new { ID = id }).SingleOrDefault();
             }
         }
-        public virtual IList<ErrorLog> List(int page = 0, int size = int.MaxValue)
+        public virtual IList<ErrorLog> List()
         {
             using(var conn = Connection)
             {
-                conn.Open();
-                return conn.Query<ErrorLog>(Queries.List, new
-                {
-                    Application,
-                    Page = page,
-                    Size = size
-                });
+                return new List<ErrorLog>(conn.Query<DbErrorLog>(Queries.List, new { Application }).Select(l => (ErrorLog) l));
             }
         }
         public virtual void Save(ErrorLog errorLog)
         {
             using(var conn = Connection)
             {
-                conn.Open();
                 conn.Execute(Queries.Save, (DbErrorLog) errorLog);
             }
-            total++;
         }
 
         public string Application { get; private set; }
-        public virtual int Total
-        {
-            get
-            {
-                if(total == null)
-                {
-                    using(var conn = Connection)
-                    {
-                        conn.Open();
-                        total = conn.Query<int>(Queries.Count, new { Application }).Single();
-                    }
-                }
-                return (int) total;
-            }
-            protected set { total = value; }
-        }
 
         protected TConnection Connection
         {
@@ -84,11 +55,11 @@ namespace Elfar.Data
             }
         }
         protected string ConnectionString { get; set; }
-        protected static TQueries Queries
+        protected virtual DbQueries Queries
         {
-            get { return new TQueries(); }
+            get { return queries ?? (queries = new DbQueries()); }
         }
 
-        int? total;
+        DbQueries queries;
     }
 }

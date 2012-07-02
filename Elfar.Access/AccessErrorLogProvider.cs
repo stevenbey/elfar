@@ -8,7 +8,7 @@ using Elfar.Data;
 namespace Elfar.Access
 {
     public sealed class AccessErrorLogProvider
-        : FileBasedDbErrorLogProvider<OleDbConnection, AccessQueries>
+        : FileBasedDbErrorLogProvider<OleDbConnection>
     {
         public AccessErrorLogProvider(
             string connectionString = @default)
@@ -33,7 +33,6 @@ namespace Elfar.Access
                     catalog.Create(ConnectionString);
                     using (var conn = Connection)
                     {
-                        conn.Open();
                         conn.Execute(Properties.Resources.Table);
                     }
                 }
@@ -45,30 +44,22 @@ namespace Elfar.Access
         {
             using(var conn = Connection)
             {
-                conn.Open();
-                return conn.Query<AccessErrorLog>(Queries.Get.Replace("@ID", "'" + id + "'"))
-                           .SingleOrDefault();
+                return conn.Query<AccessErrorLog>(Queries.Get.Replace("@ID", "'" + id + "'")).SingleOrDefault();
             }
         }
-        public override IList<ErrorLog> List(int page = 0, int size = int.MaxValue)
+        public override IList<ErrorLog> List()
         {
-            page = Total - (page * size);
-            size = page - size;
             using(var conn = Connection)
             {
-                conn.Open();
-                return conn.Query<AccessErrorLog>(string.Format(Queries.List, page, size))
-                           .Select(e => (ErrorLog) e).ToList();
+                return conn.Query<AccessErrorLog>(Queries.List, new { Application }).Select(e => (ErrorLog) e).ToList();
             }
         }
         public override void Save(ErrorLog errorLog)
         {
             using(var conn = Connection)
             {
-                conn.Open();
                 conn.Execute(Queries.Save, (AccessErrorLog) errorLog);
             }
-            Total++;
         }
 
         const string @default = @"Provider=Microsoft.Jet.OleDb.4.0;Data Source=|DataDirectory|\Elfar.mdb";

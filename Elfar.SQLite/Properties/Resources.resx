@@ -117,14 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="List" xml:space="preserve">
-    <value>SELECT [Application],[Code],[Host],[ID],[Message],[Source],[Time],[Type],[User]
-FROM Errors
-WHERE [Application] = @Application
-OR (@Application IS NULL AND [Application] IS NULL)
-ORDER BY [Sequence] DESC
-LIMIT @Page * @Size, @Size</value>
-  </data>
   <data name="Table" xml:space="preserve">
     <value>CREATE TABLE [Errors]
 (

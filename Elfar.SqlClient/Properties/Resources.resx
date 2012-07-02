@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Database" xml:space="preserve">
+    <value>IF NOT EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE ('[' + name + ']' = 'Elfar' OR name = 'Elfar'))
+BEGIN
+	CREATE DATABASE [Elfar]
+END</value>
+  </data>
   <data name="Index" xml:space="preserve">
     <value>IF NOT EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[Errors]') AND name = N'IX_Errors')
 BEGIN
@@ -128,14 +134,6 @@ BEGIN
     ) 
     ON [PRIMARY]
 END</value>
-  </data>
-  <data name="List" xml:space="preserve">
-    <value>SET ROWCOUNT @Size
-SELECT [Application],[Code],[Host],[ID],[Message],[Source],[Time],[Type],[User]
-FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY [Sequence] DESC) AS [Row] FROM Errors
-	    WHERE [Application] = @Application OR (@Application IS NULL AND [Application] IS NULL)) AS t
-WHERE [Row] &gt; (@Page * @Size)
-SET ROWCOUNT 0</value>
   </data>
   <data name="Table" xml:space="preserve">
     <value>IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Errors]') AND type in (N'U'))

@@ -6,10 +6,9 @@ namespace Elfar
     public interface IErrorLogProvider
     {
         ErrorLog Get(Guid id);
-        IList<ErrorLog> List(int page = 0, int size = int.MaxValue);
+        IList<ErrorLog> List();
         void Save(ErrorLog errorLog);
 
         string Application { get; }
-        int Total { get; }
     }
 }

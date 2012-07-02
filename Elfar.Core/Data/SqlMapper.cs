@@ -422,9 +422,9 @@ namespace Elfar.Data
                 int total = 0;
                 using(var cmd = SetupCommand(cnn, transaction, sql, null, null, commandTimeout, commandType))
                 {
-
                     string masterSql = null;
-                    foreach(var obj in multiExec)
+                    if (cnn.State == ConnectionState.Closed) cnn.Open();
+                    foreach (var obj in multiExec)
                     {
                         if(isFirst)
                         {
@@ -507,7 +507,8 @@ namespace Elfar.Data
 
             using(var cmd = SetupCommand(cnn, transaction, sql, info.ParamReader, param, commandTimeout, commandType))
             {
-                using(var reader = cmd.ExecuteReader())
+                if (cnn.State == ConnectionState.Closed) cnn.Open();
+                using (var reader = cmd.ExecuteReader())
                 {
                     Func<Func<IDataReader, object>> cacheDeserializer = () =>
                     {
@@ -1279,6 +1280,7 @@ namespace Elfar.Data
         {
             using(var cmd = SetupCommand(cnn, transaction, sql, paramReader, obj, commandTimeout, commandType))
             {
+                if (cnn.State == ConnectionState.Closed) cnn.Open();
                 return cmd.ExecuteNonQuery();
             }
         }

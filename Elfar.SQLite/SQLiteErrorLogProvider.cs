@@ -8,7 +8,7 @@ using Elfar.Data;
 namespace Elfar.SQLite
 {
     public class SQLiteErrorLogProvider
-        : FileBasedDbErrorLogProvider<SQLiteConnection, SQLiteQueries>
+        : FileBasedDbErrorLogProvider<SQLiteConnection>
     {
         public SQLiteErrorLogProvider(
             string connectionString = @default)
@@ -23,7 +23,6 @@ namespace Elfar.SQLite
                     SQLiteConnection.CreateFile(FilePath);
                     using (var conn = Connection)
                     {
-                        conn.Open();
                         conn.Execute(Properties.Resources.Table);
                     }
                 }
@@ -35,48 +34,19 @@ namespace Elfar.SQLite
         {
             using(var conn = Connection)
             {
-                conn.Open();
-                return conn.Query<SQLiteErrorLog>(Queries.Get, new
-                {
-                    ID = id
-                }).SingleOrDefault();
+                return conn.Query<SQLiteErrorLog>(Queries.Get, new { ID = id }).SingleOrDefault();
             }
         }
-        public override IList<ErrorLog> List(int page = 0, int size = int.MaxValue)
+        public override IList<ErrorLog> List()
         {
             using(var conn = Connection)
             {
-                conn.Open();
-                return conn.Query<SQLiteErrorLog>(Queries.List, new
-                {
-                    Application,
-                    Page = page,
-                    Size = size
-                }).Select(e => (ErrorLog) e).ToList();
+                return conn.Query<SQLiteErrorLog>(Queries.List, new { Application }).Select(e => (ErrorLog) e).ToList();
             }
-        }
-
-        public override int Total
-        {
-            get
-            {
-                if(total == null)
-                {
-                    using(var conn = Connection)
-                    {
-                        conn.Open();
-                        total = (int) conn.Query<long>(Queries.Count, new { Application }).Single();
-                    }
-                }
-                return (int) total;
-            }
-            protected set { total = value; }
         }
 
         const string @default = @"|DataDirectory|\Elfar.db";
 
         static readonly object key = new object();
-
-        int? total;
     }
 }

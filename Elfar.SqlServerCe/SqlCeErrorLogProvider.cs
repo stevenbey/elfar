@@ -8,7 +8,7 @@ namespace Elfar.SqlServerCe
     using Properties;
 
     public class SqlCeErrorLogProvider
-        : FileBasedDbErrorLogProvider<SqlCeConnection, SqlCeQueries>
+        : FileBasedDbErrorLogProvider<SqlCeConnection>
     {
         public SqlCeErrorLogProvider(
             string connectionString = @default)
@@ -23,7 +23,6 @@ namespace Elfar.SqlServerCe
                     using (var engine = new SqlCeEngine(ConnectionString)) engine.CreateDatabase();
                     using (var conn = Connection)
                     {
-                        conn.Open();
                         conn.Execute(Resources.Table);
                         conn.Execute(Resources.Index);
                     }

@@ -38,7 +38,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="SqlErrorLogProvider.cs" />
-    <Compile Include="SqlQueries.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

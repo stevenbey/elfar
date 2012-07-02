@@ -12,9 +12,9 @@ namespace Elfar
         {
             return ContainsKey(id) ? this[id] : null;
         }
-        public IList<ErrorLog> List(int page = 0, int size = int.MaxValue)
+        public IList<ErrorLog> List()
         {
-            return this.Skip(page * size).Take(size).Select(p => p.Value).ToList();
+            return this.Select(p => p.Value).ToList();
         }
         public void Save(ErrorLog errorLog)
         {

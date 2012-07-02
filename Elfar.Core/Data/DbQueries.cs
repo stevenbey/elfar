@@ -2,20 +2,16 @@ namespace Elfar.Data
 {
     using Properties;
 
-    public abstract class DbQueries
+    public class DbQueries
             : IDbQueries
     {
-        public virtual string Count
-        {
-            get { return Resources.Count; }
-        }
         public virtual string Get
         {
             get { return Resources.Get; }
         }
-        public abstract string List
+        public virtual string List
         {
-            get;
+            get { return Resources.List; }
         }
         public virtual string Save
         {
