@@ -61,6 +61,15 @@ namespace Elfar.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to DELETE FROM [Errors] WHERE [ID]=@ID.
+        /// </summary>
+        internal static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Elfar.
         /// </summary>
         internal static string Elfar {

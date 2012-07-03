@@ -41,7 +41,7 @@ namespace Elfar.SQLite
         {
             using(var conn = Connection)
             {
-                return conn.Query<SQLiteErrorLog>(Queries.List, new { Application }).Select(e => (ErrorLog) e).ToList();
+                return new List<ErrorLog>(conn.Query<SQLiteErrorLog>(Queries.List, new { Application }).Select(l => (ErrorLog) l));
             }
         }
 

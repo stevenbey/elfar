@@ -3,7 +3,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Elfar.SqlClient;
+using Elfar.SQLite;
 
 [assembly: PreApplicationStartMethod(typeof(Elfar.Web.__Package__), "Run")]
 namespace Elfar.Web
@@ -12,7 +12,7 @@ namespace Elfar.Web
     {
         public static void Run()
         {
-            var provider = new SqlErrorLogProvider();
+            var provider = new SQLiteErrorLogProvider();
             GlobalFilters.Filters.Add(new ErrorLogFilter(provider));
             RouteTable.Routes.Insert(0, new ErrorLogRoute(provider));
 

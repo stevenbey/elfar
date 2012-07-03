@@ -33,12 +33,14 @@
   <ItemGroup>
     <Compile Include="ActionResults\CsvResult.cs" />
     <Compile Include="ActionResults\DefaultResult.cs" />
+    <Compile Include="ActionResults\DeleteResult.cs" />
     <Compile Include="ActionResults\IndexResult.cs" />
     <Compile Include="ActionResults\RssResult.cs" />
     <Compile Include="ErrorLogController.cs" />
     <Compile Include="ErrorLogFilter.cs" />
     <Compile Include="ErrorLogRoute.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="FormActionAttribute.cs" />
     <Compile Include="Handler.cs" />
     <Compile Include="MvcErrorLog.cs" />
     <Compile Include="RouteConstraints\AdminConstraint.cs" />

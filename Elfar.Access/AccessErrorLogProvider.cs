@@ -40,6 +40,13 @@ namespace Elfar.Access
             }
         }
 
+        public override void Delete(Guid id)
+        {
+            using(var conn = Connection)
+            {
+                conn.Execute(Queries.Delete.Replace("@ID", "'" + id + "'"));
+            }
+        }
         public override ErrorLog Get(Guid id)
         {
             using(var conn = Connection)

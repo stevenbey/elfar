@@ -23,6 +23,13 @@ namespace Elfar.Data
                 ConnectionString = connectionStrings[0].ConnectionString;
         }
 
+        public virtual void Delete(Guid id)
+        {
+            using(var conn = Connection)
+            {
+                conn.Execute(Queries.Delete, new { ID = id });
+            }
+        }
         public virtual ErrorLog Get(Guid id)
         {
             using(var conn = Connection)
@@ -55,7 +62,7 @@ namespace Elfar.Data
             }
         }
         protected string ConnectionString { get; set; }
-        protected virtual DbQueries Queries
+        protected virtual IDbQueries Queries
         {
             get { return queries ?? (queries = new DbQueries()); }
         }

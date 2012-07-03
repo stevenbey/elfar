@@ -9,7 +9,7 @@ namespace Elfar.ActionResults
     {
         public IndexResult(IErrorLogProvider provider)
         {
-            this.provider = provider;
+            Provider = provider;
         }
 
         public override void ExecuteResult(ControllerContext context)
@@ -18,8 +18,8 @@ namespace Elfar.ActionResults
             {
                 ViewData.Model = new Index
                 {
-                    Application = provider.Application,
-                    Errors = provider.List()
+                    Application = Provider.Application,
+                    Errors = Provider.List()
                 };
             }
             catch(Exception e)
@@ -28,7 +28,7 @@ namespace Elfar.ActionResults
             }
             base.ExecuteResult(context);
         }
-
-        readonly IErrorLogProvider provider;
+        
+        protected readonly IErrorLogProvider Provider;
     }
 }

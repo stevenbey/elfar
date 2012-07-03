@@ -8,6 +8,10 @@ namespace Elfar
         : Dictionary<Guid, ErrorLog>,
           IErrorLogProvider
     {
+        public void Delete(Guid id)
+        {
+            Remove(id);
+        }
         public ErrorLog Get(Guid id)
         {
             return ContainsKey(id) ? this[id] : null;
@@ -19,10 +23,8 @@ namespace Elfar
         public void Save(ErrorLog errorLog)
         {
             Add(errorLog.ID, errorLog);
-            Total++;
         }
 
         public string Application { get; set; }
-        public int Total { get; private set; }
     }
 }

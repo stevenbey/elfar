@@ -5,6 +5,10 @@ namespace Elfar.Data
     public class DbQueries
             : IDbQueries
     {
+        public virtual string Delete
+        {
+            get { return Resources.Delete; }
+        }
         public virtual string Get
         {
             get { return Resources.Get; }

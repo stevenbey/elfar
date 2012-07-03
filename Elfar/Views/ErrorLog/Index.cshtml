@@ -5,55 +5,58 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
-        <title>Error log for '@Model.Application' on '@Server.MachineName'</title>
+        <title>Error log for [@Model.Application] on @Server.MachineName</title>
         <link rel="stylesheet" type="text/css" href="@Url.Action("Stylesheet")" />
         <link rel="alternate" type="application/rss+xml" title="RSS" href="@Url.Action("Rss")" />
-        <meta http-equiv="refresh" content="60">
     </head>
     <body>
-        <h1>Error Log for <span>'@Model.Application' on '@Server.MachineName'</span></h1>
-        @if(Model.Errors.Count() != 0)
+        <h1>Error Log for <span>[@Model.Application] on @Server.MachineName</span></h1>
+    @if(Model.Errors.Count() != 0)
+    {
+        <ul id="navigation">
+            <li><a href="@Url.Action("Rss")" title="RSS feed of recent errors">RSS Feed</a></li>
+            <li><a href="@Url.Action("Digest")" title="RSS feed of errors within recent days">RSS Digest</a></li>
+            <li><a href="@Url.Action("Download")" title="Download the entire log as CSV">Download</a></li>
+        </ul>
+        using(Html.BeginForm())
         {
-            <ul id="navigation">
-                <li><a href="@Url.Action("Rss")" title="RSS feed of recent errors">RSS Feed</a></li>
-                <li><a href="@Url.Action("Digest")" title="RSS feed of errors within recent days">RSS Digest</a></li>
-                <li><a href="@Url.Action("Download")" title="Download the entire log as CSV">Download</a></li>
-            </ul>
             <table>
                 <thead>
                     <tr>
+                        <th><input type="checkbox" id="select-all" /></th>
                         <th title="Number">#</th>
                         <th>Host</th>
                         <th>Application</th>
                         <th>Code</th>
                         <th>Type</th>
                         <th>Error</th>
-                        <th>User</th>
                         <th>Date &amp; Time</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @{ var i = 1; }
-                    @foreach (var errorLog in Model.Errors)
-                    {
-                        <tr>
-                            <td>@(i++)</td>
-                            <td>@errorLog.Host</td>
-                            <td>@errorLog.Application</td>
-                            <td class="code-col"><span title="@HttpWorkerRequest.GetStatusDescription(errorLog.Code.GetValueOrDefault())">@errorLog.Code</span></td>
-                            <td class="type-col"><span title="@errorLog.Type">@errorLog.Type.ShortName()</span></td>
-                            <td><span>@errorLog.Message</span> @Html.ActionLink("Details…", "Default", "ErrorLog", new { id = errorLog.ID }, null)</td>
-                            <td>@errorLog.User</td>
-                            <td class="date-col" nowrap="nowrap"><span title="@errorLog.Time">@errorLog.Time</span></td>
-                        </tr>
-                    }
+                @{ var i = 1; }
+                @foreach(var errorLog in Model.Errors)
+                {
+                    <tr>
+                        <td><input type="checkbox" value="@errorLog.ID" /></td>
+                        <td>@(i++)</td>
+                        <td>@errorLog.Host</td>
+                        <td>@errorLog.Application</td>
+                        <td title="@HttpWorkerRequest.GetStatusDescription(errorLog.Code.GetValueOrDefault())">@errorLog.Code</td>
+                        <td title="@errorLog.Type">@errorLog.Type.ShortName()</td>
+                        <td>@errorLog.Message @Html.ActionLink("Details…", "Default", "ErrorLog", new { id = errorLog.ID }, null)</td>
+                        <td nowrap="nowrap" title="@errorLog.Time">@errorLog.Time</td>
+                    </tr>
+                }
                 </tbody>
             </table>
+            <p><input type="submit" id="delete" name="Action::Delete" value="Delete" class="ui-button ui-state-default ui-corner-all" disabled="disabled" /></p>
         }
-        else
-        {
-            <p>No errors found.</p> 
-        }
+    }
+    else
+    {
+        <p>No errors found.</p>
+    }
         @{ Html.RenderPartial("Footer"); }
         <script type="text/javascript" src="@Url.Action("JavaScript")"></script>
     </body>

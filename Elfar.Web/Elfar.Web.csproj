@@ -63,9 +63,9 @@
       <Project>{41B3A539-7A37-48FA-AF45-C214C3BBE6B0}</Project>
       <Name>Elfar.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Elfar.SqlClient\Elfar.SqlClient.csproj">
-      <Project>{55D3153A-1CDE-450F-B3C4-D36C6B178377}</Project>
-      <Name>Elfar.SqlClient</Name>
+    <ProjectReference Include="..\Elfar.SQLite\Elfar.SQLite.csproj">
+      <Project>{11B4A371-E5A1-4ECF-BE8B-0BFCD06AE276}</Project>
+      <Name>Elfar.SQLite</Name>
     </ProjectReference>
     <ProjectReference Include="..\Elfar\Elfar.csproj">
       <Project>{1784AF7D-5CEF-4074-BC65-B2EC3DFA0677}</Project>

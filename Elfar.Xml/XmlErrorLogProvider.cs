@@ -27,6 +27,11 @@ namespace Elfar.Xml
             }
         }
 
+        public void Delete(Guid id)
+        {
+            File(id).Delete();
+            files = null;
+        }
         public ErrorLog Get(Guid id)
         {
             return ErrorLog(File(id));
@@ -43,7 +48,6 @@ namespace Elfar.Xml
                 writer.Flush();
             }
             files = null;
-            total++;
         }
         
         static ErrorLog ErrorLog(FileInfo file)
@@ -63,16 +67,8 @@ namespace Elfar.Xml
         }
 
         public string Application { get; private set; }
-        public int Total
-        {
-            get
-            {
-                if(total == null) total = Files.Length;
-                return (int) total;
-            }
-        }
 
-        FileInfo[] Files
+        IEnumerable<FileInfo> Files
         {
             get
             {
@@ -83,8 +79,7 @@ namespace Elfar.Xml
         }
 
         readonly DirectoryInfo directory;
-        FileInfo[] files;
-        int? total;
+        IEnumerable<FileInfo> files;
 
         const string @default = "~/App_Data/Errors";
 

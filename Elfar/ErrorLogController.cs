@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Web;
 using System.Web.Mvc;
 using Elfar.ActionResults;
 using Elfar.Models;
@@ -18,6 +17,11 @@ namespace Elfar
         public DefaultResult Default(Guid id)
         {
             return new DefaultResult(id, provider, e => View(new Default { ErrorLog = e }));
+        }
+        [HttpPost, FormAction]
+        public DeleteResult Delete(Guid[] ids)
+        {
+            return new DeleteResult(provider, ids);
         }
         public RssResult Digest()
         {
