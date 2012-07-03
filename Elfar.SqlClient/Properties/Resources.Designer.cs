@@ -61,9 +61,9 @@ namespace Elfar.SqlClient.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to IF NOT EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE (&apos;[&apos; + name + &apos;]&apos; = &apos;Elfar&apos; OR name = &apos;Elfar&apos;))
+        ///   Looks up a localized string similar to IF NOT EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE (&apos;[&apos; + name + &apos;]&apos; = &apos;{0}&apos; OR name = &apos;{0}&apos;))
         ///BEGIN
-        ///	CREATE DATABASE [Elfar]
+        ///	CREATE DATABASE [{0}]
         ///END.
         /// </summary>
         internal static string Database {

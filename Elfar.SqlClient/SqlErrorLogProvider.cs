@@ -14,21 +14,31 @@ namespace Elfar.SqlClient
             string connectionString = null)
             : base(application, connectionString)
         {
-            try
+            Execute(() =>
             {
                 var builder = new SqlConnectionStringBuilder(ConnectionString);
-                builder["Initial Catalog"] = "master";
+                var catalog = builder.InitialCatalog;
+                builder.InitialCatalog = "master";
                 using(var conn = new SqlConnection(builder.ToString()))
                 {
-                    conn.Execute(Resources.Database);
+                    conn.Execute(string.Format(Resources.Database, catalog));
                 }
+            });
+            Execute(() =>
+            {
                 using(var conn = Connection)
                 {
                     conn.Execute(Resources.Table);
                     conn.Execute(Resources.Index);
                 }
-            }
-            catch(Exception) {}
+            });
         }
+
+        static void Execute(Action action)
+        {
+            try { action(); }
+            catch(Exception) { }
+        }
+
     }
 }

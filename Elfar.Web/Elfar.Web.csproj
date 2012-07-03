@@ -67,6 +67,10 @@
       <Project>{11B4A371-E5A1-4ECF-BE8B-0BFCD06AE276}</Project>
       <Name>Elfar.SQLite</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Elfar.Xml\Elfar.Xml.csproj">
+      <Project>{31B17B39-4395-447D-8796-2C2EA275801E}</Project>
+      <Name>Elfar.Xml</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Elfar\Elfar.csproj">
       <Project>{1784AF7D-5CEF-4074-BC65-B2EC3DFA0677}</Project>
       <Name>Elfar</Name>
