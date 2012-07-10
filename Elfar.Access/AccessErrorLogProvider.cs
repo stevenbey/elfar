@@ -58,7 +58,7 @@ namespace Elfar.Access
         {
             using(var conn = Connection)
             {
-                return conn.Query<AccessErrorLog>(Queries.List, new { Application }).Select(e => (ErrorLog) e).ToList();
+                return new List<ErrorLog>(conn.Query<AccessErrorLog>(Queries.List, new { Application }).Select(e => (ErrorLog) e));
             }
         }
         public override void Save(ErrorLog errorLog)
