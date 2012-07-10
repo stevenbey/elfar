@@ -59,7 +59,8 @@ namespace Elfar.Tests
             string name,
             MethodInfo methodInfo)
         {
-            return controllerContext.HttpContext.Request.Form["Action::" + methodInfo.Name] != null;
+            return controllerContext.HttpContext.Request.Form["Action::" + methodInfo.Name] != null
+                && !controllerContext.IsChildAction;
         }
     }
 

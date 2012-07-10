@@ -13,7 +13,7 @@
     <RootNamespace>Elfar.Web</RootNamespace>
     <AssemblyName>Elfar.Web</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <MvcBuildViews>true</MvcBuildViews>
+    <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>false</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -63,13 +63,13 @@
       <Project>{41B3A539-7A37-48FA-AF45-C214C3BBE6B0}</Project>
       <Name>Elfar.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Elfar.SQLite\Elfar.SQLite.csproj">
-      <Project>{11B4A371-E5A1-4ECF-BE8B-0BFCD06AE276}</Project>
-      <Name>Elfar.SQLite</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Elfar.Xml\Elfar.Xml.csproj">
       <Project>{31B17B39-4395-447D-8796-2C2EA275801E}</Project>
       <Name>Elfar.Xml</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Elfar.Zip\Elfar.Zip.csproj">
+      <Project>{8A141F0C-D280-41E8-8B0F-CF620003A4B5}</Project>
+      <Name>Elfar.Zip</Name>
     </ProjectReference>
     <ProjectReference Include="..\Elfar\Elfar.csproj">
       <Project>{1784AF7D-5CEF-4074-BC65-B2EC3DFA0677}</Project>
