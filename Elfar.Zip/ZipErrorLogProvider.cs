@@ -45,8 +45,15 @@ namespace Elfar.Zip
         }
         public IList<ErrorLog> List()
         {
-            using(var zip = new ZipFile(path))
-                return new List<ErrorLog>(zip.Select(ErrorLog).OrderByDescending(e => e.Time));
+            try
+            {
+                using(var zip = new ZipFile(path))
+                    return new List<ErrorLog>(zip.Select(ErrorLog).OrderByDescending(e => e.Time));
+            }
+            catch(Exception)
+            {
+                return new List<ErrorLog>();
+            }
         }
         public void Save(ErrorLog errorLog)
         {
