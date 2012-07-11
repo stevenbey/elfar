@@ -120,7 +120,7 @@ WriteLiteral("</span></h1>\r\n");
 
             
             #line 14 "..\..\Views\ErrorLog\Index.cshtml"
-     if(Model.Errors.Count() != 0)
+     if(Model.Errors.Count != 0)
     {
 
             
@@ -364,7 +364,7 @@ WriteLiteral("        <p>No errors found.</p>\r\n");
 
             
             #line 60 "..\..\Views\ErrorLog\Index.cshtml"
-           Html.RenderPartial("Footer"); 
+   Html.RenderPartial("Footer"); 
 
             
             #line default
@@ -379,7 +379,17 @@ WriteLiteral("        <script type=\"text/javascript\" src=\"");
             
             #line default
             #line hidden
-WriteLiteral("\"></script>\r\n    </body>\r\n</html>");
+WriteLiteral("\"></script>\r\n        <script type=\"text/javascript\" src=\"");
+
+
+            
+            #line 62 "..\..\Views\ErrorLog\Index.cshtml"
+                                       Write(Url.Action("JavaScript"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("?file=Index\"></script>\r\n    </body>\r\n</html>");
 
 
         }

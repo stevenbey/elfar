@@ -33,7 +33,6 @@
   <ItemGroup>
     <Compile Include="ActionResults\CsvResult.cs" />
     <Compile Include="ActionResults\DefaultResult.cs" />
-    <Compile Include="ActionResults\DeleteResult.cs" />
     <Compile Include="ActionResults\IndexResult.cs" />
     <Compile Include="ActionResults\RssResult.cs" />
     <Compile Include="ErrorLogController.cs" />
@@ -58,6 +57,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Default.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ErrorLog\DisplayTemplates\Collection.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Collection.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\ErrorLog\StackTrace.generated.cs">
       <AutoGen>True</AutoGen>
@@ -106,6 +110,10 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Digest.generated.cs</LastGenOutput>
     </None>
+    <None Include="Views\ErrorLog\DisplayTemplates\Collection.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Collection.generated.cs</LastGenOutput>
+    </None>
     <None Include="Views\ErrorLog\Footer.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Footer.generated.cs</LastGenOutput>
@@ -137,6 +145,8 @@
     <EmbeddedResource Include="Resources\ui-icons_cd0a0a_256x240.png" />
     <EmbeddedResource Include="Resources\Stylesheet.css" />
     <EmbeddedResource Include="Resources\JavaScript.js" />
+    <EmbeddedResource Include="Resources\Default.js" />
+    <EmbeddedResource Include="Resources\Index.js" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>

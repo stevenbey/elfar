@@ -5,6 +5,6 @@ namespace Elfar.Models
     public class Index
     {
         public string Application { get; set; }
-        public IEnumerable<ErrorLog> Errors { get; set; }
+        public IList<ErrorLog> Errors { get; set; }
     }
 }

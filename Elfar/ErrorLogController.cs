@@ -19,9 +19,12 @@ namespace Elfar
             return new DefaultResult(id, provider, e => View(new Default { ErrorLog = e }));
         }
         [HttpPost, FormAction]
-        public DeleteResult Delete(Guid[] ids)
+        public RedirectToRouteResult Delete(Guid[] ids)
         {
-            return new DeleteResult(provider, ids);
+            if(ids != null)
+                foreach(var id in ids)
+                    provider.Delete(id);
+            return RedirectToAction("Index");
         }
         public RssResult Digest()
         {
@@ -54,12 +57,13 @@ namespace Elfar
         {
             return new IndexResult(provider);
         }
-        public FileStreamResult JavaScript()
+        public FileStreamResult JavaScript(string file = "JavaScript")
         {
-            return ResourceFile("JavaScript", "js", "text/javascript");
+            return ResourceFile(file, "js", "text/javascript");
         }
-        public DefaultResult Json(Guid id)
+        public DefaultResult Json(Guid id, bool download = false)
         {
+            if(download) Response.AddHeader("Content-Disposition", "attachment; filename=" + id + ".json;");
             return new DefaultResult(id, provider, e => Json(e, JsonRequestBehavior.AllowGet));
         }
         public RssResult Rss()
@@ -74,8 +78,9 @@ namespace Elfar
         {
             throw new TestException();
         }
-        public DefaultResult Xml(Guid id)
+        public DefaultResult Xml(Guid id, bool download = false)
         {
+            if(download) Response.AddHeader("Content-Disposition", "attachment; filename=" + id + ".xml;");
             return new DefaultResult(id, provider, e => new XmlResult { Data = e });
         }
 

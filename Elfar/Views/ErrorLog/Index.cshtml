@@ -11,7 +11,7 @@
     </head>
     <body>
         <h1>Error Log for <span>[@Model.Application] on @Server.MachineName</span></h1>
-    @if(Model.Errors.Count() != 0)
+    @if(Model.Errors.Count != 0)
     {
         <ul id="navigation">
             <li><a href="@Url.Action("Rss")" title="RSS feed of recent errors">RSS Feed</a></li>
@@ -57,7 +57,8 @@
     {
         <p>No errors found.</p>
     }
-        @{ Html.RenderPartial("Footer"); }
+@{ Html.RenderPartial("Footer"); }
         <script type="text/javascript" src="@Url.Action("JavaScript")"></script>
+        <script type="text/javascript" src="@Url.Action("JavaScript")?file=Index"></script>
     </body>
 </html>

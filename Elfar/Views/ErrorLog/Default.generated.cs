@@ -167,144 +167,142 @@ WriteLiteral(" at ");
             
             #line default
             #line hidden
-WriteLiteral(" (Local)</p>\r\n\t\t<p>See also: (opens in new window)</p>\r\n\t\t<ul>\r\n");
+WriteLiteral(" (Local)</p>\r\n\t\t<p>See also: (opens in new window)</p>\r\n        <ul>\r\n");
 
 
             
             #line 24 "..\..\Views\ErrorLog\Default.cshtml"
-         if(!string.IsNullOrWhiteSpace(errorLog.Html))
-        {
+             if(!string.IsNullOrWhiteSpace(errorLog.Html))
+            {
 
             
             #line default
             #line hidden
-WriteLiteral("            <li>The <a href=\"");
-
-
-            
-            #line 26 "..\..\Views\ErrorLog\Default.cshtml"
-                        Write(Url.Action("Html", new { id }));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\" target=\"_blank\">original ASP.NET error page</a>.</li>\r\n");
-
-
-            
-            #line 27 "..\..\Views\ErrorLog\Default.cshtml"
-        }
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\t\t\t<li>Raw/Source data in <a href=\"");
-
-
-            
-            #line 28 "..\..\Views\ErrorLog\Default.cshtml"
-                              Write(Url.Action("Xml", new { id }));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\" rel=\"alternate\" type=\"application/xml\" target=\"_blank\">XML</a> or\r\n            " +
-"<a href=\"");
+WriteLiteral("                <li>\r\n                    The <a id=\"show-html\" href=\"#\">original" +
+" ASP.NET error page</a>.\r\n                    <div id=\"dialog\" title=\"Original A" +
+"SP.NET error page\">\r\n                        <iframe src=\"");
 
 
             
             #line 29 "..\..\Views\ErrorLog\Default.cshtml"
-                Write(Url.Action("Json", new { id }));
+                                Write(Url.Action("Html", new { id }));
 
             
             #line default
             #line hidden
-WriteLiteral(@""" rel=""alternate"" type=""application/json"" target=""_blank"">JSON</a> format.</li>
-		</ul>
-        <div>
-			<p class=""table-caption"">Server Variables</p>
-			<div class=""scroll-view"">
-				<table cellspacing=""0"">
-                    <thead>
-                        <tr>
-                            <th style=""white-space: nowrap;"">Name</th>
-                            <th style=""white-space: nowrap;"">Value</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+WriteLiteral("\" frameborder=\"0\" width=\"100%\" height=\"100%\"></iframe>\r\n                    </div" +
+">\r\n                </li>\r\n");
+
+
+            
+            #line 32 "..\..\Views\ErrorLog\Default.cshtml"
+            }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("            <li>Raw/Source data in <a href=\"");
+
+
+            
+            #line 33 "..\..\Views\ErrorLog\Default.cshtml"
+                                       Write(Url.Action("Xml", new { id }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("?download=true\" rel=\"alternate\" type=\"application/xml\">XML</a> or\r\n              " +
+"  <a href=\"");
+
+
+            
+            #line 34 "..\..\Views\ErrorLog\Default.cshtml"
+                    Write(Url.Action("Json", new { id }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral(@"?download=true"" rel=""alternate"" type=""application/json"">JSON</a> format.</li>
+        </ul>
+        <div id=""tabs"">
+            <ul>
+                <li><a href=""#server-variables"">Server Variables</a></li>
+                <li><a href=""#form"">Form</a></li>
+                <li><a href=""#querystring"">QueryString</a></li>
+                <li><a href=""#cookies"">Cookies</a></li>
+            </ul>
+            <div id=""server-variables"">
 ");
 
 
             
-            #line 42 "..\..\Views\ErrorLog\Default.cshtml"
-                      
-                        var variables = errorLog.ServerVariables;
-                        var i = 0;
-                     
+            #line 44 "..\..\Views\ErrorLog\Default.cshtml"
+Write(Html.DisplayFor(m => m.ErrorLog.ServerVariables));
 
             
             #line default
             #line hidden
-
-            
-            #line 46 "..\..\Views\ErrorLog\Default.cshtml"
-                     foreach(var key in variables.Keys)
-                    {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                        <tr class=\"");
+WriteLiteral("\r\n            </div>\r\n            <div id=\"form\">\r\n");
 
 
             
-            #line 48 "..\..\Views\ErrorLog\Default.cshtml"
-                               Write(i++ % 2 == 0 ? "odd" : "even");
+            #line 47 "..\..\Views\ErrorLog\Default.cshtml"
+Write(Html.DisplayFor(m => m.ErrorLog.Form));
 
             
             #line default
             #line hidden
-WriteLiteral("\">\r\n                            <td class=\"key-col\">");
-
-
-            
-            #line 49 "..\..\Views\ErrorLog\Default.cshtml"
-                                           Write(key);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</td>\r\n                            <td>");
+WriteLiteral("\r\n            </div>\r\n            <div id=\"querystring\">\r\n");
 
 
             
             #line 50 "..\..\Views\ErrorLog\Default.cshtml"
-                           Write(variables[key]);
+Write(Html.DisplayFor(m => m.ErrorLog.QueryString));
 
             
             #line default
             #line hidden
-WriteLiteral("</td>\r\n                        </tr>\r\n");
+WriteLiteral("\r\n            </div>\r\n            <div id=\"cookies\">\r\n");
 
 
             
-            #line 52 "..\..\Views\ErrorLog\Default.cshtml"
-                    }
+            #line 53 "..\..\Views\ErrorLog\Default.cshtml"
+Write(Html.DisplayFor(m => m.ErrorLog.Cookies));
 
             
             #line default
             #line hidden
-WriteLiteral("                    </tbody>\r\n\t\t\t\t</table>\r\n\t\t\t</div>\r\n\t\t</div>\r\n");
+WriteLiteral("\r\n            </div>\r\n        </div>\r\n");
 
 
             
-            #line 57 "..\..\Views\ErrorLog\Default.cshtml"
+            #line 56 "..\..\Views\ErrorLog\Default.cshtml"
    Html.RenderPartial("Footer"); 
 
             
             #line default
             #line hidden
-WriteLiteral("\t</body>\r\n</html>");
+WriteLiteral("        <script type=\"text/javascript\" src=\"");
+
+
+            
+            #line 57 "..\..\Views\ErrorLog\Default.cshtml"
+                                       Write(Url.Action("JavaScript"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\"></script>\r\n        <script type=\"text/javascript\" src=\"");
+
+
+            
+            #line 58 "..\..\Views\ErrorLog\Default.cshtml"
+                                       Write(Url.Action("JavaScript"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("?file=Default\"></script>\r\n\t</body>\r\n</html>");
 
 
         }
