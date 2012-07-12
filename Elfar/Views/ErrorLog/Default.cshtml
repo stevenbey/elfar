@@ -13,7 +13,7 @@
 	<body>
 		<h1>@errorLog.Message</h1>
 		<ul id="navigation">
-			<li><a href="@Url.Action("Index")" title="List of logged errors">Errors</a></li>
+			<li><a href="@Url.Action("Index")" title="Back to the list of error logs">Back</a></li>
 		</ul>
         <p id="title"><span id="error-type">@errorLog.Type</span><span id="separator">: </span><span id="error-message">@errorLog.Message</span></p>
 		<pre id="stack-trace">@{ Html.RenderPartial("StackTrace", Model.StackTrace); }</pre>

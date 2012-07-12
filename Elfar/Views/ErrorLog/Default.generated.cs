@@ -102,8 +102,8 @@ WriteLiteral("</h1>\r\n\t\t<ul id=\"navigation\">\r\n\t\t\t<li><a href=\"");
             
             #line default
             #line hidden
-WriteLiteral("\" title=\"List of logged errors\">Errors</a></li>\r\n\t\t</ul>\r\n        <p id=\"title\"><" +
-"span id=\"error-type\">");
+WriteLiteral("\" title=\"Back to the list of error logs\">Back</a></li>\r\n\t\t</ul>\r\n        <p id=\"t" +
+"itle\"><span id=\"error-type\">");
 
 
             
