@@ -57,7 +57,7 @@ namespace Elfar
         {
             return new IndexResult(provider);
         }
-        public FileStreamResult JavaScript(string file = "JavaScript")
+        public new FileStreamResult JavaScript(string file = "JavaScript")
         {
             return ResourceFile(file, "js", "text/javascript");
         }

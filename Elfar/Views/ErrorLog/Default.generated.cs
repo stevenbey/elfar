@@ -92,12 +92,12 @@ WriteLiteral("\" />\r\n\t</head>\r\n\t<body>\r\n\t\t<h1>");
             
             #line default
             #line hidden
-WriteLiteral("</h1>\r\n\t\t<ul id=\"navigation\">\r\n\t\t\t<li><a href=\"");
+WriteLiteral("</h1>\r\n\t\t<ul id=\"navigation\">\r\n\t\t\t<li><a id=\"back\" href=\"");
 
 
             
             #line 16 "..\..\Views\ErrorLog\Default.cshtml"
-           Write(Url.Action("Index"));
+                     Write(Url.Action("Index"));
 
             
             #line default
@@ -282,27 +282,27 @@ WriteLiteral("\r\n            </div>\r\n        </div>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("        <script type=\"text/javascript\" src=\"");
-
-
-            
-            #line 57 "..\..\Views\ErrorLog\Default.cshtml"
-                                       Write(Url.Action("JavaScript"));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\"></script>\r\n        <script type=\"text/javascript\" src=\"");
+WriteLiteral("\t</body>\r\n    <script type=\"text/javascript\" src=\"");
 
 
             
             #line 58 "..\..\Views\ErrorLog\Default.cshtml"
-                                       Write(Url.Action("JavaScript"));
+                                   Write(Url.Action("JavaScript"));
 
             
             #line default
             #line hidden
-WriteLiteral("?file=Default\"></script>\r\n\t</body>\r\n</html>");
+WriteLiteral("\"></script>\r\n    <script type=\"text/javascript\" src=\"");
+
+
+            
+            #line 59 "..\..\Views\ErrorLog\Default.cshtml"
+                                   Write(Url.Action("JavaScript"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("?file=Default\"></script>\r\n</html>");
 
 
         }

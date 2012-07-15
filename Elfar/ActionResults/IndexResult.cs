@@ -18,8 +18,8 @@ namespace Elfar.ActionResults
             {
                 ViewData.Model = new Index
                 {
-                    Application = Provider.Application,
-                    Errors = Provider.List()
+                        Application = Provider.Application,
+                        Errors = Provider.List()
                 };
             }
             catch(Exception e)
@@ -28,7 +28,7 @@ namespace Elfar.ActionResults
             }
             base.ExecuteResult(context);
         }
-        
+
         protected readonly IErrorLogProvider Provider;
     }
 }

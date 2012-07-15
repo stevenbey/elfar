@@ -336,13 +336,30 @@ WriteLiteral("                </tbody>\r\n            </table>\r\n");
 
 
 
-WriteLiteral("            <p><input type=\"submit\" id=\"delete\" name=\"Action::Delete\" value=\"Dele" +
-"te\" class=\"ui-button ui-state-default ui-corner-all\" disabled=\"disabled\" /></p>\r" +
-"\n");
+WriteLiteral(@"            <p class=""ui-helper-clearfix"">
+                <input type=""submit"" id=""delete"" name=""Action::Delete"" value=""Delete"" class=""ui-button ui-state-default ui-corner-all"" disabled=""disabled"" />
+                <button type=""button"" id=""charts"" class=""ui-button ui-state-default ui-corner-all""><span class=""ui-icon ui-icon-newwin""></span>Charts</button>
+                <div id=""dialog"" title=""Charts"">
+                    <div>
+                        <label>
+                            Filter by:
+                            <select>
+                                <option>Date</option>
+                                <option>Host</option>
+                                <option>Application</option>
+                                <option>Code</option>
+                                <option>Type</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div id=""graph""></div>
+                </div>
+            </p>
+");
 
 
             
-            #line 54 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 72 "..\..\Views\ErrorLog\Index.cshtml"
         }
     }
     else
@@ -355,7 +372,7 @@ WriteLiteral("        <p>No errors found.</p>\r\n");
 
 
             
-            #line 59 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 77 "..\..\Views\ErrorLog\Index.cshtml"
     }
 
             
@@ -363,33 +380,43 @@ WriteLiteral("        <p>No errors found.</p>\r\n");
             #line hidden
 
             
-            #line 60 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 78 "..\..\Views\ErrorLog\Index.cshtml"
    Html.RenderPartial("Footer"); 
 
             
             #line default
             #line hidden
-WriteLiteral("        <script type=\"text/javascript\" src=\"");
+WriteLiteral("    </body>\r\n    <script type=\"text/javascript\" src=\"");
 
 
             
-            #line 61 "..\..\Views\ErrorLog\Index.cshtml"
-                                       Write(Url.Action("JavaScript"));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\"></script>\r\n        <script type=\"text/javascript\" src=\"");
-
-
-            
-            #line 62 "..\..\Views\ErrorLog\Index.cshtml"
-                                       Write(Url.Action("JavaScript"));
+            #line 80 "..\..\Views\ErrorLog\Index.cshtml"
+                                   Write(Url.Action("JavaScript"));
 
             
             #line default
             #line hidden
-WriteLiteral("?file=Index\"></script>\r\n    </body>\r\n</html>");
+WriteLiteral("\"></script>\r\n    <script type=\"text/javascript\" src=\"");
+
+
+            
+            #line 81 "..\..\Views\ErrorLog\Index.cshtml"
+                                   Write(Url.Action("JavaScript"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("?file=Index\"></script>\r\n    <script type=\"text/javascript\" src=\"");
+
+
+            
+            #line 82 "..\..\Views\ErrorLog\Index.cshtml"
+                                   Write(Url.Action("JavaScript"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("?file=HighChart\" defer=\"defer\"></script>\r\n</html>");
 
 
         }

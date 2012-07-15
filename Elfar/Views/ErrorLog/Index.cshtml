@@ -50,7 +50,25 @@
                 }
                 </tbody>
             </table>
-            <p><input type="submit" id="delete" name="Action::Delete" value="Delete" class="ui-button ui-state-default ui-corner-all" disabled="disabled" /></p>
+            <p class="ui-helper-clearfix">
+                <input type="submit" id="delete" name="Action::Delete" value="Delete" class="ui-button ui-state-default ui-corner-all" disabled="disabled" />
+                <button type="button" id="charts" class="ui-button ui-state-default ui-corner-all"><span class="ui-icon ui-icon-newwin"></span>Charts</button>
+                <div id="dialog" title="Charts">
+                    <div>
+                        <label>
+                            Filter by:
+                            <select>
+                                <option>Date</option>
+                                <option>Host</option>
+                                <option>Application</option>
+                                <option>Code</option>
+                                <option>Type</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div id="graph"></div>
+                </div>
+            </p>
         }
     }
     else
@@ -58,7 +76,8 @@
         <p>No errors found.</p>
     }
 @{ Html.RenderPartial("Footer"); }
-        <script type="text/javascript" src="@Url.Action("JavaScript")"></script>
-        <script type="text/javascript" src="@Url.Action("JavaScript")?file=Index"></script>
     </body>
+    <script type="text/javascript" src="@Url.Action("JavaScript")"></script>
+    <script type="text/javascript" src="@Url.Action("JavaScript")?file=Index"></script>
+    <script type="text/javascript" src="@Url.Action("JavaScript")?file=HighChart" defer="defer"></script>
 </html>
