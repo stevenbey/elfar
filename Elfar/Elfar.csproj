@@ -148,6 +148,7 @@
     <EmbeddedResource Include="Resources\Default.js" />
     <EmbeddedResource Include="Resources\Index.js" />
     <EmbeddedResource Include="Resources\HighChart.js" />
+    <EmbeddedResource Include="Resources\Linq.js" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>

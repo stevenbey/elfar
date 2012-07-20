@@ -343,12 +343,21 @@ WriteLiteral(@"            <p class=""ui-helper-clearfix"">
                     <div>
                         <label>
                             Filter by:
-                            <select>
+                            <select id=""filter"">
                                 <option>Date</option>
                                 <option>Host</option>
                                 <option>Application</option>
                                 <option>Code</option>
                                 <option>Type</option>
+                            </select>
+                        </label>
+                        &nbsp;
+                        <label>
+                            Show as:
+                            <select id=""chart-type"" disabled=""disabled"">
+                                <option>Timeline</option>
+                                <option>Pie Chart</option>
+                                <option>Column Chart</option>
                             </select>
                         </label>
                     </div>
@@ -359,7 +368,7 @@ WriteLiteral(@"            <p class=""ui-helper-clearfix"">
 
 
             
-            #line 72 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 81 "..\..\Views\ErrorLog\Index.cshtml"
         }
     }
     else
@@ -372,7 +381,7 @@ WriteLiteral("        <p>No errors found.</p>\r\n");
 
 
             
-            #line 77 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 86 "..\..\Views\ErrorLog\Index.cshtml"
     }
 
             
@@ -380,7 +389,7 @@ WriteLiteral("        <p>No errors found.</p>\r\n");
             #line hidden
 
             
-            #line 78 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 87 "..\..\Views\ErrorLog\Index.cshtml"
    Html.RenderPartial("Footer"); 
 
             
@@ -390,7 +399,7 @@ WriteLiteral("    </body>\r\n    <script type=\"text/javascript\" src=\"");
 
 
             
-            #line 80 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 89 "..\..\Views\ErrorLog\Index.cshtml"
                                    Write(Url.Action("JavaScript"));
 
             
@@ -400,7 +409,17 @@ WriteLiteral("\"></script>\r\n    <script type=\"text/javascript\" src=\"");
 
 
             
-            #line 81 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 90 "..\..\Views\ErrorLog\Index.cshtml"
+                                   Write(Url.Action("JavaScript"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("?file=Linq\"></script>\r\n    <script type=\"text/javascript\" src=\"");
+
+
+            
+            #line 91 "..\..\Views\ErrorLog\Index.cshtml"
                                    Write(Url.Action("JavaScript"));
 
             
@@ -410,7 +429,7 @@ WriteLiteral("?file=Index\"></script>\r\n    <script type=\"text/javascript\" sr
 
 
             
-            #line 82 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 92 "..\..\Views\ErrorLog\Index.cshtml"
                                    Write(Url.Action("JavaScript"));
 
             

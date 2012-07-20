@@ -57,12 +57,21 @@
                     <div>
                         <label>
                             Filter by:
-                            <select>
+                            <select id="filter">
                                 <option>Date</option>
                                 <option>Host</option>
                                 <option>Application</option>
                                 <option>Code</option>
                                 <option>Type</option>
+                            </select>
+                        </label>
+                        &nbsp;
+                        <label>
+                            Show as:
+                            <select id="chart-type" disabled="disabled">
+                                <option>Timeline</option>
+                                <option>Pie Chart</option>
+                                <option>Column Chart</option>
                             </select>
                         </label>
                     </div>
@@ -78,6 +87,7 @@
 @{ Html.RenderPartial("Footer"); }
     </body>
     <script type="text/javascript" src="@Url.Action("JavaScript")"></script>
+    <script type="text/javascript" src="@Url.Action("JavaScript")?file=Linq"></script>
     <script type="text/javascript" src="@Url.Action("JavaScript")?file=Index"></script>
     <script type="text/javascript" src="@Url.Action("JavaScript")?file=HighChart" defer="defer"></script>
 </html>
