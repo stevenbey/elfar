@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
+using SignalR;
 
 namespace Elfar
 {
@@ -30,6 +31,8 @@ namespace Elfar
 
             if(mail != null) Execute(mail.Send, errorLog);
             if(tweet != null) Execute(tweet.Post, errorLog);
+
+            GlobalHost.ConnectionManager.GetHubContext<ErrorLogHub>().Clients.notify();
         }
         
         static void Execute(

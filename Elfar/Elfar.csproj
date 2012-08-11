@@ -37,6 +37,7 @@
     <Compile Include="ActionResults\RssResult.cs" />
     <Compile Include="ErrorLogController.cs" />
     <Compile Include="ErrorLogFilter.cs" />
+    <Compile Include="ErrorLogHub.cs" />
     <Compile Include="ErrorLogRoute.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="FormActionAttribute.cs" />
@@ -94,6 +95,19 @@
     <Compile Include="__Package__.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>C:\Users\steven\Desktop\MvcApplication1\MvcApplication1\bin\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SignalR">
+      <HintPath>C:\Users\steven\Desktop\MvcApplication1\MvcApplication1\bin\SignalR.dll</HintPath>
+    </Reference>
+    <Reference Include="SignalR.Hosting.AspNet">
+      <HintPath>C:\Users\steven\Desktop\MvcApplication1\MvcApplication1\bin\SignalR.Hosting.AspNet.dll</HintPath>
+    </Reference>
+    <Reference Include="SignalR.Hosting.Common">
+      <HintPath>C:\Users\steven\Desktop\MvcApplication1\MvcApplication1\bin\SignalR.Hosting.Common.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -149,6 +163,7 @@
     <EmbeddedResource Include="Resources\Index.js" />
     <EmbeddedResource Include="Resources\HighChart.js" />
     <EmbeddedResource Include="Resources\Linq.js" />
+    <EmbeddedResource Include="Resources\SignalR.js" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>

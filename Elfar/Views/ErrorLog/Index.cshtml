@@ -84,10 +84,15 @@
     {
         <p>No errors found.</p>
     }
+        <div id="notify" title="New Error Log">
+            <p>A new error has just been logged.</p>
+        </div>
 @{ Html.RenderPartial("Footer"); }
+        <script type="text/javascript" src="@Url.Action("JavaScript")"></script>
+        <script type="text/javascript" src="@Url.Action("JavaScript")?file=Linq"></script>
+        <script type="text/javascript" src="@Url.Action("JavaScript")?file=Index"></script>
+        <script type="text/javascript" src="@Url.Action("JavaScript")?file=HighChart" defer="defer"></script>
+        <script type="text/javascript" src="@Url.Action("JavaScript")?file=SignalR"></script>
+        <script type="text/javascript" src="@Url.Content("~/signalr/hubs")"></script>
     </body>
-    <script type="text/javascript" src="@Url.Action("JavaScript")"></script>
-    <script type="text/javascript" src="@Url.Action("JavaScript")?file=Linq"></script>
-    <script type="text/javascript" src="@Url.Action("JavaScript")?file=Index"></script>
-    <script type="text/javascript" src="@Url.Action("JavaScript")?file=HighChart" defer="defer"></script>
 </html>

@@ -387,55 +387,79 @@ WriteLiteral("        <p>No errors found.</p>\r\n");
             
             #line default
             #line hidden
+WriteLiteral("        <div id=\"notify\" title=\"New Error Log\">\r\n            <p>A new error has j" +
+"ust been logged.</p>\r\n        </div>\r\n");
+
 
             
-            #line 87 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 90 "..\..\Views\ErrorLog\Index.cshtml"
    Html.RenderPartial("Footer"); 
 
             
             #line default
             #line hidden
-WriteLiteral("    </body>\r\n    <script type=\"text/javascript\" src=\"");
-
-
-            
-            #line 89 "..\..\Views\ErrorLog\Index.cshtml"
-                                   Write(Url.Action("JavaScript"));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\"></script>\r\n    <script type=\"text/javascript\" src=\"");
-
-
-            
-            #line 90 "..\..\Views\ErrorLog\Index.cshtml"
-                                   Write(Url.Action("JavaScript"));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("?file=Linq\"></script>\r\n    <script type=\"text/javascript\" src=\"");
+WriteLiteral("        <script type=\"text/javascript\" src=\"");
 
 
             
             #line 91 "..\..\Views\ErrorLog\Index.cshtml"
-                                   Write(Url.Action("JavaScript"));
+                                       Write(Url.Action("JavaScript"));
 
             
             #line default
             #line hidden
-WriteLiteral("?file=Index\"></script>\r\n    <script type=\"text/javascript\" src=\"");
+WriteLiteral("\"></script>\r\n        <script type=\"text/javascript\" src=\"");
 
 
             
             #line 92 "..\..\Views\ErrorLog\Index.cshtml"
-                                   Write(Url.Action("JavaScript"));
+                                       Write(Url.Action("JavaScript"));
 
             
             #line default
             #line hidden
-WriteLiteral("?file=HighChart\" defer=\"defer\"></script>\r\n</html>");
+WriteLiteral("?file=Linq\"></script>\r\n        <script type=\"text/javascript\" src=\"");
+
+
+            
+            #line 93 "..\..\Views\ErrorLog\Index.cshtml"
+                                       Write(Url.Action("JavaScript"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("?file=Index\"></script>\r\n        <script type=\"text/javascript\" src=\"");
+
+
+            
+            #line 94 "..\..\Views\ErrorLog\Index.cshtml"
+                                       Write(Url.Action("JavaScript"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("?file=HighChart\" defer=\"defer\"></script>\r\n        <script type=\"text/javascript\" " +
+"src=\"");
+
+
+            
+            #line 95 "..\..\Views\ErrorLog\Index.cshtml"
+                                       Write(Url.Action("JavaScript"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("?file=SignalR\"></script>\r\n        <script type=\"text/javascript\" src=\"");
+
+
+            
+            #line 96 "..\..\Views\ErrorLog\Index.cshtml"
+                                       Write(Url.Content("~/signalr/hubs"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\"></script>\r\n    </body>\r\n</html>");
 
 
         }
