@@ -123,17 +123,13 @@ WriteLiteral("</span><span id=\"separator\">: </span><span id=\"error-message\">
             
             #line default
             #line hidden
+WriteLiteral("</span></p>\r\n\t\t<pre id=\"stack-trace\">");
 
-            
-            #line 18 "..\..\Views\ErrorLog\Default.cshtml"
-                                                                                                                                         WriteLiteral("</span></p>\r\n\t\t<pre id=\"stack-trace\">");
 
-            
-            #line default
-            #line hidden
             
             #line 19 "..\..\Views\ErrorLog\Default.cshtml"
-                           Html.RenderPartial("StackTrace", Model.StackTrace); 
+                   Write(Html.DisplayFor(m => m.StackTrace));
+
             
             #line default
             #line hidden

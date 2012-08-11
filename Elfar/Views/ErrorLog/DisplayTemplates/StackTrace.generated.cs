@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Elfar.Views.ErrorLog
+namespace Elfar.Views.ErrorLog.DisplayTemplates
 {
     using System;
     using System.Collections.Generic;
@@ -28,7 +28,7 @@ namespace Elfar.Views.ErrorLog
     using System.Web.WebPages;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "1.2.0.0")]
-    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/ErrorLog/StackTrace.cshtml")]
+    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/ErrorLog/DisplayTemplates/StackTrace.cshtml")]
     public class StackTrace : System.Web.Mvc.WebViewPage<Elfar.Models.StackTrace>
     {
         public StackTrace()
@@ -39,7 +39,7 @@ namespace Elfar.Views.ErrorLog
 
 
             
-            #line 2 "..\..\Views\ErrorLog\StackTrace.cshtml"
+            #line 2 "..\..\Views\ErrorLog\DisplayTemplates\StackTrace.cshtml"
 Write(Html.Raw(Model.Lines.First().ToString()));
 
             
@@ -49,7 +49,7 @@ WriteLiteral("\r\n");
 
 
             
-            #line 3 "..\..\Views\ErrorLog\StackTrace.cshtml"
+            #line 3 "..\..\Views\ErrorLog\DisplayTemplates\StackTrace.cshtml"
  foreach(var line in Model.Lines.Skip(1)) {
 
             
@@ -57,7 +57,7 @@ WriteLiteral("\r\n");
             #line hidden
 
             
-            #line 4 "..\..\Views\ErrorLog\StackTrace.cshtml"
+            #line 4 "..\..\Views\ErrorLog\DisplayTemplates\StackTrace.cshtml"
 Write(Html.Raw(line.ToString()));
 
             
@@ -67,7 +67,7 @@ WriteLiteral("\r\n");
 
 
             
-            #line 5 "..\..\Views\ErrorLog\StackTrace.cshtml"
+            #line 5 "..\..\Views\ErrorLog\DisplayTemplates\StackTrace.cshtml"
 }
             
             #line default

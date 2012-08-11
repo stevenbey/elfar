@@ -64,7 +64,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Collection.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ErrorLog\StackTrace.generated.cs">
+    <Compile Include="Views\ErrorLog\DisplayTemplates\StackTrace.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>StackTrace.cshtml</DependentUpon>
@@ -140,7 +140,7 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Rss.generated.cs</LastGenOutput>
     </None>
-    <None Include="Views\ErrorLog\StackTrace.cshtml">
+    <None Include="Views\ErrorLog\DisplayTemplates\StackTrace.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>StackTrace.generated.cs</LastGenOutput>
     </None>

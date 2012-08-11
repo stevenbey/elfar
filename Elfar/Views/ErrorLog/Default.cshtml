@@ -16,7 +16,7 @@
 			<li><a id="back" href="@Url.Action("Index")" title="Back to the list of error logs">Back</a></li>
 		</ul>
         <p id="title"><span id="error-type">@errorLog.Type</span><span id="separator">: </span><span id="error-message">@errorLog.Message</span></p>
-		<pre id="stack-trace">@{ Html.RenderPartial("StackTrace", Model.StackTrace); }</pre>
+		<pre id="stack-trace">@Html.DisplayFor(m => m.StackTrace)</pre>
         @{ var date = errorLog.Time; }
 		<p>Logged on @date.ToLongDateString() at @date.ToShortTimeString() (Local)</p>
 		<p>See also: (opens in new window)</p>
