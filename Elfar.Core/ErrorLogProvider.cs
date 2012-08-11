@@ -18,7 +18,7 @@ namespace Elfar
         }
         public IList<ErrorLog> List()
         {
-            return this.Select(p => p.Value).ToList();
+            return this.Select(p => p.Value).OrderByDescending(e => e.Time).ToList();
         }
         public void Save(ErrorLog errorLog)
         {
