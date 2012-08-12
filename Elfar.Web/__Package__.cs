@@ -13,6 +13,7 @@ namespace Elfar.Web
     {
         public static void Run()
         {
+            //var provider = new ErrorLogProvider();
             var provider = new ZipErrorLogProvider();
             //var provider = new XmlErrorLogProvider();
             GlobalFilters.Filters.Add(new ErrorLogFilter(provider));
