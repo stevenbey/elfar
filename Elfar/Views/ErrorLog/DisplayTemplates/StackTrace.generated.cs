@@ -40,35 +40,8 @@ namespace Elfar.Views.ErrorLog.DisplayTemplates
 
             
             #line 2 "..\..\Views\ErrorLog\DisplayTemplates\StackTrace.cshtml"
-Write(Html.Raw(Model.Lines.First().ToString()));
+Write(Html.Raw(Model.ToString()));
 
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-
-            
-            #line 3 "..\..\Views\ErrorLog\DisplayTemplates\StackTrace.cshtml"
- foreach(var line in Model.Lines.Skip(1)) {
-
-            
-            #line default
-            #line hidden
-
-            
-            #line 4 "..\..\Views\ErrorLog\DisplayTemplates\StackTrace.cshtml"
-Write(Html.Raw(line.ToString()));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-
-            
-            #line 5 "..\..\Views\ErrorLog\DisplayTemplates\StackTrace.cshtml"
-}
             
             #line default
             #line hidden

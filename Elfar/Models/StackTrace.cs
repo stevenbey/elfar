@@ -11,7 +11,12 @@ namespace Elfar.Models
     {
         public StackTrace(string detail)
         {
-            Lines = WebUtility.HtmlEncode(detail).Split(Environment.NewLine.ToCharArray()).Select(StackTraceLineFactory.Create);
+            Lines = WebUtility.HtmlEncode(detail).Replace("\r", "").Split('\n').Select(StackTraceLineFactory.Create);
+        }
+
+        public override string ToString()
+        {
+            return string.Join(Environment.NewLine, Lines);
         }
 
         public IEnumerable<StackTraceLine> Lines { get; set; }
