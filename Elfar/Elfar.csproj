@@ -37,8 +37,9 @@
     <Compile Include="ActionResults\RssResult.cs" />
     <Compile Include="ErrorLogController.cs" />
     <Compile Include="ErrorLogFilter.cs" />
-    <Compile Include="ErrorLogHub.cs" />
+    <Compile Include="ErrorLogFilterSettings.cs" />
     <Compile Include="ErrorLogRoute.cs" />
+    <Compile Include="ErrorLogRouteSettings.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="FormActionAttribute.cs" />
     <Compile Include="Handler.cs" />
@@ -68,6 +69,25 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>StackTrace.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ErrorLog\Plugins.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Plugins.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ErrorLog\Scripts.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Scripts.cshtml</DependentUpon>
+    </Compile>
+    <None Include="Views\ErrorLog\Stylesheets.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Stylesheets.generated.cs</LastGenOutput>
+    </None>
+    <Compile Include="Views\ErrorLog\Stylesheets.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Stylesheets.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\View.cs" />
     <Compile Include="Views\Engine.cs" />
@@ -99,16 +119,8 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>C:\Users\steven\Desktop\MvcApplication1\MvcApplication1\bin\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="SignalR">
-      <HintPath>C:\Users\steven\Desktop\MvcApplication1\MvcApplication1\bin\SignalR.dll</HintPath>
-    </Reference>
-    <Reference Include="SignalR.Hosting.AspNet">
-      <HintPath>C:\Users\steven\Desktop\MvcApplication1\MvcApplication1\bin\SignalR.Hosting.AspNet.dll</HintPath>
-    </Reference>
-    <Reference Include="SignalR.Hosting.Common">
-      <HintPath>C:\Users\steven\Desktop\MvcApplication1\MvcApplication1\bin\SignalR.Hosting.Common.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -135,6 +147,10 @@
     <None Include="Views\ErrorLog\Index.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Index.generated.cs</LastGenOutput>
+    </None>
+    <None Include="Views\ErrorLog\Plugins.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Plugins.generated.cs</LastGenOutput>
     </None>
     <None Include="Views\ErrorLog\Rss.cshtml">
       <Generator>RazorGenerator</Generator>
@@ -163,8 +179,11 @@
     <EmbeddedResource Include="Resources\Index.js" />
     <EmbeddedResource Include="Resources\HighChart.js" />
     <EmbeddedResource Include="Resources\Linq.js" />
-    <EmbeddedResource Include="Resources\SignalR.js" />
     <Content Include="Views\Web.config" />
+    <None Include="Views\ErrorLog\Scripts.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Scripts.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Elfar.Core\Elfar.Core.csproj">

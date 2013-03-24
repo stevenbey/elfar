@@ -16,10 +16,7 @@ namespace Elfar
             ServerVariables = new Collection();
         }
 
-        public ErrorLog(
-            string application,
-            Exception exception)
-            : this()
+        public ErrorLog(string application, Exception exception) : this()
         {
             Application = application;
 

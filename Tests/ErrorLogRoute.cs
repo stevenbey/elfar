@@ -127,7 +127,7 @@ namespace Elfar.Tests
         public void NotElfar_GetRouteData()
         {
             // Arrange
-            var route = new Elfar.ErrorLogRoute(null);
+            var route = new Elfar.ErrorLogRoute(null, null);
             var httpContext = new HttpContext("/");
 
             // Act
@@ -141,7 +141,7 @@ namespace Elfar.Tests
         public void NotElfar_VirtualPathData()
         {
             // Arrange
-            var route = new Elfar.ErrorLogRoute(null);
+            var route = new Elfar.ErrorLogRoute(null, null);
             var request = Request;
 
             request.RouteData.Values["controller"] = "Default";
@@ -157,7 +157,7 @@ namespace Elfar.Tests
         static void Run_GetRouteData(string action)
         {
             // Arrange
-            var route = new Elfar.ErrorLogRoute(null);
+            var route = new Elfar.ErrorLogRoute(null, null);
             var httpContext = new HttpContext("/elfar/" + Guid.Empty + (action == "Default" ? null : "/" + action));
 
             // Act
@@ -171,7 +171,7 @@ namespace Elfar.Tests
         static void Run_GetRouteData(string url, string action)
         {
             // Arrange
-            var route = new Elfar.ErrorLogRoute(null);
+            var route = new Elfar.ErrorLogRoute(null, null);
             var httpContext = new HttpContext(url);
 
             // Act
@@ -184,7 +184,7 @@ namespace Elfar.Tests
         static void Run_VirtualPathData(string action)
         {
             // Arrange
-            var route = new Elfar.ErrorLogRoute(null);
+            var route = new Elfar.ErrorLogRoute(null, null);
             var request = Request;
 
             request.RouteData.Values["id"] = Guid.Empty;
@@ -200,7 +200,7 @@ namespace Elfar.Tests
         static void Run_VirtualPathData(string action, string url)
         {
             // Arrange
-            var route = new Elfar.ErrorLogRoute(null);
+            var route = new Elfar.ErrorLogRoute(null, null);
             var request = Request;
 
             request.RouteData.Values.Add("action", action);

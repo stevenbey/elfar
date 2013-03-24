@@ -8,12 +8,10 @@ namespace Elfar
     class Handler
             : IHttpAsyncHandler
     {
-        public Handler(
-                RequestContext requestContext,
-                IErrorLogProvider provider)
+        public Handler(RequestContext requestContext, IErrorLogProvider provider, IErrorLogPlugin[] plugins)
         {
             this.requestContext = requestContext;
-            controller = new ErrorLogController(provider);
+            controller = new ErrorLogController(provider, plugins);
         }
 
         public IAsyncResult BeginProcessRequest(

@@ -1,16 +1,13 @@
-﻿namespace Elfar.Views
-{
-    using System;
-    using System.IO;
-    using System.Web.Mvc;
-    using System.Web.WebPages;
+﻿using System;
+using System.IO;
+using System.Web.Mvc;
+using System.Web.WebPages;
 
-    public class View
-        : IView
+namespace Elfar.Views
+{
+    public class View : IView
     {
-        public View(
-            string virtualPath,
-            Type type)
+        public View(string virtualPath, Type type)
         {
             this.type = type;
             this.virtualPath = virtualPath;

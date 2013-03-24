@@ -1,12 +1,10 @@
-﻿@using System.Web.Mvc.Html
-@using Elfar
-@model Elfar.Models.Index
+﻿@model Elfar.Models.Index
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
         <title>Error log for [@Model.Application] on @Server.MachineName</title>
-        <link rel="stylesheet" type="text/css" href="@Url.Action("Stylesheet")" />
+@Html.Partial("Stylesheets", Model.Plugins)
         <link rel="alternate" type="application/rss+xml" title="RSS" href="@Url.Action("Rss")" />
     </head>
     <body>
@@ -84,15 +82,8 @@
     {
         <p>No errors found.</p>
     }
-        <div id="notify" title="New Error Log">
-            <p>A new error has just been logged.</p>
-        </div>
-@{ Html.RenderPartial("Footer"); }
-        <script type="text/javascript" src="@Url.Action("JavaScript")"></script>
-        <script type="text/javascript" src="@Url.Action("JavaScript")?file=Linq"></script>
-        <script type="text/javascript" src="@Url.Action("JavaScript")?file=Index"></script>
-        <script type="text/javascript" src="@Url.Action("JavaScript")?file=HighChart" defer="defer"></script>
-        <script type="text/javascript" src="@Url.Action("JavaScript")?file=SignalR"></script>
-        <script type="text/javascript" src="@Url.Content("~/signalr/hubs")"></script>
+@Html.Partial("Footer")
+@Html.Partial("Scripts")
+@Html.Partial("Plugins", Model.Plugins)
     </body>
 </html>

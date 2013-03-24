@@ -1,30 +1,35 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Elfar
 {
-    public class ErrorLogProvider
-        : Dictionary<Guid, ErrorLog>,
-          IErrorLogProvider
+    public abstract class ErrorLogProvider : IErrorLogProvider
     {
-        public void Delete(Guid id)
+        public abstract void Delete(Guid id);
+        public abstract ErrorLog Get(Guid id);
+        public abstract IList<ErrorLog> List();
+        public abstract void Save(ErrorLog errorLog);
+
+        protected virtual void SetConnectionString(string value)
         {
-            Remove(id);
+            Settings.ConnectionString = value;
         }
-        public ErrorLog Get(Guid id)
+        protected static void TryExecute(Action action)
         {
-            return ContainsKey(id) ? this[id] : null;
-        }
-        public IList<ErrorLog> List()
-        {
-            return this.Select(p => p.Value).OrderByDescending(e => e.Time).ToList();
-        }
-        public void Save(ErrorLog errorLog)
-        {
-            Add(errorLog.ID, errorLog);
+            try { action(); }
+            catch(Exception) { }
         }
 
-        public string Application { get; set; }
+        public string Application
+        {
+            get { return Settings.Application; }
+        }
+        public static ErrorLogProviderSettings Settings { get; set; }
+        
+        protected string ConnectionString
+        {
+            get { return Settings.ConnectionString; }
+            set { SetConnectionString(value); }
+        }
     }
 }

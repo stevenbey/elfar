@@ -1,3 +1,4 @@
+// ReSharper disable StaticFieldInGenericType
 using System;
 using System.Data;
 using System.Data.Common;
@@ -8,26 +9,26 @@ namespace Elfar.Data
 {
     public abstract class FileBasedDbErrorLogProvider<TConnection>
             : DbErrorLogProvider<TConnection>
-              where TConnection : class, IDbConnection, new()
+            where TConnection : class, IDbConnection, new()
     {
-        protected FileBasedDbErrorLogProvider(
-            string connectionString)
-            : base(null, connectionString)
+        protected override void SetConnectionString(string value)
         {
-            if (connectionString.StartsWith(dataDirectoryMacroString))
-                ConnectionString = "Data Source=" + ConnectionString;
+            if(String.IsNullOrWhiteSpace(value)) value = DefaultConnectionString;
+            if(value.StartsWith(dataDirectoryMacroString))
+                value = "Data Source=" + ConnectionString;
+            base.SetConnectionString(value);
         }
-
         protected string DataDirectory
         {
             get
             {
                 var currentDomain = AppDomain.CurrentDomain;
                 var dataDirectory = currentDomain.GetData(dataDirectoryMacroString.Trim('|')) as string;
-                if(string.IsNullOrEmpty(dataDirectory)) dataDirectory = currentDomain.BaseDirectory;
+                if(String.IsNullOrEmpty(dataDirectory)) dataDirectory = currentDomain.BaseDirectory;
                 return dataDirectory;
             }
         }
+        protected abstract string DefaultConnectionString { get; }
         protected string FilePath
         {
             get
@@ -50,9 +51,10 @@ namespace Elfar.Data
                 return filePath;
             }
         }
-        
-        protected const string dataDirectoryMacroString = "|DataDirectory|";
 
+        protected const string dataDirectoryMacroString = "|DataDirectory|";
+        protected static readonly object key = new object();
+        
         string filePath;
     }
 }

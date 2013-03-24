@@ -1,19 +1,23 @@
-﻿using System.Web;
+﻿using System.Linq;
+using System.Web;
 using System.Web.Routing;
 using Elfar.RouteConstraints;
 
 namespace Elfar
 {
-    public class ErrorLogRoute
-        : Route
+    public class ErrorLogRoute : Route
     {
-        public ErrorLogRoute(
-            IErrorLogProvider provider,
-            IRouteConstraint constraint = null)
-            : base("elfar/{id}/{action}", new RouteHandler(provider))
+        public ErrorLogRoute(IErrorLogProvider provider, IErrorLogPlugin[] plugins)
+            : base("elfar/{id}/{action}", new RouteHandler(provider, plugins))
         {
             var constraints = new RouteValueDictionary();
-            if(constraint != null) constraints.Add(string.Empty, constraint);
+
+            if(Settings == null) Settings = new ErrorLogRouteSettings();
+
+            foreach(var constraint in Settings.Constraints.Where(constraint => constraint != null))
+            {
+                constraints.Add(string.Empty, constraint);
+            }
 
             var defaults = new RouteValueDictionary
                 {
@@ -40,20 +44,18 @@ namespace Elfar
             };
         }
 
-        public override RouteData GetRouteData(
-            HttpContextBase httpContext)
+        public override RouteData GetRouteData(HttpContextBase httpContext)
         {
             return base.GetRouteData(httpContext)
                 ?? @default.GetRouteData(httpContext);
         }
-
-        public override VirtualPathData GetVirtualPath(
-            RequestContext requestContext,
-            RouteValueDictionary values)
+        public override VirtualPathData GetVirtualPath(RequestContext requestContext, RouteValueDictionary values)
         {
             return base.GetVirtualPath(requestContext, values)
                 ?? @default.GetVirtualPath(requestContext, values);
         }
+
+        public static ErrorLogRouteSettings Settings { get; set; }
 
         readonly Route @default;
     }

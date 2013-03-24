@@ -6,18 +6,18 @@ namespace Elfar
     class RouteHandler
         : IRouteHandler
     {
-        public RouteHandler(
-            IErrorLogProvider provider)
+        public RouteHandler(IErrorLogProvider provider, IErrorLogPlugin[] plugins)
         {
             this.provider = provider;
+            this.plugins = plugins;
         }
-
-        public IHttpHandler GetHttpHandler(
-            RequestContext requestContext)
+        
+        public IHttpHandler GetHttpHandler(RequestContext requestContext)
         {
-            return new Handler(requestContext, provider);
+            return new Handler(requestContext, provider, plugins);
         }
 
         readonly IErrorLogProvider provider;
+        readonly IErrorLogPlugin[] plugins;
     }
 }

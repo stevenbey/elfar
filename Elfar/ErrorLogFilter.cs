@@ -1,51 +1,43 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
-using SignalR;
 
 namespace Elfar
 {
-    public class ErrorLogFilter
-        : FilterAttribute,
-          IExceptionFilter
+    public class ErrorLogFilter : FilterAttribute, IExceptionFilter
     {
-        public ErrorLogFilter(
-            IErrorLogProvider provider,
-            Predicate<ExceptionContext> exclude = null,
-            IErrorLogMail mail = null,
-            IErrorLogTweet tweet = null)
+        public ErrorLogFilter(IErrorLogProvider provider, params IErrorLogPlugin[] plugins)
         {
             this.provider = provider;
-            this.exclude = exclude;
-            this.mail = mail;
-            this.tweet = tweet;
+            this.plugins = (plugins ?? new IErrorLogPlugin[0]).ToList();
+            if(Settings == null) Settings = new ErrorLogFilterSettings();
         }
         
-        public void OnException(
-            ExceptionContext exceptionContext)
+        public void OnException(ExceptionContext exceptionContext)
         {
-            if(exclude != null && exclude(exceptionContext)) return;
+            if(Exclude(exceptionContext)) return;
 
             var errorLog = new MvcErrorLog(provider.Application, exceptionContext).ToErrorLog();
 
-            if (!(exceptionContext.Exception is ErrorLogException)) Execute(provider.Save, errorLog);
+            if (!(exceptionContext.Exception is ErrorLogException)) TryExecute(provider.Save, errorLog);
 
-            if(mail != null) Execute(mail.Send, errorLog);
-            if(tweet != null) Execute(tweet.Post, errorLog);
-
-            GlobalHost.ConnectionManager.GetHubContext<ErrorLogHub>().Clients.notify();
+            plugins.ForEach(p => TryExecute(p.Execute, errorLog));
         }
         
-        static void Execute(
-            Action<ErrorLog> action,
-            ErrorLog errorLog)
+        static bool Exclude(ExceptionContext exceptionContext)
+        {
+            return Settings.Exclude != null && Settings.Exclude(exceptionContext);
+        }
+        static void TryExecute(Action<ErrorLog> action, ErrorLog errorLog)
         {
             try { action(errorLog); }
             catch (Exception) { }
         }
 
-        readonly Predicate<ExceptionContext> exclude;
-        readonly IErrorLogMail mail;
+        public static ErrorLogFilterSettings Settings { get; set; }
+
+        readonly List<IErrorLogPlugin> plugins;
         readonly IErrorLogProvider provider;
-        readonly IErrorLogTweet tweet;
     }
 }

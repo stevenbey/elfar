@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.ComponentModel.Composition;
 using System.Data.SqlClient;
 using Elfar.Data;
 
@@ -6,15 +6,13 @@ namespace Elfar.SqlClient
 {
     using Properties;
 
+    [Export("Provider", typeof(IErrorLogProvider))]
     public sealed class SqlErrorLogProvider
         : DbErrorLogProvider<SqlConnection>
     {
-        public SqlErrorLogProvider(
-            string application = null,
-            string connectionString = null)
-            : base(application, connectionString)
+        public SqlErrorLogProvider()
         {
-            Execute(() =>
+            TryExecute(() =>
             {
                 var builder = new SqlConnectionStringBuilder(ConnectionString);
                 var catalog = builder.InitialCatalog;
@@ -24,7 +22,7 @@ namespace Elfar.SqlClient
                     conn.Execute(string.Format(Resources.Database, catalog));
                 }
             });
-            Execute(() =>
+            TryExecute(() =>
             {
                 using(var conn = Connection)
                 {
@@ -33,12 +31,5 @@ namespace Elfar.SqlClient
                 }
             });
         }
-
-        static void Execute(Action action)
-        {
-            try { action(); }
-            catch(Exception) { }
-        }
-
     }
 }

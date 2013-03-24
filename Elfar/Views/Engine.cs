@@ -7,11 +7,9 @@
     using System.Web.Mvc;
     using System.Web.WebPages;
 
-    public class Engine
-        : VirtualPathProviderViewEngine,
-          IVirtualPathFactory
+    public class Engine : VirtualPathProviderViewEngine, IVirtualPathFactory
     {
-        public Engine(Assembly assembly)
+        public Engine(params Assembly[] assemblies)
         {
             AreaViewLocationFormats = new string[0];
             AreaMasterLocationFormats = new string[0];
@@ -20,10 +18,10 @@
             MasterLocationFormats = new[] { "~/Views/{1}/{0}.cshtml" };
             PartialViewLocationFormats = new[] { "~/Views/{1}/{0}.cshtml" };
             FileExtensions = new[] { "cshtml" };
-            mappings = assembly.GetTypes()
-                .Where(typeof(WebViewPage).IsAssignableFrom)
-                .Select(type => new {type, type.GetCustomAttributes(false).OfType<PageVirtualPathAttribute>().First().VirtualPath})
-                .ToDictionary(p => p.VirtualPath, p => p.type, StringComparer.OrdinalIgnoreCase);
+            mappings = assemblies.SelectMany(a => a.GetTypes())
+                                 .Where(typeof(WebViewPage).IsAssignableFrom)
+                                 .Select(type => new { type, VirtualPath = GetVirtualPath(type) })
+                                 .ToDictionary(p => p.VirtualPath, p => p.type, StringComparer.OrdinalIgnoreCase);
         }
 
         public object CreateInstance(string virtualPath)
@@ -36,27 +34,23 @@
             return mappings.ContainsKey(virtualPath);
         }
         
-        protected override bool FileExists(
-            ControllerContext controllerContext,
-            string virtualPath)
-        {
-            return Exists(virtualPath);
-        }
-
-        protected override IView CreatePartialView(
-            ControllerContext controllerContext,
-            string path)
+        protected override IView CreatePartialView(ControllerContext controllerContext, string path)
         {
             Type type;
             return mappings.TryGetValue(path, out type) ? new View(path, type) : null;
-        }
-        
-        protected override IView CreateView(
-            ControllerContext controllerContext,
-            string viewPath,
-            string masterPath)
+        }        
+        protected override IView CreateView(ControllerContext controllerContext, string viewPath, string masterPath)
         {
             return CreatePartialView(controllerContext, viewPath);
+        }
+        protected override bool FileExists(ControllerContext controllerContext, string virtualPath)
+        {
+            return Exists(virtualPath);
+        }
+        
+        static string GetVirtualPath(Type type)
+        {
+            return type.GetCustomAttributes(false).OfType<PageVirtualPathAttribute>().First().VirtualPath;
         }
         
         readonly IDictionary<string, Type> mappings;

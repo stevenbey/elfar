@@ -1,4 +1,5 @@
 ﻿using System;
+using Elfar.Data;
 using NUnit.Framework;
 
 namespace Elfar.Access.Tests
@@ -10,8 +11,7 @@ namespace Elfar.Access.Tests
         [Test]
         public void Save()
         {
-            new Access.AccessErrorLogProvider(@"Provider=Microsoft.Jet.OleDb.4.0;Data Source=.\Elfar.mdb")
-                .Save(new ErrorLog(null, new Exception("Test")));
+            new Access.AccessErrorLogProvider().Save(new ErrorLog(null, new Exception("Test")));
         }
     }
 }

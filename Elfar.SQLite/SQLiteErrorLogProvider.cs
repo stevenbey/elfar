@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Data.SQLite;
 using System.IO;
 using System.Linq;
@@ -7,26 +8,23 @@ using Elfar.Data;
 
 namespace Elfar.SQLite
 {
-    public class SQLiteErrorLogProvider
-        : FileBasedDbErrorLogProvider<SQLiteConnection>
+    [Export("Provider", typeof(IErrorLogProvider))]
+    public class SQLiteErrorLogProvider : FileBasedDbErrorLogProvider<SQLiteConnection>
     {
-        public SQLiteErrorLogProvider(
-            string connectionString = @default)
-            : base(connectionString)
+        public SQLiteErrorLogProvider()
         {
             if (File.Exists(FilePath)) return;
             lock (key)
             {
                 if (File.Exists(FilePath)) return;
-                try
+                TryExecute(() =>
                 {
                     SQLiteConnection.CreateFile(FilePath);
                     using (var conn = Connection)
                     {
                         conn.Execute(Properties.Resources.Table);
                     }
-                }
-                catch(Exception) {}
+                });
             }
         }
 
@@ -45,8 +43,11 @@ namespace Elfar.SQLite
             }
         }
 
-        const string @default = @"|DataDirectory|\Elfar.db";
+        protected override string DefaultConnectionString
+        {
+            get { return @default; }
+        }
 
-        static readonly object key = new object();
+        const string @default = @"|DataDirectory|\Elfar.db";
     }
 }

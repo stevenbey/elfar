@@ -7,19 +7,20 @@ namespace Elfar.ActionResults
     public class IndexResult
         : ViewResult
     {
-        public IndexResult(IErrorLogProvider provider)
+        public IndexResult(IErrorLogProvider provider, IErrorLogPlugin[] plugins)
         {
+            this.plugins = plugins;
             Provider = provider;
         }
-
         public override void ExecuteResult(ControllerContext context)
         {
             try
             {
                 ViewData.Model = new Index
                 {
-                        Application = Provider.Application,
-                        Errors = Provider.List()
+                    Application = Provider.Application,
+                    Errors = Provider.List(),
+                    Plugins = plugins
                 };
             }
             catch(Exception e)
@@ -29,6 +30,8 @@ namespace Elfar.ActionResults
             base.ExecuteResult(context);
         }
 
-        protected readonly IErrorLogProvider Provider;
+        protected IErrorLogProvider Provider { get; private set; }
+        
+        readonly IErrorLogPlugin[] plugins;
     }
 }

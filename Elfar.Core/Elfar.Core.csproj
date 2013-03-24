@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -44,15 +45,16 @@
     <Compile Include="Data\DbErrorLog.cs" />
     <Compile Include="Data\DbErrorLogProvider.cs" />
     <Compile Include="Data\DbQueries.cs" />
+    <Compile Include="FileBasedErrorLogProvider.cs" />
+    <Compile Include="ErrorLogProviderSettings.cs" />
     <Compile Include="Data\FileBasedDbErrorLogProvider.cs" />
     <Compile Include="Data\IDbQueries.cs" />
     <Compile Include="Data\SqlMapper.cs" />
     <Compile Include="ErrorLog.cs" />
     <Compile Include="ErrorLogException.cs" />
     <Compile Include="ErrorLogProvider.cs" />
-    <Compile Include="IErrorLogMail.cs" />
+    <Compile Include="IErrorLogPlugin.cs" />
     <Compile Include="IErrorLogProvider.cs" />
-    <Compile Include="IErrorLogTweet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <DependentUpon>Resources.resx</DependentUpon>

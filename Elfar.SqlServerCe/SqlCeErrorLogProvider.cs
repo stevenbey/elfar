@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.ComponentModel.Composition;
 using System.Data.SqlServerCe;
 using System.IO;
 using Elfar.Data;
@@ -7,18 +7,16 @@ namespace Elfar.SqlServerCe
 {
     using Properties;
 
-    public class SqlCeErrorLogProvider
-        : FileBasedDbErrorLogProvider<SqlCeConnection>
+    [Export("Provider", typeof(IErrorLogProvider))]
+    public class SqlCeErrorLogProvider : FileBasedDbErrorLogProvider<SqlCeConnection>
     {
-        public SqlCeErrorLogProvider(
-            string connectionString = @default)
-            : base(connectionString)
+        public SqlCeErrorLogProvider()
         {
             if (File.Exists(FilePath)) return;
             lock (key)
             {
                 if (File.Exists(FilePath)) return;
-                try
+                TryExecute(() =>
                 {
                     using (var engine = new SqlCeEngine(ConnectionString)) engine.CreateDatabase();
                     using (var conn = Connection)
@@ -26,13 +24,15 @@ namespace Elfar.SqlServerCe
                         conn.Execute(Resources.Table);
                         conn.Execute(Resources.Index);
                     }
-                }
-                catch(Exception) {}
+                });
             }
         }
 
-        const string @default = @"|DataDirectory|\Elfar.sdf";
+        protected override string DefaultConnectionString
+        {
+            get { return @default; }
+        }
 
-        static readonly object key = new object();
+        const string @default = @"|DataDirectory|\Elfar.sdf";
     }
 }

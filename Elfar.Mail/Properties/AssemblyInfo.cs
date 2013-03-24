@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Elfar.Mail")]
-[assembly: AssemblyDescription("Mail module for ELFAR.")]
+[assembly: AssemblyDescription("Email plugin for ELFAR.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Steven Bey")]
 [assembly: AssemblyProduct("Elfar.Mail")]

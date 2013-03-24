@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http.Filters;
 
 using errorlog = Elfar.ErrorLog;
@@ -8,44 +10,40 @@ namespace Elfar.WebApi
     public class ErrorLogFilter
         : ExceptionFilterAttribute
     {
-        public ErrorLogFilter(
-            IErrorLogProvider provider,
-            Predicate<HttpActionExecutedContext> exclude = null,
-            IErrorLogMail mail = null,
-            IErrorLogTweet tweet = null)
+        public ErrorLogFilter(IErrorLogProvider provider, params IErrorLogPlugin[] plugins)
         {
             this.provider = provider;
-            this.exclude = exclude;
-            this.mail = mail;
-            this.tweet = tweet;
+            this.plugins = (plugins ?? new IErrorLogPlugin[0]).ToList();
+            if(Settings == null) Settings = new ErrorLogFilterSettings();
         }
-
+        
         public override void OnException(
             HttpActionExecutedContext actionExecutedContext)
         {
             var exception = actionExecutedContext.Exception;
 
-            if (exclude != null && exclude(actionExecutedContext)) return;
+            if (Exclude(actionExecutedContext)) return;
 
             var errorLog = new errorlog(provider.Application, exception);
 
-            if (!(exception is ErrorLogException)) Execute(provider.Save, errorLog);
+            if (!(exception is ErrorLogException)) TryExecute(provider.Save, errorLog);
 
-            if (mail != null) Execute(mail.Send, errorLog);
-            if (tweet != null) Execute(tweet.Post, errorLog);
+            plugins.ForEach(p => TryExecute(p.Execute, errorLog));
         }
 
-        static void Execute(
-            Action<errorlog> action,
-            errorlog errorLog)
+        static bool Exclude(HttpActionExecutedContext actionExecutedContext)
+        {
+            return Settings.Exclude != null && Settings.Exclude(actionExecutedContext);
+        }
+        static void TryExecute(Action<errorlog> action, errorlog errorLog)
         {
             try { action(errorLog); }
             catch (Exception) { }
         }
 
-        readonly Predicate<HttpActionExecutedContext> exclude;
-        readonly IErrorLogMail mail;
+        public static ErrorLogFilterSettings Settings { get; set; }
+
+        readonly List<IErrorLogPlugin> plugins;
         readonly IErrorLogProvider provider;
-        readonly IErrorLogTweet tweet;
     }
 }

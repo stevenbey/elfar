@@ -5,7 +5,7 @@ namespace Elfar.ActionResults
     public class RssResult
         : IndexResult
     {
-        public RssResult(IErrorLogProvider provider) : base(provider) {}
+        public RssResult(IErrorLogProvider provider) : base(provider, null) {}
 
         public override void ExecuteResult(ControllerContext context)
         {

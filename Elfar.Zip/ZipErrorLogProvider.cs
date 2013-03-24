@@ -1,53 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Web.Hosting;
-using System.Xml.Serialization;
 using Ionic.Zip;
 using Ionic.Zlib;
 
 namespace Elfar.Zip
 {
-    public class ZipErrorLogProvider
-        : IErrorLogProvider
+    [Export("Provider", typeof(IErrorLogProvider))]
+    public class ZipErrorLogProvider : FileBasedErrorLogProvider
     {
-        public ZipErrorLogProvider(
-            string application = null,
-            string path = @default)
+        public ZipErrorLogProvider()
         {
-            Application = string.IsNullOrWhiteSpace(application) ? null : application;
-            if(string.IsNullOrWhiteSpace(path)) path = @default;
-            if(path.StartsWith("~/")) path = HostingEnvironment.MapPath(path);
-            this.path = path;
-            var file = new FileInfo(path);
+            var file = new FileInfo(Path);
             if(file.Exists) return;
             lock(key)
             {
                 if(file.Exists) return;
-                try { using(file.Create()) {} }
-                catch(Exception) {}
+                TryExecute(() => { using(file.Create()) {} });
             }
         }
 
-        public void Delete(Guid id)
+        public override void Delete(Guid id)
         {
-            using(var zip = new ZipFile(path))
+            using(var zip = new ZipFile(Path))
             {
                 zip.RemoveEntry(id + ".xml");
                 zip.Save();
             }
         }
-        public ErrorLog Get(Guid id)
+        public override ErrorLog Get(Guid id)
         {
-            using(var zip = new ZipFile(path)) return ErrorLog(zip.SingleOrDefault(e => e.FileName == id + ".xml"));
+            using(var zip = new ZipFile(Path)) return ErrorLog(zip.SingleOrDefault(e => e.FileName == id + ".xml"));
         }
-        public IList<ErrorLog> List()
+        public override IList<ErrorLog> List()
         {
             try
             {
-                using(var zip = new ZipFile(path))
+                using(var zip = new ZipFile(Path))
                     return new List<ErrorLog>(zip.Select(ErrorLog).OrderByDescending(e => e.Time));
             }
             catch(Exception)
@@ -55,18 +47,23 @@ namespace Elfar.Zip
                 return new List<ErrorLog>();
             }
         }
-        public void Save(ErrorLog errorLog)
+        public override void Save(ErrorLog errorLog)
         {
             try
             {
-                Save(errorLog, new ZipFile(path), zip => zip.Save());
+                Save(errorLog, new ZipFile(Path), zip => zip.Save());
             }
             catch(Exception)
             {
-                Save(errorLog, new ZipFile { CompressionLevel = CompressionLevel.BestCompression }, zip => zip.Save(path));
+                Save(errorLog, new ZipFile { CompressionLevel = CompressionLevel.BestCompression }, zip => zip.Save(Path));
             }
         }
-        
+
+        protected override string GetDefaultPath()
+        {
+            return @default;
+        }
+
         static ErrorLog ErrorLog(ZipEntry entry)
         {
             using(var reader = entry.OpenReader())
@@ -84,13 +81,6 @@ namespace Elfar.Zip
             }
         }
 
-        public string Application { get; private set; }
-
-        readonly string path;
-
         const string @default = "~/App_Data/Errors.zip";
-
-        static readonly object key = new object();
-        static readonly XmlSerializer serializer = new XmlSerializer(typeof(ErrorLog));
     }
 }

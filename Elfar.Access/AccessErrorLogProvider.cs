@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Data.OleDb;
 using System.IO;
 using System.Linq;
@@ -7,36 +8,32 @@ using Elfar.Data;
 
 namespace Elfar.Access
 {
-    public sealed class AccessErrorLogProvider
-        : FileBasedDbErrorLogProvider<OleDbConnection>
+    [Export("Provider", typeof(IErrorLogProvider))]
+    public sealed class AccessErrorLogProvider : FileBasedDbErrorLogProvider<OleDbConnection>
     {
-        public AccessErrorLogProvider(
-            string connectionString = @default)
-            : base(connectionString)
+        public AccessErrorLogProvider()
         {
             if (File.Exists(FilePath)) return;
             lock (key)
             {
                 if (File.Exists(FilePath)) return;
-                try
+                TryExecute(() =>
                 {
                     var directory = Path.GetDirectoryName(FilePath);
-                    if (!(directory == null || Directory.Exists(directory))) Directory.CreateDirectory(directory);
+                    if(!(directory == null || Directory.Exists(directory))) Directory.CreateDirectory(directory);
                     var builder = new OleDbConnectionStringBuilder(ConnectionString);
                     var dataSource = builder.DataSource;
-                    if (dataSource.StartsWith(".") || dataSource.StartsWith(dataDirectoryMacroString))
+                    if(dataSource.StartsWith(".") || dataSource.StartsWith(dataDirectoryMacroString))
                     {
                         builder.DataSource = FilePath;
                         ConnectionString = builder.ConnectionString;
                     }
-                    var catalog = new ADOX.Catalog();
-                    catalog.Create(ConnectionString);
-                    using (var conn = Connection)
+                    new ADOX.Catalog().Create(ConnectionString);
+                    using(var conn = Connection)
                     {
                         conn.Execute(Properties.Resources.Table);
                     }
-                }
-                catch(Exception) {}
+                });
             }
         }
 
@@ -69,8 +66,11 @@ namespace Elfar.Access
             }
         }
 
-        const string @default = @"Provider=Microsoft.Jet.OleDb.4.0;Data Source=|DataDirectory|\Elfar.mdb";
+        protected override string DefaultConnectionString
+        {
+            get { return @default; }
+        }
 
-        static readonly object key = new object();
+        const string @default = @"Provider=Microsoft.Jet.OleDb.4.0;Data Source=|DataDirectory|\Elfar.mdb";
     }
 }

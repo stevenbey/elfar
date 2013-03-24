@@ -1,19 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Web.Mvc;
 using Elfar.ActionResults;
 using Elfar.Models;
 
 namespace Elfar
 {
-    class ErrorLogController
-        : AsyncController
+    class ErrorLogController : AsyncController
     {
-        public ErrorLogController(
-            IErrorLogProvider provider)
+        public ErrorLogController(IErrorLogProvider provider, IErrorLogPlugin[] plugins)
         {
             this.provider = provider;
-        }
+            this.plugins = plugins;
 
+            assemblies = new List<Assembly>(plugins.Select(p => p.GetType().Assembly));
+        }
+        
         public DefaultResult Default(Guid id)
         {
             return new DefaultResult(id, provider, e => View(new Default { ErrorLog = e }));
@@ -55,7 +59,7 @@ namespace Elfar
         }
         public IndexResult Index()
         {
-            return new IndexResult(provider);
+            return new IndexResult(provider, plugins);
         }
         public new FileStreamResult JavaScript(string file = "JavaScript")
         {
@@ -70,9 +74,9 @@ namespace Elfar
         {
             return new RssResult(provider);
         }
-        public FileStreamResult Stylesheet()
+        public FileStreamResult Stylesheet(string file = "Stylesheet")
         {
-            return ResourceFile("Stylesheet", "css", "text/css");
+            return ResourceFile(file, "css", "text/css");
         }
         public void Test()
         {
@@ -86,9 +90,16 @@ namespace Elfar
 
         FileStreamResult ResourceFile(string name, string ext, string contentType)
         {
-            return File(GetType().Assembly.GetManifestResourceStream("Elfar.Resources." + name + "." + ext), contentType);
+            return File
+            (
+                GetType().Assembly.GetManifestResourceStream("Elfar.Resources." + name + "." + ext) ??
+                    assemblies.Select(a => a.GetManifestResourceStream(a.GetName().Name + ".Resources." + name + "." + ext)).Single(),
+                contentType
+            );
         }
 
+        readonly List<Assembly> assemblies;
         readonly IErrorLogProvider provider;
+        readonly IErrorLogPlugin[] plugins;
     }
 }

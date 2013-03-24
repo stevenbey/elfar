@@ -15,9 +15,9 @@ namespace Elfar.WebApi.Host
         
         static void ConfigureApi(HttpConfiguration config)
         {
-            var provider = new XmlErrorLogProvider(null, @"D:\Projects\Elfar\Elfar.Web\App_Data\Errors");
-            config.Filters.Add(new ErrorLogFilter(provider));
-            config.Routes.Add("elfar", new ErrorLogRoute(provider));
+            //var provider = new XmlErrorLogProvider(null, @"D:\Projects\Elfar\Elfar.Web\App_Data\Errors");
+            //config.Filters.Add(new ErrorLogFilter(provider));
+            //config.Routes.Add("elfar", new ErrorLogRoute(provider));
         }
     }
 }

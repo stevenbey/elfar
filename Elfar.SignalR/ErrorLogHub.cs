@@ -1,6 +1,6 @@
 ﻿using SignalR.Hubs;
 
-namespace Elfar
+namespace Elfar.SignalR
 {
     [HubName("errorLogHub")]
     public class ErrorLogHub : Hub {}
