@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -9,7 +8,6 @@ using Ionic.Zlib;
 
 namespace Elfar.Zip
 {
-    [Export("Provider", typeof(IErrorLogProvider))]
     public class ZipErrorLogProvider : FileBasedErrorLogProvider
     {
         public ZipErrorLogProvider()

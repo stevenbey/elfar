@@ -1,23 +1,26 @@
-﻿using System.Web;
+﻿using System.ComponentModel.Composition;
+using System.Web;
 using System.Web.Routing;
 
 namespace Elfar
 {
-    class RouteHandler
-        : IRouteHandler
+    [Export]
+    public class RouteHandler : IRouteHandler
     {
-        public RouteHandler(IErrorLogProvider provider, IErrorLogPlugin[] plugins)
+        [ImportingConstructor]
+        public RouteHandler(IErrorLogProvider provider)
         {
             this.provider = provider;
-            this.plugins = plugins;
         }
         
         public IHttpHandler GetHttpHandler(RequestContext requestContext)
         {
-            return new Handler(requestContext, provider, plugins);
+            return new Handler(requestContext, provider, Plugins);
         }
+        
+        [ImportMany]
+        public IErrorLogPlugin[] Plugins;
 
         readonly IErrorLogProvider provider;
-        readonly IErrorLogPlugin[] plugins;
     }
 }

@@ -1,14 +1,11 @@
-﻿using System.ComponentModel.Composition;
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
 using Elfar.Data;
 
 namespace Elfar.SqlClient
 {
     using Properties;
 
-    [Export("Provider", typeof(IErrorLogProvider))]
-    public sealed class SqlErrorLogProvider
-        : DbErrorLogProvider<SqlConnection>
+    public sealed class SqlErrorLogProvider : DbErrorLogProvider<SqlConnection>
     {
         public SqlErrorLogProvider()
         {

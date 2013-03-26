@@ -58,6 +58,19 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="WebActivator">
+      <HintPath>..\lib\WebActivator.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\Elfar.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Elfar.Core\Elfar.Core.csproj">
       <Project>{41B3A539-7A37-48FA-AF45-C214C3BBE6B0}</Project>
       <Name>Elfar.Core</Name>
@@ -70,27 +83,10 @@
       <Project>{55D3153A-1CDE-450F-B3C4-D36C6B178377}</Project>
       <Name>Elfar.SqlClient</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Elfar.Xml\Elfar.Xml.csproj">
-      <Project>{31B17B39-4395-447D-8796-2C2EA275801E}</Project>
-      <Name>Elfar.Xml</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Elfar\Elfar.csproj">
       <Project>{1784AF7D-5CEF-4074-BC65-B2EC3DFA0677}</Project>
       <Name>Elfar</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="WebActivator">
-      <HintPath>..\lib\WebActivator.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="App_Start\Elfar.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

@@ -3,13 +3,9 @@ using System.Web.Mvc;
 
 namespace Elfar
 {
-    public class FormActionAttribute
-        : ActionNameSelectorAttribute
+    class FormActionAttribute : ActionNameSelectorAttribute
     {
-        public override bool IsValidName(
-            ControllerContext controllerContext,
-            string name,
-            MethodInfo methodInfo)
+        public override bool IsValidName(ControllerContext controllerContext, string name, MethodInfo methodInfo)
         {
             return controllerContext.HttpContext.Request.Form[Prefix + methodInfo.Name] != null
                 && !controllerContext.IsChildAction;

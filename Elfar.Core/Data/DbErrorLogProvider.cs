@@ -57,9 +57,7 @@ namespace Elfar.Data
         DbQueries queries;
     }
 
-    public abstract class DbErrorLogProvider<TConnection>
-        : DbErrorLogProvider
-          where TConnection: class, IDbConnection, new()
+    public abstract class DbErrorLogProvider<TConnection> : DbErrorLogProvider where TConnection: class, IDbConnection, new()
     {
         protected sealed override IDbConnection Connection
         {

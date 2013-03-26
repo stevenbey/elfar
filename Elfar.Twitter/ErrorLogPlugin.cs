@@ -1,11 +1,9 @@
 ﻿using System;
-using System.ComponentModel.Composition;
 using System.Net;
 using System.Web;
 
 namespace Elfar.Twitter
 {
-    [Export("Plugin", typeof(IErrorLogPlugin))]
     public class ErrorLogPlugin : IErrorLogPlugin
     {
         public ErrorLogPlugin()

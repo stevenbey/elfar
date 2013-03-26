@@ -26,39 +26,13 @@ namespace Elfar
             ViewEngines.Engines.Insert(0, engine);
             VirtualPathFactoryManager.RegisterVirtualPathFactory(engine);
 
-            if(ErrorLogProvider.Settings == null) ErrorLogProvider.Settings = new ErrorLogProviderSettings();
-
-            var provider = Provider;
-            var plugins = Plugins;
-            GlobalFilters.Filters.Add(new ErrorLogFilter(provider, plugins));
-            RouteTable.Routes.Insert(0, new ErrorLogRoute(provider, plugins));
+            GlobalFilters.Filters.Add(compositionContainer.GetExport<ErrorLogFilter>().Value);
+            RouteTable.Routes.Insert(0, compositionContainer.GetExport<ErrorLogRoute>().Value);
         }
 
         static bool IsElfarAssembly(Assembly assembly)
         {
             return assembly.FullName.StartsWith("Elfar", StringComparison.OrdinalIgnoreCase);
-        }
-
-        static IErrorLogPlugin[] Plugins
-        {
-            get
-            {
-                return compositionContainer.GetExports<IErrorLogPlugin>("Plugin").Select(p => p.Value).ToArray();
-            }
-        }
-        static IErrorLogProvider Provider
-        {
-            get
-            {
-                try
-                {
-                    return compositionContainer.GetExports<IErrorLogProvider>("Provider").Single().Value;
-                }
-                catch(Exception)
-                {
-                    throw new Exception("Multiple ErrorLogProviders found.");
-                }
-            }
         }
 
         static readonly Assembly[] assemblies; 

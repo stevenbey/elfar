@@ -1,11 +1,9 @@
-﻿using System.ComponentModel.Composition;
-using System.Net.Mail;
+﻿using System.Net.Mail;
 using System.Text;
 using Postal;
 
 namespace Elfar.Mail
 {
-    [Export("Plugin", typeof(IErrorLogPlugin))]
     public class ErrorLogPlugin : IErrorLogPlugin
     {
         public ErrorLogPlugin()

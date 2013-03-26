@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.Composition;
-using System.Data.SqlServerCe;
+﻿using System.Data.SqlServerCe;
 using System.IO;
 using Elfar.Data;
 
@@ -7,7 +6,6 @@ namespace Elfar.SqlServerCe
 {
     using Properties;
 
-    [Export("Provider", typeof(IErrorLogProvider))]
     public class SqlCeErrorLogProvider : FileBasedDbErrorLogProvider<SqlCeConnection>
     {
         public SqlCeErrorLogProvider()

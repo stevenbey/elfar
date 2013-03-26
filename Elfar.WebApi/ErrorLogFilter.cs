@@ -1,24 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.ComponentModel.Composition;
 using System.Web.Http.Filters;
 
 using errorlog = Elfar.ErrorLog;
 
 namespace Elfar.WebApi
 {
-    public class ErrorLogFilter
-        : ExceptionFilterAttribute
+    [Export]
+    public class ErrorLogFilter : ExceptionFilterAttribute
     {
-        public ErrorLogFilter(IErrorLogProvider provider, params IErrorLogPlugin[] plugins)
+        static ErrorLogFilter()
+        {
+            Settings = new ErrorLogFilterSettings();
+        }
+
+        [ImportingConstructor]
+        public ErrorLogFilter(IErrorLogProvider provider)
         {
             this.provider = provider;
-            this.plugins = (plugins ?? new IErrorLogPlugin[0]).ToList();
             if(Settings == null) Settings = new ErrorLogFilterSettings();
         }
         
-        public override void OnException(
-            HttpActionExecutedContext actionExecutedContext)
+        public override void OnException(HttpActionExecutedContext actionExecutedContext)
         {
             var exception = actionExecutedContext.Exception;
 
@@ -28,7 +31,10 @@ namespace Elfar.WebApi
 
             if (!(exception is ErrorLogException)) TryExecute(provider.Save, errorLog);
 
-            plugins.ForEach(p => TryExecute(p.Execute, errorLog));
+            foreach(var plugin in Plugins)
+            {
+                TryExecute(plugin.Execute, errorLog);
+            }
         }
 
         static bool Exclude(HttpActionExecutedContext actionExecutedContext)
@@ -42,8 +48,10 @@ namespace Elfar.WebApi
         }
 
         public static ErrorLogFilterSettings Settings { get; set; }
+        
+        [ImportMany]
+        public IErrorLogPlugin[] Plugins;
 
-        readonly List<IErrorLogPlugin> plugins;
         readonly IErrorLogProvider provider;
     }
 }

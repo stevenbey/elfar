@@ -5,6 +5,11 @@ namespace Elfar
 {
     public abstract class ErrorLogProvider : IErrorLogProvider
     {
+        static ErrorLogProvider()
+        {
+            Settings = new ErrorLogProviderSettings();
+        }
+
         public abstract void Delete(Guid id);
         public abstract ErrorLog Get(Guid id);
         public abstract IList<ErrorLog> List();

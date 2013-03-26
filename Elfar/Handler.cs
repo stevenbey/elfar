@@ -5,8 +5,7 @@ using System.Web.Routing;
 
 namespace Elfar
 {
-    class Handler
-            : IHttpAsyncHandler
+    class Handler : IHttpAsyncHandler
     {
         public Handler(RequestContext requestContext, IErrorLogProvider provider, IErrorLogPlugin[] plugins)
         {
@@ -14,22 +13,15 @@ namespace Elfar
             controller = new ErrorLogController(provider, plugins);
         }
 
-        public IAsyncResult BeginProcessRequest(
-                HttpContext context,
-                AsyncCallback cb,
-                object extraData)
+        public IAsyncResult BeginProcessRequest(HttpContext context, AsyncCallback cb, object extraData)
         {
             return controller.BeginExecute(requestContext, cb, extraData);
         }
-
-        public void EndProcessRequest(
-                IAsyncResult result)
+        public void EndProcessRequest(IAsyncResult result)
         {
             controller.EndExecute(result);
         }
-
-        public void ProcessRequest(
-                HttpContext context)
+        public void ProcessRequest(HttpContext context)
         {
             controller.Execute(requestContext);
         }

@@ -1,9 +1,7 @@
-﻿using System.ComponentModel.Composition;
-using SignalR;
+﻿using SignalR;
 
 namespace Elfar.SignalR
 {
-    [Export("Plugin", typeof(IErrorLogPlugin))]
     public class ErrorLogPlugin : IErrorLogPlugin
     {
         public void Execute(ErrorLog errorLog)

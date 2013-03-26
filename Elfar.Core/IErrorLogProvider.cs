@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 
 namespace Elfar
 {
+    [InheritedExport]
     public interface IErrorLogProvider
     {
         void Delete(Guid id);

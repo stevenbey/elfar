@@ -5,15 +5,11 @@ using System.Web.Mvc;
 
 namespace Elfar
 {
-    public class MvcErrorLog
-        : ErrorLog
+    class MvcErrorLog : ErrorLog
     {
         public MvcErrorLog() {}
 
-        public MvcErrorLog(
-            string application,
-            ExceptionContext exceptionContext)
-            : base(application, exceptionContext.Exception)
+        public MvcErrorLog(string application, ExceptionContext exceptionContext) : base(application, exceptionContext.Exception)
         {
             var context = exceptionContext.HttpContext;
 

@@ -7,9 +7,7 @@ using System.Web.Hosting;
 
 namespace Elfar.Data
 {
-    public abstract class FileBasedDbErrorLogProvider<TConnection>
-            : DbErrorLogProvider<TConnection>
-            where TConnection : class, IDbConnection, new()
+    public abstract class FileBasedDbErrorLogProvider<TConnection> : DbErrorLogProvider<TConnection> where TConnection : class, IDbConnection, new()
     {
         protected override void SetConnectionString(string value)
         {

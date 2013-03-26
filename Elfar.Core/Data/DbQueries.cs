@@ -2,8 +2,7 @@ namespace Elfar.Data
 {
     using Properties;
 
-    public class DbQueries
-            : IDbQueries
+    public class DbQueries : IDbQueries
     {
         public virtual string Delete
         {

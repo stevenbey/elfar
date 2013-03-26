@@ -2,11 +2,8 @@
 
 namespace Elfar
 {
-    class ErrorLogException
-        : Exception
+    class ErrorLogException : Exception
     {
-        public ErrorLogException(
-            Exception inner)
-            : base("Elfar experienced a problem.", inner) {}
+        public ErrorLogException(Exception inner) : base("Elfar experienced a problem.", inner) {}
     }
 }

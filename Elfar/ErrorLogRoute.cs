@@ -1,18 +1,23 @@
-﻿using System.Linq;
+﻿using System.ComponentModel.Composition;
+using System.Linq;
 using System.Web;
 using System.Web.Routing;
 using Elfar.RouteConstraints;
 
 namespace Elfar
 {
+    [Export]
     public class ErrorLogRoute : Route
     {
-        public ErrorLogRoute(IErrorLogProvider provider, IErrorLogPlugin[] plugins)
-            : base("elfar/{id}/{action}", new RouteHandler(provider, plugins))
+        static ErrorLogRoute()
+        {
+            Settings = new ErrorLogRouteSettings();
+        }
+
+        [ImportingConstructor]
+        public ErrorLogRoute(RouteHandler routeHandler) : base("elfar/{id}/{action}", routeHandler)
         {
             var constraints = new RouteValueDictionary();
-
-            if(Settings == null) Settings = new ErrorLogRouteSettings();
 
             foreach(var constraint in Settings.Constraints.Where(constraint => constraint != null))
             {

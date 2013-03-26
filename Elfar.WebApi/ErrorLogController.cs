@@ -7,8 +7,7 @@ using System.Web.Http;
 
 namespace Elfar.WebApi
 {
-    public class ErrorLogController
-        : ApiController
+    public class ErrorLogController : ApiController
     {
         public IEnumerable<ErrorLog> Get()
         {

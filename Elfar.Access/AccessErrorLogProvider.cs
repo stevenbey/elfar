@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.Data.OleDb;
 using System.IO;
 using System.Linq;
@@ -8,7 +7,6 @@ using Elfar.Data;
 
 namespace Elfar.Access
 {
-    [Export("Provider", typeof(IErrorLogProvider))]
     public sealed class AccessErrorLogProvider : FileBasedDbErrorLogProvider<OleDbConnection>
     {
         public AccessErrorLogProvider()

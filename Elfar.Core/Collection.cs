@@ -10,9 +10,7 @@ using System.Xml.Serialization;
 
 namespace Elfar
 {
-    public sealed class Collection
-        : Dictionary<string, string>,
-          IXmlSerializable
+    public sealed class Collection : Dictionary<string, string>, IXmlSerializable
     {
         public void Add(NameValueCollection nvc)
         {

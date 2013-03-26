@@ -2,7 +2,7 @@
 
 namespace Elfar
 {
-    public static class Extensions
+    static class Extensions
     {
         public static string Name(this IErrorLogPlugin plugin)
         {
