@@ -6,8 +6,7 @@ namespace Elfar.Mvc.ActionResults
 {
     public class XmlResult : ActionResult
     {
-        public override void ExecuteResult(
-            ControllerContext context)
+        public override void ExecuteResult(ControllerContext context)
         {
             var response = context.HttpContext.Response;
             response.ContentType = string.IsNullOrWhiteSpace(ContentType) ? "application/xml" : ContentType;

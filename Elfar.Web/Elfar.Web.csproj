@@ -76,7 +76,7 @@
       <Name>Elfar.Data.SqlClient</Name>
     </ProjectReference>
     <ProjectReference Include="..\Elfar.Mvc\Elfar.Mvc.csproj">
-      <Project>{1784AF7D-5CEF-4074-BC65-B2EC3DFA0677}</Project>
+      <Project>{7C6FCD11-4C1A-46E8-8587-E2639628E5C4}</Project>
       <Name>Elfar.Mvc</Name>
     </ProjectReference>
     <ProjectReference Include="..\Elfar.SignalR\Elfar.SignalR.csproj">

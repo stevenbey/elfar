@@ -57,12 +57,6 @@
     <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Elfar\Elfar.csproj">
-      <Project>{41B3A539-7A37-48FA-AF45-C214C3BBE6B0}</Project>
-      <Name>Elfar.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\SignalR.css" />
     <EmbeddedResource Include="Resources\SignalR.js" />
     <None Include="app.config" />
@@ -71,6 +65,12 @@
       <LastGenOutput>SignalR.generated.cs</LastGenOutput>
     </None>
     <Content Include="Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Elfar\Elfar.csproj">
+      <Project>{41B3A539-7A37-48FA-AF45-C214C3BBE6B0}</Project>
+      <Name>Elfar</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

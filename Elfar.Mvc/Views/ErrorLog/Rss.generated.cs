@@ -26,7 +26,6 @@ namespace Elfar.Mvc.Views.ErrorLog
     using System.Web.Security;
     using System.Web.UI;
     using System.Web.WebPages;
-    using Elfar;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "1.2.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/ErrorLog/Rss.cshtml")]
