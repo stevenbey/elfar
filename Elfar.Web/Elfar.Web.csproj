@@ -71,21 +71,17 @@
     <Compile Include="App_Start\Elfar.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Elfar.Core\Elfar.Core.csproj">
-      <Project>{41B3A539-7A37-48FA-AF45-C214C3BBE6B0}</Project>
-      <Name>Elfar.Core</Name>
+    <ProjectReference Include="..\Elfar.Data.SqlClient\Elfar.Data.SqlClient.csproj">
+      <Project>{55D3153A-1CDE-450F-B3C4-D36C6B178377}</Project>
+      <Name>Elfar.Data.SqlClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Elfar.Mvc\Elfar.Mvc.csproj">
+      <Project>{1784AF7D-5CEF-4074-BC65-B2EC3DFA0677}</Project>
+      <Name>Elfar.Mvc</Name>
     </ProjectReference>
     <ProjectReference Include="..\Elfar.SignalR\Elfar.SignalR.csproj">
       <Project>{AF7E74E3-B70F-493C-91E4-839A9CE07929}</Project>
       <Name>Elfar.SignalR</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Elfar.SqlClient\Elfar.SqlClient.csproj">
-      <Project>{55D3153A-1CDE-450F-B3C4-D36C6B178377}</Project>
-      <Name>Elfar.SqlClient</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Elfar\Elfar.csproj">
-      <Project>{1784AF7D-5CEF-4074-BC65-B2EC3DFA0677}</Project>
-      <Name>Elfar</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

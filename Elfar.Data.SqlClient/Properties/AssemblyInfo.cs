@@ -1,15 +1,14 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Elfar")]
-[assembly: AssemblyDescription("Error Logging Filter and Route (ELFAR)")]
+[assembly: AssemblyTitle("Elfar.Data.SqlClient")]
+[assembly: AssemblyDescription("SQL Server ErrorLog Provider for ELFAR.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Steven Bey")]
-[assembly: AssemblyProduct("Elfar")]
+[assembly: AssemblyProduct("Elfar.Data.SqlClient")]
 [assembly: AssemblyCopyright("Copyright © Steven Bey 2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("e7318fba-b9e5-4c0f-afe0-393481323290")]
+[assembly: Guid("5b04ca31-13b1-49d1-9219-9c26e499f005")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -34,6 +33,3 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.2.*")]
 [assembly: AssemblyVersion("1.2.*")]
 [assembly: AssemblyFileVersion("1.2")]
-
-[assembly: InternalsVisibleTo("Elfar.Mvc")]
-[assembly: InternalsVisibleTo("Elfar.WebApi")]

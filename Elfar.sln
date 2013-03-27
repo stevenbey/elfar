@@ -1,41 +1,35 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{8BC000F2-A156-4BCA-AD8D-096B48527C19}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar", "Tests\Elfar.csproj", "{7A829539-3A2D-4B67-9050-E588D3BD8793}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.Access", "Tests\Access\Elfar.Access.csproj", "{26F63713-7061-4517-A089-6F9B30BC7D7F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar", "Elfar\Elfar.csproj", "{1784AF7D-5CEF-4074-BC65-B2EC3DFA0677}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.Access", "Elfar.Access\Elfar.Access.csproj", "{756E9DA7-6C93-40A2-A29E-D8ADA8D1F743}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.Data.Access", "Elfar.Data.Access\Elfar.Data.Access.csproj", "{756E9DA7-6C93-40A2-A29E-D8ADA8D1F743}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.Mail", "Elfar.Mail\Elfar.Mail.csproj", "{BF71C600-5B96-42C7-B1CD-CB9FCC411049}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.SqlClient", "Elfar.SqlClient\Elfar.SqlClient.csproj", "{55D3153A-1CDE-450F-B3C4-D36C6B178377}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.Data.SqlClient", "Elfar.Data.SqlClient\Elfar.Data.SqlClient.csproj", "{55D3153A-1CDE-450F-B3C4-D36C6B178377}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.SQLite", "Elfar.SQLite\Elfar.SQLite.csproj", "{11B4A371-E5A1-4ECF-BE8B-0BFCD06AE276}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.Data.SQLite", "Elfar.Data.SQLite\Elfar.Data.SQLite.csproj", "{11B4A371-E5A1-4ECF-BE8B-0BFCD06AE276}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.Twitter", "Elfar.Twitter\Elfar.Twitter.csproj", "{42C2DB08-2707-46E6-8383-435049F0F4FC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.Web", "Elfar.Web\Elfar.Web.csproj", "{160ED85C-90E2-4383-8659-95F4203D33F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.Xml", "Elfar.Xml\Elfar.Xml.csproj", "{31B17B39-4395-447D-8796-2C2EA275801E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.Data.Xml", "Elfar.Data.Xml\Elfar.Data.Xml.csproj", "{31B17B39-4395-447D-8796-2C2EA275801E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.SqlServerCe", "Elfar.SqlServerCe\Elfar.SqlServerCe.csproj", "{B5DBE30B-4406-4126-843E-7A83EAE0DDA2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.Data.SqlServerCe", "Elfar.Data.SqlServerCe\Elfar.Data.SqlServerCe.csproj", "{B5DBE30B-4406-4126-843E-7A83EAE0DDA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.Core", "Elfar.Core\Elfar.Core.csproj", "{41B3A539-7A37-48FA-AF45-C214C3BBE6B0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar", "Elfar\Elfar.csproj", "{41B3A539-7A37-48FA-AF45-C214C3BBE6B0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.WebApi", "Elfar.WebApi\Elfar.WebApi.csproj", "{67FC3686-AD3F-44C1-93B9-C86A43BE378B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.WebApi.Host", "Elfar.WebApi.Host\Elfar.WebApi.Host.csproj", "{F894D471-4328-4503-B0DC-91203EB56621}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.Zip", "Elfar.Zip\Elfar.Zip.csproj", "{8A141F0C-D280-41E8-8B0F-CF620003A4B5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.Data.Zip", "Elfar.Data.Zip\Elfar.Data.Zip.csproj", "{8A141F0C-D280-41E8-8B0F-CF620003A4B5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.SignalR", "Elfar.SignalR\Elfar.SignalR.csproj", "{AF7E74E3-B70F-493C-91E4-839A9CE07929}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.InMemory", "Elfar.InMemory\Elfar.InMemory.csproj", "{84CDC80B-4574-4B0C-B331-70A946839235}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.Data.InMemory", "Elfar.Data.InMemory\Elfar.Data.InMemory.csproj", "{84CDC80B-4574-4B0C-B331-70A946839235}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.Mvc", "Elfar.Mvc\Elfar.Mvc.csproj", "{1784AF7D-5CEF-4074-BC65-B2EC3DFA0677}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,36 +41,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7A829539-3A2D-4B67-9050-E588D3BD8793}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7A829539-3A2D-4B67-9050-E588D3BD8793}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7A829539-3A2D-4B67-9050-E588D3BD8793}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{7A829539-3A2D-4B67-9050-E588D3BD8793}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{7A829539-3A2D-4B67-9050-E588D3BD8793}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{7A829539-3A2D-4B67-9050-E588D3BD8793}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7A829539-3A2D-4B67-9050-E588D3BD8793}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7A829539-3A2D-4B67-9050-E588D3BD8793}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{7A829539-3A2D-4B67-9050-E588D3BD8793}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{7A829539-3A2D-4B67-9050-E588D3BD8793}.Release|x86.ActiveCfg = Release|Any CPU
-		{26F63713-7061-4517-A089-6F9B30BC7D7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{26F63713-7061-4517-A089-6F9B30BC7D7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{26F63713-7061-4517-A089-6F9B30BC7D7F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{26F63713-7061-4517-A089-6F9B30BC7D7F}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{26F63713-7061-4517-A089-6F9B30BC7D7F}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{26F63713-7061-4517-A089-6F9B30BC7D7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{26F63713-7061-4517-A089-6F9B30BC7D7F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{26F63713-7061-4517-A089-6F9B30BC7D7F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{26F63713-7061-4517-A089-6F9B30BC7D7F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{26F63713-7061-4517-A089-6F9B30BC7D7F}.Release|x86.ActiveCfg = Release|Any CPU
-		{1784AF7D-5CEF-4074-BC65-B2EC3DFA0677}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1784AF7D-5CEF-4074-BC65-B2EC3DFA0677}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1784AF7D-5CEF-4074-BC65-B2EC3DFA0677}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{1784AF7D-5CEF-4074-BC65-B2EC3DFA0677}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{1784AF7D-5CEF-4074-BC65-B2EC3DFA0677}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{1784AF7D-5CEF-4074-BC65-B2EC3DFA0677}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1784AF7D-5CEF-4074-BC65-B2EC3DFA0677}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1784AF7D-5CEF-4074-BC65-B2EC3DFA0677}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{1784AF7D-5CEF-4074-BC65-B2EC3DFA0677}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{1784AF7D-5CEF-4074-BC65-B2EC3DFA0677}.Release|x86.ActiveCfg = Release|Any CPU
 		{756E9DA7-6C93-40A2-A29E-D8ADA8D1F743}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{756E9DA7-6C93-40A2-A29E-D8ADA8D1F743}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{756E9DA7-6C93-40A2-A29E-D8ADA8D1F743}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -217,12 +181,18 @@ Global
 		{84CDC80B-4574-4B0C-B331-70A946839235}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{84CDC80B-4574-4B0C-B331-70A946839235}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{84CDC80B-4574-4B0C-B331-70A946839235}.Release|x86.ActiveCfg = Release|Any CPU
+		{1784AF7D-5CEF-4074-BC65-B2EC3DFA0677}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1784AF7D-5CEF-4074-BC65-B2EC3DFA0677}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1784AF7D-5CEF-4074-BC65-B2EC3DFA0677}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{1784AF7D-5CEF-4074-BC65-B2EC3DFA0677}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{1784AF7D-5CEF-4074-BC65-B2EC3DFA0677}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1784AF7D-5CEF-4074-BC65-B2EC3DFA0677}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1784AF7D-5CEF-4074-BC65-B2EC3DFA0677}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1784AF7D-5CEF-4074-BC65-B2EC3DFA0677}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{1784AF7D-5CEF-4074-BC65-B2EC3DFA0677}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{1784AF7D-5CEF-4074-BC65-B2EC3DFA0677}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{7A829539-3A2D-4B67-9050-E588D3BD8793} = {8BC000F2-A156-4BCA-AD8D-096B48527C19}
-		{26F63713-7061-4517-A089-6F9B30BC7D7F} = {8BC000F2-A156-4BCA-AD8D-096B48527C19}
 	EndGlobalSection
 EndGlobal

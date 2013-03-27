@@ -40,7 +40,7 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Elfar.Core\Elfar.Core.csproj">
+    <ProjectReference Include="..\Elfar\Elfar.csproj">
       <Project>{41B3A539-7A37-48FA-AF45-C214C3BBE6B0}</Project>
       <Name>Elfar.Core</Name>
     </ProjectReference>

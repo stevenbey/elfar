@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{AF7E74E3-B70F-493C-91E4-839A9CE07929}</ProjectGuid>
+    <ProjectGuid>{8A141F0C-D280-41E8-8B0F-CF620003A4B5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Elfar.SignalR</RootNamespace>
-    <AssemblyName>Elfar.SignalR</AssemblyName>
+    <RootNamespace>Elfar.Data.Zip</RootNamespace>
+    <AssemblyName>Elfar.Data.Zip</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,46 +31,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ErrorLogHub.cs" />
-    <Compile Include="ErrorLogPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\ErrorLog\SignalR.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SignalR.cshtml</DependentUpon>
-    </Compile>
+    <Compile Include="ZipErrorLogProvider.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="SignalR">
-      <HintPath>..\lib\SignalR.dll</HintPath>
-    </Reference>
-    <Reference Include="SignalR.Hosting.AspNet">
-      <HintPath>..\lib\SignalR.Hosting.AspNet.dll</HintPath>
-    </Reference>
-    <Reference Include="SignalR.Hosting.Common">
-      <HintPath>..\lib\SignalR.Hosting.Common.dll</HintPath>
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\lib\Ionic.Zip.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Elfar\Elfar.csproj">
       <Project>{41B3A539-7A37-48FA-AF45-C214C3BBE6B0}</Project>
-      <Name>Elfar.Core</Name>
+      <Name>Elfar</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\SignalR.css" />
-    <EmbeddedResource Include="Resources\SignalR.js" />
-    <None Include="app.config" />
-    <None Include="Views\ErrorLog\SignalR.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>SignalR.generated.cs</LastGenOutput>
-    </None>
-    <Content Include="Views\Web.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

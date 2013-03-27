@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{1784AF7D-5CEF-4074-BC65-B2EC3DFA0677}</ProjectGuid>
+    <ProjectGuid>{41B3A539-7A37-48FA-AF45-C214C3BBE6B0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Elfar</RootNamespace>
@@ -31,165 +31,44 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ActionResults\CsvResult.cs" />
-    <Compile Include="ActionResults\DefaultResult.cs" />
-    <Compile Include="ActionResults\IndexResult.cs" />
-    <Compile Include="ActionResults\RssResult.cs" />
-    <Compile Include="ErrorLogController.cs" />
-    <Compile Include="ErrorLogFilter.cs" />
-    <Compile Include="ErrorLogFilterSettings.cs" />
-    <Compile Include="ErrorLogRoute.cs" />
-    <Compile Include="ErrorLogRouteSettings.cs" />
-    <Compile Include="Extensions.cs" />
-    <Compile Include="FormActionAttribute.cs" />
-    <Compile Include="Handler.cs" />
-    <Compile Include="MvcErrorLog.cs" />
-    <Compile Include="RouteConstraints\AdminConstraint.cs" />
-    <Compile Include="RouteConstraints\DeveloperConstraint.cs" />
-    <Compile Include="RouteConstraints\GuidConstraint.cs" />
-    <Compile Include="RouteConstraints\IPConstraint.cs" />
-    <Compile Include="RouteConstraints\LocalConstraint.cs" />
-    <Compile Include="Models\Csv.cs" />
-    <Compile Include="Models\Default.cs" />
-    <Compile Include="Models\Index.cs" />
-    <Compile Include="Models\StackTrace.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RouteHandler.cs" />
-    <Compile Include="Views\ErrorLog\Default.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Default.cshtml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ErrorLog\DisplayTemplates\Collection.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Collection.cshtml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ErrorLog\DisplayTemplates\StackTrace.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>StackTrace.cshtml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ErrorLog\Plugins.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Plugins.cshtml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ErrorLog\Scripts.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Scripts.cshtml</DependentUpon>
-    </Compile>
-    <None Include="Views\ErrorLog\Stylesheets.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>Stylesheets.generated.cs</LastGenOutput>
-    </None>
-    <Compile Include="Views\ErrorLog\Stylesheets.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Stylesheets.cshtml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\View.cs" />
-    <Compile Include="Views\Engine.cs" />
-    <Compile Include="Views\ErrorLog\Digest.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Digest.cshtml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ErrorLog\Footer.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Footer.cshtml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ErrorLog\Index.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Index.cshtml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ErrorLog\Rss.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Rss.cshtml</DependentUpon>
-    </Compile>
-    <Compile Include="ActionResults\XmlResult.cs" />
-    <Compile Include="__Package__.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>C:\Users\steven\Desktop\MvcApplication1\MvcApplication1\bin\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
-    <Reference Include="System.Drawing" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Views\ErrorLog\Default.cshtml">
-      <LastGenOutput>Default.generated.cs</LastGenOutput>
-      <Generator>RazorGenerator</Generator>
-    </None>
-    <None Include="Views\ErrorLog\Digest.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>Digest.generated.cs</LastGenOutput>
-    </None>
-    <None Include="Views\ErrorLog\DisplayTemplates\Collection.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>Collection.generated.cs</LastGenOutput>
-    </None>
-    <None Include="Views\ErrorLog\Footer.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>Footer.generated.cs</LastGenOutput>
-    </None>
-    <None Include="Views\ErrorLog\Index.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>Index.generated.cs</LastGenOutput>
-    </None>
-    <None Include="Views\ErrorLog\Plugins.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>Plugins.generated.cs</LastGenOutput>
-    </None>
-    <None Include="Views\ErrorLog\Rss.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>Rss.generated.cs</LastGenOutput>
-    </None>
-    <None Include="Views\ErrorLog\DisplayTemplates\StackTrace.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>StackTrace.generated.cs</LastGenOutput>
-    </None>
-    <EmbeddedResource Include="Resources\ui-bg_flat_0_aaaaaa_40x100.png" />
-    <EmbeddedResource Include="Resources\ui-bg_flat_75_ffffff_40x100.png" />
-    <EmbeddedResource Include="Resources\ui-bg_glass_55_fbf9ee_1x400.png" />
-    <EmbeddedResource Include="Resources\ui-bg_glass_65_ffffff_1x400.png" />
-    <EmbeddedResource Include="Resources\ui-bg_glass_75_dadada_1x400.png" />
-    <EmbeddedResource Include="Resources\ui-bg_glass_75_e6e6e6_1x400.png" />
-    <EmbeddedResource Include="Resources\ui-bg_glass_95_fef1ec_1x400.png" />
-    <EmbeddedResource Include="Resources\ui-bg_highlight-soft_75_cccccc_1x100.png" />
-    <EmbeddedResource Include="Resources\ui-icons_222222_256x240.png" />
-    <EmbeddedResource Include="Resources\ui-icons_2e83ff_256x240.png" />
-    <EmbeddedResource Include="Resources\ui-icons_454545_256x240.png" />
-    <EmbeddedResource Include="Resources\ui-icons_888888_256x240.png" />
-    <EmbeddedResource Include="Resources\ui-icons_cd0a0a_256x240.png" />
-    <EmbeddedResource Include="Resources\Stylesheet.css" />
-    <EmbeddedResource Include="Resources\JavaScript.js" />
-    <EmbeddedResource Include="Resources\Default.js" />
-    <EmbeddedResource Include="Resources\Index.js" />
-    <EmbeddedResource Include="Resources\HighChart.js" />
-    <EmbeddedResource Include="Resources\Linq.js" />
-    <Content Include="Views\Web.config" />
-    <None Include="Views\ErrorLog\Scripts.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>Scripts.generated.cs</LastGenOutput>
-    </None>
+    <Compile Include="Collection.cs" />
+    <Compile Include="Data\DbErrorLog.cs" />
+    <Compile Include="Data\DbErrorLogProvider.cs" />
+    <Compile Include="Data\DbQueries.cs" />
+    <Compile Include="FileBasedErrorLogProvider.cs" />
+    <Compile Include="ErrorLogProviderSettings.cs" />
+    <Compile Include="Data\FileBasedDbErrorLogProvider.cs" />
+    <Compile Include="Data\IDbQueries.cs" />
+    <Compile Include="Data\SqlMapper.cs" />
+    <Compile Include="ErrorLog.cs" />
+    <Compile Include="ErrorLogException.cs" />
+    <Compile Include="ErrorLogProvider.cs" />
+    <Compile Include="IErrorLogPlugin.cs" />
+    <Compile Include="IErrorLogProvider.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="TestException.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Elfar.Core\Elfar.Core.csproj">
-      <Project>{41B3A539-7A37-48FA-AF45-C214C3BBE6B0}</Project>
-      <Name>Elfar.Core</Name>
-    </ProjectReference>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
