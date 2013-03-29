@@ -25,7 +25,7 @@ namespace Elfar.Data.InMemory
 
         public string Application
         {
-            get { return ErrorLogProvider.Settings.Application; }
+            get { return Settings.Application; }
         }
     }
 }

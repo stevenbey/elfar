@@ -41,25 +41,25 @@ namespace Elfar.Data.Access
                 conn.Execute(Queries.Delete.Replace("@ID", "'" + id + "'"));
             }
         }
-        public override Elfar.ErrorLog Get(Guid id)
+        public override ErrorLog Get(Guid id)
         {
             using(var conn = Connection)
             {
-                return conn.Query<ErrorLog>(Queries.Get.Replace("@ID", "'" + id + "'")).SingleOrDefault();
+                return conn.Query<AccessErrorLog>(Queries.Get.Replace("@ID", "'" + id + "'")).SingleOrDefault();
             }
         }
-        public override IList<Elfar.ErrorLog> List()
+        public override IList<ErrorLog> List()
         {
             using(var conn = Connection)
             {
-                return new List<Elfar.ErrorLog>(conn.Query<ErrorLog>(Queries.List, new { Application }).Select(e => (Elfar.ErrorLog) e));
+                return new List<ErrorLog>(conn.Query<AccessErrorLog>(Queries.List, new { Application }).Select(e => (ErrorLog) e));
             }
         }
-        public override void Save(Elfar.ErrorLog errorLog)
+        public override void Save(ErrorLog errorLog)
         {
             using(var conn = Connection)
             {
-                conn.Execute(Queries.Save, (ErrorLog) errorLog);
+                conn.Execute(Queries.Save, (AccessErrorLog) errorLog);
             }
         }
 

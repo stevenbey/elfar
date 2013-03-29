@@ -10,6 +10,9 @@ namespace Elfar.Web.App_Start
     {
         public static void Init()
         {
+            //global::Elfar.Mvc.Settings.Constraints = null;
+            //global::Elfar.Mvc.Settings.Exclude = null;
+
             UpdateViewEngines(ViewEngines.Engines);
 
             RouteTable.Routes.MapRoute("", "", new { controller = "Default", action = "Default" });

@@ -9,11 +9,6 @@ namespace Elfar.WebApi
     [Export]
     public class ErrorLogRoute : HttpRoute
     {
-        static ErrorLogRoute()
-        {
-            Settings = new ErrorLogRouteSettings();
-        }
-        
         [ImportingConstructor]
         public ErrorLogRoute(IErrorLogProvider provider)
             : base(Url,
@@ -21,13 +16,12 @@ namespace Elfar.WebApi
                    new HttpRouteValueDictionary(new { id = new GuidConstraint() }),
                    new HttpRouteValueDictionary(new { provider }))
         {
-            foreach(var constraint in Settings.Constraints.Where(constraint => constraint != null))
+            if(Settings.Constraints == null) return;
+            foreach(var constraint in Settings.Constraints.Where(c => c != null))
             {
                 Constraints.Add(string.Empty, constraint);
             }
         }
-
-        public static ErrorLogRouteSettings Settings { get; set; }
 
         internal const string Url = "api/elfar/{id}";
     }

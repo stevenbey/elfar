@@ -2,11 +2,11 @@ using System;
 
 namespace Elfar.Data.SQLite
 {
-    class ErrorLog
+    class SQLiteErrorLog
     {
-        public static implicit operator Elfar.ErrorLog(ErrorLog errorLog)
+        public static implicit operator ErrorLog(SQLiteErrorLog errorLog)
         {
-            return new Elfar.ErrorLog
+            return new ErrorLog
             {
                     Application = errorLog.Application,
                     Code = errorLog.Code,

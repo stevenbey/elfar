@@ -37,7 +37,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="ErrorLog.cs" />
+    <Compile Include="SQLiteErrorLog.cs" />
     <Compile Include="SQLiteErrorLogProvider.cs" />
   </ItemGroup>
   <ItemGroup>

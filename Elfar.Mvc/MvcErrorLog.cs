@@ -4,11 +4,11 @@ using System.Web.Mvc;
 
 namespace Elfar.Mvc
 {
-    class ErrorLog : Elfar.ErrorLog
+    class MvcErrorLog : ErrorLog
     {
-        public ErrorLog() {}
+        public MvcErrorLog() {}
 
-        public ErrorLog(string application, ExceptionContext exceptionContext) : base(application, exceptionContext.Exception)
+        public MvcErrorLog(string application, ExceptionContext exceptionContext) : base(application, exceptionContext.Exception)
         {
             var context = exceptionContext.HttpContext;
 
@@ -27,9 +27,9 @@ namespace Elfar.Mvc
             Cookies.Add(request.Cookies);
         }
 
-        public Elfar.ErrorLog ToErrorLog()
+        public ErrorLog ToErrorLog()
         {
-            return new ErrorLog
+            return new MvcErrorLog
             {
                 Application = Application,
                 Code = Code,

@@ -3,11 +3,11 @@ using System.Globalization;
 
 namespace Elfar.Data.Access
 {
-    class ErrorLog
+    class AccessErrorLog
     {
-        public static explicit operator ErrorLog(Elfar.ErrorLog errorLog)
+        public static explicit operator AccessErrorLog(ErrorLog errorLog)
         {
-            return new ErrorLog
+            return new AccessErrorLog
             {
                 Application = errorLog.Application,
                 Code = errorLog.Code,
@@ -26,9 +26,9 @@ namespace Elfar.Data.Access
                 User = errorLog.User
             };
         }
-        public static implicit operator Elfar.ErrorLog(ErrorLog errorLog)
+        public static implicit operator ErrorLog(AccessErrorLog errorLog)
         {
-            return new Elfar.ErrorLog
+            return new ErrorLog
             {
                 Application = errorLog.Application,
                 Code = errorLog.Code,

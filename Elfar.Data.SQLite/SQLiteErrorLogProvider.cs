@@ -27,18 +27,18 @@ namespace Elfar.Data.SQLite
             }
         }
 
-        public override Elfar.ErrorLog Get(Guid id)
+        public override ErrorLog Get(Guid id)
         {
             using(var conn = Connection)
             {
-                return conn.Query<ErrorLog>(Queries.Get, new { ID = id }).SingleOrDefault();
+                return conn.Query<SQLiteErrorLog>(Queries.Get, new { ID = id }).SingleOrDefault();
             }
         }
-        public override IList<Elfar.ErrorLog> List()
+        public override IList<ErrorLog> List()
         {
             using(var conn = Connection)
             {
-                return new List<Elfar.ErrorLog>(conn.Query<ErrorLog>(Queries.List, new { Application }).Select(l => (Elfar.ErrorLog) l));
+                return new List<ErrorLog>(conn.Query<SQLiteErrorLog>(Queries.List, new { Application }).Select(l => (ErrorLog) l));
             }
         }
 

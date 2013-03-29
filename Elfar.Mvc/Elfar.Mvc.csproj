@@ -47,12 +47,10 @@
     <Compile Include="ActionResults\IndexResult.cs" />
     <Compile Include="ActionResults\RssResult.cs" />
     <Compile Include="ActionResults\XmlResult.cs" />
-    <Compile Include="ErrorLog.cs" />
+    <Compile Include="MvcErrorLog.cs" />
     <Compile Include="ErrorLogController.cs" />
     <Compile Include="ErrorLogFilter.cs" />
-    <Compile Include="ErrorLogFilterSettings.cs" />
     <Compile Include="ErrorLogRoute.cs" />
-    <Compile Include="ErrorLogRouteSettings.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="FormActionAttribute.cs" />
     <Compile Include="Handler.cs" />
@@ -67,6 +65,7 @@
     <Compile Include="RouteConstraints\IPConstraint.cs" />
     <Compile Include="RouteConstraints\LocalConstraint.cs" />
     <Compile Include="RouteHandler.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="Views\Engine.cs" />
     <Compile Include="Views\ErrorLog\Default.generated.cs">
       <AutoGen>True</AutoGen>

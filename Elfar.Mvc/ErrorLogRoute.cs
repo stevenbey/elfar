@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.Composition;
+﻿using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
 using System.Web;
 using System.Web.Routing;
@@ -9,59 +10,38 @@ namespace Elfar.Mvc
     [Export]
     public class ErrorLogRoute : Route
     {
-        static ErrorLogRoute()
-        {
-            Settings = new ErrorLogRouteSettings();
-        }
-
         [ImportingConstructor]
-        public ErrorLogRoute(RouteHandler routeHandler) : base("elfar/{id}/{action}", routeHandler)
+        public ErrorLogRoute(RouteHandler routeHandler) : base("elfar/{action}", routeHandler)
         {
-            var constraints = new RouteValueDictionary();
-
-            foreach(var constraint in Settings.Constraints.Where(constraint => constraint != null))
-            {
-                constraints.Add(string.Empty, constraint);
-            }
+            var constraints = Settings.Constraints == null
+                            ? new Dictionary<string, object>()
+                            : Settings.Constraints.Where(c => c != null).ToDictionary(k => string.Empty, c => (object) c);
 
             var defaults = new RouteValueDictionary
-                {
-                    { "namespaces", new[] { "Elfar" } },
-                    { "controller", "ErrorLog" }
-                };
-
-            @default = new Route("elfar/{action}", RouteHandler)
             {
-                Defaults = new RouteValueDictionary(defaults)
-                {
-                    { "action", "Index" }
-                },
-                Constraints = constraints
+                { "namespaces", new[] { "Elfar" } },
+                { "controller", "ErrorLog" }
             };
 
-            Defaults = new RouteValueDictionary(defaults)
+            withID = new Route("elfar/{id}/{action}", RouteHandler)
             {
-                { "action", "Default" }
+                Defaults = new RouteValueDictionary(defaults) { { "action", "Default" } },
+                Constraints = new RouteValueDictionary(constraints) { { "id", new GuidConstraint() } }
             };
-            Constraints = new RouteValueDictionary(constraints)
-            {
-                { "id", new GuidConstraint() }
-            };
+
+            Defaults = new RouteValueDictionary(defaults) { { "action", "Index" } };
+            Constraints = new RouteValueDictionary(constraints);
         }
 
         public override RouteData GetRouteData(HttpContextBase httpContext)
         {
-            return base.GetRouteData(httpContext)
-                ?? @default.GetRouteData(httpContext);
+            return withID.GetRouteData(httpContext) ?? base.GetRouteData(httpContext);
         }
         public override VirtualPathData GetVirtualPath(RequestContext requestContext, RouteValueDictionary values)
         {
-            return base.GetVirtualPath(requestContext, values)
-                ?? @default.GetVirtualPath(requestContext, values);
+            return withID.GetVirtualPath(requestContext, values) ?? base.GetVirtualPath(requestContext, values);
         }
 
-        public static ErrorLogRouteSettings Settings { get; set; }
-
-        readonly Route @default;
+        readonly Route withID;
     }
 }

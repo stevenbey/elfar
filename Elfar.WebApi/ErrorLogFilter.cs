@@ -9,16 +9,10 @@ namespace Elfar.WebApi
     [Export]
     public class ErrorLogFilter : ExceptionFilterAttribute
     {
-        static ErrorLogFilter()
-        {
-            Settings = new ErrorLogFilterSettings();
-        }
-
         [ImportingConstructor]
         public ErrorLogFilter(IErrorLogProvider provider)
         {
             this.provider = provider;
-            if(Settings == null) Settings = new ErrorLogFilterSettings();
         }
         
         public override void OnException(HttpActionExecutedContext actionExecutedContext)
@@ -47,8 +41,6 @@ namespace Elfar.WebApi
             catch (Exception) { }
         }
 
-        public static ErrorLogFilterSettings Settings { get; set; }
-        
         [ImportMany]
         public IErrorLogPlugin[] Plugins;
 

@@ -5,13 +5,8 @@ using System.Web.Mvc;
 namespace Elfar.Mvc
 {
     [Export]
-    public class ErrorLogFilter : FilterAttribute //, IExceptionFilter
+    public class ErrorLogFilter : FilterAttribute, IExceptionFilter
     {
-        static ErrorLogFilter()
-        {
-            Settings = new ErrorLogFilterSettings();
-        }
-
         [ImportingConstructor]
         public ErrorLogFilter(IErrorLogProvider provider)
         {
@@ -22,7 +17,7 @@ namespace Elfar.Mvc
         {
             if(Exclude(exceptionContext)) return;
 
-            var errorLog = new ErrorLog(provider.Application, exceptionContext).ToErrorLog();
+            var errorLog = new MvcErrorLog(provider.Application, exceptionContext).ToErrorLog();
 
             if(!(exceptionContext.Exception is ErrorLogException)) TryExecute(provider.Save, errorLog);
 
@@ -36,7 +31,7 @@ namespace Elfar.Mvc
         {
             return Settings.Exclude != null && Settings.Exclude(exceptionContext);
         }
-        static void TryExecute(Action<Elfar.ErrorLog> action, Elfar.ErrorLog errorLog)
+        static void TryExecute(Action<ErrorLog> action, ErrorLog errorLog)
         {
             try { action(errorLog); }
             catch(Exception) { }
@@ -44,7 +39,6 @@ namespace Elfar.Mvc
 
         [ImportMany]
         public IErrorLogPlugin[] Plugins { get; set; }
-        public static ErrorLogFilterSettings Settings { get; set; }
 
         readonly IErrorLogProvider provider;
     }
