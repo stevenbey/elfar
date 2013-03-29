@@ -10,6 +10,9 @@ namespace Elfar.Web.App_Start
     {
         public static void Init()
         {
+            //global::Elfar.Settings.Application = null;
+            //global::Elfar.Settings.ConnectionString = null;
+            //global::Elfar.Settings.Path = null;
             //global::Elfar.Mvc.Settings.Constraints = null;
             //global::Elfar.Mvc.Settings.Exclude = null;
 

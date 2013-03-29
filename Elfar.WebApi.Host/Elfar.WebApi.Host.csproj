@@ -62,9 +62,17 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Elfar.Data.SqlClient\Elfar.Data.SqlClient.csproj">
+      <Project>{55D3153A-1CDE-450F-B3C4-D36C6B178377}</Project>
+      <Name>Elfar.Data.SqlClient</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Elfar.WebApi\Elfar.WebApi.csproj">
       <Project>{67FC3686-AD3F-44C1-93B9-C86A43BE378B}</Project>
       <Name>Elfar.WebApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Elfar\Elfar.csproj">
+      <Project>{41B3A539-7A37-48FA-AF45-C214C3BBE6B0}</Project>
+      <Name>Elfar</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
