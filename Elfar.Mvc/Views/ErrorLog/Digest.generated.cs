@@ -26,6 +26,7 @@ namespace Elfar.Mvc.Views.ErrorLog
     using System.Web.Security;
     using System.Web.UI;
     using System.Web.WebPages;
+    using Elfar.Mvc;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "1.2.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/ErrorLog/Digest.cshtml")]
@@ -37,12 +38,20 @@ namespace Elfar.Mvc.Views.ErrorLog
         public override void Execute()
         {
 
+
+WriteLiteral("\r\n");
+
+
+
+WriteLiteral("\r\n");
+
+
 WriteLiteral("<rss xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www." +
 "w3.org/2001/XMLSchema\" version=\"0.91\">\r\n  <channel>\r\n    <title>");
 
 
             
-            #line 4 "..\..\Views\ErrorLog\Digest.cshtml"
+            #line 6 "..\..\Views\ErrorLog\Digest.cshtml"
       Write(string.Format("Daily digest of errors for {0} on {1}", Model.Application, Server.MachineName));
 
             
@@ -52,7 +61,7 @@ WriteLiteral("</title>\r\n    <link>");
 
 
             
-            #line 5 "..\..\Views\ErrorLog\Digest.cshtml"
+            #line 7 "..\..\Views\ErrorLog\Digest.cshtml"
       Write(Request.Url.GetLeftPart(UriPartial.Authority) + Request.ServerVariables["URL"]);
 
             
@@ -63,7 +72,7 @@ WriteLiteral("</link>\r\n    <description>Daily digest of application errors</de
 
 
             
-            #line 8 "..\..\Views\ErrorLog\Digest.cshtml"
+            #line 10 "..\..\Views\ErrorLog\Digest.cshtml"
  foreach (var group in Model.Errors.GroupBy(e => e.Time.Date))
 {
     var date = group.Key;
@@ -75,7 +84,7 @@ WriteLiteral("    <item>\r\n        <title>Digest for ");
 
 
             
-            #line 12 "..\..\Views\ErrorLog\Digest.cshtml"
+            #line 14 "..\..\Views\ErrorLog\Digest.cshtml"
                      Write(date.ToString("yyyy-MM-dd"));
 
             
@@ -85,7 +94,7 @@ WriteLiteral(" (");
 
 
             
-            #line 12 "..\..\Views\ErrorLog\Digest.cshtml"
+            #line 14 "..\..\Views\ErrorLog\Digest.cshtml"
                                                    Write(date.ToLongDateString());
 
             
@@ -95,7 +104,7 @@ WriteLiteral(")</title>\r\n        <description>&lt;ul&gt;\r\n");
 
 
             
-            #line 14 "..\..\Views\ErrorLog\Digest.cshtml"
+            #line 16 "..\..\Views\ErrorLog\Digest.cshtml"
          foreach (var errorLog in group) {
 
             
@@ -107,7 +116,7 @@ WriteLiteral("    &lt;li&gt;&lt;span title=\"");
 
 
             
-            #line 15 "..\..\Views\ErrorLog\Digest.cshtml"
+            #line 17 "..\..\Views\ErrorLog\Digest.cshtml"
                                    Write(errorLog.Type);
 
             
@@ -117,7 +126,7 @@ WriteLiteral("\"&gt;");
 
 
             
-            #line 15 "..\..\Views\ErrorLog\Digest.cshtml"
+            #line 17 "..\..\Views\ErrorLog\Digest.cshtml"
                                                       Write(errorLog.Type.ShortName());
 
             
@@ -127,7 +136,7 @@ WriteLiteral("&lt;/span&gt;: ");
 
 
             
-            #line 15 "..\..\Views\ErrorLog\Digest.cshtml"
+            #line 17 "..\..\Views\ErrorLog\Digest.cshtml"
                                                                                                Write(Html.Encode(Html.ActionLink(errorLog.Message, "Default", new { id = errorLog.ID })));
 
             
@@ -137,7 +146,7 @@ WriteLiteral(" &lt;/li&gt;\r\n");
 
 
             
-            #line 16 "..\..\Views\ErrorLog\Digest.cshtml"
+            #line 18 "..\..\Views\ErrorLog\Digest.cshtml"
         }
 
             
@@ -147,7 +156,7 @@ WriteLiteral("            &lt;/ul&gt;</description>\r\n        <pubDate>");
 
 
             
-            #line 18 "..\..\Views\ErrorLog\Digest.cshtml"
+            #line 20 "..\..\Views\ErrorLog\Digest.cshtml"
             Write(date.ToString("r"));
 
             
@@ -157,7 +166,7 @@ WriteLiteral("</pubDate>\r\n    </item>\r\n");
 
 
             
-            #line 20 "..\..\Views\ErrorLog\Digest.cshtml"
+            #line 22 "..\..\Views\ErrorLog\Digest.cshtml"
 }
 
             

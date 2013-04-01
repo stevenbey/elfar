@@ -26,10 +26,11 @@ namespace Elfar.Mvc.Views.ErrorLog
     using System.Web.Security;
     using System.Web.UI;
     using System.Web.WebPages;
+    using Elfar.Mvc;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "1.2.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/ErrorLog/Plugins.cshtml")]
-    public class Plugins : System.Web.Mvc.WebViewPage<IErrorLogPlugin[]>
+    public class Plugins : System.Web.Mvc.WebViewPage<Elfar.IErrorLogPlugin[]>
     {
         public Plugins()
         {

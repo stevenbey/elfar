@@ -26,6 +26,7 @@ namespace Elfar.Mvc.Views.ErrorLog
     using System.Web.Security;
     using System.Web.UI;
     using System.Web.WebPages;
+    using Elfar.Mvc;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "1.2.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/ErrorLog/Rss.cshtml")]
@@ -38,8 +39,16 @@ namespace Elfar.Mvc.Views.ErrorLog
         {
 
 
+WriteLiteral("\r\n");
+
+
+
+WriteLiteral("\r\n");
+
+
+
             
-            #line 2 "..\..\Views\ErrorLog\Rss.cshtml"
+            #line 4 "..\..\Views\ErrorLog\Rss.cshtml"
    var url = Request.Url; 
 
             
@@ -50,7 +59,7 @@ WriteLiteral("<rss xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns
 
 
             
-            #line 5 "..\..\Views\ErrorLog\Rss.cshtml"
+            #line 7 "..\..\Views\ErrorLog\Rss.cshtml"
       Write(string.Format("Error log for {0} on {1}", Model.Application, Server.MachineName));
 
             
@@ -60,7 +69,7 @@ WriteLiteral("</title>\r\n    <link>");
 
 
             
-            #line 6 "..\..\Views\ErrorLog\Rss.cshtml"
+            #line 8 "..\..\Views\ErrorLog\Rss.cshtml"
       Write(Request.Url.GetLeftPart(UriPartial.Authority) + Request.ServerVariables["URL"]);
 
             
@@ -71,7 +80,7 @@ WriteLiteral("</link>\r\n    <description>Log of recent errors</description>\r\n
 
 
             
-            #line 9 "..\..\Views\ErrorLog\Rss.cshtml"
+            #line 11 "..\..\Views\ErrorLog\Rss.cshtml"
  foreach (var errorLog in Model.Errors)
 {
 
@@ -82,7 +91,7 @@ WriteLiteral("    <item>\r\n      <title>");
 
 
             
-            #line 12 "..\..\Views\ErrorLog\Rss.cshtml"
+            #line 14 "..\..\Views\ErrorLog\Rss.cshtml"
         Write(errorLog.Message);
 
             
@@ -92,7 +101,7 @@ WriteLiteral("</title>\r\n      <description>An errorLog of type ");
 
 
             
-            #line 13 "..\..\Views\ErrorLog\Rss.cshtml"
+            #line 15 "..\..\Views\ErrorLog\Rss.cshtml"
                                   Write(errorLog.Type);
 
             
@@ -102,7 +111,7 @@ WriteLiteral(" occurred. ");
 
 
             
-            #line 13 "..\..\Views\ErrorLog\Rss.cshtml"
+            #line 15 "..\..\Views\ErrorLog\Rss.cshtml"
                                                            Write(errorLog.Message);
 
             
@@ -112,7 +121,7 @@ WriteLiteral("</description>\r\n      <pubDate>");
 
 
             
-            #line 14 "..\..\Views\ErrorLog\Rss.cshtml"
+            #line 16 "..\..\Views\ErrorLog\Rss.cshtml"
           Write(errorLog.Time.ToString("r"));
 
             
@@ -122,7 +131,7 @@ WriteLiteral("</pubDate>\r\n      <link>");
 
 
             
-            #line 15 "..\..\Views\ErrorLog\Rss.cshtml"
+            #line 17 "..\..\Views\ErrorLog\Rss.cshtml"
        Write(url.Scheme);
 
             
@@ -132,7 +141,7 @@ WriteLiteral("://");
 
 
             
-            #line 15 "..\..\Views\ErrorLog\Rss.cshtml"
+            #line 17 "..\..\Views\ErrorLog\Rss.cshtml"
                      Write(url.Authority);
 
             
@@ -140,8 +149,8 @@ WriteLiteral("://");
             #line hidden
 
             
-            #line 15 "..\..\Views\ErrorLog\Rss.cshtml"
-                                   Write(Url.Action("Default", "ErrorLog", new { id = errorLog.ID }));
+            #line 17 "..\..\Views\ErrorLog\Rss.cshtml"
+                                   Write(Url.Action("Default", new { id = errorLog.ID }));
 
             
             #line default
@@ -150,7 +159,7 @@ WriteLiteral("</link>\r\n    </item>\r\n");
 
 
             
-            #line 17 "..\..\Views\ErrorLog\Rss.cshtml"
+            #line 19 "..\..\Views\ErrorLog\Rss.cshtml"
 }
 
             

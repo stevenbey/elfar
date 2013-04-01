@@ -26,6 +26,7 @@ namespace Elfar.Mvc.Views.ErrorLog
     using System.Web.Security;
     using System.Web.UI;
     using System.Web.WebPages;
+    using Elfar.Mvc;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "1.2.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/ErrorLog/Scripts.cshtml")]
@@ -36,17 +37,9 @@ namespace Elfar.Mvc.Views.ErrorLog
         }
         public override void Execute()
         {
-WriteLiteral("        <script type=\"text/javascript\" src=\"");
 
 
-            
-            #line 1 "..\..\Views\ErrorLog\Scripts.cshtml"
-                                       Write(Url.Action("JavaScript"));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\"></script>\r\n        <script type=\"text/javascript\" src=\"");
+WriteLiteral("\r\n        <script type=\"text/javascript\" src=\"");
 
 
             
@@ -56,7 +49,7 @@ WriteLiteral("\"></script>\r\n        <script type=\"text/javascript\" src=\"");
             
             #line default
             #line hidden
-WriteLiteral("?file=Linq\"></script>\r\n        <script type=\"text/javascript\" src=\"");
+WriteLiteral("\"></script>\r\n        <script type=\"text/javascript\" src=\"");
 
 
             
@@ -66,11 +59,21 @@ WriteLiteral("?file=Linq\"></script>\r\n        <script type=\"text/javascript\"
             
             #line default
             #line hidden
-WriteLiteral("?file=Index\"></script>\r\n        <script type=\"text/javascript\" src=\"");
+WriteLiteral("?file=Linq\"></script>\r\n        <script type=\"text/javascript\" src=\"");
 
 
             
             #line 4 "..\..\Views\ErrorLog\Scripts.cshtml"
+                                       Write(Url.Action("JavaScript"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("?file=Index\"></script>\r\n        <script type=\"text/javascript\" src=\"");
+
+
+            
+            #line 5 "..\..\Views\ErrorLog\Scripts.cshtml"
                                        Write(Url.Action("JavaScript"));
 
             

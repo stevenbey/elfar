@@ -36,7 +36,14 @@ namespace Elfar.SignalR.Views.ErrorLog
         }
         public override void Execute()
         {
-WriteLiteral(@"        <div id=""notify"" title=""New Error Log"">
+
+
+WriteLiteral("\r\n");
+
+
+
+WriteLiteral(@"
+        <div id=""notify"" title=""New Error Log"">
             <p>
                 <span>A new error has just been logged.</span>
                 <span>Refresh the page to view the error log.</span>
@@ -46,7 +53,7 @@ WriteLiteral(@"        <div id=""notify"" title=""New Error Log"">
 
 
             
-            #line 7 "..\..\Views\ErrorLog\SignalR.cshtml"
+            #line 9 "..\..\Views\ErrorLog\SignalR.cshtml"
                                        Write(Url.Action("JavaScript"));
 
             
@@ -56,7 +63,7 @@ WriteLiteral("?file=SignalR\"></script>\r\n        <script type=\"text/javascrip
 
 
             
-            #line 8 "..\..\Views\ErrorLog\SignalR.cshtml"
+            #line 10 "..\..\Views\ErrorLog\SignalR.cshtml"
                                        Write(Url.Content("~/signalr/hubs"));
 
             

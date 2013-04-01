@@ -60,10 +60,10 @@
     <EmbeddedResource Include="Resources\SignalR.css" />
     <EmbeddedResource Include="Resources\SignalR.js" />
     <None Include="app.config" />
-    <None Include="Views\ErrorLog\SignalR.cshtml">
+    <Content Include="Views\ErrorLog\SignalR.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>SignalR.generated.cs</LastGenOutput>
-    </None>
+    </Content>
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>

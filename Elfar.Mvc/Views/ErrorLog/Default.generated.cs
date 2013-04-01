@@ -26,6 +26,7 @@ namespace Elfar.Mvc.Views.ErrorLog
     using System.Web.Security;
     using System.Web.UI;
     using System.Web.WebPages;
+    using Elfar.Mvc;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "1.2.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/ErrorLog/Default.cshtml")]
@@ -38,8 +39,12 @@ namespace Elfar.Mvc.Views.ErrorLog
         {
 
 
+WriteLiteral("\r\n");
+
+
+
             
-            #line 2 "..\..\Views\ErrorLog\Default.cshtml"
+            #line 3 "..\..\Views\ErrorLog\Default.cshtml"
   
     var errorLog = Model.ErrorLog;
     var id = errorLog.ID;
@@ -56,7 +61,7 @@ WriteLiteral(@"<!DOCTYPE html PUBLIC ""-//W3C//DTD XHTML 1.0 Transitional//EN"" 
 
 
             
-            #line 10 "..\..\Views\ErrorLog\Default.cshtml"
+            #line 11 "..\..\Views\ErrorLog\Default.cshtml"
            Write(errorLog.Type);
 
             
@@ -66,7 +71,7 @@ WriteLiteral(" [");
 
 
             
-            #line 10 "..\..\Views\ErrorLog\Default.cshtml"
+            #line 11 "..\..\Views\ErrorLog\Default.cshtml"
                            Write(id);
 
             
@@ -76,7 +81,7 @@ WriteLiteral("]</title>\r\n        <link rel=\"stylesheet\" type=\"text/css\" hr
 
 
             
-            #line 11 "..\..\Views\ErrorLog\Default.cshtml"
+            #line 12 "..\..\Views\ErrorLog\Default.cshtml"
                                                 Write(Url.Action("Stylesheet"));
 
             
@@ -86,7 +91,7 @@ WriteLiteral("\" />\r\n\t</head>\r\n\t<body>\r\n\t\t<h1>");
 
 
             
-            #line 14 "..\..\Views\ErrorLog\Default.cshtml"
+            #line 15 "..\..\Views\ErrorLog\Default.cshtml"
  Write(errorLog.Message);
 
             
@@ -96,7 +101,7 @@ WriteLiteral("</h1>\r\n\t\t<ul id=\"navigation\">\r\n\t\t\t<li><a id=\"back\" hr
 
 
             
-            #line 16 "..\..\Views\ErrorLog\Default.cshtml"
+            #line 17 "..\..\Views\ErrorLog\Default.cshtml"
                      Write(Url.Action("Index"));
 
             
@@ -107,7 +112,7 @@ WriteLiteral("\" title=\"Back to the list of error logs\">Back</a></li>\r\n\t\t<
 
 
             
-            #line 18 "..\..\Views\ErrorLog\Default.cshtml"
+            #line 19 "..\..\Views\ErrorLog\Default.cshtml"
                                        Write(errorLog.Type);
 
             
@@ -117,7 +122,7 @@ WriteLiteral("</span><span id=\"separator\">: </span><span id=\"error-message\">
 
 
             
-            #line 18 "..\..\Views\ErrorLog\Default.cshtml"
+            #line 19 "..\..\Views\ErrorLog\Default.cshtml"
                                                                                                                    Write(errorLog.Message);
 
             
@@ -127,7 +132,7 @@ WriteLiteral("</span></p>\r\n\t\t<pre id=\"stack-trace\">");
 
 
             
-            #line 19 "..\..\Views\ErrorLog\Default.cshtml"
+            #line 20 "..\..\Views\ErrorLog\Default.cshtml"
                    Write(Html.DisplayFor(m => m.StackTrace));
 
             
@@ -137,7 +142,7 @@ WriteLiteral("</pre>\r\n");
 
 
             
-            #line 20 "..\..\Views\ErrorLog\Default.cshtml"
+            #line 21 "..\..\Views\ErrorLog\Default.cshtml"
            var date = errorLog.Time; 
 
             
@@ -147,7 +152,7 @@ WriteLiteral("\t\t<p>Logged on ");
 
 
             
-            #line 21 "..\..\Views\ErrorLog\Default.cshtml"
+            #line 22 "..\..\Views\ErrorLog\Default.cshtml"
           Write(date.ToLongDateString());
 
             
@@ -157,7 +162,7 @@ WriteLiteral(" at ");
 
 
             
-            #line 21 "..\..\Views\ErrorLog\Default.cshtml"
+            #line 22 "..\..\Views\ErrorLog\Default.cshtml"
                                       Write(date.ToShortTimeString());
 
             
@@ -167,7 +172,7 @@ WriteLiteral(" (Local)</p>\r\n\t\t<p>See also: (opens in new window)</p>\r\n    
 
 
             
-            #line 24 "..\..\Views\ErrorLog\Default.cshtml"
+            #line 25 "..\..\Views\ErrorLog\Default.cshtml"
              if(!string.IsNullOrWhiteSpace(errorLog.Html))
             {
 
@@ -180,18 +185,18 @@ WriteLiteral("                <li>\r\n                    The <a id=\"show-html\
 
 
             
-            #line 29 "..\..\Views\ErrorLog\Default.cshtml"
+            #line 30 "..\..\Views\ErrorLog\Default.cshtml"
                                 Write(Url.Action("Html", new { id }));
 
             
             #line default
             #line hidden
-WriteLiteral("\" frameborder=\"0\" width=\"100%\" height=\"100%\"></iframe>\r\n                    </div" +
-">\r\n                </li>\r\n");
+WriteLiteral("\" width=\"100%\" height=\"100%\" />\r\n                    </div>\r\n                </li" +
+">\r\n");
 
 
             
-            #line 32 "..\..\Views\ErrorLog\Default.cshtml"
+            #line 33 "..\..\Views\ErrorLog\Default.cshtml"
             }
 
             
@@ -201,7 +206,7 @@ WriteLiteral("            <li>Raw/Source data in <a href=\"");
 
 
             
-            #line 33 "..\..\Views\ErrorLog\Default.cshtml"
+            #line 34 "..\..\Views\ErrorLog\Default.cshtml"
                                        Write(Url.Action("Xml", new { id }));
 
             
@@ -212,7 +217,7 @@ WriteLiteral("?download=true\" rel=\"alternate\" type=\"application/xml\">XML</a
 
 
             
-            #line 34 "..\..\Views\ErrorLog\Default.cshtml"
+            #line 35 "..\..\Views\ErrorLog\Default.cshtml"
                     Write(Url.Action("Json", new { id }));
 
             
@@ -232,7 +237,7 @@ WriteLiteral(@"?download=true"" rel=""alternate"" type=""application/json"">JSON
 
 
             
-            #line 44 "..\..\Views\ErrorLog\Default.cshtml"
+            #line 45 "..\..\Views\ErrorLog\Default.cshtml"
 Write(Html.DisplayFor(m => m.ErrorLog.ServerVariables));
 
             
@@ -242,7 +247,7 @@ WriteLiteral("\r\n            </div>\r\n            <div id=\"form\">\r\n");
 
 
             
-            #line 47 "..\..\Views\ErrorLog\Default.cshtml"
+            #line 48 "..\..\Views\ErrorLog\Default.cshtml"
 Write(Html.DisplayFor(m => m.ErrorLog.Form));
 
             
@@ -252,7 +257,7 @@ WriteLiteral("\r\n            </div>\r\n            <div id=\"querystring\">\r\n
 
 
             
-            #line 50 "..\..\Views\ErrorLog\Default.cshtml"
+            #line 51 "..\..\Views\ErrorLog\Default.cshtml"
 Write(Html.DisplayFor(m => m.ErrorLog.QueryString));
 
             
@@ -262,7 +267,7 @@ WriteLiteral("\r\n            </div>\r\n            <div id=\"cookies\">\r\n");
 
 
             
-            #line 53 "..\..\Views\ErrorLog\Default.cshtml"
+            #line 54 "..\..\Views\ErrorLog\Default.cshtml"
 Write(Html.DisplayFor(m => m.ErrorLog.Cookies));
 
             
@@ -272,7 +277,7 @@ WriteLiteral("\r\n            </div>\r\n        </div>\r\n");
 
 
             
-            #line 56 "..\..\Views\ErrorLog\Default.cshtml"
+            #line 57 "..\..\Views\ErrorLog\Default.cshtml"
    Html.RenderPartial("Footer"); 
 
             
@@ -282,7 +287,7 @@ WriteLiteral("\t</body>\r\n    <script type=\"text/javascript\" src=\"");
 
 
             
-            #line 58 "..\..\Views\ErrorLog\Default.cshtml"
+            #line 59 "..\..\Views\ErrorLog\Default.cshtml"
                                    Write(Url.Action("JavaScript"));
 
             
@@ -292,7 +297,7 @@ WriteLiteral("\"></script>\r\n    <script type=\"text/javascript\" src=\"");
 
 
             
-            #line 59 "..\..\Views\ErrorLog\Default.cshtml"
+            #line 60 "..\..\Views\ErrorLog\Default.cshtml"
                                    Write(Url.Action("JavaScript"));
 
             

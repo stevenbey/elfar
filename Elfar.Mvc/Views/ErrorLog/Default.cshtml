@@ -1,4 +1,5 @@
-﻿@model Elfar.Mvc.Models.Default
+﻿@* ReSharper disable Mvc.ActionNotResolved *@
+@model Elfar.Mvc.Models.Default
 @{
     var errorLog = Model.ErrorLog;
     var id = errorLog.ID;
@@ -26,7 +27,7 @@
                 <li>
                     The <a id="show-html" href="#">original ASP.NET error page</a>.
                     <div id="dialog" title="Original ASP.NET error page">
-                        <iframe src="@Url.Action("Html", new { id })" frameborder="0" width="100%" height="100%"></iframe>
+                        <iframe src="@Url.Action("Html", new { id })" width="100%" height="100%" />
                     </div>
                 </li>
             }

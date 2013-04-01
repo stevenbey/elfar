@@ -2,7 +2,7 @@
 
 namespace Elfar.Mvc
 {
-    static class Extensions
+    public static class Extensions
     {
         public static string Name(this IErrorLogPlugin plugin)
         {

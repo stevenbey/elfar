@@ -1,4 +1,6 @@
-﻿@model Elfar.Mvc.Models.Index
+﻿@* ReSharper disable Mvc.ActionNotResolved *@
+@* ReSharper disable Html.TagNotResolved *@
+@model Elfar.Mvc.Models.Index
 @{ var url = Request.Url; }
 <rss xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="0.91">
   <channel>
@@ -12,7 +14,7 @@
       <title>@errorLog.Message</title>
       <description>An errorLog of type @errorLog.Type occurred. @errorLog.Message</description>
       <pubDate>@errorLog.Time.ToString("r")</pubDate>
-      <link>@url.Scheme://@url.Authority@Url.Action("Default", "ErrorLog", new { id = errorLog.ID })</link>
+      <link>@url.Scheme://@url.Authority@Url.Action("Default", new { id = errorLog.ID })</link>
     </item>
 }
   </channel>

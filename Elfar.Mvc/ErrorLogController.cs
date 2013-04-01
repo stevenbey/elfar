@@ -1,4 +1,6 @@
-﻿using System;
+﻿// ReSharper disable Mvc.ActionNotResolved
+// ReSharper disable UnusedMember.Global
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -23,7 +25,7 @@ namespace Elfar.Mvc
             return new DefaultResult(id, provider, e => View(new Default { ErrorLog = e }));
         }
         [HttpPost, FormAction]
-        public RedirectToRouteResult Delete(Guid[] ids)
+        public RedirectToRouteResult Delete(IEnumerable<Guid> ids)
         {
             if(ids != null)
                 foreach(var id in ids)

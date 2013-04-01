@@ -6,7 +6,7 @@ using System.Web.Routing;
 [assembly: WebActivator.PreApplicationStartMethod(typeof(Elfar.Web.App_Start.Elfar), "Init")]
 namespace Elfar.Web.App_Start
 {
-    public static class Elfar
+    public static partial class Elfar
     {
         public static void Init()
         {

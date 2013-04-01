@@ -26,10 +26,11 @@ namespace Elfar.Mvc.Views.ErrorLog
     using System.Web.Security;
     using System.Web.UI;
     using System.Web.WebPages;
+    using Elfar.Mvc;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "1.2.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/ErrorLog/Stylesheets.cshtml")]
-    public class Stylesheets : System.Web.Mvc.WebViewPage<IErrorLogPlugin[]>
+    public class Stylesheets : System.Web.Mvc.WebViewPage<Elfar.IErrorLogPlugin[]>
     {
         public Stylesheets()
         {
@@ -37,11 +38,15 @@ namespace Elfar.Mvc.Views.ErrorLog
         public override void Execute()
         {
 
+
+WriteLiteral("\r\n");
+
+
 WriteLiteral("        <link rel=\"stylesheet\" type=\"text/css\" href=\"");
 
 
             
-            #line 2 "..\..\Views\ErrorLog\Stylesheets.cshtml"
+            #line 3 "..\..\Views\ErrorLog\Stylesheets.cshtml"
                                                 Write(Url.Action("Stylesheet"));
 
             
@@ -51,7 +56,7 @@ WriteLiteral("\" />\r\n");
 
 
             
-            #line 3 "..\..\Views\ErrorLog\Stylesheets.cshtml"
+            #line 4 "..\..\Views\ErrorLog\Stylesheets.cshtml"
      foreach(var plugin in Model)
     {
 
@@ -62,7 +67,7 @@ WriteLiteral("        <link rel=\"stylesheet\" type=\"text/css\" href=\"");
 
 
             
-            #line 5 "..\..\Views\ErrorLog\Stylesheets.cshtml"
+            #line 6 "..\..\Views\ErrorLog\Stylesheets.cshtml"
                                                 Write(Url.Action("Stylesheet"));
 
             
@@ -72,7 +77,7 @@ WriteLiteral("?file=");
 
 
             
-            #line 5 "..\..\Views\ErrorLog\Stylesheets.cshtml"
+            #line 6 "..\..\Views\ErrorLog\Stylesheets.cshtml"
                                                                                Write(plugin.Name());
 
             
@@ -82,7 +87,7 @@ WriteLiteral("\" />\r\n");
 
 
             
-            #line 6 "..\..\Views\ErrorLog\Stylesheets.cshtml"
+            #line 7 "..\..\Views\ErrorLog\Stylesheets.cshtml"
     }
             
             #line default

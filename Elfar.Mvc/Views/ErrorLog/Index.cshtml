@@ -1,4 +1,5 @@
-﻿@model Elfar.Mvc.Models.Index
+﻿@* ReSharper disable Mvc.ActionNotResolved *@
+@model Elfar.Mvc.Models.Index
 @{ var title = string.Format("Error Log for [{0}] on [{1}]", Model.Application, Server.MachineName); }
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -43,7 +44,7 @@
                         <td>@errorLog.Application</td>
                         <td title="@HttpWorkerRequest.GetStatusDescription(errorLog.Code.GetValueOrDefault())">@errorLog.Code</td>
                         <td title="@errorLog.Type">@errorLog.Type.ShortName()</td>
-                        <td>@errorLog.Message @Html.ActionLink("Details…", "Default", "ErrorLog", new { id = errorLog.ID }, null)</td>
+                        <td>@errorLog.Message @Html.ActionLink("Details…", "Default", new { id = errorLog.ID })</td>
                         <td nowrap="nowrap" title="@errorLog.Time">@errorLog.Time</td>
                     </tr>
                 }

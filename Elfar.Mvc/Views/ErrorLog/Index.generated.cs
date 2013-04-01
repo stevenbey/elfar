@@ -39,8 +39,12 @@ namespace Elfar.Mvc.Views.ErrorLog
         {
 
 
+WriteLiteral("\r\n");
+
+
+
             
-            #line 2 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 3 "..\..\Views\ErrorLog\Index.cshtml"
    var title = string.Format("Error Log for [{0}] on [{1}]", Model.Application, Server.MachineName); 
 
             
@@ -54,7 +58,7 @@ WriteLiteral(@"<!DOCTYPE html PUBLIC ""-//W3C//DTD XHTML 1.0 Transitional//EN"" 
 
 
             
-            #line 7 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 8 "..\..\Views\ErrorLog\Index.cshtml"
           Write(title);
 
             
@@ -64,7 +68,7 @@ WriteLiteral("</title>\r\n");
 
 
             
-            #line 8 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 9 "..\..\Views\ErrorLog\Index.cshtml"
 Write(Html.Partial("Stylesheets", Model.Plugins));
 
             
@@ -74,7 +78,7 @@ WriteLiteral("\r\n        <link rel=\"alternate\" type=\"application/rss+xml\" t
 
 
             
-            #line 9 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 10 "..\..\Views\ErrorLog\Index.cshtml"
                                                                       Write(Url.Action("Rss"));
 
             
@@ -84,7 +88,7 @@ WriteLiteral("\" />\r\n    </head>\r\n    <body>\r\n        <h1>");
 
 
             
-            #line 12 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 13 "..\..\Views\ErrorLog\Index.cshtml"
        Write(title);
 
             
@@ -94,7 +98,7 @@ WriteLiteral("</h1>\r\n");
 
 
             
-            #line 13 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 14 "..\..\Views\ErrorLog\Index.cshtml"
      if(Model.Errors.Count != 0)
     {
 
@@ -105,7 +109,7 @@ WriteLiteral("        <ul id=\"navigation\">\r\n            <li><a href=\"");
 
 
             
-            #line 16 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 17 "..\..\Views\ErrorLog\Index.cshtml"
                     Write(Url.Action("Rss"));
 
             
@@ -115,7 +119,7 @@ WriteLiteral("\" title=\"RSS feed of recent errors\">RSS Feed</a></li>\r\n      
 
 
             
-            #line 17 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 18 "..\..\Views\ErrorLog\Index.cshtml"
                     Write(Url.Action("Digest"));
 
             
@@ -126,7 +130,7 @@ WriteLiteral("\" title=\"RSS feed of errors within recent days\">RSS Digest</a><
 
 
             
-            #line 18 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 19 "..\..\Views\ErrorLog\Index.cshtml"
                     Write(Url.Action("Download"));
 
             
@@ -136,7 +140,7 @@ WriteLiteral("\" title=\"Download the entire log as CSV\">Download</a></li>\r\n 
 
 
             
-            #line 20 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 21 "..\..\Views\ErrorLog\Index.cshtml"
         using(Html.BeginForm())
         {
 
@@ -161,7 +165,7 @@ WriteLiteral(@"            <table>
 
 
             
-            #line 36 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 37 "..\..\Views\ErrorLog\Index.cshtml"
                    var i = 1; 
 
             
@@ -169,7 +173,7 @@ WriteLiteral(@"            <table>
             #line hidden
 
             
-            #line 37 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 38 "..\..\Views\ErrorLog\Index.cshtml"
                  foreach(var errorLog in Model.Errors)
                 {
 
@@ -181,7 +185,7 @@ WriteLiteral("                    <tr>\r\n                        <td><input typ
 
 
             
-            #line 40 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 41 "..\..\Views\ErrorLog\Index.cshtml"
                                                      Write(errorLog.ID);
 
             
@@ -191,7 +195,7 @@ WriteLiteral("\" /></td>\r\n                        <td>");
 
 
             
-            #line 41 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 42 "..\..\Views\ErrorLog\Index.cshtml"
                         Write(i++);
 
             
@@ -201,7 +205,7 @@ WriteLiteral("</td>\r\n                        <td>");
 
 
             
-            #line 42 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 43 "..\..\Views\ErrorLog\Index.cshtml"
                        Write(errorLog.Host);
 
             
@@ -211,7 +215,7 @@ WriteLiteral("</td>\r\n                        <td>");
 
 
             
-            #line 43 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 44 "..\..\Views\ErrorLog\Index.cshtml"
                        Write(errorLog.Application);
 
             
@@ -221,7 +225,7 @@ WriteLiteral("</td>\r\n                        <td title=\"");
 
 
             
-            #line 44 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 45 "..\..\Views\ErrorLog\Index.cshtml"
                               Write(HttpWorkerRequest.GetStatusDescription(errorLog.Code.GetValueOrDefault()));
 
             
@@ -231,7 +235,7 @@ WriteLiteral("\">");
 
 
             
-            #line 44 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 45 "..\..\Views\ErrorLog\Index.cshtml"
                                                                                                           Write(errorLog.Code);
 
             
@@ -241,7 +245,7 @@ WriteLiteral("</td>\r\n                        <td title=\"");
 
 
             
-            #line 45 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 46 "..\..\Views\ErrorLog\Index.cshtml"
                               Write(errorLog.Type);
 
             
@@ -251,7 +255,7 @@ WriteLiteral("\">");
 
 
             
-            #line 45 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 46 "..\..\Views\ErrorLog\Index.cshtml"
                                               Write(errorLog.Type.ShortName());
 
             
@@ -261,7 +265,7 @@ WriteLiteral("</td>\r\n                        <td>");
 
 
             
-            #line 46 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 47 "..\..\Views\ErrorLog\Index.cshtml"
                        Write(errorLog.Message);
 
             
@@ -271,8 +275,8 @@ WriteLiteral(" ");
 
 
             
-            #line 46 "..\..\Views\ErrorLog\Index.cshtml"
-                                         Write(Html.ActionLink("Details…", "Default", "ErrorLog", new { id = errorLog.ID }, null));
+            #line 47 "..\..\Views\ErrorLog\Index.cshtml"
+                                         Write(Html.ActionLink("Details…", "Default", new { id = errorLog.ID }));
 
             
             #line default
@@ -281,7 +285,7 @@ WriteLiteral("</td>\r\n                        <td nowrap=\"nowrap\" title=\"");
 
 
             
-            #line 47 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 48 "..\..\Views\ErrorLog\Index.cshtml"
                                               Write(errorLog.Time);
 
             
@@ -291,7 +295,7 @@ WriteLiteral("\">");
 
 
             
-            #line 47 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 48 "..\..\Views\ErrorLog\Index.cshtml"
                                                               Write(errorLog.Time);
 
             
@@ -301,7 +305,7 @@ WriteLiteral("</td>\r\n                    </tr>\r\n");
 
 
             
-            #line 49 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 50 "..\..\Views\ErrorLog\Index.cshtml"
                 }
 
             
@@ -343,7 +347,7 @@ WriteLiteral(@"            <p class=""ui-helper-clearfix"">
 
 
             
-            #line 80 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 81 "..\..\Views\ErrorLog\Index.cshtml"
         }
     }
     else
@@ -356,7 +360,7 @@ WriteLiteral("        <p>No errors found.</p>\r\n");
 
 
             
-            #line 85 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 86 "..\..\Views\ErrorLog\Index.cshtml"
     }
 
             
@@ -364,7 +368,7 @@ WriteLiteral("        <p>No errors found.</p>\r\n");
             #line hidden
 
             
-            #line 86 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 87 "..\..\Views\ErrorLog\Index.cshtml"
 Write(Html.Partial("Footer"));
 
             
@@ -374,7 +378,7 @@ WriteLiteral("\r\n");
 
 
             
-            #line 87 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 88 "..\..\Views\ErrorLog\Index.cshtml"
 Write(Html.Partial("Scripts"));
 
             
@@ -384,7 +388,7 @@ WriteLiteral("\r\n");
 
 
             
-            #line 88 "..\..\Views\ErrorLog\Index.cshtml"
+            #line 89 "..\..\Views\ErrorLog\Index.cshtml"
 Write(Html.Partial("Plugins", Model.Plugins));
 
             
