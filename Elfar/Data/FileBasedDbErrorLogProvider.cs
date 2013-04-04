@@ -11,11 +11,12 @@ namespace Elfar.Data
     {
         protected override void SetConnectionString(string value)
         {
-            if(String.IsNullOrWhiteSpace(value)) value = DefaultConnectionString;
+            if(string.IsNullOrWhiteSpace(value)) value = DefaultConnectionString;
             if(value.StartsWith(dataDirectoryMacroString))
                 value = "Data Source=" + ConnectionString;
             base.SetConnectionString(value);
         }
+
         protected string DataDirectory
         {
             get

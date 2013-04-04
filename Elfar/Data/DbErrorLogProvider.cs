@@ -10,7 +10,7 @@ namespace Elfar.Data
     {
         protected DbErrorLogProvider()
         {
-            var connectionString = Settings.ConnectionString;
+            var connectionString = ConnectionString;
             if(string.IsNullOrWhiteSpace(connectionString)) connectionString = null;
             var connectionStrings = ConfigurationManager.ConnectionStrings;
             var settings = connectionStrings[connectionString ?? Properties.Resources.Elfar];
