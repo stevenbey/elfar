@@ -6,11 +6,6 @@ namespace Elfar.Mail
 {
     public class ErrorLogPlugin : IErrorLogPlugin
     {
-        public ErrorLogPlugin()
-        {
-            if(Settings == null) Settings = new Settings();
-        }
-
         public void Execute(ErrorLog errorLog)
         {
             if(string.IsNullOrWhiteSpace(Settings.To)) return;
@@ -25,7 +20,5 @@ namespace Elfar.Mail
                 email.Attach(Attachment.CreateAttachmentFromString(errorLog.Html, "Original ASP.NET error page.html", Encoding.UTF8, "text/html"));
             email.SendAsync();
         }
-
-        public static Settings Settings { get; set; }
     }
 }

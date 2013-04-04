@@ -17,7 +17,7 @@ namespace Elfar.Mvc
             this.provider = provider;
             this.plugins = plugins;
 
-            assemblies = new List<Assembly>(plugins.Select(p => p.GetType().Assembly));
+            assemblies = plugins.Select(p => p.GetType().Assembly).ToArray();
         }
         
         public DefaultResult Default(Guid id)
@@ -92,16 +92,14 @@ namespace Elfar.Mvc
 
         FileStreamResult ResourceFile(string name, string ext, string contentType)
         {
-            return File
-            (
-                GetType().Assembly.GetManifestResourceStream("Elfar.Mvc.Resources." + name + "." + ext) ??
-                    assemblies.Select(a => a.GetManifestResourceStream(a.GetName().Name + ".Resources." + name + "." + ext)).Single(),
-                contentType
-            );
+            var resource = ".Resources." + name + "." + ext;
+            var stream = GetType().Assembly.GetManifestResourceStream("Elfar.Mvc" + resource) ??
+                            assemblies.Select(a => a.GetManifestResourceStream(a.GetName().Name + resource)).FirstOrDefault();
+            return stream == null ? null : File(stream, contentType);
         }
 
-        readonly List<Assembly> assemblies;
         readonly IErrorLogProvider provider;
         readonly IErrorLogPlugin[] plugins;
+        readonly Assembly[] assemblies;
     }
 }

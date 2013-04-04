@@ -6,7 +6,7 @@ using System.Web.Routing;
 [assembly: WebActivator.PreApplicationStartMethod(typeof(Elfar.Web.App_Start.Elfar), "Init")]
 namespace Elfar.Web.App_Start
 {
-    public static partial class Elfar
+    public static class Elfar
     {
         public static void Init()
         {
@@ -15,6 +15,7 @@ namespace Elfar.Web.App_Start
             //global::Elfar.Settings.Path = null;
             //global::Elfar.Mvc.Settings.Constraints = null;
             //global::Elfar.Mvc.Settings.Exclude = null;
+            global::Elfar.Mail.Settings.To = "a@aa.aaa";
 
             UpdateViewEngines(ViewEngines.Engines);
 

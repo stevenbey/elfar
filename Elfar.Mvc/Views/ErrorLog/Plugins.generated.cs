@@ -43,7 +43,11 @@ namespace Elfar.Mvc.Views.ErrorLog
             #line 2 "..\..\Views\ErrorLog\Plugins.cshtml"
  foreach(var plugin in Model)
 {
-    Html.RenderPartial(plugin.Name());
+    try
+    {
+        Html.RenderPartial(plugin.Name());
+    }
+    catch(Exception) {}
 }
             
             #line default

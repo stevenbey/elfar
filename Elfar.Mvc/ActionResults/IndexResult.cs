@@ -11,6 +11,7 @@ namespace Elfar.Mvc.ActionResults
             this.plugins = plugins;
             Provider = provider;
         }
+
         public override void ExecuteResult(ControllerContext context)
         {
             try

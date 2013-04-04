@@ -2,14 +2,14 @@ using System;
 
 namespace Elfar.Twitter
 {
-    public class Settings
+    public static class Settings
     {
-        public string Ellipsis { get; set; }
-        public string FormFormat { get; set; }
-        public int? MaxStatusLength { get; set; }
-        public string Password { get; set; }
-        public Func<ErrorLog, string> Status { get; set; }
-        public string Url { get; set; }
-        public string Username { get; set; }
+        public static string Ellipsis { get; set; }
+        public static string FormFormat { get; set; }
+        public static int? MaxStatusLength { get; set; }
+        public static string Password { get; set; }
+        public static Func<ErrorLog, string> Status { get; set; }
+        public static string Url { get; set; }
+        public static string Username { get; set; }
     }
 }

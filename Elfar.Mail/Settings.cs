@@ -1,10 +1,10 @@
 namespace Elfar.Mail
 {
-    public class Settings
+    public static class Settings
     {
-        public bool AttachOriginalError { get; set; }
-        public string From { get; set; }
-        public string SubjectFormat { get; set; }
-        public string To { get; set; }
+        public static bool AttachOriginalError { get; set; }
+        public static string From { get; set; }
+        public static string SubjectFormat { get; set; }
+        public static string To { get; set; }
     }
 }

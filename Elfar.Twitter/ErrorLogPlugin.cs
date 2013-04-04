@@ -6,11 +6,6 @@ namespace Elfar.Twitter
 {
     public class ErrorLogPlugin : IErrorLogPlugin
     {
-        public ErrorLogPlugin()
-        {
-            if(Settings == null) Settings = new Settings();
-        }
-
         public void Execute(ErrorLog errorLog)
         {
             new WebClient
@@ -33,8 +28,6 @@ namespace Elfar.Twitter
             return string.Format(Settings.FormFormat ?? "status={0}", HttpUtility.UrlEncode(status));
         }
 
-        public static Settings Settings { get; set; }
-        
         static NetworkCredential Credentials
         {
             get
