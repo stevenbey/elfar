@@ -47,7 +47,7 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ErrorLog.cs">
+    <Compile Include="WebApiErrorLog.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ErrorLogController.cs" />

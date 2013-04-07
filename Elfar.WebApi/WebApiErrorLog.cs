@@ -2,11 +2,11 @@
 
 namespace Elfar.WebApi
 {
-    public class ErrorLog
+    public class WebApiErrorLog
     {
-        public static explicit operator ErrorLog(Elfar.ErrorLog errorLog)
+        public static explicit operator WebApiErrorLog(ErrorLog errorLog)
         {
-            return new ErrorLog
+            return new WebApiErrorLog
             {
                 Application = errorLog.Application,
                 Code = errorLog.Code,

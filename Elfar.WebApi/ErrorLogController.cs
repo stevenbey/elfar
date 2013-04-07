@@ -9,18 +9,18 @@ namespace Elfar.WebApi
 {
     public class ErrorLogController : ApiController
     {
-        public IEnumerable<ErrorLog> Get()
+        public IEnumerable<WebApiErrorLog> Get()
         {
-            try { return Execute(p => p.List()).Select(errorLog => (ErrorLog)errorLog); }
+            try { return Execute(p => p.List()).Select(errorLog => (WebApiErrorLog)errorLog); }
             catch(Exception e) { throw new ErrorLogException(e); }
         }
-        public ErrorLog Get(Guid id)
+        public WebApiErrorLog Get(Guid id)
         {
-            Elfar.ErrorLog errorLog;
+            ErrorLog errorLog;
             try { errorLog = Execute(p => p.Get(id)); }
             catch (Exception e) { throw new ErrorLogException(e); }
             if (errorLog == null) throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
-            return (ErrorLog) errorLog;
+            return (WebApiErrorLog) errorLog;
         }
 
         T Execute<T>(Func<IErrorLogProvider, T> func)
