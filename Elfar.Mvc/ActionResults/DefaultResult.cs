@@ -5,7 +5,7 @@ namespace Elfar.Mvc.ActionResults
 {
     class DefaultResult : ActionResult
     {
-        public DefaultResult(Guid id, IErrorLogProvider provider, Func<Elfar.ErrorLog, ActionResult> success)
+        public DefaultResult(Guid id, IErrorLogProvider provider, Func<ErrorLog, ActionResult> success)
         {
             this.id = id;
             this.provider = provider;
@@ -26,6 +26,6 @@ namespace Elfar.Mvc.ActionResults
 
         readonly Guid id;
         readonly IErrorLogProvider provider;
-        readonly Func<Elfar.ErrorLog, ActionResult> success;
+        readonly Func<ErrorLog, ActionResult> success;
     }
 }

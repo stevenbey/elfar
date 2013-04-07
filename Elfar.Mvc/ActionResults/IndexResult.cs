@@ -20,7 +20,8 @@ namespace Elfar.Mvc.ActionResults
                 {
                     Application = Provider.Application,
                     Errors = Provider.List(),
-                    Plugins = plugins
+                    Plugins = plugins,
+                    Provider = Provider.GetType().Name
                 };
             }
             catch(Exception e)

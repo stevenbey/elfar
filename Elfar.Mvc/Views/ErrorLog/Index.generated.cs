@@ -45,7 +45,7 @@ WriteLiteral("\r\n");
 
             
             #line 3 "..\..\Views\ErrorLog\Index.cshtml"
-   var title = string.Format("Error Log for [{0}] on [{1}]", Model.Application, Server.MachineName); 
+   var title = string.Format("Error Log for [{0}] on [{1}] using {2}", Model.Application, Server.MachineName, Model.Provider); 
 
             
             #line default

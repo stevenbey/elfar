@@ -41,7 +41,7 @@ namespace Elfar.Mvc.Models
             const string header = "Host,Application,ID,Time,Type,Source,User,Code,Message,URL,XMLREF,JSONREF";
             builder.AppendLine(header);
         }
-        void AppendLine(Elfar.ErrorLog errorLog)
+        void AppendLine(ErrorLog errorLog)
         {
             const string format = @"{0},{1},{2},{3},{4},""{5}"",""{6}"",{7},""{8}"",{9},{10},{11}";
             builder.AppendFormat(

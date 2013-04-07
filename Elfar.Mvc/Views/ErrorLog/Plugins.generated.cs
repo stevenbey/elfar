@@ -45,7 +45,20 @@ namespace Elfar.Mvc.Views.ErrorLog
 {
     try
     {
-        Html.RenderPartial(plugin.Name());
+        
+            
+            #line default
+            #line hidden
+            
+            #line 6 "..\..\Views\ErrorLog\Plugins.cshtml"
+   Write(Html.Partial(plugin.Name()));
+
+            
+            #line default
+            #line hidden
+            
+            #line 6 "..\..\Views\ErrorLog\Plugins.cshtml"
+                                    
     }
     catch(Exception) {}
 }

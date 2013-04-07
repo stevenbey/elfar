@@ -2,7 +2,7 @@
 {
     public class Default
     {
-        public Elfar.ErrorLog ErrorLog { get; set; }
+        public ErrorLog ErrorLog { get; set; }
         public StackTrace StackTrace
         {
             get
