@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.Composition.Hosting;
 using System.Linq;
 using System.Reflection;
@@ -15,14 +16,11 @@ namespace Elfar
 
         public static T Create<T>()
         {
-            try
-            {
-                return compositionContainer.GetExport<T>().Value;
-            }
-            catch(Exception)
-            {
-                return default(T);
-            }
+            return compositionContainer.GetExportedValueOrDefault<T>();
+        }
+        public static IEnumerable<T> CreateMany<T>()
+        {
+            return compositionContainer.GetExportedValues<T>();
         }
 
         static bool IsElfarAssembly(Assembly assembly)

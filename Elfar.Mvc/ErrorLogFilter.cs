@@ -32,7 +32,7 @@ namespace Elfar.Mvc
 
         IEnumerable<IErrorLogPlugin> Plugins
         {
-            get { return plugins ?? (plugins = Components.Create<IEnumerable<IErrorLogPlugin>>()); }
+            get { return plugins ?? (plugins = new List<IErrorLogPlugin>(Components.CreateMany<IErrorLogPlugin>())); }
         }
         IErrorLogProvider Provider
         {
