@@ -1,7 +1,8 @@
 ﻿// ReSharper disable Mvc.ActionNotResolved
-// ReSharper disable UnusedMember.Global
+// ReSharper disable UnusedAutoPropertyAccessor.Local
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
@@ -10,14 +11,13 @@ using Elfar.Mvc.Models;
 
 namespace Elfar.Mvc
 {
+    [Export, PartCreationPolicy(CreationPolicy.NonShared)]
     class ErrorLogController : AsyncController
     {
-        public ErrorLogController(IErrorLogProvider provider, IErrorLogPlugin[] plugins)
+        [ImportingConstructor]
+        public ErrorLogController(IErrorLogProvider provider)
         {
             this.provider = provider;
-            this.plugins = plugins;
-
-            assemblies = plugins.Select(p => p.GetType().Assembly).ToArray();
         }
         
         public DefaultResult Default(Guid id)
@@ -61,7 +61,7 @@ namespace Elfar.Mvc
         }
         public IndexResult Index()
         {
-            return new IndexResult(provider, plugins);
+            return new IndexResult(provider, Plugins);
         }
         public new FileStreamResult JavaScript(string file = "JavaScript")
         {
@@ -93,13 +93,18 @@ namespace Elfar.Mvc
         FileStreamResult ResourceFile(string name, string ext, string contentType)
         {
             var resource = ".Resources." + name + "." + ext;
-            var stream = GetType().Assembly.GetManifestResourceStream("Elfar.Mvc" + resource) ??
-                            assemblies.Select(a => a.GetManifestResourceStream(a.GetName().Name + resource)).FirstOrDefault();
+            var stream = Assemblies.Select(a => a.GetManifestResourceStream(a.GetName().Name + resource)).FirstOrDefault();
             return stream == null ? null : File(stream, contentType);
         }
 
+        IEnumerable<Assembly> Assemblies
+        {
+            get { return assemblies ?? (assemblies = new List<Assembly>(Plugins.Select(p => p.GetType().Assembly)) { GetType().Assembly }); }
+        }
+        [ImportMany]
+        IErrorLogPlugin[] Plugins { get; set; }
+
+        IEnumerable<Assembly> assemblies;
         readonly IErrorLogProvider provider;
-        readonly IErrorLogPlugin[] plugins;
-        readonly Assembly[] assemblies;
     }
 }

@@ -1,25 +1,18 @@
 ﻿using System;
-using System.ComponentModel.Composition;
+using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace Elfar.Mvc
 {
-    [Export]
     public class ErrorLogFilter : FilterAttribute, IExceptionFilter
     {
-        [ImportingConstructor]
-        public ErrorLogFilter(IErrorLogProvider provider)
-        {
-            this.provider = provider;
-        }
-
         public void OnException(ExceptionContext exceptionContext)
         {
             if(Exclude(exceptionContext)) return;
 
-            var errorLog = new MvcErrorLog(provider.Application, exceptionContext).ToErrorLog();
+            var errorLog = new MvcErrorLog(Provider.Application, exceptionContext).ToErrorLog();
 
-            if(!(exceptionContext.Exception is ErrorLogException)) TryExecute(provider.Save, errorLog);
+            if(!(exceptionContext.Exception is ErrorLogException)) TryExecute(Provider.Save, errorLog);
 
             foreach(var plugin in Plugins)
             {
@@ -37,9 +30,16 @@ namespace Elfar.Mvc
             catch(Exception) { }
         }
 
-        [ImportMany]
-        public IErrorLogPlugin[] Plugins { get; set; }
+        IEnumerable<IErrorLogPlugin> Plugins
+        {
+            get { return plugins ?? (plugins = Components.Create<IEnumerable<IErrorLogPlugin>>()); }
+        }
+        IErrorLogProvider Provider
+        {
+            get { return provider ?? (provider = Components.Create<IErrorLogProvider>()); }
+        }
 
-        readonly IErrorLogProvider provider;
+        IEnumerable<IErrorLogPlugin> plugins;
+        IErrorLogProvider provider;
     }
 }

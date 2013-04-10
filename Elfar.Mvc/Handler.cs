@@ -7,10 +7,10 @@ namespace Elfar.Mvc
 {
     class Handler : IHttpAsyncHandler
     {
-        public Handler(RequestContext requestContext, IErrorLogProvider provider, IErrorLogPlugin[] plugins)
+        public Handler(RequestContext requestContext)
         {
             this.requestContext = requestContext;
-            controller = new ErrorLogController(provider, plugins);
+            controller = Components.Create<ErrorLogController>();
         }
 
         public IAsyncResult BeginProcessRequest(HttpContext context, AsyncCallback cb, object extraData)

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.Linq;
 using System.Web;
 using System.Web.Routing;
@@ -7,11 +6,9 @@ using Elfar.Mvc.RouteConstraints;
 
 namespace Elfar.Mvc
 {
-    [Export]
     public class ErrorLogRoute : Route
     {
-        [ImportingConstructor]
-        public ErrorLogRoute(RouteHandler routeHandler) : base("elfar/{action}", routeHandler)
+        public ErrorLogRoute() : base("elfar/{action}", new RouteHandler())
         {
             var constraints = Settings.Constraints == null
                             ? new Dictionary<string, object>()
