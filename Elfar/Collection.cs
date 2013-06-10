@@ -10,9 +10,11 @@ using System.Xml.Serialization;
 
 namespace Elfar
 {
-    public sealed class Collection : Dictionary<string, string>, IXmlSerializable
+    using dictionary = Dictionary<string, string>;
+
+    public sealed class Collection : NameValueCollection, IXmlSerializable
     {
-        public void Add(NameValueCollection nvc)
+        public new void Add(NameValueCollection nvc)
         {
             if(nvc == null) return;
             for (var i = 0; i < nvc.Count; i++)
@@ -35,7 +37,6 @@ namespace Elfar
             foreach (var key in cookies.AllKeys)
                 Add(key, cookies[key].Value);
         }
-
         public XmlSchema GetSchema()
         {
             return null;
@@ -54,17 +55,19 @@ namespace Elfar
         }
         public override string ToString()
         {
-            return serializer.Serialize(this);
+            var d = new dictionary();
+            Each(d.Add);
+            return serializer.Serialize(d);
         }
         public void WriteXml(XmlWriter writer)
         {
-            foreach (var key in Keys)
+            Each((key, value) =>
             {
                 writer.WriteStartElement("item");
                 writer.WriteAttributeString("key", key);
-                writer.WriteString(this[key]);
+                writer.WriteString(value);
                 writer.WriteEndElement();
-            }
+            });
         }
 
         public static implicit operator string(Collection c)
@@ -73,10 +76,26 @@ namespace Elfar
         }
         public static implicit operator Collection(string s)
         {
-            return string.IsNullOrWhiteSpace(s) ? Empty : serializer.Deserialize<Collection>(s);
+            if(string.IsNullOrWhiteSpace(s) || s == "{}") return Empty;
+            return new Collection { serializer.Deserialize<dictionary>(s) };
         }
 
-        static readonly Collection Empty = new Collection();
+        void Add(dictionary d)
+        {
+            foreach(var pair in d)
+            {
+                Add(pair.Key, pair.Value);
+            }
+        }
+        void Each(Action<string, string> func)
+        {
+            foreach(var key in AllKeys)
+            {
+                func(key, this[key]);
+            }
+        }
+
+        static readonly Collection Empty = new Collection { IsReadOnly = true };
 
         static readonly JavaScriptSerializer serializer = new JavaScriptSerializer();
     }
