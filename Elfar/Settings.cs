@@ -1,9 +1,7 @@
 namespace Elfar
 {
-    public static class Settings
+    public class Settings
     {
-        public static string Application { get; set; }
-        public static string ConnectionString { get; set; }
-        public static string Path { get; set; }
+        public string Application { get; set; }
     }
 }

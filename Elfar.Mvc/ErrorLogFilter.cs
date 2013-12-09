@@ -8,9 +8,9 @@ namespace Elfar.Mvc
     {
         public void OnException(ExceptionContext exceptionContext)
         {
-            if(Exclude(exceptionContext)) return;
+            if (Exclude(exceptionContext)) return;
 
-            var errorLog = new MvcErrorLog(Provider.Application, exceptionContext).ToErrorLog();
+            var errorLog = new ErrorLog(Provider.Application, exceptionContext);
 
             if(!(exceptionContext.Exception is ErrorLogException)) TryExecute(Provider.Save, errorLog);
 
@@ -20,14 +20,16 @@ namespace Elfar.Mvc
             }
         }
 
-        static bool Exclude(ExceptionContext exceptionContext)
-        {
-            return Settings.Exclude != null && Settings.Exclude(exceptionContext);
-        }
         static void TryExecute(Action<ErrorLog> action, ErrorLog errorLog)
         {
             try { action(errorLog); }
-            catch(Exception) { }
+            catch (Exception) { }
+        }
+
+        public static Predicate<ExceptionContext> Exclude
+        {
+            get { return exclude ?? (exclude = (c => false)); }
+            set { exclude = value; }
         }
 
         IEnumerable<IErrorLogPlugin> Plugins
@@ -39,6 +41,7 @@ namespace Elfar.Mvc
             get { return provider ?? (provider = Components.Create<IErrorLogProvider>()); }
         }
 
+        static Predicate<ExceptionContext> exclude;
         IEnumerable<IErrorLogPlugin> plugins;
         IErrorLogProvider provider;
     }

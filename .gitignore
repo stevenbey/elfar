@@ -7,7 +7,7 @@ app_data
 *.suo
 _Resharper*
 nuget
-packages*
+packages/
 
 # mstest test results
 TestResults

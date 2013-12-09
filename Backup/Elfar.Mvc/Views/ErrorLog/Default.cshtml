@@ -1,0 +1,61 @@
+﻿@* ReSharper disable Mvc.ActionNotResolved *@
+@model Elfar.Mvc.Models.Default
+@{
+    var errorLog = Model.ErrorLog;
+    var id = errorLog.ID;
+ }
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+		<title>Error: @errorLog.Type [@id]</title>
+        <link rel="stylesheet" type="text/css" href="@Url.Action("Stylesheet")" />
+	</head>
+	<body>
+		<h1>@errorLog.Message</h1>
+		<ul id="navigation">
+			<li><a id="back" href="@Url.Action("Index")" title="Back to the list of error logs">Back</a></li>
+		</ul>
+        <p id="title"><span id="error-type">@errorLog.Type</span><span id="separator">: </span><span id="error-message">@errorLog.Message</span></p>
+		<pre id="stack-trace">@Html.DisplayFor(m => m.StackTrace)</pre>
+        @{ var date = errorLog.Time; }
+		<p>Logged on @date.ToLongDateString() at @date.ToShortTimeString() (Local)</p>
+		<p>See also: (opens in new window)</p>
+        <ul>
+            @if(!string.IsNullOrWhiteSpace(errorLog.Html))
+            {
+                <li>
+                    The <a id="show-html" href="#">original ASP.NET error page</a>.
+                    <div id="dialog" title="Original ASP.NET error page">
+                        <iframe src="@Url.Action("Html", new { id })" width="100%" height="100%" />
+                    </div>
+                </li>
+            }
+            <li>Raw/Source data in <a href="@Url.Action("Xml", new { id })?download=true" rel="alternate" type="application/xml">XML</a> or
+                <a href="@Url.Action("Json", new { id })?download=true" rel="alternate" type="application/json">JSON</a> format.</li>
+        </ul>
+        <div id="tabs">
+            <ul>
+                <li><a href="#server-variables">Server Variables</a></li>
+                <li><a href="#form">Form</a></li>
+                <li><a href="#querystring">QueryString</a></li>
+                <li><a href="#cookies">Cookies</a></li>
+            </ul>
+            <div id="server-variables">
+@Html.DisplayFor(m => m.ErrorLog.ServerVariables)
+            </div>
+            <div id="form">
+@Html.DisplayFor(m => m.ErrorLog.Form)
+            </div>
+            <div id="querystring">
+@Html.DisplayFor(m => m.ErrorLog.QueryString)
+            </div>
+            <div id="cookies">
+@Html.DisplayFor(m => m.ErrorLog.Cookies)
+            </div>
+        </div>
+@{ Html.RenderPartial("Footer"); }
+	</body>
+    <script type="text/javascript" src="@Url.Action("JavaScript")"></script>
+    <script type="text/javascript" src="@Url.Action("JavaScript")?file=Default"></script>
+</html>

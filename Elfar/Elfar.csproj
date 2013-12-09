@@ -44,14 +44,9 @@
   <ItemGroup>
     <Compile Include="Collection.cs" />
     <Compile Include="Components.cs" />
-    <Compile Include="Data\DbErrorLog.cs" />
-    <Compile Include="Data\DbErrorLogProvider.cs" />
-    <Compile Include="Data\DbQueries.cs" />
-    <Compile Include="FileBasedErrorLogProvider.cs" />
+    <Compile Include="Data\Settings.cs" />
+    <Compile Include="IO\Settings.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="Data\FileBasedDbErrorLogProvider.cs" />
-    <Compile Include="Data\IDbQueries.cs" />
-    <Compile Include="Data\SqlMapper.cs" />
     <Compile Include="ErrorLog.cs" />
     <Compile Include="ErrorLogException.cs" />
     <Compile Include="ErrorLogProvider.cs" />
@@ -72,6 +67,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,34 +1,18 @@
-using System;
 using System.Collections.Generic;
 
 namespace Elfar
 {
     public abstract class ErrorLogProvider : IErrorLogProvider
     {
-        public abstract void Delete(Guid id);
-        public abstract ErrorLog Get(Guid id);
-        public abstract IList<ErrorLog> List();
+        public abstract void Delete(int id);
         public abstract void Save(ErrorLog errorLog);
 
-        protected virtual void SetConnectionString(string value)
-        {
-            Settings.ConnectionString = value;
-        }
-        protected static void TryExecute(Action action)
-        {
-            try { action(); }
-            catch(Exception) { }
-        }
-
+        public abstract IEnumerable<ErrorLog> All { get; }
         public string Application
         {
             get { return Settings.Application; }
         }
         
-        protected string ConnectionString
-        {
-            get { return Settings.ConnectionString; }
-            set { SetConnectionString(value); }
-        }
+        public static Settings Settings = new Settings();
     }
 }

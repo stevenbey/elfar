@@ -1,44 +1,28 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Routing;
-using Elfar.Mvc.RouteConstraints;
 
 namespace Elfar.Mvc
 {
-    public class ErrorLogRoute : Route
+    public class ErrorLogRoute
     {
-        public ErrorLogRoute() : base("elfar/{action}", new RouteHandler())
+        internal class Route : System.Web.Routing.Route
         {
-            var constraints = Settings.Constraints == null
-                            ? new Dictionary<string, object>()
-                            : Settings.Constraints.Where(c => c != null).ToDictionary(k => string.Empty, c => (object) c);
-
-            var defaults = new RouteValueDictionary
-            {
-                { "namespaces", new[] { "Elfar" } },
-                { "controller", "ErrorLog" }
-            };
-
-            withID = new Route("elfar/{id}/{action}", RouteHandler)
-            {
-                Defaults = new RouteValueDictionary(defaults) { { "action", "Default" } },
-                Constraints = new RouteValueDictionary(constraints) { { "id", new GuidConstraint() } }
-            };
-
-            Defaults = new RouteValueDictionary(defaults) { { "action", "Index" } };
-            Constraints = new RouteValueDictionary(constraints);
+            public Route() : base
+            (
+                "elfar/{action}",
+                new RouteValueDictionary { { "action", "Default" }, { "controller", "ErrorLog" }, { "namespaces", new[] { "Elfar" } } },
+                new RouteValueDictionary(ErrorLogRoute.Constraints.Where(c => c != null).ToDictionary(k => string.Empty, c => (object) c)),
+                new RouteHandler()
+            ) {}
         }
 
-        public override RouteData GetRouteData(HttpContextBase httpContext)
+        public static IEnumerable<IRouteConstraint> Constraints
         {
-            return withID.GetRouteData(httpContext) ?? base.GetRouteData(httpContext);
-        }
-        public override VirtualPathData GetVirtualPath(RequestContext requestContext, RouteValueDictionary values)
-        {
-            return withID.GetVirtualPath(requestContext, values) ?? base.GetVirtualPath(requestContext, values);
+            get { return constraints ?? (constraints = new IRouteConstraint[0]); }
+            set { constraints = value; }
         }
 
-        readonly Route withID;
+        static IEnumerable<IRouteConstraint> constraints;
     }
 }

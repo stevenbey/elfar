@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.Composition;
 
 namespace Elfar
@@ -7,11 +6,10 @@ namespace Elfar
     [InheritedExport]
     public interface IErrorLogProvider
     {
-        void Delete(Guid id);
-        ErrorLog Get(Guid id);
-        IList<ErrorLog> List();
+        void Delete(int id);
         void Save(ErrorLog errorLog);
 
+        IEnumerable<ErrorLog> All { get; }
         string Application { get; }
     }
 }

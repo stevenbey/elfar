@@ -17,7 +17,7 @@ namespace Elfar.Mvc
             VirtualPathFactoryManager.RegisterVirtualPathFactory(engine);
 
             GlobalFilters.Filters.Add(new ErrorLogFilter());
-            RouteTable.Routes.Insert(0, new ErrorLogRoute());
+            RouteTable.Routes.Insert(0, new ErrorLogRoute.Route());
         }
     }
 }

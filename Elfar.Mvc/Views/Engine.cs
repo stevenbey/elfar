@@ -20,7 +20,7 @@ namespace Elfar.Mvc.Views
             FileExtensions = new[] { "cshtml" };
             mappings = assemblies.SelectMany(a => a.GetTypes())
                                  .Where(typeof(WebViewPage).IsAssignableFrom)
-                                 .Select(type => new { type, VirtualPath = GetVirtualPath(type) })
+                                 .Select(type => new { type, type.GetCustomAttributes(false).OfType<PageVirtualPathAttribute>().First().VirtualPath })
                                  .ToDictionary(p => p.VirtualPath, p => p.type, StringComparer.OrdinalIgnoreCase);
         }
 
@@ -46,11 +46,6 @@ namespace Elfar.Mvc.Views
         protected override bool FileExists(ControllerContext controllerContext, string virtualPath)
         {
             return Exists(virtualPath);
-        }
-        
-        static string GetVirtualPath(Type type)
-        {
-            return type.GetCustomAttributes(false).OfType<PageVirtualPathAttribute>().First().VirtualPath;
         }
         
         readonly IDictionary<string, Type> mappings;
