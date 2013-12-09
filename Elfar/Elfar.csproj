@@ -46,6 +46,7 @@
     <Compile Include="Components.cs" />
     <Compile Include="Data\Settings.cs" />
     <Compile Include="IO\Settings.cs" />
+    <Compile Include="Json.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="ErrorLog.cs" />
     <Compile Include="ErrorLogException.cs" />

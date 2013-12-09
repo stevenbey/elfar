@@ -94,6 +94,7 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="FormActionAttribute.cs" />
     <Compile Include="Handler.cs" />
+    <Compile Include="Json.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RouteConstraints\AdminConstraint.cs" />
     <Compile Include="RouteConstraints\DeveloperConstraint.cs" />
