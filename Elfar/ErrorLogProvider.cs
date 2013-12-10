@@ -31,9 +31,13 @@ namespace Elfar
             get { return settings ?? (settings = new Settings()); }
             set { settings = value; }
         }
+        public static Type Type
+        {
+            get { return Instance.GetType(); }
+        }
         public static string Version
         {
-            get { return Instance.GetType().Assembly.GetName().Version.ToString(); }
+            get { return Type.Assembly.GetName().Version.ToString(); }
         }
         
         static IErrorLogProvider Instance

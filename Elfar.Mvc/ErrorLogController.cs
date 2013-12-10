@@ -1,16 +1,14 @@
-﻿// ReSharper disable Mvc.ActionNotResolved
-// ReSharper disable UnusedAutoPropertyAccessor.Local
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.Composition;
-using System.Linq;
-using System.Reflection;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+
 namespace Elfar.Mvc
 {
     //[Export, PartCreationPolicy(CreationPolicy.NonShared)]
     class ErrorLogController : AsyncController
     {
+        public ViewResult Default()
+        {
+            return View();
+        }
         //[ImportingConstructor]
         //public ErrorLogController(IErrorLogProvider provider)
         //{
