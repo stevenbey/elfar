@@ -10,7 +10,7 @@ namespace Elfar.Mvc
 
     class Json : Elfar.Json
     {
-        public Json(Exception exception, RouteData routeData = null, HttpContextBase context = null) : base(exception)
+        public Json(Exception exception, RouteData routeData, HttpContextBase context) : base(exception)
         {
             var httpException = exception as HttpException;
 
