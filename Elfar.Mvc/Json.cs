@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Web;
-using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace Elfar.Mvc
@@ -11,7 +10,7 @@ namespace Elfar.Mvc
 
     class Json : Elfar.Json
     {
-        public Json(Exception exception, RouteData routeData, HttpContextBase context) : base(exception)
+        public Json(Exception exception, RouteData routeData = null, HttpContextBase context = null) : base(exception)
         {
             var httpException = exception as HttpException;
 
@@ -20,9 +19,6 @@ namespace Elfar.Mvc
                 Code = httpException.GetHttpCode();
                 Html = httpException.GetHtmlErrorMessage();
             }
-
-            try { Host = context.Server.MachineName; }
-            catch(HttpException) { }
 
             var route = routeData.Route as Route;
             if(route != null) RouteUrl = route.Url;
@@ -36,6 +32,9 @@ namespace Elfar.Mvc
             DataTokens = (Dictionary) routeData.DataTokens;
 
             Area = ToTitle(DataTokens["area"]);
+            
+            try { Host = context.Server.MachineName; }
+            catch(HttpException) { }
 
             var user = context.User;
             if(!(user == null || string.IsNullOrWhiteSpace(user.Identity.Name))) User = user.Identity.Name;
@@ -50,11 +49,6 @@ namespace Elfar.Mvc
             Form = (Dictionary) request.Form;
             QueryString = (Dictionary) request.QueryString;
             ServerVariables = (Dictionary) request.ServerVariables;
-        }
-        
-        public static implicit operator Json(string json)
-        {
-            return Serializer.Deserialize<Json>(json);
         }
 
         static string ToTitle(string value)

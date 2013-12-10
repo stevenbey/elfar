@@ -7,7 +7,7 @@ namespace Elfar
 {
     public class Json
     {
-        protected Json(Exception exception)
+        public Json(Exception exception)
         {
             if(exception == null) throw new ArgumentNullException("exception");
 
@@ -28,14 +28,6 @@ namespace Elfar
             ID = Math.Abs((Host + Type + Time + User).GetHashCode() + exception.GetHashCode() + @base.GetHashCode());
         }
 
-        public static explicit operator Json(Exception exception)
-        {
-            return new Json(exception);
-        }
-        public static implicit operator Json(string json)
-        {
-            return Serializer.Deserialize<Json>(json);
-        }
         public static implicit operator string(Json json)
         {
             return json.ToString();
