@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-[assembly: WebActivator.PreApplicationStartMethod(typeof(Elfar.Web.App_Start.Elfar), "Init")]
+[assembly: PreApplicationStartMethod(typeof(Elfar.Web.App_Start.Elfar), "Init")]
 namespace Elfar.Web.App_Start
 {
     public static class Elfar

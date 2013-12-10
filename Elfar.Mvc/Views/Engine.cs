@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Web.Mvc;
 using System.Web.WebPages;
 
@@ -9,7 +8,7 @@ namespace Elfar.Mvc.Views
 {
     public class Engine : VirtualPathProviderViewEngine, IVirtualPathFactory
     {
-        public Engine(params Assembly[] assemblies)
+        public Engine()
         {
             AreaViewLocationFormats = new string[0];
             AreaMasterLocationFormats = new string[0];
@@ -18,7 +17,7 @@ namespace Elfar.Mvc.Views
             MasterLocationFormats = new[] { "~/Views/{1}/{0}.cshtml" };
             PartialViewLocationFormats = new[] { "~/Views/{1}/{0}.cshtml" };
             FileExtensions = new[] { "cshtml" };
-            mappings = assemblies.SelectMany(a => a.GetTypes())
+            mappings = Components.Assemblies.SelectMany(a => a.GetTypes())
                                  .Where(typeof(WebViewPage).IsAssignableFrom)
                                  .Select(type => new { type, type.GetCustomAttributes(false).OfType<PageVirtualPathAttribute>().First().VirtualPath })
                                  .ToDictionary(p => p.VirtualPath, p => p.type, StringComparer.OrdinalIgnoreCase);
