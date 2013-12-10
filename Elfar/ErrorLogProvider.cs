@@ -9,22 +9,21 @@ namespace Elfar
         {
             if(Instance == null) return;
             try { Instance.Delete(id); }
-            catch(Exception) { }
+            catch(Exception e) { throw new ErrorLogException(e); }
         }
         public static void Save(ErrorLog errorLog)
         {
             if(Instance == null) return;
             try { Instance.Save(errorLog); }
-            catch(Exception) {}
+            catch(Exception e) { throw new ErrorLogException(e); }
         }
 
         public static IEnumerable<ErrorLog> All
         {
             get
             {
-                try { if(Instance != null) return Instance.All; }
-                catch(Exception) {}
-                return new ErrorLog[0];
+                try { return Instance == null ? new ErrorLog[0] : Instance.All; }
+                catch(Exception e) { throw new ErrorLogException(e); }
             }
         }
         public static Settings Settings
