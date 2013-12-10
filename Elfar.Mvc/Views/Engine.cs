@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.WebPages;
 
 namespace Elfar.Mvc.Views
 {
-    public class Engine : VirtualPathProviderViewEngine, IVirtualPathFactory
+    class Engine : VirtualPathProviderViewEngine, IVirtualPathFactory
     {
         public Engine()
         {
@@ -48,5 +49,28 @@ namespace Elfar.Mvc.Views
         }
         
         readonly IDictionary<string, Type> mappings;
+
+        class View : IView
+        {
+            public View(string virtualPath, Type type)
+            {
+                this.type = type;
+                this.virtualPath = virtualPath;
+            }
+
+            public void Render(ViewContext viewContext, TextWriter writer)
+            {
+                var webViewPage = Activator.CreateInstance(type) as WebViewPage;
+                if (webViewPage == null) throw new InvalidOperationException("Invalid view type");
+                webViewPage.VirtualPath = virtualPath;
+                webViewPage.ViewContext = viewContext;
+                webViewPage.ViewData = viewContext.ViewData;
+                webViewPage.InitHelpers();
+                webViewPage.ExecutePageHierarchy(new WebPageContext(viewContext.HttpContext, webViewPage, null), writer, null);
+            }
+
+            readonly Type type;
+            readonly string virtualPath;
+        }
     }
 }

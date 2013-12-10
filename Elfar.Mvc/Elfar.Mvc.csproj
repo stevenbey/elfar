@@ -113,29 +113,28 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Footer.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\View.cs" />
     <Compile Include="__Package__.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Default.js" />
-    <EmbeddedResource Include="Resources\HighChart.js" />
-    <EmbeddedResource Include="Resources\Index.js" />
-    <EmbeddedResource Include="Resources\JavaScript.js" />
-    <EmbeddedResource Include="Resources\Linq.js" />
-    <EmbeddedResource Include="Resources\Stylesheet.css" />
-    <EmbeddedResource Include="Resources\ui-bg_flat_0_aaaaaa_40x100.png" />
-    <EmbeddedResource Include="Resources\ui-bg_flat_75_ffffff_40x100.png" />
-    <EmbeddedResource Include="Resources\ui-bg_glass_55_fbf9ee_1x400.png" />
-    <EmbeddedResource Include="Resources\ui-bg_glass_65_ffffff_1x400.png" />
-    <EmbeddedResource Include="Resources\ui-bg_glass_75_dadada_1x400.png" />
-    <EmbeddedResource Include="Resources\ui-bg_glass_75_e6e6e6_1x400.png" />
-    <EmbeddedResource Include="Resources\ui-bg_glass_95_fef1ec_1x400.png" />
-    <EmbeddedResource Include="Resources\ui-bg_highlight-soft_75_cccccc_1x100.png" />
-    <EmbeddedResource Include="Resources\ui-icons_222222_256x240.png" />
-    <EmbeddedResource Include="Resources\ui-icons_2e83ff_256x240.png" />
-    <EmbeddedResource Include="Resources\ui-icons_454545_256x240.png" />
-    <EmbeddedResource Include="Resources\ui-icons_888888_256x240.png" />
-    <EmbeddedResource Include="Resources\ui-icons_cd0a0a_256x240.png" />
+    <EmbeddedResource Include="Resources\Scripts\Default.js" />
+    <EmbeddedResource Include="Resources\Scripts\HighChart.js" />
+    <EmbeddedResource Include="Resources\Scripts\Index.js" />
+    <EmbeddedResource Include="Resources\Scripts\JavaScript.js" />
+    <EmbeddedResource Include="Resources\Scripts\Linq.js" />
+    <EmbeddedResource Include="Resources\Stylesheets\Stylesheet.css" />
+    <EmbeddedResource Include="Resources\Images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <EmbeddedResource Include="Resources\Images\ui-bg_flat_75_ffffff_40x100.png" />
+    <EmbeddedResource Include="Resources\Images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <EmbeddedResource Include="Resources\Images\ui-bg_glass_65_ffffff_1x400.png" />
+    <EmbeddedResource Include="Resources\Images\ui-bg_glass_75_dadada_1x400.png" />
+    <EmbeddedResource Include="Resources\Images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <EmbeddedResource Include="Resources\Images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <EmbeddedResource Include="Resources\Images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <EmbeddedResource Include="Resources\Images\ui-icons_222222_256x240.png" />
+    <EmbeddedResource Include="Resources\Images\ui-icons_2e83ff_256x240.png" />
+    <EmbeddedResource Include="Resources\Images\ui-icons_454545_256x240.png" />
+    <EmbeddedResource Include="Resources\Images\ui-icons_888888_256x240.png" />
+    <EmbeddedResource Include="Resources\Images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
