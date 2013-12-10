@@ -19,11 +19,7 @@ namespace Elfar.Mvc
         {
             var errorLog = new ErrorLog(Application, exception, routeData, context);
 
-            foreach(var plugin in Plugins)
-            {
-                try { plugin.Execute(errorLog); }
-                catch(Exception) { }
-            }
+            ErrorLogPlugins.Execute(errorLog);
 
             if(exception is ErrorLogException) return;
 
@@ -40,12 +36,7 @@ namespace Elfar.Mvc
         {
             get { return ErrorLogProvider.Settings.Application; }
         }
-        static IEnumerable<IErrorLogPlugin> Plugins
-        {
-            get { return plugins ?? (plugins = Components.CreateMany<IErrorLogPlugin>().ToList()); }
-        }
 
         static Predicate<ExceptionContext> exclude;
-        static IEnumerable<IErrorLogPlugin> plugins;
     }
 }
