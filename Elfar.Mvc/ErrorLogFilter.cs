@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace Elfar.Mvc
 {
@@ -10,20 +13,21 @@ namespace Elfar.Mvc
         {
             if (Exclude(exceptionContext)) return;
 
-            var errorLog = new ErrorLog(Provider.Application, exceptionContext);
-
-            if(!(exceptionContext.Exception is ErrorLogException)) TryExecute(Provider.Save, errorLog);
+            OnException(exceptionContext.Exception, exceptionContext.RouteData, exceptionContext.HttpContext);
+        }
+        public static void OnException(Exception exception, RouteData routeData, HttpContextBase context)
+        {
+            var errorLog = new ErrorLog(Application, exception, routeData, context);
 
             foreach(var plugin in Plugins)
             {
-                TryExecute(plugin.Execute, errorLog);
+                try { plugin.Execute(errorLog); }
+                catch(Exception) { }
             }
-        }
 
-        static void TryExecute(Action<ErrorLog> action, ErrorLog errorLog)
-        {
-            try { action(errorLog); }
-            catch (Exception) { }
+            if(exception is ErrorLogException) return;
+
+            ErrorLogProvider.Save(errorLog);
         }
 
         public static Predicate<ExceptionContext> Exclude
@@ -32,17 +36,16 @@ namespace Elfar.Mvc
             set { exclude = value; }
         }
 
-        IEnumerable<IErrorLogPlugin> Plugins
+        static string Application
         {
-            get { return plugins ?? (plugins = new List<IErrorLogPlugin>(Components.CreateMany<IErrorLogPlugin>())); }
+            get { return ErrorLogProvider.Settings.Application; }
         }
-        IErrorLogProvider Provider
+        static IEnumerable<IErrorLogPlugin> Plugins
         {
-            get { return provider ?? (provider = Components.Create<IErrorLogProvider>()); }
+            get { return plugins ?? (plugins = Components.CreateMany<IErrorLogPlugin>().ToList()); }
         }
 
         static Predicate<ExceptionContext> exclude;
-        IEnumerable<IErrorLogPlugin> plugins;
-        IErrorLogProvider provider;
+        static IEnumerable<IErrorLogPlugin> plugins;
     }
 }

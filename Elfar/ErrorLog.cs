@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Security;
-using System.Threading;
-using System.Web;
 
 namespace Elfar
 {
@@ -13,6 +10,7 @@ namespace Elfar
         public ErrorLog(string application, Json json)
         {
             Application = application;
+            ID = json.ID;
             Json = json;
         }
 

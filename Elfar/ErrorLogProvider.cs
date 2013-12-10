@@ -1,18 +1,48 @@
+using System;
 using System.Collections.Generic;
 
 namespace Elfar
 {
-    public abstract class ErrorLogProvider : IErrorLogProvider
+    public static class ErrorLogProvider
     {
-        public abstract void Delete(int id);
-        public abstract void Save(ErrorLog errorLog);
-
-        public abstract IEnumerable<ErrorLog> All { get; }
-        public string Application
+        public static void Delete(int id)
         {
-            get { return Settings.Application; }
+            if(Instance == null) return;
+            try { Instance.Delete(id); }
+            catch(Exception) { }
+        }
+        public static void Save(ErrorLog errorLog)
+        {
+            if(Instance == null) return;
+            try { Instance.Save(errorLog); }
+            catch(Exception) {}
+        }
+
+        public static IEnumerable<ErrorLog> All
+        {
+            get
+            {
+                try { if(Instance != null) return Instance.All; }
+                catch(Exception) {}
+                return new ErrorLog[0];
+            }
+        }
+        public static Settings Settings
+        {
+            get { return settings ?? (settings = new Settings()); }
+            set { settings = value; }
+        }
+        public static string Version
+        {
+            get { return Instance.GetType().Assembly.GetName().Version.ToString(); }
         }
         
-        public static Settings Settings = new Settings();
+        static IErrorLogProvider Instance
+        {
+            get { return instance ?? (instance = Components.Create<IErrorLogProvider>()); }
+        }
+
+        static IErrorLogProvider instance;
+        static Settings settings;
     }
 }

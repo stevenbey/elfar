@@ -1,53 +1,80 @@
 ﻿using System;
-using System.Security;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace Elfar.Mvc
 {
-    public class Json : Elfar.Json
+    using dictionary = IDictionary<string, string>;
+
+    class Json : Elfar.Json
     {
-        Json(ExceptionContext exceptionContext) : base(exceptionContext.Exception)
+        public Json(Exception exception, RouteData routeData, HttpContextBase context) : base(exception)
         {
-            Cookies = new Collection();
-            Form = new Collection();
-            QueryString = new Collection();
-            ServerVariables = new Collection();
+            var httpException = exception as HttpException;
 
-            var context = exceptionContext.HttpContext;
+            if(httpException != null)
+            {
+                Code = httpException.GetHttpCode();
+                Html = httpException.GetHtmlErrorMessage();
+            }
 
-            if (context == null) return;
+            try { Host = context.Server.MachineName; }
+            catch(HttpException) { }
 
-            Host = Host ?? GetMachineName(context);
+            var route = routeData.Route as Route;
+            if(route != null) RouteUrl = route.Url;
+
+            var values = routeData.Values;
+
+            Action = ToTitle((string) values["action"]);
+            Controller = ToTitle((string) values["controller"]);
+
+            RouteData = (Dictionary) values;
+            DataTokens = (Dictionary) routeData.DataTokens;
+
+            Area = ToTitle(DataTokens["area"]);
 
             var user = context.User;
-            if (!(user == null || string.IsNullOrWhiteSpace(user.Identity.Name)))
-                User = user.Identity.Name;
+            if(!(user == null || string.IsNullOrWhiteSpace(user.Identity.Name))) User = user.Identity.Name;
 
             var request = context.Request;
-            ServerVariables.Add(request.ServerVariables);
-            QueryString.Add(request.QueryString);
-            Form.Add(request.Form);
-            Cookies.Add(request.Cookies);
-        }
 
-        public static explicit operator Json(ExceptionContext exceptionContext)
+            Url = request.Url;
+
+            HttpMethod = request.HttpMethod;
+
+            Cookies = (Dictionary) request.Cookies;
+            Form = (Dictionary) request.Form;
+            QueryString = (Dictionary) request.QueryString;
+            ServerVariables = (Dictionary) request.ServerVariables;
+        }
+        
+        public static implicit operator Json(string json)
         {
-            return new Json(exceptionContext);
+            return Serializer.Deserialize<Json>(json);
         }
 
-
-        static string GetMachineName(HttpContextBase context)
+        static string ToTitle(string value)
         {
-            try { return context.Server.MachineName; }
-            catch (HttpException) { }
-            catch (SecurityException) { }
-            return null;
+            return value == null ? null : Regex.Replace(value, @"^[a-z]", m => m.Value.ToUpper());
         }
 
-        public Collection Cookies { get; set; }
-        public Collection Form { get; set; }
-        public Collection QueryString { get; set; }
-        public Collection ServerVariables { get; set; }
+        public string Action { get; set; }
+        public string Area { get; set; }
+        public int? Code { get; set; }
+        public string Controller { get; set; }
+        public dictionary Cookies { get; set; }
+        public dictionary DataTokens { get; set; }
+        public dictionary Form { get; set; }
+        public string Html { get; set; }
+        public string HttpMethod { get; set; }
+        public dictionary QueryString { get; set; }
+        public dictionary RouteData { get; set; }
+        public string RouteUrl { get; set; }
+        public dictionary ServerVariables { get; set; }
+        public Uri Url { get; set; }
     }
 }
