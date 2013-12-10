@@ -4,9 +4,11 @@ using System.Web.Routing;
 
 namespace Elfar.Mvc
 {
+    using route = Route;
+
     public class ErrorLogRoute
     {
-        internal class Route : System.Web.Routing.Route
+        internal class Route : route
         {
             public Route() : base
             (
@@ -15,6 +17,11 @@ namespace Elfar.Mvc
                 new RouteValueDictionary(ErrorLogRoute.Constraints.Where(c => c != null).ToDictionary(k => string.Empty, c => (object) c)),
                 new RouteHandler()
             ) {}
+        }
+
+        public static implicit operator route(ErrorLogRoute route)
+        {
+            return new Route();
         }
 
         public static IEnumerable<IRouteConstraint> Constraints
