@@ -30,37 +30,56 @@ namespace Elfar.Mvc.Views.ErrorLog
     using Elfar.Mvc;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/ErrorLog/Default.cshtml")]
-    public partial class Default : System.Web.Mvc.WebViewPage<dynamic>
+    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/ErrorLog/Footer.cshtml")]
+    public partial class Footer : System.Web.Mvc.WebViewPage<dynamic>
     {
-        public Default()
+        public Footer()
         {
         }
         public override void Execute()
         {
-WriteLiteral("<!DOCTYPE html>\r\n<html>\r\n    <head>\r\n        <title>Error Logging Filter &amp; Ro" +
-"ute (ELFAR) [");
+WriteLiteral("<footer>\r\n");
 
 
             
-            #line 4 "..\..\Views\ErrorLog\Default.cshtml"
-                                                    Write(ErrorLogProvider.Settings.Application);
+            #line 2 "..\..\Views\ErrorLog\Footer.cshtml"
+     if (!string.IsNullOrWhiteSpace(ErrorLogProvider.Name))
+    {
+        
+            
+            #line default
+            #line hidden
+            
+            #line 4 "..\..\Views\ErrorLog\Footer.cshtml"
+   Write(ErrorLogProvider.Name);
 
             
             #line default
             #line hidden
-WriteLiteral("]</title>\r\n    </head>\r\n    <body>\r\n        <div>\r\n              \r\n        </div>" +
-"\r\n        ");
+
+WriteLiteral(" ");
+
+WriteLiteral("v");
 
 
             
-            #line 10 "..\..\Views\ErrorLog\Default.cshtml"
-   Write(Html.Partial("Footer"));
+            #line 4 "..\..\Views\ErrorLog\Footer.cshtml"
+                              Write(ErrorLogProvider.Version);
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </body>\r\n</html>");
+WriteLiteral(")\r\n");
+
+
+            
+            #line 5 "..\..\Views\ErrorLog\Footer.cshtml"
+    }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</footer>");
 
 
         }

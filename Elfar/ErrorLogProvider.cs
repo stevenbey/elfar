@@ -26,23 +26,28 @@ namespace Elfar
                 catch(Exception e) { throw new ErrorLogException(e); }
             }
         }
+
+        public static string Name
+        {
+            get { return Type == null ? null : Type.Name; }
+        }
         public static Settings Settings
         {
             get { return settings ?? (settings = new Settings()); }
             set { settings = value; }
         }
-        public static Type Type
-        {
-            get { return Instance.GetType(); }
-        }
         public static string Version
         {
-            get { return Type.Assembly.GetName().Version.ToString(); }
+            get { return Type == null ? null : Type.Assembly.GetName().Version.ToString(); }
         }
         
         static IErrorLogProvider Instance
         {
             get { return instance ?? (instance = Components.Create<IErrorLogProvider>()); }
+        }
+        static Type Type
+        {
+            get { return Instance == null ? null : Instance.GetType(); }
         }
 
         static IErrorLogProvider instance;
