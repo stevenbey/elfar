@@ -1,8 +1,9 @@
-﻿using System.Web.Mvc;
+﻿using System.ComponentModel.Composition;
+using System.Web.Mvc;
 
 namespace Elfar.Mvc
 {
-    //[Export, PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export, PartCreationPolicy(CreationPolicy.NonShared)]
     class ErrorLogController : AsyncController
     {
         public ViewResult Default()
