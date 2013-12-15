@@ -1,7 +1,0 @@
-﻿@* ReSharper disable Mvc.ActionNotResolved *@
-@model Elfar.IErrorLogPlugin[]
-        <link rel="stylesheet" type="text/css" href="@Url.Action("Stylesheet")" />
-    @foreach(var plugin in Model)
-    {
-        <link rel="stylesheet" type="text/css" href="@Url.Action("Stylesheet")?file=@plugin.Name()" />
-    }

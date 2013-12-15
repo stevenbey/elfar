@@ -1,9 +1,0 @@
-﻿@model Elfar.IErrorLogPlugin[]
-@foreach(var plugin in Model)
-{
-    try
-    {
-        @Html.Partial(plugin.Name())
-    }
-    catch(Exception) {}
-}
