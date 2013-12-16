@@ -5,38 +5,67 @@ namespace Elfar
 {
     public static class ErrorLogProvider
     {
-        public static void Delete(int id)
+        internal static bool Delete(int id)
         {
-            if(Instance == null) return;
-            try { Instance.Delete(id); }
-            catch(Exception e) { throw new ErrorLogException(e); }
-        }
-        public static void Save(ErrorLog errorLog)
-        {
-            if(Instance == null) return;
-            try { Instance.Save(errorLog); }
-            catch(Exception e) { throw new ErrorLogException(e); }
-        }
-
-        public static IEnumerable<ErrorLog> All
-        {
-            get
+            if(Instance != null)
             {
-                try { return Instance == null ? new ErrorLog[0] : Instance.All; }
-                catch(Exception e) { throw new ErrorLogException(e); }
+                try
+                {
+                    Instance.Delete(id);
+                    return true;
+                }
+                catch(Exception) { }
             }
+            return false;
+        }
+        internal static void Save(ErrorLog errorLog)
+        {
+            Save(errorLog, true);
         }
 
-        public static string Name
+        static void Plugins(ErrorLog errorLog, bool save = true)
         {
-            get { return Type == null ? null : Type.Name; }
+            try { ErrorLogPlugins.Execute(errorLog); }
+            catch(Exception e) { if(save) Save(e); }
         }
+        static void Plugins(Exception exception)
+        {
+            Plugins(new ErrorLog(exception), false);
+        }
+        static void Save(ErrorLog errorLog, bool plugins)
+        {
+            if(plugins) Plugins(errorLog);
+            
+            if(Instance == null) return;
+            
+            try { Instance.Save(errorLog); }
+            catch(Exception e) { Plugins(e); }
+        }
+        static void Save(Exception exception)
+        {
+            Save(new ErrorLog(exception), false);
+        }
+
         public static Settings Settings
         {
             get { return settings ?? (settings = new Settings()); }
             set { settings = value; }
         }
-        public static string Version
+
+        internal static IEnumerable<ErrorLog> All
+        {
+            get
+            {
+                try { if(Instance != null) return Instance.All; }
+                catch(Exception) {}
+                return empty;
+            }
+        }
+        internal static string Name
+        {
+            get { return Type == null ? null : Type.FullName; }
+        }
+        internal static string Version
         {
             get { return Type == null ? null : Type.Assembly.GetName().Version.ToString(); }
         }
@@ -50,6 +79,7 @@ namespace Elfar
             get { return Instance == null ? null : Instance.GetType(); }
         }
 
+        static readonly ErrorLog[] empty = new ErrorLog[0];
         static IErrorLogProvider instance;
         static Settings settings;
     }

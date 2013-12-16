@@ -26,10 +26,11 @@ namespace Elfar.Mvc
 
         public static IEnumerable<IRouteConstraint> Constraints
         {
-            get { return constraints ?? (constraints = new IRouteConstraint[0]); }
+            get { return constraints ?? (constraints = empty); }
             set { constraints = value; }
         }
 
         static IEnumerable<IRouteConstraint> constraints;
+        static readonly IRouteConstraint[] empty = new IRouteConstraint[0];
     }
 }

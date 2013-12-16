@@ -6,11 +6,9 @@ using System.Web.Routing;
 
 namespace Elfar.Mvc
 {
-    using dictionary = IDictionary<string, string>;
-
     class Json : Elfar.Json
     {
-        public Json(Exception exception, RouteData routeData, HttpContextBase context) : base(exception)
+        public Json(Exception exception, RouteData data, HttpContextBase context) : base(exception)
         {
             var httpException = exception as HttpException;
 
@@ -20,19 +18,31 @@ namespace Elfar.Mvc
                 Html = httpException.GetHtmlErrorMessage();
             }
 
-            var route = routeData.Route as Route;
-            if(route != null) RouteUrl = route.Url;
+            if(data != null)
+            {
+                var route = data.Route as Route;
+                if(route != null) RouteUrl = route.Url;
 
-            var values = routeData.Values;
+                var values = data.Values;
 
-            Action = ToTitle((string) values["action"]);
-            Controller = ToTitle((string) values["controller"]);
+                Action = ToTitle((string) values["action"]);
+                Controller = ToTitle((string) values["controller"]);
 
-            RouteData = (Dictionary) values;
-            DataTokens = (Dictionary) routeData.DataTokens;
+                RouteData = (Dictionary) values;
+                DataTokens = (Dictionary) data.DataTokens;
 
-            Area = ToTitle(DataTokens["area"]);
-            
+                if(DataTokens.ContainsKey("area")) Area = ToTitle(DataTokens["area"]);
+            }
+
+            if(context == null)
+            {
+                Cookies =
+                Form =
+                QueryString =
+                ServerVariables = empty;
+                return;
+            }
+
             try { Host = context.Server.MachineName; }
             catch(HttpException) { }
 
@@ -42,7 +52,6 @@ namespace Elfar.Mvc
             var request = context.Request;
 
             Url = request.Url;
-
             HttpMethod = request.HttpMethod;
 
             Cookies = (Dictionary) request.Cookies;
@@ -60,15 +69,17 @@ namespace Elfar.Mvc
         public string Area { get; set; }
         public int? Code { get; set; }
         public string Controller { get; set; }
-        public dictionary Cookies { get; set; }
-        public dictionary DataTokens { get; set; }
-        public dictionary Form { get; set; }
+        public Dictionary Cookies { get; set; }
+        public Dictionary DataTokens { get; set; }
+        public Dictionary Form { get; set; }
         public string Html { get; set; }
         public string HttpMethod { get; set; }
-        public dictionary QueryString { get; set; }
-        public dictionary RouteData { get; set; }
+        public Dictionary QueryString { get; set; }
+        public Dictionary RouteData { get; set; }
         public string RouteUrl { get; set; }
-        public dictionary ServerVariables { get; set; }
+        public Dictionary ServerVariables { get; set; }
         public Uri Url { get; set; }
+
+        static readonly Dictionary empty = new Dictionary();
     }
 }

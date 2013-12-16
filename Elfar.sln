@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.Data.Access", "Elfar.Data.Access\Elfar.Data.Access.csproj", "{756E9DA7-6C93-40A2-A29E-D8ADA8D1F743}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.Mail", "Elfar.Mail\Elfar.Mail.csproj", "{BF71C600-5B96-42C7-B1CD-CB9FCC411049}"
@@ -14,8 +12,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.Twitter", "Elfar.Twitter\Elfar.Twitter.csproj", "{42C2DB08-2707-46E6-8383-435049F0F4FC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.Web", "Elfar.Web\Elfar.Web.csproj", "{160ED85C-90E2-4383-8659-95F4203D33F6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.Data.Xml", "Elfar.Data.Xml\Elfar.Data.Xml.csproj", "{31B17B39-4395-447D-8796-2C2EA275801E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.Data.SqlServerCe", "Elfar.Data.SqlServerCe\Elfar.Data.SqlServerCe.csproj", "{B5DBE30B-4406-4126-843E-7A83EAE0DDA2}"
 EndProject
@@ -39,6 +35,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{44359B
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.Xml", "Elfar.Xml\Elfar.Xml.csproj", "{31B17B39-4395-447D-8796-2C2EA275801E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -110,16 +108,6 @@ Global
 		{160ED85C-90E2-4383-8659-95F4203D33F6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{160ED85C-90E2-4383-8659-95F4203D33F6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{160ED85C-90E2-4383-8659-95F4203D33F6}.Release|x86.ActiveCfg = Release|Any CPU
-		{31B17B39-4395-447D-8796-2C2EA275801E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{31B17B39-4395-447D-8796-2C2EA275801E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{31B17B39-4395-447D-8796-2C2EA275801E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{31B17B39-4395-447D-8796-2C2EA275801E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{31B17B39-4395-447D-8796-2C2EA275801E}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{31B17B39-4395-447D-8796-2C2EA275801E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{31B17B39-4395-447D-8796-2C2EA275801E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{31B17B39-4395-447D-8796-2C2EA275801E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{31B17B39-4395-447D-8796-2C2EA275801E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{31B17B39-4395-447D-8796-2C2EA275801E}.Release|x86.ActiveCfg = Release|Any CPU
 		{B5DBE30B-4406-4126-843E-7A83EAE0DDA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B5DBE30B-4406-4126-843E-7A83EAE0DDA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B5DBE30B-4406-4126-843E-7A83EAE0DDA2}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -200,6 +188,16 @@ Global
 		{7C6FCD11-4C1A-46E8-8587-E2639628E5C4}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{7C6FCD11-4C1A-46E8-8587-E2639628E5C4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{7C6FCD11-4C1A-46E8-8587-E2639628E5C4}.Release|x86.ActiveCfg = Release|Any CPU
+		{31B17B39-4395-447D-8796-2C2EA275801E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31B17B39-4395-447D-8796-2C2EA275801E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31B17B39-4395-447D-8796-2C2EA275801E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{31B17B39-4395-447D-8796-2C2EA275801E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{31B17B39-4395-447D-8796-2C2EA275801E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{31B17B39-4395-447D-8796-2C2EA275801E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31B17B39-4395-447D-8796-2C2EA275801E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31B17B39-4395-447D-8796-2C2EA275801E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{31B17B39-4395-447D-8796-2C2EA275801E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{31B17B39-4395-447D-8796-2C2EA275801E}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -39,17 +39,16 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Components.cs" />
     <Compile Include="Data\Settings.cs" />
     <Compile Include="ErrorLogPlugins.cs" />
+    <Compile Include="IO\ErrorLogProvider.cs" />
     <Compile Include="IO\Settings.cs" />
     <Compile Include="Json.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="ErrorLog.cs" />
-    <Compile Include="ErrorLogException.cs" />
     <Compile Include="ErrorLogProvider.cs" />
     <Compile Include="IErrorLogPlugin.cs" />
     <Compile Include="IErrorLogProvider.cs" />

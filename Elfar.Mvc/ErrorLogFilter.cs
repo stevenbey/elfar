@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -15,15 +13,9 @@ namespace Elfar.Mvc
 
             OnException(exceptionContext.Exception, exceptionContext.RouteData, exceptionContext.HttpContext);
         }
-        public static void OnException(Exception exception, RouteData routeData, HttpContextBase context)
+        public static void OnException(Exception exception, RouteData routeData = null, HttpContextBase context = null)
         {
-            var errorLog = new ErrorLog(Application, exception, routeData, context);
-
-            ErrorLogPlugins.Execute(errorLog);
-
-            if(exception is ErrorLogException) return;
-
-            ErrorLogProvider.Save(errorLog);
+            ErrorLogProvider.Save(new ErrorLog(new Json(exception, routeData, context)));
         }
 
         public static Predicate<ExceptionContext> Exclude
@@ -31,12 +23,7 @@ namespace Elfar.Mvc
             get { return exclude ?? (exclude = (c => false)); }
             set { exclude = value; }
         }
-
-        static string Application
-        {
-            get { return ErrorLogProvider.Settings.Application; }
-        }
-
+        
         static Predicate<ExceptionContext> exclude;
     }
 }

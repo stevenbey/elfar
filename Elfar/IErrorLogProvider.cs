@@ -10,6 +10,5 @@ namespace Elfar
         void Save(ErrorLog errorLog);
 
         IEnumerable<ErrorLog> All { get; }
-        Settings Settings { get; set; }
     }
 }

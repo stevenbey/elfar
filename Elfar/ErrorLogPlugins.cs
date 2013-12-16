@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 
 namespace Elfar
 {
@@ -8,18 +6,14 @@ namespace Elfar
     {
         static ErrorLogPlugins()
         {
-            plugins = Components.CreateMany<IErrorLogPlugin>().ToList();
+            plugins = Components.CreateMany<IErrorLogPlugin>().ToArray();
         }
         
-        public static void Execute(ErrorLog errorLog)
+        internal static void Execute(ErrorLog errorLog)
         {
-            foreach(var plugin in plugins)
-            {
-                try { plugin.Execute(errorLog); }
-                catch(Exception) { }
-            }
+            foreach(var plugin in plugins) plugin.Execute(errorLog);
         }
 
-        static readonly List<IErrorLogPlugin> plugins;
+        static readonly IErrorLogPlugin[] plugins;
     }
 }
