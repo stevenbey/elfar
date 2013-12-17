@@ -21,7 +21,7 @@ namespace Elfar.Xml
 
         public override void Delete(int id)
         {
-            lock(key)
+            lock(Key)
             {
                 DocumentElement.RemoveChild(FindNode(id));
                 document.Save(FilePath);
@@ -29,7 +29,7 @@ namespace Elfar.Xml
         }
         public override void Save(Elfar.ErrorLog errorLog)
         {
-            lock(key)
+            lock(Key)
             {
                 DocumentElement.AppendChild(CreateNode(errorLog));
                 document.Save(FilePath);
@@ -67,7 +67,7 @@ namespace Elfar.Xml
             }
         }
 
-        const string defaultFilePath = "~/App_Data/Elfar.xml";
+        const string defaultFilePath = "~/App_Data/Elfar_ErrorLogs.xml";
 
         static readonly XmlDocument document = new XmlDocument();
         static readonly XmlSerializer serializer = new XmlSerializer(typeof(ErrorLog));

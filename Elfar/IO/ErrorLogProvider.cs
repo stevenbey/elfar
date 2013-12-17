@@ -27,6 +27,6 @@ namespace Elfar.IO
             get { return GetDefaultFilePath(); }
         }
 
-        protected static readonly object key = new object();
+        protected static readonly object Key = new object();
     }
 }
