@@ -1,69 +1,58 @@
-using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
-using System.Linq;
 
 namespace Elfar.Data
 {
-    public abstract class DbErrorLogProvider : ErrorLogProvider
+    public abstract class DbErrorLogProvider : IErrorLogProvider
     {
-        protected DbErrorLogProvider()
+        static DbErrorLogProvider()
         {
-            var connectionString = ConnectionString;
-            if(string.IsNullOrWhiteSpace(connectionString)) connectionString = null;
-            var connectionStrings = ConfigurationManager.ConnectionStrings;
-            var settings = connectionStrings[connectionString ?? Properties.Resources.Elfar];
-            ConnectionString = settings == null ? connectionString : settings.ConnectionString;
-            if(string.IsNullOrWhiteSpace(ConnectionString) && connectionStrings.Count != 0)
-                ConnectionString = connectionStrings[0].ConnectionString;
+            Settings = ErrorLogProvider.Settings as Settings ?? new Settings { Application = ErrorLogProvider.Settings.Application };
+        }
+        
+        public virtual void Delete(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Execute("DELETE FROM [" + Table + "] WHERE [ID] = @ID", new { ID = id });
+            }
+        }
+        public virtual void Save(ErrorLog errorLog)
+        {
+            using(var conn = Connection)
+            {
+                conn.Execute("INSERT INTO [" + Table + "] VALUES(@ID, @Json)", errorLog);
+            }
         }
 
-        public override void Delete(Guid id)
+        public virtual IEnumerable<ErrorLog> All
         {
-            using(var conn = Connection)
+            get
             {
-                conn.Execute(Queries.Delete, new { ID = id });
-            }
-        }
-        public override ErrorLog Get(Guid id)
-        {
-            using(var conn = Connection)
-            {
-                return conn.Query<DbErrorLog>(Queries.Get, new { ID = id }).SingleOrDefault();
-            }
-        }
-        public override IList<ErrorLog> List()
-        {
-            using(var conn = Connection)
-            {
-                return new List<ErrorLog>(conn.Query<DbErrorLog>(Queries.List, new { Application }).Select(l => (ErrorLog) l));
-            }
-        }
-        public override void Save(ErrorLog errorLog)
-        {
-            using(var conn = Connection)
-            {
-                conn.Execute(Queries.Save, (DbErrorLog) errorLog);
+                using (var conn = Connection)
+                {
+                    return conn.Query<ErrorLog>("SELECT * FROM [" + Table + "]");
+                }
             }
         }
 
         protected abstract IDbConnection Connection { get; }
-        protected virtual IDbQueries Queries
+
+        static string Table
         {
-            get { return queries ?? (queries = new DbQueries()); }
+            get { return Settings.Table; }
         }
 
-        DbQueries queries;
+        protected static readonly Settings Settings;
     }
 
-    public abstract class DbErrorLogProvider<TConnection> : DbErrorLogProvider where TConnection: class, IDbConnection, new()
+    public abstract class DbErrorLogProvider<TConnection> : DbErrorLogProvider where TConnection : class, IDbConnection, new()
     {
         protected sealed override IDbConnection Connection
         {
             get
             {
-                return new TConnection { ConnectionString = ConnectionString };
+                return new TConnection { ConnectionString = Settings.ConnectionString };
             }
         }
     }
