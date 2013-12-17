@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace Elfar.Data
 {
@@ -21,17 +22,17 @@ namespace Elfar.Data
         {
             using(var conn = Connection)
             {
-                conn.Execute("INSERT INTO [" + Table + "] VALUES(@ID, @Json)", errorLog);
+                conn.Execute("INSERT INTO [" + Table + "](ID, Json) VALUES(@ID, @Json)", (DbErrorLog) errorLog);
             }
         }
-
+        
         public virtual IEnumerable<ErrorLog> All
         {
             get
             {
                 using (var conn = Connection)
                 {
-                    return conn.Query<ErrorLog>("SELECT * FROM [" + Table + "]");
+                    return conn.Query<DbErrorLog>("SELECT * FROM [" + Table + "]").Select(l => (ErrorLog) l);
                 }
             }
         }
@@ -44,6 +45,40 @@ namespace Elfar.Data
         }
 
         protected static readonly Settings Settings;
+
+        class DbErrorLog : DynamicParameters
+        {
+            public static explicit operator DbErrorLog(ErrorLog errorLog)
+            {
+                return new DbErrorLog
+                {
+                    ID = errorLog.ID,
+                    Json = errorLog.Json.Compress()
+                };
+            }
+            public static explicit operator ErrorLog(DbErrorLog errorLog)
+            {
+                return new ErrorLog
+                {
+                    ID = errorLog.ID,
+                    Json = errorLog.Json.Decompress()
+                };
+            }
+
+            public int ID
+            {
+                get { return id; }
+                set { Add("ID", id = value); }
+            }
+            public string Json
+            {
+                get { return json; }
+                set { Add("Json", json = value, DbType.String, size: value.Length + 1); }
+            }
+
+            int id;
+            string json;
+        }
     }
 
     public abstract class DbErrorLogProvider<TConnection> : DbErrorLogProvider where TConnection : class, IDbConnection, new()

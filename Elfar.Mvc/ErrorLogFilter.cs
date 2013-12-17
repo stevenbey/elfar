@@ -15,7 +15,7 @@ namespace Elfar.Mvc
         }
         public static void OnException(Exception exception, RouteData routeData = null, HttpContextBase context = null)
         {
-            ErrorLogProvider.Save(new ErrorLog(new Json(exception, routeData, context)));
+            ErrorLogProvider.Save(new Json(exception, routeData, context));
         }
 
         public static Predicate<ExceptionContext> Exclude

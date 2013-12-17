@@ -1929,7 +1929,7 @@ namespace Elfar.Data
         /// <typeparam name="T"></typeparam>
         /// <param name="name"></param>
         /// <returns>The value, note DBNull.Value is not returned, instead the value is returned as null</returns>
-        public T Get<T>(string name) where T : class
+        public T Get<T>(string name)
         {
             var val = parameters[Clean(name)].AttachedParam.Value;
             return val == DBNull.Value ? default(T) : (T) val;

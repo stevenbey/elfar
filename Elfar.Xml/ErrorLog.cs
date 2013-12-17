@@ -21,12 +21,12 @@ namespace Elfar.Xml
         public void ReadXml(XmlReader reader)
         {
             ID = int.Parse(reader.GetAttribute("id"));
-            Json = reader.ReadElementContentAsString();
+            Json = reader.ReadElementContentAsString().Decompress();
         }
         public void WriteXml(XmlWriter writer)
         {
             writer.WriteAttributeString("id", ID.ToString(CultureInfo.InvariantCulture));
-            writer.WriteString(Json);
+            writer.WriteString(Json.Compress());
         }
     }
 }

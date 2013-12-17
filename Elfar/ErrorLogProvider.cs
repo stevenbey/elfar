@@ -18,9 +18,9 @@ namespace Elfar
             }
             return false;
         }
-        internal static void Save(ErrorLog errorLog)
+        internal static void Save(Json json)
         {
-            Save(errorLog, true);
+            Save(new ErrorLog(json), true);
         }
 
         static void Plugins(ErrorLog errorLog, bool save = true)

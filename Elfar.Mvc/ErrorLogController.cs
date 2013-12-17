@@ -8,6 +8,7 @@ namespace Elfar.Mvc
     {
         public ViewResult Default()
         {
+            var all = ErrorLogProvider.All;
             return View();
         }
         //[ImportingConstructor]
