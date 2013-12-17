@@ -25,7 +25,7 @@ namespace Elfar
 
             User = Thread.CurrentPrincipal.Identity.Name;
 
-            ID = Math.Abs((Host + Type + Time + User).GetHashCode() + exception.GetHashCode() + @base.GetHashCode());
+            ID = Math.Abs((Application + Host + Type + Time + User).GetHashCode() + @base.GetHashCode());
         }
 
         public static implicit operator string(Json json)
@@ -38,6 +38,10 @@ namespace Elfar
             return Serializer.Serialize(this);
         }
 
+        public string Application
+        {
+            get { return ErrorLogProvider.Settings.Application; }
+        }
         public string Host { get; protected set; }
         public int ID { get; private set; }
         public string Message { get; private set; }
