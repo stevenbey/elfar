@@ -26,8 +26,6 @@ namespace Elfar.Mvc.Views.ErrorLog
     using System.Web.Security;
     using System.Web.UI;
     using System.Web.WebPages;
-    using Elfar;
-    using Elfar.Mvc;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/ErrorLog/Default.cshtml")]
@@ -43,7 +41,7 @@ WriteLiteral("<!DOCTYPE html>\r\n<html>\r\n    <head>\r\n        <title>");
 
             
             #line 4 "..\..\Views\ErrorLog\Default.cshtml"
-          Write(ErrorLogProvider.Settings.Application);
+           Write(ErrorLogProvider.Settings.Application ?? "''");
 
             
             #line default
@@ -53,7 +51,7 @@ WriteLiteral(" on ");
 
             
             #line 4 "..\..\Views\ErrorLog\Default.cshtml"
-                                                    Write(Server.MachineName);
+                                                              Write(Server.MachineName);
 
             
             #line default
