@@ -44,7 +44,6 @@
     <Compile Include="Components.cs" />
     <Compile Include="Data\DbErrorLogProvider.cs" />
     <Compile Include="Data\Settings.cs" />
-    <Compile Include="Data\SqlMapper.cs" />
     <Compile Include="ErrorLogPlugins.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="IO\ErrorLogProvider.cs" />

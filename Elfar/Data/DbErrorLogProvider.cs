@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 
 namespace Elfar.Data
 {
@@ -14,70 +13,101 @@ namespace Elfar.Data
         public virtual void Delete(int id)
         {
             using (var conn = Connection)
+            using (var cmd = conn.CreateCommand())
             {
-                conn.Execute("DELETE FROM " + Table + " WHERE ID = @ID", new { ID = id });
+                cmd.CommandText = Scripts.Delete;
+                SetIDParameter(cmd, id);
+                conn.Open();
+                cmd.ExecuteNonQuery();
             }
         }
         public virtual void Save(ErrorLog errorLog)
         {
             using(var conn = Connection)
+            using(var cmd = conn.CreateCommand())
             {
-                conn.Execute("INSERT INTO " + Table + "(ID, Json) VALUES(@ID, @Json)", (DbErrorLog) errorLog);
+                cmd.CommandText = Scripts.Save;
+                SetSaveParameters(cmd, errorLog);
+                conn.Open();
+                cmd.ExecuteNonQuery();
             }
         }
-        
-        public virtual IEnumerable<ErrorLog> All
+
+        protected virtual void SetSaveParameters(IDbCommand command, ErrorLog errorLog)
+        {
+            SetIDParameter(command, errorLog.ID);
+
+            var json = errorLog.Json.Compress();
+            var parameter = command.CreateParameter();
+            parameter.ParameterName = "Json";
+            parameter.Size = json.Length;
+            parameter.Value = json;
+            parameter.DbType = DbType.String;
+            command.Parameters.Add(parameter);
+        }
+
+        static void SetIDParameter(IDbCommand command, int id)
+        {
+            var parameter = command.CreateParameter();
+            parameter.ParameterName = "ID";
+            parameter.DbType = DbType.Int32;
+            parameter.Value = id;
+            command.Parameters.Add(parameter);
+        }
+
+        public IEnumerable<ErrorLog> All
         {
             get
             {
+                var errorLogs = new List<ErrorLog>();
                 using (var conn = Connection)
+                using (var cmd = conn.CreateCommand())
                 {
-                    return conn.Query<DbErrorLog>("SELECT * FROM " + Table).Select(l => (ErrorLog) l);
+                    cmd.CommandText = Scripts.All;
+                    conn.Open();
+                    var reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        errorLogs.Add(new ErrorLog
+                        {
+                            ID = reader.GetInt32(0),
+                            Json = reader.GetString(1).Decompress()
+                        });
+                    }
                 }
+                return errorLogs;
             }
         }
 
         protected abstract IDbConnection Connection { get; }
 
-        static string Table
+        protected virtual SqlScripts Scripts
         {
-            get { return Settings.Table; }
+            get { return scripts ?? (scripts = new SqlScripts()); }
+            set { scripts = value; }
         }
 
         protected static readonly Settings Settings;
+        
+        SqlScripts scripts;
 
-        class DbErrorLog : DynamicParameters
+        protected class SqlScripts
         {
-            public static explicit operator DbErrorLog(ErrorLog errorLog)
+            public SqlScripts()
             {
-                return new DbErrorLog
-                {
-                    ID = errorLog.ID,
-                    Json = errorLog.Json.Compress()
-                };
-            }
-            public static explicit operator ErrorLog(DbErrorLog errorLog)
-            {
-                return new ErrorLog
-                {
-                    ID = errorLog.ID,
-                    Json = errorLog.Json.Decompress()
-                };
+                All = "SELECT * FROM " + Table;
+                Delete = "DELETE FROM " + Table + " WHERE ID = @ID";
+                Save = "INSERT INTO " + Table + " VALUES(@ID, @Json)";
             }
 
-            public int ID
-            {
-                get { return id; }
-                set { Add("ID", id = value); }
-            }
-            public string Json
-            {
-                get { return json; }
-                set { Add("Json", json = value, DbType.String, size: value.Length + 1); }
-            }
+            public string All { get; set; }
+            public string Delete { get; set; }
+            public string Save { get; set; }
 
-            int id;
-            string json;
+            protected static string Table
+            {
+                get { return Settings.Table; }
+            }
         }
     }
 

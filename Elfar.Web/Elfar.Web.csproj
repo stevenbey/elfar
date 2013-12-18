@@ -108,7 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Elfar.Data.SqlServerCe\Elfar.Data.SqlServerCe.csproj">
-      <Project>{B5DBE30B-4406-4126-843E-7A83EAE0DDA2}</Project>
+      <Project>{b5dbe30b-4406-4126-843e-7a83eae0dda2}</Project>
       <Name>Elfar.Data.SqlServerCe</Name>
     </ProjectReference>
     <ProjectReference Include="..\Elfar.Mvc\Elfar.Mvc.csproj">
