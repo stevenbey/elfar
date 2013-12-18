@@ -16,7 +16,7 @@ namespace Elfar.Data
                 connectionString = value;
             }
         }
-        public string Table
+        public virtual string Table
         {
             get { return table ?? (table = "Elfar_ErrorLogs"); }
             set { table = value; }

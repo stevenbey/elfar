@@ -15,14 +15,14 @@ namespace Elfar.Data
         {
             using (var conn = Connection)
             {
-                conn.Execute("DELETE FROM [" + Table + "] WHERE [ID] = @ID", new { ID = id });
+                conn.Execute("DELETE FROM " + Table + " WHERE ID = @ID", new { ID = id });
             }
         }
         public virtual void Save(ErrorLog errorLog)
         {
             using(var conn = Connection)
             {
-                conn.Execute("INSERT INTO [" + Table + "](ID, Json) VALUES(@ID, @Json)", (DbErrorLog) errorLog);
+                conn.Execute("INSERT INTO " + Table + "(ID, Json) VALUES(@ID, @Json)", (DbErrorLog) errorLog);
             }
         }
         
@@ -32,7 +32,7 @@ namespace Elfar.Data
             {
                 using (var conn = Connection)
                 {
-                    return conn.Query<DbErrorLog>("SELECT * FROM [" + Table + "]").Select(l => (ErrorLog) l);
+                    return conn.Query<DbErrorLog>("SELECT * FROM " + Table).Select(l => (ErrorLog) l);
                 }
             }
         }
