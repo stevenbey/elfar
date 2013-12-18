@@ -10,7 +10,7 @@ namespace Elfar.Data
             Settings = ErrorLogProvider.Settings as Settings ?? new Settings { Application = ErrorLogProvider.Settings.Application };
         }
         
-        public virtual void Delete(int id)
+        public void Delete(int id)
         {
             using (var conn = Connection)
             using (var cmd = conn.CreateCommand())
@@ -21,7 +21,7 @@ namespace Elfar.Data
                 cmd.ExecuteNonQuery();
             }
         }
-        public virtual void Save(ErrorLog errorLog)
+        public void Save(ErrorLog errorLog)
         {
             using(var conn = Connection)
             using(var cmd = conn.CreateCommand())
@@ -33,10 +33,6 @@ namespace Elfar.Data
             }
         }
 
-        protected virtual SqlScripts CreaScripts()
-        {
-            return new SqlScripts();
-        }
         protected virtual void SetSaveParameters(IDbCommand command, ErrorLog errorLog)
         {
             SetIDParameter(command, errorLog.ID);
@@ -85,28 +81,13 @@ namespace Elfar.Data
 
         protected abstract IDbConnection Connection { get; }
 
-        protected virtual SqlScripts Scripts
-        {
-            get { return scripts ?? (scripts = CreaScripts()); }
-            set { scripts = value; }
-        }
-
         protected static readonly Settings Settings;
         
-        SqlScripts scripts;
-
-        protected class SqlScripts
+        static class Scripts
         {
-            public SqlScripts()
-            {
-                All = "SELECT * FROM " + Table;
-                Delete = "DELETE FROM " + Table + " WHERE ID = @ID";
-                Save = "INSERT INTO " + Table + " VALUES(@ID, @Json)";
-            }
-
-            public string All { get; set; }
-            public string Delete { get; set; }
-            public string Save { get; set; }
+            public static readonly string All = "SELECT * FROM " + Table;
+            public static readonly string Delete = "DELETE FROM " + Table + " WHERE ID = @ID";
+            public static readonly string Save = "INSERT INTO " + Table + " VALUES(@ID, @Json)";
 
            static string Table
             {

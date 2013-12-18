@@ -19,7 +19,7 @@ namespace Elfar.Data
         public virtual string Table
         {
             get { return table ?? (table = "Elfar_ErrorLogs"); }
-            set { table = value; }
+            set { table = (value ?? "").Trim('[', ']'); }
         }
 
         static ConnectionStringSettingsCollection ConnectionStrings
