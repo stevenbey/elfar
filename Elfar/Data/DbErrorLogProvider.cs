@@ -33,6 +33,10 @@ namespace Elfar.Data
             }
         }
 
+        protected virtual SqlScripts CreaScripts()
+        {
+            return new SqlScripts();
+        }
         protected virtual void SetSaveParameters(IDbCommand command, ErrorLog errorLog)
         {
             SetIDParameter(command, errorLog.ID);
@@ -83,7 +87,7 @@ namespace Elfar.Data
 
         protected virtual SqlScripts Scripts
         {
-            get { return scripts ?? (scripts = new SqlScripts()); }
+            get { return scripts ?? (scripts = CreaScripts()); }
             set { scripts = value; }
         }
 
@@ -104,7 +108,7 @@ namespace Elfar.Data
             public string Delete { get; set; }
             public string Save { get; set; }
 
-            protected static string Table
+           static string Table
             {
                 get { return Settings.Table; }
             }

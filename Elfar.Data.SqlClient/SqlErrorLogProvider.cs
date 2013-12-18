@@ -1,4 +1,5 @@
-﻿using System.Data.SqlClient;
+﻿using System.Data;
+using System.Data.SqlClient;
 
 namespace Elfar.Data.SqlClient
 {
@@ -6,16 +7,33 @@ namespace Elfar.Data.SqlClient
 
     public sealed class SqlErrorLogProvider : DbErrorLogProvider<SqlConnection>
     {
-        public SqlErrorLogProvider()
+        protected override SqlScripts CreaScripts()
         {
-            TryExecute(() =>
+            return new TsqlScripts();
+        }
+
+        protected override void SetSaveParameters(IDbCommand command, ErrorLog errorLog)
+        {
+            base.SetSaveParameters(command, errorLog);
+            
+            var parameter = (SqlParameter) command.Parameters[1];
+            parameter.SqlDbType = SqlDbType.NVarChar;
+            parameter.Size = ((string)parameter.Value).Length;
+
+            parameter = (SqlParameter) command.CreateParameter();
+            parameter.ParameterName = "Application";
+            parameter.SqlDbType = SqlDbType.NVarChar;
+            parameter.Value = Settings.Application;
+            command.Parameters.Insert(1, parameter);
+        }
+
+        sealed class TsqlScripts : SqlScripts
+        {
+            public TsqlScripts()
             {
-                using(var conn = Connection)
-                {
-                    conn.Execute(Resources.Table);
-                    conn.Execute(Resources.Index);
-                }
-            });
+                All += " WHERE Application IS NULL OR Application = @Application";
+                Save = Save.Insert(Save.Length - 8, ", @Application");
+            }
         }
     }
 }
