@@ -1,13 +1,73 @@
 ﻿<!DOCTYPE html>
 <html>
     <head>
-        <title>@(ErrorLogProvider.Settings.Application ?? "''") on @Server.MachineName &ndash; Error Logging Filter &amp; Route (ELFAR)</title>
-        <link href="@Url.Content("~/elfar/Resources/Stylesheets/Stylesheet.css")" type="text/css" rel="stylesheet" />
+        <title>Error Logging Filter and Route (ELFAR)</title>
+        @*<link href="@Url.Content("~/elfar/Resources/Stylesheets/Stylesheet.css")" type="text/css" rel="stylesheet" />*@
+        <style type="text/css">
+            body
+            {
+                width: 100%;
+                margin: 0;
+                padding: 0;
+                font-family: verdana;
+                overflow-x: hidden;
+                overflow-y: auto;
+            }
+            header, footer
+            {
+                position: fixed;
+                width: 100%;
+                padding: 10px;
+                background-color: #0072C6;
+                color: white;
+                z-index: 999;
+            }
+            header
+            {
+                height: 50px;
+            }
+            footer
+            {
+                bottom: 0;
+                height: 16px;
+                font-size: small;
+                text-align: center;
+            }
+
+            pre
+            {
+                width: 95%;
+            }
+
+            #content
+            {
+                position: absolute;
+                top: 60px;
+                width: 100%;
+                padding: 10px;
+                padding-bottom: 36px;
+                overflow-x: auto;
+                overflow-y: hidden;
+            }
+        </style>
     </head>
     <body>
-        <div>
+        <header>Error Logs for @(ErrorLogProvider.Settings.Application ?? "''") on @Server.MachineName</header>
+        <div id="content">
+            <pre id="stack-trace">
               
+            </pre>
         </div>
-        @Html.Partial("Footer")
+        <footer>Beyond395 Limited &copy; 2011&ndash;@DateTime.Now.Year &nbsp; @if(!string.IsNullOrWhiteSpace(ErrorLogProvider.Name)) {
+            @ErrorLogProvider.Name @:(v@(ErrorLogProvider.Version))
+        }</footer>
+        <script src="@Url.Content("~/elfar/Resources/Scripts/JavaScript.js")" type="text/javascript"></script>
+        <script type="text/javascript">
+            $(function() {
+                $.ajax({ url: "@Url.Content("~/elfar/Errors")" }).done(function(json) {
+                    $("pre#stack-trace").html(json[0].StackTrace);
+                });
+            });
+        </script>
     </body>
 </html>

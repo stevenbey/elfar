@@ -105,11 +105,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Default.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ErrorLog\Footer.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Footer.cshtml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Scripts\Default.js" />
@@ -155,10 +150,6 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Default.generated.cs</LastGenOutput>
     </None>
-    <Content Include="Views\ErrorLog\Footer.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>Footer.generated.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
