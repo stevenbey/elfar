@@ -38,5 +38,13 @@ namespace Elfar.Twitter
                         : new NetworkCredential(Settings.Username, Settings.Password);
             }
         }
+
+        public static Settings Settings
+        {
+            get { return settings ?? (settings = new Settings()); }
+            set { settings = value; }
+        }
+
+        static Settings settings;
     }
 }
