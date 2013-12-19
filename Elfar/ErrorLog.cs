@@ -38,7 +38,7 @@ namespace Elfar
         public int ID { get; private set; }
         public string Message { get; private set; }
         public string Source { get; private set; }
-        public string StackTrace { get; private set; }
+        public string StackTrace { get; protected set; }
         public DateTime Time { get; private set; }
         public string Type { get; private set; }
         public string User { get; protected set; }
@@ -49,13 +49,13 @@ namespace Elfar
             internal Storage(ErrorLog errorLog)
             {
                 ID = errorLog.ID;
-                Json = Serializer.Serialize(errorLog);
+                Json = serializer.Serialize(errorLog);
             }
 
             public int ID { get; set; }
             public string Json { get; set; }
-
-            protected static readonly JavaScriptSerializer Serializer = new JavaScriptSerializer();
+            
+            static readonly JavaScriptSerializer serializer = new JavaScriptSerializer();
         }
     }
 }

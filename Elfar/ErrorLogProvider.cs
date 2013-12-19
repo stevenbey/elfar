@@ -69,7 +69,7 @@ namespace Elfar
         }
         internal static string Name
         {
-            get { return Type == null ? null : Type.FullName; }
+            get { return Type == null ? null : Type.Namespace; }
         }
         internal static string Version
         {
