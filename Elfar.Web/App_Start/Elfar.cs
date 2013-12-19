@@ -6,8 +6,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-[assembly: PreApplicationStartMethod(typeof(Elfar.Web.App_Start.Elfar), "Init")]
-namespace Elfar.Web.App_Start
+[assembly: PreApplicationStartMethod(typeof(Elfar.Web.Elfar), "Init")]
+namespace Elfar.Web
 {
     public static class Elfar
     {
