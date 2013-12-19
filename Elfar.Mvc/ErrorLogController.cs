@@ -8,8 +8,11 @@ namespace Elfar.Mvc
     {
         public ViewResult Default()
         {
-            var all = ErrorLogProvider.All;
             return View();
+        }
+        public ContentResult Errors()
+        {
+            return Content("[" + string.Join(",", ErrorLogProvider.All) + "]", "application/json");
         }
         //[ImportingConstructor]
         //public ErrorLogController(IErrorLogProvider provider)

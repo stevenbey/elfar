@@ -1,13 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using System.Xml.Schema;
 using System.Xml.Serialization;
 
 namespace Elfar.Xml
 {
-    public class XmlErrorLogProvider : IO.ErrorLogProvider
+    public class XmlErrorLogProvider : IO.ErrorLogProvider, IInternalErrorLogProvider
     {
         public XmlErrorLogProvider()
         {
@@ -27,7 +30,7 @@ namespace Elfar.Xml
                 document.Save(FilePath);
             }
         }
-        public override void Save(Elfar.ErrorLog errorLog)
+        public override void Save(ErrorLog errorLog)
         {
             lock(Key)
             {
@@ -41,22 +44,27 @@ namespace Elfar.Xml
             return defaultFilePath;
         }
 
-        static XmlNode CreateNode(Elfar.ErrorLog errorLog)
+        static XmlNode CreateNode(ErrorLog errorLog)
         {
             var builder = new StringBuilder();
-            serializer.Serialize(XmlWriter.Create(builder), new ErrorLog(errorLog));
+            serializer.Serialize(XmlWriter.Create(builder), new errorLog(errorLog));
             var element = document.CreateElement("temp");
             element.InnerXml = builder.ToString();
-            return element.SelectSingleNode("ErrorLog");
+            return element.SelectSingleNode("errorLog");
         }
         static XmlNode FindNode(int id)
         {
             return document.SelectSingleNode(string.Format("errorLogs/ErrorLog[@id='{0}']", id));
         }
 
-        public override IEnumerable<Elfar.ErrorLog> All
+        public override IEnumerable<ErrorLog> All
         {
-            get { return DocumentElement.ChildNodes.Cast<XmlNode>().Select(n => (ErrorLog) serializer.Deserialize(new XmlNodeReader(n))); }
+            get { throw new NotImplementedException(); }
+        }
+
+        IEnumerable<string> IInternalErrorLogProvider.Json
+        {
+            get { return DocumentElement.ChildNodes.Cast<XmlNode>().Select(n => (errorLog) serializer.Deserialize(new XmlNodeReader(n))).Select(l => l.Json); }
         }
 
         static XmlElement DocumentElement
@@ -70,6 +78,28 @@ namespace Elfar.Xml
         const string defaultFilePath = "~/App_Data/Elfar_ErrorLogs.xml";
 
         static readonly XmlDocument document = new XmlDocument();
-        static readonly XmlSerializer serializer = new XmlSerializer(typeof(ErrorLog));
+        static readonly XmlSerializer serializer = new XmlSerializer(typeof(errorLog));
+
+        // ReSharper disable once InconsistentNaming
+        public class errorLog : ErrorLog.Storage, IXmlSerializable
+        {
+            public errorLog() { }
+            internal errorLog(ErrorLog errorLog) : base(errorLog) {}
+
+            public XmlSchema GetSchema()
+            {
+                return null;
+            }
+            public void ReadXml(XmlReader reader)
+            {
+                ID = int.Parse(reader.GetAttribute("id"), CultureInfo.CurrentUICulture);
+                Json = reader.ReadElementContentAsString().Decompress();
+            }
+            public void WriteXml(XmlWriter writer)
+            {
+                writer.WriteAttributeString("id", ID.ToString(CultureInfo.InvariantCulture));
+                writer.WriteString(Json.Compress());
+            }
+        }
     }
 }

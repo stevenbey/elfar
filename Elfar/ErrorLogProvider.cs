@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Elfar
 {
@@ -18,9 +19,9 @@ namespace Elfar
             }
             return false;
         }
-        internal static void Save(Json json)
+        internal static void Save(ErrorLog errorLog)
         {
-            Save(new ErrorLog(json), true);
+            Save(errorLog, true);
         }
 
         static void Plugins(ErrorLog errorLog, bool save = true)
@@ -52,11 +53,16 @@ namespace Elfar
             set { settings = value; }
         }
 
-        internal static IEnumerable<ErrorLog> All
+        internal static IEnumerable<string> All
         {
             get
             {
-                try { if(Instance != null) return Instance.All; }
+                try
+                {
+                    var provider = Instance as IInternalErrorLogProvider;
+                    if(provider != null) return provider.Json;
+                    if(Instance != null) return Instance.All.Select(l => new ErrorLog.Storage(l).Json);
+                }
                 catch(Exception) {}
                 return empty;
             }
@@ -79,7 +85,7 @@ namespace Elfar
             get { return Instance == null ? null : Instance.GetType(); }
         }
 
-        static readonly ErrorLog[] empty = new ErrorLog[0];
+        static readonly string[] empty = new string[0];
         static IErrorLogProvider instance;
         static Settings settings;
     }

@@ -6,9 +6,9 @@ using System.Web.Routing;
 
 namespace Elfar.Mvc
 {
-    class Json : Elfar.Json
+    class ErrorLog : Elfar.ErrorLog
     {
-        public Json(Exception exception, RouteData data, HttpContextBase context) : base(exception)
+        public ErrorLog(Exception exception, RouteData data, HttpContextBase context) : base(exception)
         {
             var httpException = exception as HttpException;
 

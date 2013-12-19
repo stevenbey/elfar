@@ -5,9 +5,9 @@ namespace Elfar.Data.Access
 {
     public sealed class AccessErrorLogProvider : DbErrorLogProvider<OleDbConnection>
     {
-        protected override void SetSaveParameters(IDbCommand command, ErrorLog errorLog)
+        protected override void SetSaveParameters(IDbCommand command, ErrorLog.Storage storage)
         {
-            base.SetSaveParameters(command, errorLog);
+            base.SetSaveParameters(command, storage);
 
             ((OleDbParameter) command.Parameters[1]).OleDbType = OleDbType.LongVarWChar;
         }

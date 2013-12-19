@@ -1,9 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Data;
 
 namespace Elfar.Data
 {
-    public abstract class DbErrorLogProvider : IErrorLogProvider
+    public abstract class DbErrorLogProvider : IErrorLogProvider, IInternalErrorLogProvider
     {
         static DbErrorLogProvider()
         {
@@ -27,17 +28,17 @@ namespace Elfar.Data
             using(var cmd = conn.CreateCommand())
             {
                 cmd.CommandText = Scripts.Save;
-                SetSaveParameters(cmd, errorLog);
+                SetSaveParameters(cmd, new ErrorLog.Storage(errorLog));
                 conn.Open();
                 cmd.ExecuteNonQuery();
             }
         }
 
-        protected virtual void SetSaveParameters(IDbCommand command, ErrorLog errorLog)
+        protected virtual void SetSaveParameters(IDbCommand command, ErrorLog.Storage data)
         {
-            SetIDParameter(command, errorLog.ID);
+            SetIDParameter(command, data.ID);
 
-            var json = errorLog.Json.Compress();
+            var json = data.Json.Compress();
             var parameter = command.CreateParameter();
             parameter.ParameterName = "Json";
             parameter.Size = json.Length;
@@ -55,37 +56,34 @@ namespace Elfar.Data
             command.Parameters.Add(parameter);
         }
 
-        public IEnumerable<ErrorLog> All
+        protected abstract IDbConnection Connection { get; }
+
+        IEnumerable<ErrorLog> IErrorLogProvider.All
+        {
+            get { throw new NotImplementedException(); }
+        }
+        IEnumerable<string> IInternalErrorLogProvider.Json
         {
             get
             {
-                var errorLogs = new List<ErrorLog>();
+                var list = new List<string>();
                 using (var conn = Connection)
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = Scripts.All;
                     conn.Open();
-                    var reader = cmd.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        errorLogs.Add(new ErrorLog
-                        {
-                            ID = reader.GetInt32(0),
-                            Json = reader.GetString(1).Decompress()
-                        });
-                    }
+                    using (var reader = cmd.ExecuteReader(CommandBehavior.CloseConnection))
+                        while (reader.Read()) list.Add(reader.GetString(0).Decompress());
                 }
-                return errorLogs;
+                return list;
             }
         }
-
-        protected abstract IDbConnection Connection { get; }
 
         protected static readonly Settings Settings;
         
         static class Scripts
         {
-            public static readonly string All = "SELECT * FROM " + Table;
+            public static readonly string All = "SELECT Json FROM " + Table;
             public static readonly string Delete = "DELETE FROM " + Table + " WHERE ID = @ID";
             public static readonly string Save = "INSERT INTO " + Table + " VALUES(@ID, @Json)";
 

@@ -1,19 +1,61 @@
 ﻿using System;
+using System.Security;
+using System.Threading;
+using System.Web.Script.Serialization;
 
 namespace Elfar
 {
     public class ErrorLog
     {
         public ErrorLog() { }
-        
-        internal ErrorLog(Exception exception) : this(new Json(exception)) { }
-        internal ErrorLog(Json json)
+
+        internal ErrorLog(Exception exception)
         {
-            ID = json.ID;
-            Json = json;
+            if (exception == null) throw new ArgumentNullException("exception");
+
+            Time = DateTime.Now;
+
+            try { Host = Environment.MachineName; }
+            catch (SecurityException) { }
+
+            var @base = exception.GetBaseException();
+
+            Message = @base.Message;
+            Source = @base.Source;
+            StackTrace = @base.ToString();
+            Type = @base.GetType().ToString();
+
+            User = Thread.CurrentPrincipal.Identity.Name;
+
+            ID = Math.Abs((Application + Host + Type + Time + User).GetHashCode() + @base.GetHashCode());
         }
 
-        public int ID { get; set; }
-        public string Json { get; set; }
+        public string Application
+        {
+            get { return ErrorLogProvider.Settings.Application; }
+        }
+        public string Host { get; protected set; }
+        public int ID { get; private set; }
+        public string Message { get; private set; }
+        public string Source { get; private set; }
+        public string StackTrace { get; private set; }
+        public DateTime Time { get; private set; }
+        public string Type { get; private set; }
+        public string User { get; protected set; }
+
+        public class Storage
+        {
+            internal Storage() { }
+            internal Storage(ErrorLog errorLog)
+            {
+                ID = errorLog.ID;
+                Json = Serializer.Serialize(errorLog);
+            }
+
+            public int ID { get; set; }
+            public string Json { get; set; }
+
+            protected static readonly JavaScriptSerializer Serializer = new JavaScriptSerializer();
+        }
     }
 }

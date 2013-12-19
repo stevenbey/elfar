@@ -89,7 +89,7 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="FormActionAttribute.cs" />
     <Compile Include="Handler.cs" />
-    <Compile Include="Json.cs" />
+    <Compile Include="ErrorLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Provider.cs" />
     <Compile Include="RouteConstraints\AdminConstraint.cs" />

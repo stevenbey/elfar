@@ -107,9 +107,9 @@
     <Compile Include="App_Start\Elfar.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Elfar.Data.Access\Elfar.Data.Access.csproj">
-      <Project>{756e9da7-6c93-40a2-a29e-d8ada8d1f743}</Project>
-      <Name>Elfar.Data.Access</Name>
+    <ProjectReference Include="..\Elfar.Data.SqlServerCe\Elfar.Data.SqlServerCe.csproj">
+      <Project>{b5dbe30b-4406-4126-843e-7a83eae0dda2}</Project>
+      <Name>Elfar.Data.SqlServerCe</Name>
     </ProjectReference>
     <ProjectReference Include="..\Elfar.Mvc\Elfar.Mvc.csproj">
       <Project>{7C6FCD11-4C1A-46E8-8587-E2639628E5C4}</Project>
