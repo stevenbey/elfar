@@ -1,6 +1,4 @@
-﻿using System.Net.Mail;
-using System.Text;
-using Postal;
+﻿using Postal;
 
 namespace Elfar.Mail
 {
@@ -14,10 +12,8 @@ namespace Elfar.Mail
             email.To = Settings.To;
             email.Subject = string.Format(Settings.SubjectFormat ?? "Error ({0}): {1}", errorLog.Type, errorLog.Message).Replace(@"\r\n", " ");
             email.Time = errorLog.Time;
-            email.Detail = errorLog.Detail;
-            email.ServerVariables = errorLog.ServerVariables;
-            if(Settings.AttachOriginalError && !string.IsNullOrWhiteSpace(errorLog.Html))
-                email.Attach(Attachment.CreateAttachmentFromString(errorLog.Html, "Original ASP.NET error page.html", Encoding.UTF8, "text/html"));
+            email.Source = errorLog.Source;
+            email.StackTrace = errorLog.StackTrace;
             email.SendAsync();
         }
     }
