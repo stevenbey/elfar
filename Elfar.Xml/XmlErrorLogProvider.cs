@@ -10,7 +10,7 @@ using System.Xml.Serialization;
 
 namespace Elfar.Xml
 {
-    public class XmlErrorLogProvider : IO.ErrorLogProvider, IInternalErrorLogProvider
+    public class XmlErrorLogProvider : IO.ErrorLogProvider, IJsonErrorLogProvider
     {
         public XmlErrorLogProvider()
         {
@@ -62,7 +62,7 @@ namespace Elfar.Xml
             get { throw new NotImplementedException(); }
         }
 
-        IEnumerable<string> IInternalErrorLogProvider.Json
+        IEnumerable<string> IJsonErrorLogProvider.Json
         {
             get { return DocumentElement.ChildNodes.Cast<XmlNode>().Select(n => (errorLog) serializer.Deserialize(new XmlNodeReader(n))).Select(l => l.Json); }
         }

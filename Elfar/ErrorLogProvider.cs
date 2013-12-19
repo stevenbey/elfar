@@ -59,7 +59,7 @@ namespace Elfar
             {
                 try
                 {
-                    var provider = Instance as IInternalErrorLogProvider;
+                    var provider = Instance as IJsonErrorLogProvider;
                     if(provider != null) return provider.Json;
                     if(Instance != null) return Instance.All.Select(l => new ErrorLog.Storage(l).Json);
                 }

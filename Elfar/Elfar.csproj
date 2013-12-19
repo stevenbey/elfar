@@ -46,7 +46,7 @@
     <Compile Include="Data\Settings.cs" />
     <Compile Include="ErrorLogPlugins.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="IInternalErrorLogProvider.cs" />
+    <Compile Include="IJsonErrorLogProvider.cs" />
     <Compile Include="IO\ErrorLogProvider.cs" />
     <Compile Include="IO\Settings.cs" />
     <Compile Include="Settings.cs" />

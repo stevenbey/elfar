@@ -4,7 +4,7 @@ using System.Data;
 
 namespace Elfar.Data
 {
-    public abstract class DbErrorLogProvider : IErrorLogProvider, IInternalErrorLogProvider
+    public abstract class DbErrorLogProvider : IErrorLogProvider, IJsonErrorLogProvider
     {
         static DbErrorLogProvider()
         {
@@ -62,7 +62,7 @@ namespace Elfar.Data
         {
             get { throw new NotImplementedException(); }
         }
-        IEnumerable<string> IInternalErrorLogProvider.Json
+        IEnumerable<string> IJsonErrorLogProvider.Json
         {
             get
             {
