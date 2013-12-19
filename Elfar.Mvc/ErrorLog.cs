@@ -58,6 +58,8 @@ namespace Elfar.Mvc
             Form = (Dictionary) request.Form;
             QueryString = (Dictionary) request.QueryString;
             ServerVariables = (Dictionary) request.ServerVariables;
+
+            StackTrace = new StackTrace(base.StackTrace);
         }
 
         static string ToTitle(string value)
@@ -78,6 +80,7 @@ namespace Elfar.Mvc
         public Dictionary RouteData { get; set; }
         public string RouteUrl { get; set; }
         public Dictionary ServerVariables { get; set; }
+        public new StackTrace StackTrace { get; set; }
         public Uri Url { get; set; }
 
         static readonly Dictionary empty = new Dictionary();
