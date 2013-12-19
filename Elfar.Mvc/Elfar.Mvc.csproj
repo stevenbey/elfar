@@ -109,7 +109,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Footer.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="__Package__.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Scripts\Default.js" />
