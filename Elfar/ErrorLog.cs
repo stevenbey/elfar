@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Security;
 using System.Threading;
+using System.Web;
 using System.Web.Script.Serialization;
 
 namespace Elfar
@@ -27,13 +28,9 @@ namespace Elfar
 
             User = Thread.CurrentPrincipal.Identity.Name;
 
-            ID = Math.Abs((Application + Host + Type + Time + User).GetHashCode() + @base.GetHashCode());
+            ID = Math.Abs((HttpRuntime.AppDomainAppId + Host + Type + Time + User).GetHashCode() + @base.GetHashCode());
         }
 
-        public string Application
-        {
-            get { return ErrorLogProvider.Settings.Application; }
-        }
         public string Host { get; protected set; }
         public int ID { get; private set; }
         public string Message { get; private set; }

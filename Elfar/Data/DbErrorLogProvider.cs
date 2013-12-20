@@ -8,7 +8,7 @@ namespace Elfar.Data
     {
         static DbErrorLogProvider()
         {
-            Settings = ErrorLogProvider.Settings as Settings ?? new Settings { Application = ErrorLogProvider.Settings.Application };
+            Settings = ErrorLogProvider.Settings as Settings ?? new Settings();
         }
         
         public void Delete(int id)

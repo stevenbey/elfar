@@ -67,15 +67,11 @@ namespace Elfar
                 return empty;
             }
         }
-        internal static string Name
+        internal static string Details
         {
-            get { return Type == null ? null : Type.Namespace; }
+            get { return Type == null ? null : string.Format("{0} (v{1})", Type.Namespace, Type.Assembly.GetName().Version); }
         }
-        internal static string Version
-        {
-            get { return Type == null ? null : Type.Assembly.GetName().Version.ToString(); }
-        }
-        
+
         static IErrorLogProvider Instance
         {
             get { return instance ?? (instance = Components.Create<IErrorLogProvider>()); }
