@@ -2,6 +2,7 @@
 using System.IO;
 using System.IO.Compression;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Elfar
 {
@@ -24,6 +25,10 @@ namespace Elfar
                 using(var gs = new GZipStream(msi, CompressionMode.Decompress)) gs.CopyTo(mso);
                 return Encoding.UTF8.GetString(mso.ToArray());
             }
+        }
+        public static string ToTitle(this string value)
+        {
+            return value == null ? null : Regex.Replace(value, @"^[a-z]", m => m.Value.ToUpper());
         }
     }
 }

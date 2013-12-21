@@ -24,13 +24,13 @@ namespace Elfar.Mvc
 
                 var values = data.Values;
 
-                Action = ToTitle((string) values["action"]);
-                Controller = ToTitle((string) values["controller"]);
+                Action = ((string) values["action"]).ToTitle();
+                Controller = ((string) values["controller"]).ToTitle();
 
                 RouteData = (Dictionary) values;
                 DataTokens = (Dictionary) data.DataTokens;
 
-                if(DataTokens.ContainsKey("area")) Area = ToTitle(DataTokens["area"]);
+                if(DataTokens.ContainsKey("area")) Area = DataTokens["area"].ToTitle();
             }
 
             if(context == null)
@@ -57,13 +57,6 @@ namespace Elfar.Mvc
             Form = (Dictionary) request.Form;
             QueryString = (Dictionary) request.QueryString;
             ServerVariables = (Dictionary) request.ServerVariables;
-
-            StackTrace = new StackTrace(StackTrace).ToString();
-        }
-
-        static string ToTitle(string value)
-        {
-            return value == null ? null : Regex.Replace(value, @"^[a-z]", m => m.Value.ToUpper());
         }
 
         public string Action { get; set; }
