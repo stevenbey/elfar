@@ -83,7 +83,9 @@ namespace Elfar.Xml
         // ReSharper disable once InconsistentNaming
         public class errorLog : ErrorLog.Storage, IXmlSerializable
         {
+            // ReSharper disable UnusedMember.Global
             public errorLog() { }
+            
             internal errorLog(ErrorLog errorLog) : base(errorLog) {}
 
             public XmlSchema GetSchema()
