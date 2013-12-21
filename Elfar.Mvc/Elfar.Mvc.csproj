@@ -98,7 +98,6 @@
     <Compile Include="RouteConstraints\IPConstraint.cs" />
     <Compile Include="RouteConstraints\LocalConstraint.cs" />
     <Compile Include="RouteHandler.cs" />
-    <Compile Include="StackTrace.cs" />
     <Compile Include="Views\Engine.cs" />
     <Compile Include="Views\ErrorLog\Default.generated.cs">
       <AutoGen>True</AutoGen>

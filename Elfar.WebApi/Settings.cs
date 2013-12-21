@@ -8,6 +8,5 @@ namespace Elfar.WebApi
     public static class Settings
     {
         public static List<IHttpRouteConstraint> Constraints { get; set; }
-        public static Predicate<HttpActionExecutedContext> Exclude { get; set; }
     }
 }
