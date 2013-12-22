@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 
 namespace Elfar
 {
@@ -67,9 +68,17 @@ namespace Elfar
                 return empty;
             }
         }
+        internal static string Application
+        {
+            get
+            {
+                var path = HttpRuntime.AppDomainAppVirtualPath.Trim('/');
+                return string.IsNullOrWhiteSpace(path) ? HttpRuntime.AppDomainAppId : path;
+            }
+        }
         internal static string Details
         {
-            get { return Type == null ? null : string.Format("{0} (v{1})", Type.Namespace, Type.Assembly.GetName().Version); }
+            get { return Type == null ? null : string.Format("{0} [{1}]", Type.Namespace, Type.Assembly.GetName().Version); }
         }
 
         static IErrorLogProvider Instance

@@ -50,73 +50,102 @@ WriteLiteral("<!DOCTYPE html>\r\n<html>\r\n    <head>\r\n        <title>Error Lo
             #line default
             #line hidden
 WriteLiteral("\" type=\"text/css\" rel=\"stylesheet\" />\r\n    </head>\r\n    <body>\r\n        <header>\r" +
-"\n            <div id=\"elfar\">Error Logging Filter and Route (ELFAR)</div>\r\n     " +
-"       <div id=\"title\">Dashboard for <strong>");
+"\n            <div id=\"elfar\">Error Logging Filter and Route (ELFAR) &nbsp;/&nbsp" +
+"; <strong>");
 
 
             
-            #line 10 "..\..\Views\ErrorLog\Default.cshtml"
-                                             Write(HttpRuntime.AppDomainAppId);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</strong> on <strong>");
-
-
-            
-            #line 10 "..\..\Views\ErrorLog\Default.cshtml"
-                                                                                             Write(Server.MachineName);
+            #line 9 "..\..\Views\ErrorLog\Default.cshtml"
+                                                                                    Write(ErrorLogProvider.Application);
 
             
             #line default
             #line hidden
-WriteLiteral("</strong></div>\r\n        </header>\r\n        <div id=\"content\">\r\n            <pre " +
-"id=\"stack-trace\">\r\n            </pre>\r\n        </div>\r\n        <footer>Copyright" +
-" &copy; Beyond395 Limited 2011&ndash;");
+WriteLiteral("</strong> &nbsp;/&nbsp; <strong>");
 
 
             
-            #line 16 "..\..\Views\ErrorLog\Default.cshtml"
-                                                         Write(DateTime.Now.Year);
+            #line 9 "..\..\Views\ErrorLog\Default.cshtml"
+                                                                                                                                                 Write(Server.MachineName);
 
             
             #line default
             #line hidden
-WriteLiteral(" &nbsp; All rights reserved. &nbsp; ");
+WriteLiteral("</strong></div>\r\n            <ul id=\"tabs\">\r\n                <li class=\"selected\"" +
+">Dashboard</li>\r\n                <li>test</li>\r\n            </ul>\r\n        </hea" +
+"der>\r\n        <div id=\"content\">\r\n            <div id=\"list\">\r\n                <" +
+"span>test</span><br/>\r\n                <span>test</span><br/>\r\n                <" +
+"span>test</span><br/>\r\n                <span>test</span><br/>\r\n                <" +
+"span>test</span><br/>\r\n                <span>test</span><br/>\r\n                <" +
+"span>test</span><br/>\r\n                <span>test</span><br/>\r\n                <" +
+"span>test</span><br/>\r\n                <span>test</span><br/>\r\n                <" +
+"span>test</span><br/>\r\n                <span>test</span><br/>\r\n                <" +
+"span>test</span><br/>\r\n                <span>test</span><br/>\r\n                <" +
+"span>test</span><br/>\r\n                <span>test</span><br/>\r\n                <" +
+"span>test</span><br/>\r\n                <span>test</span><br/>\r\n                <" +
+"span>test</span><br/>\r\n                <span>test</span><br/>\r\n                <" +
+"span>test</span><br/>\r\n                <span>test</span><br/>\r\n                <" +
+"span>test</span><br/>\r\n                <span>test</span><br/>\r\n                <" +
+"span>test</span><br/>\r\n                <span>test</span><br/>\r\n            </div" +
+">\r\n            <div id=\"item\">\r\n                <div id=\"summary\">\r\n            " +
+"        Summary\r\n                </div>\r\n                <div id=\"detail\">\r\n    " +
+"                <span>testtesttesttesttesttesttesttesttesttesttesttesttesttestte" +
+"sttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttestte" +
+"sttesttesttesttesttesttesttest</span><br/>\r\n                    <span>test</span" +
+"><br/>\r\n                    <span>test</span><br/>\r\n                    <span>te" +
+"st</span><br/>\r\n                    <span>test</span><br/>\r\n                    " +
+"<span>test</span><br/>\r\n                    <span>test</span><br/>\r\n            " +
+"        <span>test</span><br/>\r\n                    <span>test</span><br/>\r\n    " +
+"                <span>test</span><br/>\r\n                    <span>test</span><br" +
+"/>\r\n                    <span>test</span><br/>\r\n                    <span>test</" +
+"span><br/>\r\n                    <span>test</span><br/>\r\n                    <spa" +
+"n>test</span><br/>\r\n                    <span>test</span><br/>\r\n                " +
+"    <span>test</span><br/>\r\n                    <span>test</span><br/>\r\n        " +
+"            <span>test</span><br/>\r\n                    <span>test</span><br/>\r\n" +
+"                    <span>test</span><br/>\r\n                    <span>test</span" +
+"><br/>\r\n                    <span>test</span><br/>\r\n                    <span>te" +
+"st</span><br/>\r\n                    <span>test</span><br/>\r\n                    " +
+"<span>test</span><br/>\r\n                    <span>test</span><br/>\r\n            " +
+"        <span>test</span><br/>\r\n                    <span>test</span><br/>\r\n    " +
+"                <span>test</span><br/>\r\n                    <span>test</span><br" +
+"/>\r\n                    <span>test</span><br/>\r\n                    <span>test</" +
+"span><br/>\r\n                    <span>test</span><br/>\r\n                    <spa" +
+"n>test</span><br/>\r\n                    <span>test</span><br/>\r\n                " +
+"    <span>test</span><br/>\r\n                    <span>test</span><br/>\r\n        " +
+"            <span>test</span><br/>\r\n                    <span>test</span><br/>\r\n" +
+"                    <span>test</span><br/>\r\n                    <span>test</span" +
+"><br/>\r\n                    <span>test</span><br/>\r\n                    <span>te" +
+"st</span><br/>\r\n                    <span>test</span><br/>\r\n                    " +
+"<span>test</span><br/>\r\n                    <span>test</span><br/>\r\n            " +
+"        <span>test</span><br/>\r\n                    <span>test</span><br/>\r\n    " +
+"                <span>test</span><br/>\r\n                    <span>test</span><br" +
+"/>\r\n                    <span>test</span><br/>\r\n                </div>\r\n        " +
+"    </div>\r\n        </div>\r\n        <footer>Copyright &#169; 2012&ndash;");
 
 
             
-            #line 16 "..\..\Views\ErrorLog\Default.cshtml"
-                                                                                                               Write(ErrorLogProvider.Details);
+            #line 104 "..\..\Views\ErrorLog\Default.cshtml"
+                                       Write(DateTime.Now.Year);
 
             
             #line default
             #line hidden
-WriteLiteral("</footer>\r\n        <script src=\"");
+WriteLiteral("  Beyond395 Limited &nbsp;&middot;&nbsp; All rights reserved &nbsp;&middot;&nbsp;" +
+" ");
 
 
             
-            #line 17 "..\..\Views\ErrorLog\Default.cshtml"
-                Write(Url.Content("~/Scripts/jquery-2.0.3.min.js"));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\" type=\"text/javascript\"></script>\r\n        <script type=\"text/javascript\">\r\n    " +
-"        $(function() {\r\n                $.ajax({ url: \"");
-
-
-            
-            #line 20 "..\..\Views\ErrorLog\Default.cshtml"
-                          Write(Url.Content("~/elfar/Errors"));
+            #line 104 "..\..\Views\ErrorLog\Default.cshtml"
+                                                                                                                                           Write(ErrorLogProvider.Details);
 
             
             #line default
             #line hidden
-WriteLiteral("\" }).done(function(json) {\r\n                    //$(\"pre#stack-trace\").html(json[" +
-"0].StackTrace);\r\n                });\r\n            });\r\n        </script>\r\n    </" +
-"body>\r\n</html>");
+WriteLiteral("</footer>\r\n        ");
+
+
+
+WriteLiteral("\r\n    </body>\r\n</html>");
 
 
         }
