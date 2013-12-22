@@ -14,6 +14,11 @@ namespace Elfar.Mvc
         {
             return Content("[" + string.Join(",", ErrorLogProvider.All) + "]", "application/json");
         }
+        public void Test()
+        {
+            throw new TestException();
+        }
+        
         //[ImportingConstructor]
         //public ErrorLogController(IErrorLogProvider provider)
         //{
@@ -79,10 +84,6 @@ namespace Elfar.Mvc
         //public FileStreamResult Stylesheet(string file = "Stylesheet")
         //{
         //    return ResourceFile(file, "css", "text/css");
-        //}
-        //public void Test()
-        //{
-        //    throw new TestException();
         //}
         //public DefaultResult Xml(Guid id, bool download = false)
         //{
