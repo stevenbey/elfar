@@ -20,11 +20,8 @@ Content-Type: text/html
     }
         <p>@Model.Source</p>
         <pre id="errorDetail">
-@Model.StackTrace
+@Html.Raw(Model.StackTrace)
         </pre>
-		<p id="Footer">
-            Powered by Error Logging Filter and Route (ELFAR) for ASP.NET MVC, Copyright &#169; 2012, Steven Bey. All rights reserved.
-            Licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>.
-        </p>
+		<p id="Footer">Copyright &#169; 2012&ndash;@DateTime.Now.Year Beyond395 Limited &nbsp;&middot;&nbsp; All rights reserved &nbsp;&middot;&nbsp; @ErrorLogProvider.Details</p>
 	</body>
 </html>

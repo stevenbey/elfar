@@ -8,13 +8,21 @@ namespace Elfar.Mail
         {
             if(string.IsNullOrWhiteSpace(Settings.To)) return;
             dynamic email = new Email("ErrorLog");
-            email.From = Settings.From ?? "elfar@" + errorLog.Host;
             email.To = Settings.To;
-            email.Subject = string.Format(Settings.SubjectFormat ?? "Error ({0}): {1}", errorLog.Type, errorLog.Message).Replace(@"\r\n", " ");
+            email.From = Settings.From ?? "elfar@" + errorLog.Host;
+            email.Subject = string.Format(Settings.SubjectFormat ?? "Error Logging Filter and Route (ELFAR): New error logged.");
             email.Time = errorLog.Time;
             email.Source = errorLog.Source;
             email.StackTrace = errorLog.StackTrace;
             email.SendAsync();
         }
+
+        public static Settings Settings
+        {
+            get { return settings ?? (settings = new Settings()); }
+            set { settings = value; }
+        }
+        
+        static Settings settings;
     }
 }
