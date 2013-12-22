@@ -71,60 +71,39 @@ WriteLiteral("</strong> &nbsp;/&nbsp; <strong>");
             
             #line default
             #line hidden
-WriteLiteral("</strong></div>\r\n            <ul id=\"tabs\">\r\n                <li class=\"selected\"" +
-">Dashboard</li>\r\n                <li>test</li>\r\n            </ul>\r\n        </hea" +
-"der>\r\n        <div id=\"content\">\r\n            <div id=\"list\">\r\n                <" +
-"span>test</span><br/>\r\n                <span>test</span><br/>\r\n                <" +
-"span>test</span><br/>\r\n                <span>test</span><br/>\r\n                <" +
-"span>test</span><br/>\r\n                <span>test</span><br/>\r\n                <" +
-"span>test</span><br/>\r\n                <span>test</span><br/>\r\n                <" +
-"span>test</span><br/>\r\n                <span>test</span><br/>\r\n                <" +
-"span>test</span><br/>\r\n                <span>test</span><br/>\r\n                <" +
-"span>test</span><br/>\r\n                <span>test</span><br/>\r\n                <" +
-"span>test</span><br/>\r\n                <span>test</span><br/>\r\n                <" +
-"span>test</span><br/>\r\n                <span>test</span><br/>\r\n                <" +
-"span>test</span><br/>\r\n                <span>test</span><br/>\r\n                <" +
-"span>test</span><br/>\r\n                <span>test</span><br/>\r\n                <" +
-"span>test</span><br/>\r\n                <span>test</span><br/>\r\n                <" +
-"span>test</span><br/>\r\n                <span>test</span><br/>\r\n            </div" +
-">\r\n            <div id=\"item\">\r\n                <div id=\"summary\">\r\n            " +
-"        Summary\r\n                </div>\r\n                <div id=\"detail\">\r\n    " +
-"                <span>testtesttesttesttesttesttesttesttesttesttesttesttesttestte" +
-"sttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttestte" +
-"sttesttesttesttesttesttesttest</span><br/>\r\n                    <span>test</span" +
-"><br/>\r\n                    <span>test</span><br/>\r\n                    <span>te" +
-"st</span><br/>\r\n                    <span>test</span><br/>\r\n                    " +
-"<span>test</span><br/>\r\n                    <span>test</span><br/>\r\n            " +
-"        <span>test</span><br/>\r\n                    <span>test</span><br/>\r\n    " +
-"                <span>test</span><br/>\r\n                    <span>test</span><br" +
-"/>\r\n                    <span>test</span><br/>\r\n                    <span>test</" +
-"span><br/>\r\n                    <span>test</span><br/>\r\n                    <spa" +
-"n>test</span><br/>\r\n                    <span>test</span><br/>\r\n                " +
-"    <span>test</span><br/>\r\n                    <span>test</span><br/>\r\n        " +
-"            <span>test</span><br/>\r\n                    <span>test</span><br/>\r\n" +
-"                    <span>test</span><br/>\r\n                    <span>test</span" +
-"><br/>\r\n                    <span>test</span><br/>\r\n                    <span>te" +
-"st</span><br/>\r\n                    <span>test</span><br/>\r\n                    " +
-"<span>test</span><br/>\r\n                    <span>test</span><br/>\r\n            " +
-"        <span>test</span><br/>\r\n                    <span>test</span><br/>\r\n    " +
-"                <span>test</span><br/>\r\n                    <span>test</span><br" +
-"/>\r\n                    <span>test</span><br/>\r\n                    <span>test</" +
-"span><br/>\r\n                    <span>test</span><br/>\r\n                    <spa" +
-"n>test</span><br/>\r\n                    <span>test</span><br/>\r\n                " +
-"    <span>test</span><br/>\r\n                    <span>test</span><br/>\r\n        " +
-"            <span>test</span><br/>\r\n                    <span>test</span><br/>\r\n" +
-"                    <span>test</span><br/>\r\n                    <span>test</span" +
-"><br/>\r\n                    <span>test</span><br/>\r\n                    <span>te" +
-"st</span><br/>\r\n                    <span>test</span><br/>\r\n                    " +
-"<span>test</span><br/>\r\n                    <span>test</span><br/>\r\n            " +
-"        <span>test</span><br/>\r\n                    <span>test</span><br/>\r\n    " +
-"                <span>test</span><br/>\r\n                    <span>test</span><br" +
-"/>\r\n                    <span>test</span><br/>\r\n                </div>\r\n        " +
-"    </div>\r\n        </div>\r\n        <footer>Copyright &#169; 2012&ndash;");
+WriteLiteral(@"</strong></div>
+            <ul id=""tabs"">
+                <li class=""selected"">Dashboard</li>
+            </ul>
+        </header>
+        <div id=""content"">
+            <div id=""dashboard"">
+                <p>
+                    Trends:
+                    <ul>
+                        <li>90 days</li>
+                        <li>30 days</li>
+                        <li>7 days</li>
+                        <li>today</li>
+                    </ul>
+                </p>
+                <p>
+                    Column charts:
+                    <ul>
+                        <li>Areas</li>
+                    </ul>
+                </p>
+                <p>List: (last 10 errors)</p>
+            </div>
+            ");
+
+
+
+WriteLiteral("\r\n        </div>\r\n        <footer>Copyright &#169; 2012&ndash;");
 
 
             
-            #line 104 "..\..\Views\ErrorLog\Default.cshtml"
+            #line 121 "..\..\Views\ErrorLog\Default.cshtml"
                                        Write(DateTime.Now.Year);
 
             
@@ -135,13 +114,17 @@ WriteLiteral("  Beyond395 Limited &nbsp;&middot;&nbsp; All rights reserved &nbsp
 
 
             
-            #line 104 "..\..\Views\ErrorLog\Default.cshtml"
+            #line 121 "..\..\Views\ErrorLog\Default.cshtml"
                                                                                                                                            Write(ErrorLogProvider.Details);
 
             
             #line default
             #line hidden
 WriteLiteral("</footer>\r\n        ");
+
+
+
+WriteLiteral("\r\n        ");
 
 
 

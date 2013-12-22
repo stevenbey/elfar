@@ -9,11 +9,28 @@
             <div id="elfar">Error Logging Filter and Route (ELFAR) &nbsp;/&nbsp; <strong>@ErrorLogProvider.Application</strong> &nbsp;/&nbsp; <strong>@Server.MachineName</strong></div>
             <ul id="tabs">
                 <li class="selected">Dashboard</li>
-                <li>test</li>
             </ul>
         </header>
         <div id="content">
-            <div id="list">
+            <div id="dashboard">
+                <p>
+                    Trends:
+                    <ul>
+                        <li>90 days</li>
+                        <li>30 days</li>
+                        <li>7 days</li>
+                        <li>today</li>
+                    </ul>
+                </p>
+                <p>
+                    Column charts:
+                    <ul>
+                        <li>Areas</li>
+                    </ul>
+                </p>
+                <p>List: (last 10 errors)</p>
+            </div>
+            @*<div id="list">
                 <span>test</span><br/>
                 <span>test</span><br/>
                 <span>test</span><br/>
@@ -99,16 +116,12 @@
                     <span>test</span><br/>
                     <span>test</span><br/>
                 </div>
-            </div>
+            </div>*@
         </div>
         <footer>Copyright &#169; 2012&ndash;@DateTime.Now.Year  Beyond395 Limited &nbsp;&middot;&nbsp; All rights reserved &nbsp;&middot;&nbsp; @ErrorLogProvider.Details</footer>
-        @*<script src="@Url.Content("~/Scripts/jquery-2.0.3.min.js")" type="text/javascript"></script>
-        <script type="text/javascript">
-            $(function() {
-                $.ajax({ url: "@Url.Content("~/elfar/Errors")" }).done(function(json) {
-                    //$("pre#stack-trace").html(json[0].StackTrace);
-                });
-            });
+        @*<script src="@Url.Content("~/Scripts/jquery-2.0.3.min.js")" type="text/javascript"></script>*@
+        @*<script type="text/javascript">
+            var errors = [@Html.Raw(string.Join(",", ErrorLogProvider.All))];
         </script>*@
     </body>
 </html>
