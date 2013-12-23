@@ -1,17 +1,15 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Web;
 
-[assembly: AssemblyTitle("Elfar.Mvc")]
-[assembly: AssemblyDescription("Error Logging Filter and Route (ELFAR) for ASP.NET MVC")]
+[assembly: AssemblyTitle("Elfar.Data.Odbc")]
+[assembly: AssemblyDescription("ODBC ErrorLog Provider for ELFAR.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Beyond395 Limited")]
-[assembly: AssemblyProduct("Elfar.Mvc")]
+[assembly: AssemblyProduct("Elfar.Data.Odbc")]
 [assembly: AssemblyCopyright("Copyright © Beyond395 Limited 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
-[assembly: Guid("369b6b75-7b12-433e-857a-c124e069d590")]
+[assembly: Guid("9e93bd63-5570-4a60-b1b1-f240aa208ddd")]
 [assembly: AssemblyVersion("2.0.*")]
 [assembly: AssemblyFileVersion("2.0")]
-[assembly: PreApplicationStartMethod(typeof(Elfar.Mvc.Helper), "Init")]

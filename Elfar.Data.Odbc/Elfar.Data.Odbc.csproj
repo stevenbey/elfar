@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{756E9DA7-6C93-40A2-A29E-D8ADA8D1F743}</ProjectGuid>
+    <ProjectGuid>{16C18C19-F000-47A8-B812-127E9906931F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Elfar.Data.Access</RootNamespace>
-    <AssemblyName>Elfar.Data.Access</AssemblyName>
+    <RootNamespace>Elfar.Data.Odbc</RootNamespace>
+    <AssemblyName>Elfar.Data.Odbc</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,7 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AccessErrorLogProvider.cs" />
+    <Compile Include="OdbcErrorLogProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

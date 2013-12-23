@@ -17,7 +17,7 @@ namespace Elfar.Data
             using (var cmd = conn.CreateCommand())
             {
                 cmd.CommandText = Scripts.Delete;
-                SetIDParameter(cmd, id);
+                SetDeleteParameters(cmd, id);
                 conn.Open();
                 cmd.ExecuteNonQuery();
             }
@@ -28,19 +28,23 @@ namespace Elfar.Data
             using(var cmd = conn.CreateCommand())
             {
                 cmd.CommandText = Scripts.Save;
-                SetSaveParameters(cmd, new ErrorLog.Storage(errorLog));
+                SetSaveParameters(cmd, errorLog);
                 conn.Open();
                 cmd.ExecuteNonQuery();
             }
         }
 
+        protected virtual void SetDeleteParameters(IDbCommand command, int id)
+        {
+            SetIDParameter(command, id);
+        }
         protected virtual void SetSaveParameters(IDbCommand command, ErrorLog.Storage data)
         {
             SetIDParameter(command, data.ID);
 
             var json = data.Json.Compress();
             var parameter = command.CreateParameter();
-            parameter.ParameterName = "Value";
+            parameter.ParameterName = "ErrorLog";
             parameter.Size = json.Length;
             parameter.Value = json;
             parameter.DbType = DbType.String;
@@ -83,9 +87,9 @@ namespace Elfar.Data
         
         static class Scripts
         {
-            public static readonly string All = "SELECT Value FROM " + Table;
+            public static readonly string All = "SELECT ErrorLog FROM " + Table;
             public static readonly string Delete = "DELETE FROM " + Table + " WHERE ID = @ID";
-            public static readonly string Save = "INSERT INTO " + Table + " VALUES(@ID, @Value)";
+            public static readonly string Save = "INSERT INTO " + Table + " VALUES(@ID, @ErrorLog)";
 
            static string Table
             {

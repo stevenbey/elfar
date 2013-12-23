@@ -1,11 +1,11 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Elfar.Data.Access")]
-[assembly: AssemblyDescription("Access ErrorLog Provider for ELFAR.")]
+[assembly: AssemblyTitle("Elfar.Data.OleDb")]
+[assembly: AssemblyDescription("OLE DB ErrorLog Provider for ELFAR.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Beyond395 Limited")]
-[assembly: AssemblyProduct("Elfar.Data.Access")]
+[assembly: AssemblyProduct("Elfar.Data.OleDb")]
 [assembly: AssemblyCopyright("Copyright © Beyond395 Limited 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

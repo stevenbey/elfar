@@ -51,6 +51,11 @@ namespace Elfar
                 Json = serializer.Serialize(errorLog);
             }
 
+            public static implicit operator Storage(ErrorLog errorLog)
+            {
+                return new Storage(errorLog);
+            }
+
             public int ID { get; protected set; }
             public string Json { get; protected set; }
             
