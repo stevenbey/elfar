@@ -2,7 +2,7 @@
 
 namespace Elfar.Mail
 {
-    public class ErrorLogPlugin : IErrorLogPlugin
+    public sealed class ErrorLogPlugin : IErrorLogPlugin
     {
         public void Execute(ErrorLog errorLog)
         {

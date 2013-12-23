@@ -4,7 +4,7 @@ using System.Web;
 
 namespace Elfar.Twitter
 {
-    public class ErrorLogPlugin : IErrorLogPlugin
+    public sealed class ErrorLogPlugin : IErrorLogPlugin
     {
         public void Execute(ErrorLog errorLog)
         {

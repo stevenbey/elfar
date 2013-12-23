@@ -5,7 +5,7 @@ using Elfar.IO;
 
 namespace Elfar.Csv
 {
-    public class CsvErrorLogProvider : FileErrorLogProvider, IJsonProvider
+    public sealed class CsvErrorLogProvider : FileErrorLogProvider, IJsonProvider
     {
         public CsvErrorLogProvider()
         {

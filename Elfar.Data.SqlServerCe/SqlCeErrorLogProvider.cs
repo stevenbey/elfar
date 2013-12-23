@@ -3,9 +3,9 @@ using System.Data.SqlServerCe;
 
 namespace Elfar.Data.SqlServerCe
 {
-    public class SqlCeErrorLogProvider : DbErrorLogProvider<SqlCeConnection>
+    public sealed class SqlCeErrorLogProvider : DbErrorLogProvider<SqlCeConnection>
     {
-        protected sealed override void SetSaveParameters(IDbCommand command, ErrorLog.Storage storage)
+        protected override void SetSaveParameters(IDbCommand command, ErrorLog.Storage storage)
         {
             base.SetSaveParameters(command, storage);
             

@@ -10,7 +10,7 @@ using Elfar.IO;
 
 namespace Elfar.Xml
 {
-    public class XmlErrorLogProvider : FileErrorLogProvider, IJsonProvider
+    public sealed class XmlErrorLogProvider : FileErrorLogProvider, IJsonProvider
     {
         public XmlErrorLogProvider()
         {
