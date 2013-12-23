@@ -38,6 +38,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.Data.OleDb", "Elfar.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.Data.Odbc", "Elfar.Data.Odbc\Elfar.Data.Odbc.csproj", "{16C18C19-F000-47A8-B812-127E9906931F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.Data.PostgreSQL", "Elfar.Data.PostgreSQL\Elfar.Data.PostgreSQL.csproj", "{2C4FA72F-037E-4C4A-B375-26F092768003}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -198,6 +200,16 @@ Global
 		{16C18C19-F000-47A8-B812-127E9906931F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{16C18C19-F000-47A8-B812-127E9906931F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{16C18C19-F000-47A8-B812-127E9906931F}.Release|x86.ActiveCfg = Release|Any CPU
+		{2C4FA72F-037E-4C4A-B375-26F092768003}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C4FA72F-037E-4C4A-B375-26F092768003}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C4FA72F-037E-4C4A-B375-26F092768003}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{2C4FA72F-037E-4C4A-B375-26F092768003}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{2C4FA72F-037E-4C4A-B375-26F092768003}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2C4FA72F-037E-4C4A-B375-26F092768003}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C4FA72F-037E-4C4A-B375-26F092768003}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C4FA72F-037E-4C4A-B375-26F092768003}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{2C4FA72F-037E-4C4A-B375-26F092768003}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{2C4FA72F-037E-4C4A-B375-26F092768003}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
