@@ -5,7 +5,7 @@ using Elfar.IO;
 
 namespace Elfar.Csv
 {
-    public class CsvErrorLogProvider : FileErrorLogProvider, IJsonErrorLogProvider
+    public class CsvErrorLogProvider : FileErrorLogProvider, IJsonProvider
     {
         public CsvErrorLogProvider()
         {
@@ -35,7 +35,7 @@ namespace Elfar.Csv
             File.WriteAllLines(FilePath, new[] { columns }.Concat(errorLogs.Select(l => l.ToString())));
         }
 
-        IEnumerable<string> IJsonErrorLogProvider.Json
+        IEnumerable<string> IJsonProvider.Json
         {
             get { return errorLogs.Select(l => l.Json); }
         }

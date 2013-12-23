@@ -2,7 +2,7 @@
 
 namespace Elfar
 {
-    interface IJsonErrorLogProvider
+    interface IJsonProvider
     {
         IEnumerable<string> Json { get; }
     }

@@ -61,7 +61,7 @@ namespace Elfar
             {
                 try
                 {
-                    var provider = Instance as IJsonErrorLogProvider;
+                    var provider = Instance as IJsonProvider;
                     if(provider != null) return provider.Json;
                     if(Instance != null) return Instance.All.Select(l => new ErrorLog.Storage(l).Json);
                 }
@@ -96,7 +96,7 @@ namespace Elfar
         static Settings settings;
 
         [PartNotDiscoverable]
-        class Cache : Dictionary<int, ErrorLog.Storage>, IErrorLogProvider, IJsonErrorLogProvider
+        class Cache : Dictionary<int, ErrorLog.Storage>, IErrorLogProvider, IJsonProvider
         {
             void IErrorLogProvider.Delete(int id)
             {
@@ -111,7 +111,7 @@ namespace Elfar
             {
                 get { throw new NotImplementedException(); }
             }
-            IEnumerable<string> IJsonErrorLogProvider.Json
+            IEnumerable<string> IJsonProvider.Json
             {
                 get { return Values.Select(l => l.Json); }
             }

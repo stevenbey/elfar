@@ -10,7 +10,7 @@ using Elfar.IO;
 
 namespace Elfar.Xml
 {
-    public class XmlErrorLogProvider : FileErrorLogProvider, IJsonErrorLogProvider
+    public class XmlErrorLogProvider : FileErrorLogProvider, IJsonProvider
     {
         public XmlErrorLogProvider()
         {
@@ -57,7 +57,7 @@ namespace Elfar.Xml
             return document.SelectSingleNode(string.Format("errorLogs/errorLog[@id='{0}']", id));
         }
 
-        IEnumerable<string> IJsonErrorLogProvider.Json
+        IEnumerable<string> IJsonProvider.Json
         {
             get { return DocumentElement.ChildNodes.Cast<XmlNode>().Select(n => (errorLog) serializer.Deserialize(new XmlNodeReader(n))).Select(l => l.Json); }
         }
