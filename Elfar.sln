@@ -36,6 +36,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{44359B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.Xml", "Elfar.Xml\Elfar.Xml.csproj", "{31B17B39-4395-447D-8796-2C2EA275801E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.Csv", "Elfar.Csv\Elfar.Csv.csproj", "{D7890078-5DC1-4D0F-A63C-DCE44DEFDF41}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -186,6 +188,16 @@ Global
 		{31B17B39-4395-447D-8796-2C2EA275801E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{31B17B39-4395-447D-8796-2C2EA275801E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{31B17B39-4395-447D-8796-2C2EA275801E}.Release|x86.ActiveCfg = Release|Any CPU
+		{D7890078-5DC1-4D0F-A63C-DCE44DEFDF41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7890078-5DC1-4D0F-A63C-DCE44DEFDF41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7890078-5DC1-4D0F-A63C-DCE44DEFDF41}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D7890078-5DC1-4D0F-A63C-DCE44DEFDF41}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D7890078-5DC1-4D0F-A63C-DCE44DEFDF41}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D7890078-5DC1-4D0F-A63C-DCE44DEFDF41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7890078-5DC1-4D0F-A63C-DCE44DEFDF41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7890078-5DC1-4D0F-A63C-DCE44DEFDF41}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D7890078-5DC1-4D0F-A63C-DCE44DEFDF41}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{D7890078-5DC1-4D0F-A63C-DCE44DEFDF41}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

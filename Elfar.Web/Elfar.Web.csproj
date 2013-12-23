@@ -112,13 +112,13 @@
     <Compile Include="App_Start\Elfar.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Elfar.Csv\Elfar.Csv.csproj">
+      <Project>{D7890078-5DC1-4D0F-A63C-DCE44DEFDF41}</Project>
+      <Name>Elfar.Csv</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Elfar.Mvc\Elfar.Mvc.csproj">
       <Project>{7C6FCD11-4C1A-46E8-8587-E2639628E5C4}</Project>
       <Name>Elfar.Mvc</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Elfar.Xml\Elfar.Xml.csproj">
-      <Project>{31B17B39-4395-447D-8796-2C2EA275801E}</Project>
-      <Name>Elfar.Xml</Name>
     </ProjectReference>
     <ProjectReference Include="..\Elfar\Elfar.csproj">
       <Project>{41B3A539-7A37-48FA-AF45-C214C3BBE6B0}</Project>
