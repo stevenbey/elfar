@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -7,17 +6,18 @@ using System.Text;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
+using Elfar.IO;
 
 namespace Elfar.Xml
 {
-    public class XmlErrorLogProvider : IO.ErrorLogProvider, IJsonErrorLogProvider
+    public class XmlErrorLogProvider : FileErrorLogProvider, IJsonErrorLogProvider
     {
         public XmlErrorLogProvider()
         {
             if(File.Exists(FilePath)) document.Load(FilePath);
             else
             {
-                document.LoadXml(@"<?xml version=""1.0"" encoding=""utf-8""?><errorLogs></errorLogs>");
+                document.LoadXml(markup);
                 document.Save(FilePath);
             }
         }
@@ -57,11 +57,6 @@ namespace Elfar.Xml
             return document.SelectSingleNode(string.Format("errorLogs/ErrorLog[@id='{0}']", id));
         }
 
-        public override IEnumerable<ErrorLog> All
-        {
-            get { throw new NotImplementedException(); }
-        }
-
         IEnumerable<string> IJsonErrorLogProvider.Json
         {
             get { return DocumentElement.ChildNodes.Cast<XmlNode>().Select(n => (errorLog) serializer.Deserialize(new XmlNodeReader(n))).Select(l => l.Json); }
@@ -75,7 +70,8 @@ namespace Elfar.Xml
             }
         }
 
-        const string defaultFilePath = "~/App_Data/Elfar_ErrorLogs.xml";
+        const string defaultFilePath = "|DataDirectory|Elfar_ErrorLogs.xml";
+        const string markup = @"<?xml version=""1.0"" encoding=""utf-8""?><errorLogs></errorLogs>";
 
         static readonly XmlDocument document = new XmlDocument();
         static readonly XmlSerializer serializer = new XmlSerializer(typeof(errorLog));

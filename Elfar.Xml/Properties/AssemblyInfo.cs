@@ -1,11 +1,11 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Elfar.Data.Xml")]
+[assembly: AssemblyTitle("Elfar.Xml")]
 [assembly: AssemblyDescription("XML ErrorLog Provider for ELFAR.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Beyond395 Limited")]
-[assembly: AssemblyProduct("Elfar.Data.Xml")]
+[assembly: AssemblyProduct("Elfar.Xml")]
 [assembly: AssemblyCopyright("Copyright © Beyond395 Limited 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
