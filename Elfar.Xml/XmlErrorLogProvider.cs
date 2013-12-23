@@ -70,7 +70,7 @@ namespace Elfar.Xml
             }
         }
 
-        const string defaultFilePath = "|DataDirectory|Elfar_ErrorLogs.xml";
+        const string defaultFilePath = "|DataDirectory|Elfar.xml";
         const string markup = @"<?xml version=""1.0"" encoding=""utf-8""?><errorLogs></errorLogs>";
 
         static readonly XmlDocument document = new XmlDocument();
