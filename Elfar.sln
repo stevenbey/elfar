@@ -23,8 +23,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.WebApi.Host", "Elfar.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.SignalR", "Elfar.SignalR\Elfar.SignalR.csproj", "{AF7E74E3-B70F-493C-91E4-839A9CE07929}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.Data.InMemory", "Elfar.Data.InMemory\Elfar.Data.InMemory.csproj", "{84CDC80B-4574-4B0C-B331-70A946839235}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.Mvc", "Elfar.Mvc\Elfar.Mvc.csproj", "{7C6FCD11-4C1A-46E8-8587-E2639628E5C4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{44359B28-9DA6-458A-90B3-8B197C7F8C07}"
@@ -158,16 +156,6 @@ Global
 		{AF7E74E3-B70F-493C-91E4-839A9CE07929}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{AF7E74E3-B70F-493C-91E4-839A9CE07929}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{AF7E74E3-B70F-493C-91E4-839A9CE07929}.Release|x86.ActiveCfg = Release|Any CPU
-		{84CDC80B-4574-4B0C-B331-70A946839235}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{84CDC80B-4574-4B0C-B331-70A946839235}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{84CDC80B-4574-4B0C-B331-70A946839235}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{84CDC80B-4574-4B0C-B331-70A946839235}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{84CDC80B-4574-4B0C-B331-70A946839235}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{84CDC80B-4574-4B0C-B331-70A946839235}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{84CDC80B-4574-4B0C-B331-70A946839235}.Release|Any CPU.Build.0 = Release|Any CPU
-		{84CDC80B-4574-4B0C-B331-70A946839235}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{84CDC80B-4574-4B0C-B331-70A946839235}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{84CDC80B-4574-4B0C-B331-70A946839235}.Release|x86.ActiveCfg = Release|Any CPU
 		{7C6FCD11-4C1A-46E8-8587-E2639628E5C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7C6FCD11-4C1A-46E8-8587-E2639628E5C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C6FCD11-4C1A-46E8-8587-E2639628E5C4}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU

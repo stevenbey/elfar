@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
 using System.Web;
 
@@ -83,7 +84,7 @@ namespace Elfar
 
         static IErrorLogProvider Instance
         {
-            get { return instance ?? (instance = Components.Create<IErrorLogProvider>()); }
+            get { return instance ?? (instance = Components.Create<IErrorLogProvider>() ?? new Cache()); }
         }
         static Type Type
         {
@@ -93,5 +94,27 @@ namespace Elfar
         static readonly string[] empty = new string[0];
         static IErrorLogProvider instance;
         static Settings settings;
+
+        [PartNotDiscoverable]
+        class Cache : Dictionary<int, ErrorLog.Storage>, IErrorLogProvider, IJsonErrorLogProvider
+        {
+            void IErrorLogProvider.Delete(int id)
+            {
+                Remove(id);
+            }
+            void IErrorLogProvider.Save(ErrorLog errorLog)
+            {
+                Add(errorLog.ID, new ErrorLog.Storage(errorLog));
+            }
+
+            IEnumerable<ErrorLog> IErrorLogProvider.All
+            {
+                get { throw new NotImplementedException(); }
+            }
+            IEnumerable<string> IJsonErrorLogProvider.Json
+            {
+                get { return Values.Select(l => l.Json); }
+            }
+        }
     }
 }
