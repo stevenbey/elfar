@@ -20,7 +20,7 @@ namespace Elfar.Mvc
 
         public static Predicate<ExceptionContext> Exclude
         {
-            get { return exclude ?? (exclude = (c => false)); }
+            get { return exclude ?? (exclude = c => false); }
             set { exclude = value; }
         }
         

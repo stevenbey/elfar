@@ -17,6 +17,12 @@ namespace Elfar.WebApi
             ErrorLogProvider.Save(new ErrorLog(exception, context));
         }
 
-        public static Predicate<HttpActionExecutedContext> Exclude { get; set; }
+        public static Predicate<HttpActionExecutedContext> Exclude
+        {
+            get { return exclude ?? (exclude = c => false); }
+            set { exclude = value; }
+        }
+
+        static Predicate<HttpActionExecutedContext> exclude;
     }
 }
