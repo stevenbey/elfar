@@ -42,7 +42,7 @@ namespace Elfar.Csv
         
         readonly IList<errorLog> errorLogs;
 
-        const string columns = " ID, Value";
+        const string columns = "ID,Value";
         const string defaultFilePath = "|DataDirectory|Elfar.csv";
 
         class errorLog : ErrorLog.Storage
@@ -51,13 +51,13 @@ namespace Elfar.Csv
             {
                 var index = value.IndexOf(',');
                 ID = int.Parse(value.Substring(0, index));
-                Json = value.Substring(++index).Trim('"').Decompress();
+                Json = value.Substring(++index).Decompress();
             }
             internal errorLog(ErrorLog errorLog) : base(errorLog) {}
 
             public override string ToString()
             {
-                return string.Format("{0},\"{1}\"", ID, Json.Compress());
+                return string.Format("{0},{1}", ID, Json.Compress());
             }
         }
     }
