@@ -8,6 +8,8 @@ namespace Elfar.Twitter
     {
         public void Execute(ErrorLog errorLog)
         {
+            if(string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(Password)) return;
+
             new WebClient
             {
                 Credentials = Credentials,
@@ -32,10 +34,7 @@ namespace Elfar.Twitter
         {
             get
             {
-                return string.IsNullOrWhiteSpace(Settings.Username)
-                    || string.IsNullOrWhiteSpace(Settings.Password)
-                        ? null
-                        : new NetworkCredential(Settings.Username, Settings.Password);
+                return new NetworkCredential(Username, Password);
             }
         }
 
@@ -43,6 +42,15 @@ namespace Elfar.Twitter
         {
             get { return settings ?? (settings = new Settings()); }
             set { settings = value; }
+        }
+        
+        static string Password
+        {
+            get { return Settings.Password; }
+        }
+        static string Username
+        {
+            get { return Settings.Username; }
         }
 
         static Settings settings;
