@@ -42,7 +42,7 @@ namespace Elfar.Csv
         
         readonly IList<errorLog> errorLogs;
 
-        const string columns = " ID, Json";
+        const string columns = " ID, Value";
         const string defaultFilePath = "|DataDirectory|Elfar_ErrorLogs.csv";
 
         class errorLog : ErrorLog.Storage

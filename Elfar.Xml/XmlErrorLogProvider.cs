@@ -54,7 +54,7 @@ namespace Elfar.Xml
         }
         static XmlNode FindNode(int id)
         {
-            return document.SelectSingleNode(string.Format("errorLogs/ErrorLog[@id='{0}']", id));
+            return document.SelectSingleNode(string.Format("errorLogs/errorLog[@id='{0}']", id));
         }
 
         IEnumerable<string> IJsonErrorLogProvider.Json

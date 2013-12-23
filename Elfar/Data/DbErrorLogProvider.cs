@@ -40,7 +40,7 @@ namespace Elfar.Data
 
             var json = data.Json.Compress();
             var parameter = command.CreateParameter();
-            parameter.ParameterName = "Json";
+            parameter.ParameterName = "Value";
             parameter.Size = json.Length;
             parameter.Value = json;
             parameter.DbType = DbType.String;
@@ -83,9 +83,9 @@ namespace Elfar.Data
         
         static class Scripts
         {
-            public static readonly string All = "SELECT Json FROM " + Table;
+            public static readonly string All = "SELECT Value FROM " + Table;
             public static readonly string Delete = "DELETE FROM " + Table + " WHERE ID = @ID";
-            public static readonly string Save = "INSERT INTO " + Table + " VALUES(@ID, @Json)";
+            public static readonly string Save = "INSERT INTO " + Table + " VALUES(@ID, @Value)";
 
            static string Table
             {
