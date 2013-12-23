@@ -1,16 +1,13 @@
-﻿using System.IO;
+﻿using System.Linq;
+using System.Security.Principal;
 
 namespace Elfar.Mvc
 {
-    public static class Extensions
+    static class Extensions
     {
-        public static string Name(this IErrorLogPlugin plugin)
+        public static bool IsInRoles(this IPrincipal principal, params string[] roles)
         {
-            return Path.GetExtension(plugin.GetType().Namespace).Substring(1);
-        }
-        public static string ShortName(this string s)
-        {
-            return Path.GetExtension(s).Trim('.').Replace("Exception", "");
+            return roles.Any(principal.IsInRole);
         }
     }
 }

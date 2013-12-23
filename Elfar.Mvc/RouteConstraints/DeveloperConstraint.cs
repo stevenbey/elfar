@@ -7,8 +7,7 @@ namespace Elfar.Mvc.RouteConstraints
     {
         public bool Match(HttpContextBase httpContext, Route route, string parameterName, RouteValueDictionary values, RouteDirection routeDirection)
         {
-            var user = httpContext.User;
-            return httpContext.Request.IsAuthenticated && (user.IsInRole("Dev") || user.IsInRole("Developer") || user.IsInRole("Development"));
+            return httpContext.Request.IsAuthenticated && (httpContext.User.IsInRoles("Dev", "Developer", "Development"));
         }
     }
 }
