@@ -8,7 +8,6 @@ namespace Elfar.Mvc
     {
         public ViewResult Default()
         {
-            ViewBag.Version = GetType().Assembly.GetName().Version;
             return View();
         }
         public ContentResult Errors()
