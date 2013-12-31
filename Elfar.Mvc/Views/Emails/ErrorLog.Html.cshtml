@@ -14,7 +14,7 @@ Content-Type: text/html
 	</head>
 	<body>
 		<p id="errorMessage">@Model.Subject</p>
-    @if (Model.Time > DateTime.MinValue)
+    @if(Model.Time > DateTime.MinValue)
     {
         <p>Generated: @Model.Time.ToString("r")</p>
     }
@@ -22,6 +22,6 @@ Content-Type: text/html
         <pre id="errorDetail">
 @Html.Raw(Model.StackTrace)
         </pre>
-		<p id="Footer">Copyright &#169; 2012&ndash;@DateTime.Now.Year Beyond395 Limited &nbsp;&middot;&nbsp; All rights reserved &nbsp;&middot;&nbsp; @ErrorLogProvider.Details</p>
+		<p id="Footer">Error Logging Filter and Route (v@(this.Version())) &#169; 2012&ndash;@DateTime.Now.Year Beyond395 Limited &nbsp;&middot;&nbsp; All rights reserved</p>
 	</body>
 </html>

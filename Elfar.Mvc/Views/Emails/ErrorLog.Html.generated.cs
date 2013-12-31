@@ -74,7 +74,7 @@ WriteLiteral("</p>\r\n");
 
             
             #line 17 "..\..\Views\Emails\ErrorLog.Html.cshtml"
-     if (Model.Time > DateTime.MinValue)
+     if(Model.Time > DateTime.MinValue)
     {
 
             
@@ -120,28 +120,28 @@ Write(Html.Raw(Model.StackTrace));
             
             #line default
             #line hidden
-WriteLiteral("\r\n        </pre>\r\n\t\t<p id=\"Footer\">Copyright &#169; 2012&ndash;");
+WriteLiteral("\r\n        </pre>\r\n\t\t<p id=\"Footer\">Error Logging Filter and Route (v");
 
 
             
             #line 25 "..\..\Views\Emails\ErrorLog.Html.cshtml"
-                                        Write(DateTime.Now.Year);
+                                              Write(this.Version());
 
             
             #line default
             #line hidden
-WriteLiteral(" Beyond395 Limited &nbsp;&middot;&nbsp; All rights reserved &nbsp;&middot;&nbsp; " +
-"");
+WriteLiteral(") &#169; 2012&ndash;");
 
 
             
             #line 25 "..\..\Views\Emails\ErrorLog.Html.cshtml"
-                                                                                                                                           Write(ErrorLogProvider.Details);
+                                                                                  Write(DateTime.Now.Year);
 
             
             #line default
             #line hidden
-WriteLiteral("</p>\r\n\t</body>\r\n</html>");
+WriteLiteral(" Beyond395 Limited &nbsp;&middot;&nbsp; All rights reserved</p>\r\n\t</body>\r\n</html" +
+">");
 
 
         }

@@ -54,7 +54,8 @@ WriteLiteral("\r\n");
 
             
             #line 5 "..\..\Views\Emails\ErrorLog.Text.cshtml"
- if (Model.Time > DateTime.MinValue) {
+ if(Model.Time > DateTime.MinValue)
+{
 
             
             #line default
@@ -63,7 +64,7 @@ WriteLiteral("Generated: ");
 
 
             
-            #line 6 "..\..\Views\Emails\ErrorLog.Text.cshtml"
+            #line 7 "..\..\Views\Emails\ErrorLog.Text.cshtml"
         Write(Model.Time.ToString("r"));
 
             
@@ -73,7 +74,7 @@ WriteLiteral("\r\n");
 
 
             
-            #line 7 "..\..\Views\Emails\ErrorLog.Text.cshtml"
+            #line 8 "..\..\Views\Emails\ErrorLog.Text.cshtml"
 }
 
             
@@ -83,32 +84,34 @@ WriteLiteral("Source:\r\n");
 
 
             
-            #line 9 "..\..\Views\Emails\ErrorLog.Text.cshtml"
+            #line 10 "..\..\Views\Emails\ErrorLog.Text.cshtml"
 Write(Model.Source);
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\nCopyright © 2012-");
+WriteLiteral("\r\n\r\nError Logging Filter and Route (v");
 
 
             
-            #line 11 "..\..\Views\Emails\ErrorLog.Text.cshtml"
-            Write(DateTime.Now.Year);
-
-            
-            #line default
-            #line hidden
-WriteLiteral(" Beyond395 Limited · All rights reserved · ");
-
-
-            
-            #line 11 "..\..\Views\Emails\ErrorLog.Text.cshtml"
-                                                                         Write(ErrorLogProvider.Details);
+            #line 12 "..\..\Views\Emails\ErrorLog.Text.cshtml"
+                             Write(this.Version());
 
             
             #line default
             #line hidden
+WriteLiteral(")  © 2012-");
+
+
+            
+            #line 12 "..\..\Views\Emails\ErrorLog.Text.cshtml"
+                                                       Write(DateTime.Now.Year);
+
+            
+            #line default
+            #line hidden
+WriteLiteral(" Beyond395 Limited · All rights reserved");
+
 
         }
     }

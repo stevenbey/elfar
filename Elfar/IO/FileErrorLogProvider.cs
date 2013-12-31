@@ -34,8 +34,8 @@ namespace Elfar.IO
         }
 
         protected string FilePath { get; private set; }
-
-        string DataDirectory
+        
+        static string DataDirectory
         {
             get
             {

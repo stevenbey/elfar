@@ -15,6 +15,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("2.0.*")]
 [assembly: AssemblyFileVersion("2.0")]
 [assembly: InternalsVisibleTo("Elfar.Csv")]
+[assembly: InternalsVisibleTo("Elfar.Data")]
 [assembly: InternalsVisibleTo("Elfar.Mvc")]
 [assembly: InternalsVisibleTo("Elfar.WebApi")]
 [assembly: InternalsVisibleTo("Elfar.Xml")]

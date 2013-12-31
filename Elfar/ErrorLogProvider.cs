@@ -77,18 +77,10 @@ namespace Elfar
                 return string.IsNullOrWhiteSpace(path) ? HttpRuntime.AppDomainAppId : path;
             }
         }
-        internal static string Details
-        {
-            get { return Type == null ? null : string.Format("{0} [{1}]", Type.Namespace, Type.Assembly.GetName().Version); }
-        }
 
         static IErrorLogProvider Instance
         {
             get { return instance ?? (instance = Components.Create<IErrorLogProvider>() ?? new Cache()); }
-        }
-        static Type Type
-        {
-            get { return Instance == null ? null : Instance.GetType(); }
         }
 
         static readonly string[] empty = new string[0];

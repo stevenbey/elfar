@@ -2,10 +2,11 @@
 Content-Type: text/plain
 
 @Model.Subject
-@if (Model.Time > DateTime.MinValue) {
+@if(Model.Time > DateTime.MinValue)
+{
 @:Generated: @Model.Time.ToString("r")
 }
 Source:
 @Model.Source
 
-Copyright © 2012-@DateTime.Now.Year Beyond395 Limited · All rights reserved · @ErrorLogProvider.Details
+Error Logging Filter and Route (v@(this.Version()))  © 2012-@DateTime.Now.Year Beyond395 Limited · All rights reserved

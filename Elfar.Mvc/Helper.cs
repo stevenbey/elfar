@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Security.Principal;
 using System.Web.Hosting;
 using System.Web.Mvc;
@@ -21,6 +22,10 @@ namespace Elfar.Mvc
         internal static bool IsInRoles(this IPrincipal principal, params string[] roles)
         {
             return roles.Any(principal.IsInRole);
+        }
+        public static Version Version(this object obj)
+        {
+            return obj.GetType().Assembly.GetName().Version;
         }
     }
 }
