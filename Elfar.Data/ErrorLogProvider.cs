@@ -30,7 +30,7 @@ namespace Elfar.Data
         }
         IEnumerable<string> IJsonProvider.Json
         {
-            get { return ((IEnumerable<string>) errorLogs.All().Select(errorLogs.ErrorLog)).Select(s => s.Decompress()); }
+            get { return ((errorLog[]) errorLogs.All().ToArray<errorLog>()).Select(l => l.Json); }
         }
 
         static readonly Settings settings;
@@ -38,6 +38,7 @@ namespace Elfar.Data
 
         class errorLog : ErrorLog.Storage
         {
+            public errorLog() {}
             public errorLog(ErrorLog errorLog) : base(errorLog) {}
 
             public string ErrorLog

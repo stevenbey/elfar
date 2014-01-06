@@ -127,15 +127,31 @@ WriteLiteral(") &#169; 2012&ndash;");
             
             #line default
             #line hidden
-WriteLiteral("  Beyond395 Limited &nbsp;&middot;&nbsp; All rights reserved</footer>\r\n        ");
+WriteLiteral("  Beyond395 Limited &nbsp;&middot;&nbsp; All rights reserved</footer>\r\n        <s" +
+"cript src=\"");
 
 
+            
+            #line 130 "..\..\Views\ErrorLog\Default.cshtml"
+                Write(Url.Content("~/Scripts/jquery-2.0.3.min.js"));
 
-WriteLiteral("\r\n        ");
+            
+            #line default
+            #line hidden
+WriteLiteral("\" type=\"text/javascript\"></script>\r\n        <script type=\"text/javascript\">\r\n    " +
+"        var errors;\r\n            $.ajax(\r\n                \"");
 
 
+            
+            #line 134 "..\..\Views\ErrorLog\Default.cshtml"
+            Write(Url.Content("~/"));
 
-WriteLiteral("\r\n    </body>\r\n</html>");
+            
+            #line default
+            #line hidden
+WriteLiteral("elfar/errorlogs\",\r\n                {\r\n                    success: function(data)" +
+" { alert(data.length); },\r\n                    error: function(r, m) { alert(m);" +
+" }\r\n                }\r\n            );\r\n        </script>\r\n    </body>\r\n</html>");
 
 
         }

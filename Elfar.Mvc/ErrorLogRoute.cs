@@ -31,7 +31,7 @@ namespace Elfar.Mvc
                     public Handler(RequestContext requestContext)
                     {
                         this.requestContext = requestContext;
-                        controller = Components.Create<ErrorLogController>();
+                        controller = new ErrorLogController();
                     }
 
                     public IAsyncResult BeginProcessRequest(HttpContext context, AsyncCallback cb, object extraData)
