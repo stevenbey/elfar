@@ -23,7 +23,7 @@ namespace Elfar.Mvc
             {
                 var response = context.HttpContext.Response;
                 response.ContentType = "application/json";
-                response.Write("[" + string.Join(",", ErrorLogProvider.All) + "]");
+                response.Write("var errors = [" + string.Join(",", ErrorLogProvider.All) + "];");
             }
         }
     }
