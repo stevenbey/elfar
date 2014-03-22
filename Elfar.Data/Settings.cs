@@ -6,8 +6,8 @@ namespace Elfar.Data
     {
         public string ConnectionString
         {
-            get { return connectionString ?? (connectionString = DefaultConnectionString); }
-            set
+            get { return connectionString ?? (ConnectionString = GetAppSetting("ConnectionString")); }
+            private set
             {
                 if (string.IsNullOrWhiteSpace(value)) value = null;
                 var settings = ConnectionStrings[value ?? "Elfar"];
@@ -16,9 +16,16 @@ namespace Elfar.Data
                 connectionString = value;
             }
         }
-        public string Schema { get; set; }
-        public string Table { get; set; }
-
+        public string Schema
+        {
+            get { return schema ?? (schema = GetAppSetting("Schema")); }
+        }
+        public string Table
+        {
+            get { return table ?? (Table = GetAppSetting("Table")); }
+            private set { table = string.IsNullOrWhiteSpace(value) ? "Elfar_ErrorLogs" : value; }
+        }
+        
         static ConnectionStringSettingsCollection ConnectionStrings
         {
             get { return ConfigurationManager.ConnectionStrings; }
@@ -28,6 +35,6 @@ namespace Elfar.Data
             get { return ConnectionStrings.Count == 0 ? null : ConnectionStrings[0].ConnectionString; }
         }
 
-        string connectionString;
+        string connectionString, schema, table;
     }
 }

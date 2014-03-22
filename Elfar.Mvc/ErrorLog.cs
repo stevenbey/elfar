@@ -24,11 +24,11 @@ namespace Elfar.Mvc
 
                 var values = data.Values;
 
-                Action = ((string) values["action"]).ToTitle();
-                Controller = ((string) values["controller"]).ToTitle();
+                Action = values["action"].ToTitle();
+                Controller = values["controller"].ToTitle();
 
-                RouteData = (Dictionary) values;
-                DataTokens = (Dictionary) data.DataTokens;
+                RouteData = values;
+                DataTokens = data.DataTokens;
 
                 if(DataTokens.ContainsKey("area")) Area = DataTokens["area"].ToTitle();
             }
@@ -58,21 +58,6 @@ namespace Elfar.Mvc
             QueryString = (Dictionary) request.QueryString;
             ServerVariables = (Dictionary) request.ServerVariables;
         }
-
-        public string Action { get; set; }
-        public string Area { get; set; }
-        public int? Code { get; set; }
-        public string Controller { get; set; }
-        public Dictionary Cookies { get; set; }
-        public Dictionary DataTokens { get; set; }
-        public Dictionary Form { get; set; }
-        public string Html { get; set; }
-        public string HttpMethod { get; set; }
-        public Dictionary QueryString { get; set; }
-        public Dictionary RouteData { get; set; }
-        public string RouteUrl { get; set; }
-        public Dictionary ServerVariables { get; set; }
-        public Uri Url { get; set; }
 
         static readonly Dictionary empty = new Dictionary();
     }

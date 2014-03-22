@@ -20,8 +20,8 @@ namespace Elfar.WebApi
 
                 var values = data.Values;
 
-                Action = ((string) values["action"]).ToTitle();
-                Controller = ((string) values["controller"]).ToTitle();
+                Action = values["action"].ToTitle();
+                Controller = values["controller"].ToTitle();
 
                 RouteData = values;
                 DataTokens = route.DataTokens;
@@ -31,16 +31,6 @@ namespace Elfar.WebApi
 
             Url = request.RequestUri;
             HttpMethod = request.Method.Method;
-
-            // TODO: the remaining request properties?
         }
-
-        public string Action { get; set; }
-        public string Controller { get; set; }
-        public IDictionary<string, object> DataTokens { get; set; }
-        public string HttpMethod { get; set; }
-        public IDictionary<string, object> RouteData { get; set; }
-        public string RouteUrl { get; set; }
-        public Uri Url { get; set; }
     }
 }

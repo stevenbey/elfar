@@ -6,11 +6,10 @@ using System.Text;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
-using Elfar.IO;
 
 namespace Elfar.Xml
 {
-    public sealed class XmlErrorLogProvider : FileErrorLogProvider, IJsonProvider
+    public sealed class XmlErrorLogProvider : FileErrorLogProvider, IStorageProvider
     {
         public XmlErrorLogProvider()
         {
@@ -57,9 +56,9 @@ namespace Elfar.Xml
             return document.SelectSingleNode(string.Format("errorLogs/errorLog[@id='{0}']", id));
         }
 
-        IEnumerable<string> IJsonProvider.Json
+        IEnumerable<ErrorLog.Storage> IStorageProvider.Items
         {
-            get { return DocumentElement.ChildNodes.Cast<XmlNode>().Select(n => (errorLog) serializer.Deserialize(new XmlNodeReader(n))).Select(l => l.Json); }
+            get { return DocumentElement.ChildNodes.Cast<XmlNode>().Select(n => (errorLog) serializer.Deserialize(new XmlNodeReader(n))); }
         }
 
         static XmlElement DocumentElement
@@ -76,10 +75,8 @@ namespace Elfar.Xml
         static readonly XmlDocument document = new XmlDocument();
         static readonly XmlSerializer serializer = new XmlSerializer(typeof(errorLog));
 
-        // ReSharper disable once InconsistentNaming
         public class errorLog : ErrorLog.Storage, IXmlSerializable
         {
-            // ReSharper disable UnusedMember.Global
             public errorLog() { }
             
             internal errorLog(ErrorLog errorLog) : base(errorLog) {}
@@ -90,7 +87,7 @@ namespace Elfar.Xml
             }
             public void ReadXml(XmlReader reader)
             {
-                ID = int.Parse(reader.GetAttribute("id"), CultureInfo.CurrentUICulture);
+                ID = int.Parse(reader.GetAttribute("id"), CultureInfo.InvariantCulture);
                 Json = reader.ReadElementContentAsString().Decompress();
             }
             public void WriteXml(XmlWriter writer)

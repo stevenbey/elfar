@@ -1,17 +1,15 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Simple.Data;
 
 namespace Elfar.Data
 {
-    public class ErrorLogProvider : IErrorLogProvider, IJsonProvider
+    public class ErrorLogProvider : IErrorLogProvider, IStorageProvider
     {
         static ErrorLogProvider()
         {
             settings = Elfar.ErrorLogProvider.Settings as Settings ?? new Settings();
             var obj = Database.OpenConnection(settings.ConnectionString);
             if(!string.IsNullOrWhiteSpace(settings.Schema)) obj = obj[settings.Schema];
-            if(string.IsNullOrWhiteSpace(settings.Table)) settings.Table = "Elfar_ErrorLogs";
             errorLogs = obj[settings.Table];
         }
 
@@ -28,9 +26,9 @@ namespace Elfar.Data
         {
             get { throw new System.NotImplementedException(); }
         }
-        IEnumerable<string> IJsonProvider.Json
+        IEnumerable<ErrorLog.Storage> IStorageProvider.Items
         {
-            get { return ((errorLog[]) errorLogs.All().ToArray<errorLog>()).Select(l => l.Json); }
+            get { return ((errorLog[]) errorLogs.All().ToArray<errorLog>()); }
         }
 
         static readonly Settings settings;
@@ -47,7 +45,7 @@ namespace Elfar.Data
                 set { Json = value.Decompress(); }
             }
 
-            new string Json
+            new string Json // Hides the base property
             {
                 get { return base.Json; }
                 set { base.Json = value; }

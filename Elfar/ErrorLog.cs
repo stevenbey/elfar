@@ -14,12 +14,12 @@ namespace Elfar
     {
         internal ErrorLog(Exception exception)
         {
-            if (exception == null) throw new ArgumentNullException("exception");
+            if(exception == null) throw new ArgumentNullException("exception");
 
             Time = DateTime.Now;
 
             try { Host = Environment.MachineName; }
-            catch (SecurityException) { }
+            catch(SecurityException) { }
 
             var @base = exception.GetBaseException();
 
@@ -33,13 +33,27 @@ namespace Elfar
             ID = Math.Abs((HttpRuntime.AppDomainAppId + Host + Type + Time + User).GetHashCode() + @base.GetHashCode());
         }
 
+        public string Action { get; set; }
+        public string Area { get; set; }
+        public int? Code { get; set; }
+        public string Controller { get; set; }
+        public IDictionary<string, string> Cookies { get; set; }
+        public IDictionary<string, object> DataTokens { get; set; }
+        public IDictionary<string, string> Form { get; set; }
         public string Host { get; protected set; }
+        public string Html { get; set; }
+        public string HttpMethod { get; set; }
         public int ID { get; private set; }
         public string Message { get; private set; }
+        public IDictionary<string, string> QueryString { get; set; }
+        public IDictionary<string, object> RouteData { get; set; }
+        public string RouteUrl { get; set; }
+        public IDictionary<string, string> ServerVariables { get; set; }
         public string Source { get; private set; }
         public string StackTrace { get; set; }
         public DateTime Time { get; private set; }
         public string Type { get; private set; }
+        public Uri Url { get; set; }
         public string User { get; protected set; }
 
         public class Storage
@@ -48,7 +62,34 @@ namespace Elfar
             internal Storage(ErrorLog errorLog)
             {
                 ID = errorLog.ID;
-                Json = serializer.Serialize(errorLog);
+                Detail = serializer.Serialize(new
+                {
+                    errorLog.Action,
+                    errorLog.Area,
+                    errorLog.Controller,
+                    errorLog.ID,
+                    errorLog.Host,
+                    errorLog.Time,
+                    errorLog.Type
+                });
+                Summary = serializer.Serialize(new
+                {
+                    errorLog.Code,
+                    errorLog.Cookies,
+                    errorLog.DataTokens,
+                    errorLog.Form,
+                    errorLog.Html,
+                    errorLog.HttpMethod,
+                    errorLog.Message,
+                    errorLog.QueryString,
+                    errorLog.RouteData,
+                    errorLog.RouteUrl,
+                    errorLog.ServerVariables,
+                    errorLog.Source,
+                    errorLog.StackTrace,
+                    errorLog.Url,
+                    errorLog.User
+                });
             }
 
             public static implicit operator Storage(ErrorLog errorLog)
@@ -57,8 +98,21 @@ namespace Elfar
             }
 
             public int ID { get; protected set; }
-            public string Json { get; protected set; }
+            public string Json
+            {
+                get { return string.Concat(Detail, "-", Summary); }
+                protected set
+                {
+                    var parts = value.Split('-');
+                    if(parts.Length < 2) return;
+                    Detail = parts[0];
+                    Summary = parts[1];
+                }
+            }
             
+            internal string Detail { get; set; }
+            internal string Summary { get; set; }
+
             static readonly JavaScriptSerializer serializer = new JavaScriptSerializer();
         }
 

@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Mvc;
 
 namespace Elfar.Mvc
 {
@@ -8,23 +9,50 @@ namespace Elfar.Mvc
         {
             return View();
         }
-        public ErrorLogsResult ErrorLogs()
+        public DetailResult Details(int id)
         {
-            return new ErrorLogsResult();
+            return new DetailResult(id);
+        }
+        public DashboardResult Dashboard()
+        {
+            return new DashboardResult();
         }
         public void Test()
         {
             throw new TestException();
         }
 
-        internal class ErrorLogsResult : ActionResult
+        internal class DetailResult : ErrorLogsResult
         {
-            public override void ExecuteResult(ControllerContext context)
+            public DetailResult(int id)
+            {
+                this.id = id;
+            }
+
+            protected override string Content
+            {
+                get { return ErrorLogProvider.All.Single(i => i.ID == id).Detail; }
+            }
+            
+            readonly int id;
+        }
+        internal class DashboardResult : ErrorLogsResult
+        {
+            protected override string Content
+            {
+                get { return "[" + string.Join(",", ErrorLogProvider.All.Select(i => i.Summary)) + "]"; }
+            }
+        }
+        internal abstract class ErrorLogsResult : ActionResult
+        {
+            public sealed override void ExecuteResult(ControllerContext context)
             {
                 var response = context.HttpContext.Response;
                 response.ContentType = "application/json";
-                response.Write("[" + string.Join(",", ErrorLogProvider.All) + "]");
+                response.Write(Content);
             }
+            
+            protected abstract string Content { get; }
         }
     }
 }

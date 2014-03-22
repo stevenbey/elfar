@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Elfar.IO;
 
 namespace Elfar.Csv
 {
-    public sealed class CsvErrorLogProvider : FileErrorLogProvider, IJsonProvider
+    public sealed class CsvErrorLogProvider : FileErrorLogProvider, IStorageProvider
     {
         public CsvErrorLogProvider()
         {
@@ -35,9 +34,9 @@ namespace Elfar.Csv
             File.WriteAllLines(FilePath, new[] { columns }.Concat(errorLogs.Select(l => l.ToString())));
         }
 
-        IEnumerable<string> IJsonProvider.Json
+        IEnumerable<ErrorLog.Storage> IStorageProvider.Items
         {
-            get { return errorLogs.Select(l => l.Json); }
+            get { return errorLogs; }
         }
         
         readonly IList<errorLog> errorLogs;
@@ -49,9 +48,9 @@ namespace Elfar.Csv
         {
             internal errorLog(string value)
             {
-                var index = value.IndexOf(',');
-                ID = int.Parse(value.Substring(0, index));
-                Json = value.Substring(++index).Decompress();
+                var parts = value.Split(',');
+                ID = int.Parse(parts[0]);
+                Json = parts[1].Decompress();
             }
             internal errorLog(ErrorLog errorLog) : base(errorLog) {}
 

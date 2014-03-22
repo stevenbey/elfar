@@ -138,20 +138,22 @@ WriteLiteral("  Beyond395 Limited &nbsp;&middot;&nbsp; All rights reserved</foot
             
             #line default
             #line hidden
-WriteLiteral("\" type=\"text/javascript\"></script>\r\n        <script type=\"text/javascript\">\r\n    " +
-"        var errors;\r\n            $.ajax(\r\n                \"");
+WriteLiteral("\" type=\"text/javascript\"></script>\r\n        <script src=\"");
 
 
             
-            #line 134 "..\..\Views\ErrorLog\Default.cshtml"
-            Write(Url.Content("~/"));
+            #line 131 "..\..\Views\ErrorLog\Default.cshtml"
+                Write(Url.Content("~/"));
 
             
             #line default
             #line hidden
-WriteLiteral("elfar/errorlogs\",\r\n                {\r\n                    success: function(data)" +
-" { alert(data.length); },\r\n                    error: function(r, m) { alert(m);" +
-" }\r\n                }\r\n            );\r\n        </script>\r\n    </body>\r\n</html>");
+WriteLiteral("elfar/errorlogs\" type=\"text/javascript\"></script>\r\n        ");
+
+
+
+WriteLiteral("\r\n        <script type=\"text/javascript\">\r\n            $(\"body\")(errors[0].Html);" +
+"\r\n        </script>\r\n    </body>\r\n</html>");
 
 
         }

@@ -55,15 +55,19 @@ namespace Elfar
             set { settings = value; }
         }
 
-        internal static IEnumerable<string> All
+        public static IEnumerable<string> Details
+        {
+            get { return All.Select(i => i.Detail); }
+        }
+        internal static IEnumerable<ErrorLog.Storage> All
         {
             get
             {
                 try
                 {
-                    var provider = Instance as IJsonProvider;
-                    if(provider != null) return provider.Json;
-                    if(Instance != null) return Instance.All.Select(l => new ErrorLog.Storage(l).Json);
+                    var provider = Instance as IStorageProvider;
+                    if(provider != null) return provider.Items;
+                    if(Instance != null) return Instance.All.Select(l => new ErrorLog.Storage(l));
                 }
                 catch(Exception) {}
                 return empty;
@@ -83,12 +87,12 @@ namespace Elfar
             get { return instance ?? (instance = Components.Create<IErrorLogProvider>() ?? new Cache()); }
         }
 
-        static readonly string[] empty = new string[0];
+        static readonly ErrorLog.Storage[] empty = new ErrorLog.Storage[0];
         static IErrorLogProvider instance;
         static Settings settings;
 
         [PartNotDiscoverable]
-        class Cache : Dictionary<int, ErrorLog.Storage>, IErrorLogProvider, IJsonProvider
+        class Cache : Dictionary<int, ErrorLog.Storage>, IErrorLogProvider, IStorageProvider
         {
             void IErrorLogProvider.Delete(int id)
             {
@@ -103,9 +107,9 @@ namespace Elfar
             {
                 get { throw new NotImplementedException(); }
             }
-            IEnumerable<string> IJsonProvider.Json
+            IEnumerable<ErrorLog.Storage> IStorageProvider.Items
             {
-                get { return Values.Select(l => l.Json); }
+                get { return Values; }
             }
         }
     }

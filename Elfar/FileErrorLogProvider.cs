@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Web.Hosting;
 
-namespace Elfar.IO
+namespace Elfar
 {
     public abstract class FileErrorLogProvider : IErrorLogProvider
     {
