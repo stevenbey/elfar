@@ -49,7 +49,11 @@ namespace Elfar.Mvc
             {
                 var response = context.HttpContext.Response;
                 response.ContentType = "application/json";
+<<<<<<< HEAD
                 response.Write(Content);
+=======
+                response.Write("var errors = [" + string.Join(",", ErrorLogProvider.All) + "];");
+>>>>>>> 53fd557b0647c227bf3c8480e0cc89a3d0ad00f4
             }
             
             protected abstract string Content { get; }

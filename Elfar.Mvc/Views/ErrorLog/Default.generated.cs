@@ -127,7 +127,36 @@ WriteLiteral(") &#169; 2012&ndash;");
             
             #line default
             #line hidden
+<<<<<<< HEAD
 WriteLiteral("  Beyond395 Limited &nbsp;&middot;&nbsp; All rights reserved</footer>\r\n");
+=======
+WriteLiteral("  Beyond395 Limited &nbsp;&middot;&nbsp; All rights reserved</footer>\r\n        <s" +
+"cript src=\"");
+
+
+            
+            #line 130 "..\..\Views\ErrorLog\Default.cshtml"
+                Write(Url.Content("~/Scripts/jquery-2.0.3.min.js"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\" type=\"text/javascript\"></script>\r\n        ");
+
+
+
+WriteLiteral("\r\n        <script src=\"");
+
+
+            
+            #line 141 "..\..\Views\ErrorLog\Default.cshtml"
+                Write(Url.Content("~/"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("elfar/errorlogs\"></script>\r\n    </body>\r\n</html>");
+>>>>>>> 53fd557b0647c227bf3c8480e0cc89a3d0ad00f4
 
 
         }
