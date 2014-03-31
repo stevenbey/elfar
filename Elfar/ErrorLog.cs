@@ -64,16 +64,6 @@ namespace Elfar
                 ID = errorLog.ID;
                 Detail = serializer.Serialize(new
                 {
-                    errorLog.Action,
-                    errorLog.Area,
-                    errorLog.Controller,
-                    errorLog.ID,
-                    errorLog.Host,
-                    errorLog.Time,
-                    errorLog.Type
-                });
-                Summary = serializer.Serialize(new
-                {
                     errorLog.Code,
                     errorLog.Cookies,
                     errorLog.DataTokens,
@@ -90,6 +80,16 @@ namespace Elfar
                     errorLog.Url,
                     errorLog.User
                 });
+                Summary = serializer.Serialize(new
+                {
+                    errorLog.Action,
+                    errorLog.Area,
+                    errorLog.Controller,
+                    errorLog.ID,
+                    errorLog.Host,
+                    errorLog.Time,
+                    errorLog.Type
+                });
             }
 
             public static implicit operator Storage(ErrorLog errorLog)
@@ -100,10 +100,10 @@ namespace Elfar
             public int ID { get; protected set; }
             public string Json
             {
-                get { return string.Concat(Detail, "-", Summary); }
+                get { return string.Concat(Detail, separator, Summary); }
                 protected set
                 {
-                    var parts = value.Split('-');
+                    var parts = value.Split(separator[0]);
                     if(parts.Length < 2) return;
                     Detail = parts[0];
                     Summary = parts[1];
@@ -114,6 +114,8 @@ namespace Elfar
             internal string Summary { get; set; }
 
             static readonly JavaScriptSerializer serializer = new JavaScriptSerializer();
+
+            const string separator = "¬";
         }
 
         class StackTraceBuilder

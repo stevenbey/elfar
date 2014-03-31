@@ -15,6 +15,7 @@ namespace Elfar
         public string FilePath
         {
             get { return filePath ?? (filePath = GetAppSetting("FilePath")); }
+            set { filePath = value; }
         }
 
         NameValueCollection AppSettings

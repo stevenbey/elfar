@@ -19,11 +19,12 @@ namespace Elfar.Data
         public string Schema
         {
             get { return schema ?? (schema = GetAppSetting("Schema")); }
+            set { schema = value; }
         }
         public string Table
         {
             get { return table ?? (Table = GetAppSetting("Table")); }
-            private set { table = string.IsNullOrWhiteSpace(value) ? "Elfar_ErrorLogs" : value; }
+            set { table = string.IsNullOrWhiteSpace(value) ? "Elfar_ErrorLogs" : value; }
         }
         
         static ConnectionStringSettingsCollection ConnectionStrings

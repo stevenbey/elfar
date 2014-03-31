@@ -9,8 +9,8 @@ namespace Elfar
     {
         protected FileErrorLogProvider()
         {
-            var settings = ErrorLogProvider.Settings as Settings;
-            var path = settings == null ? DefaultFilePath : settings.FilePath;
+            var settings = ErrorLogProvider.Settings;
+            var path = settings.FilePath ?? DefaultFilePath;
             if(string.IsNullOrWhiteSpace(path)) return;
             if(path.StartsWith("~/")) path = HostingEnvironment.MapPath(path);
             else if(path.StartsWith(".")) path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, path.Substring(2));

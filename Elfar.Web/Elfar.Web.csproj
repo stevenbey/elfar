@@ -76,15 +76,6 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Simple.Data">
-      <HintPath>..\packages\Simple.Data.Core.0.19.0.0\lib\net40\Simple.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="Simple.Data.Ado">
-      <HintPath>..\packages\Simple.Data.Ado.0.19.0.0\lib\net40\Simple.Data.Ado.dll</HintPath>
-    </Reference>
-    <Reference Include="Simple.Data.SqlCe40">
-      <HintPath>..\packages\Simple.Data.SqlCompact40.0.19.0.0\lib\net40\Simple.Data.SqlCe40.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -96,9 +87,9 @@
     <Compile Include="App_Start\Elfar.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Elfar.Data\Elfar.Data.csproj">
-      <Project>{0F38C418-F77B-473F-949E-81854091A364}</Project>
-      <Name>Elfar.Data</Name>
+    <ProjectReference Include="..\Elfar.Csv\Elfar.Csv.csproj">
+      <Project>{d7890078-5dc1-4d0f-a63c-dce44defdf41}</Project>
+      <Name>Elfar.Csv</Name>
     </ProjectReference>
     <ProjectReference Include="..\Elfar.Mvc\Elfar.Mvc.csproj">
       <Project>{7C6FCD11-4C1A-46E8-8587-E2639628E5C4}</Project>
