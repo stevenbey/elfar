@@ -132,8 +132,7 @@ namespace Elfar
 
             static StackTraceLine CreateLine(string line)
             {
-                if(line.StartsWith("   at")) return new MethodLine(line);
-                return new StackTraceLine(line);
+                return line.StartsWith("   at") ? new MethodLine(line) : new StackTraceLine(line);
             }
 
             readonly IEnumerable<StackTraceLine> lines;

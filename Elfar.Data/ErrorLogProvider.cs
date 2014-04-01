@@ -3,11 +3,13 @@ using Simple.Data;
 
 namespace Elfar.Data
 {
+    // ReSharper disable InconsistentNaming
+    // ReSharper disable UnusedMember.Local
     public class ErrorLogProvider : IErrorLogProvider, IStorageProvider
     {
         static ErrorLogProvider()
         {
-            settings = Elfar.ErrorLogProvider.Settings as Settings ?? new Settings();
+            var settings = Elfar.ErrorLogProvider.Settings as Settings ?? new Settings();
             var obj = Database.OpenConnection(settings.ConnectionString);
             if(!string.IsNullOrWhiteSpace(settings.Schema)) obj = obj[settings.Schema];
             errorLogs = obj[settings.Table];
@@ -31,7 +33,6 @@ namespace Elfar.Data
             get { return ((errorLog[]) errorLogs.All().ToArray<errorLog>()); }
         }
 
-        static readonly Settings settings;
         static readonly dynamic errorLogs;
 
         class errorLog : ErrorLog.Storage

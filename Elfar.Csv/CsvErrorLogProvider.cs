@@ -1,11 +1,10 @@
-﻿// ReSharper disable InconsistentNaming
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
 namespace Elfar.Csv
 {
+    // ReSharper disable InconsistentNaming
     public sealed class CsvErrorLogProvider : FileErrorLogProvider, IStorageProvider
     {
         public CsvErrorLogProvider()

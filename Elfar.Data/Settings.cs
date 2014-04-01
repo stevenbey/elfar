@@ -7,7 +7,7 @@ namespace Elfar.Data
         public string ConnectionString
         {
             get { return connectionString ?? (ConnectionString = GetAppSetting("ConnectionString")); }
-            private set
+            set
             {
                 if (string.IsNullOrWhiteSpace(value)) value = null;
                 var settings = ConnectionStrings[value ?? "Elfar"];

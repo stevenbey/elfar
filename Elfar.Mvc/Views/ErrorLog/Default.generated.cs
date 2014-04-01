@@ -49,13 +49,23 @@ WriteLiteral("<!DOCTYPE html>\r\n<html>\r\n    <head>\r\n        <title>Error Lo
             
             #line default
             #line hidden
+WriteLiteral("\" type=\"text/css\" rel=\"stylesheet\" />\r\n        <link href=\"");
+
+
+            
+            #line 6 "..\..\Views\ErrorLog\Default.cshtml"
+               Write(Url.Content("~/elfar/StyleSheet.css"));
+
+            
+            #line default
+            #line hidden
 WriteLiteral("\" type=\"text/css\" rel=\"stylesheet\" />\r\n    </head>\r\n    <body>\r\n        <header>\r" +
 "\n            <div id=\"elfar\">Error Logging Filter and Route &nbsp;/&nbsp; <stron" +
 "g title=\"The name or id of the web application\">");
 
 
             
-            #line 9 "..\..\Views\ErrorLog\Default.cshtml"
+            #line 10 "..\..\Views\ErrorLog\Default.cshtml"
                                                                                                                           Write(ErrorLogProvider.Application);
 
             
@@ -65,7 +75,7 @@ WriteLiteral("</strong> &nbsp;/&nbsp; <strong title=\"The name of the server\">"
 
 
             
-            #line 9 "..\..\Views\ErrorLog\Default.cshtml"
+            #line 10 "..\..\Views\ErrorLog\Default.cshtml"
                                                                                                                                                                                                                       Write(Server.MachineName);
 
             
@@ -111,7 +121,7 @@ WriteLiteral("\r\n        </div>\r\n        <footer>Error Logging Filter and Rou
 
 
             
-            #line 129 "..\..\Views\ErrorLog\Default.cshtml"
+            #line 130 "..\..\Views\ErrorLog\Default.cshtml"
                                              Write(this.Version());
 
             
@@ -121,7 +131,7 @@ WriteLiteral(") &#169; 2012&ndash;");
 
 
             
-            #line 129 "..\..\Views\ErrorLog\Default.cshtml"
+            #line 130 "..\..\Views\ErrorLog\Default.cshtml"
                                                                                  Write(DateTime.Now.Year);
 
             
