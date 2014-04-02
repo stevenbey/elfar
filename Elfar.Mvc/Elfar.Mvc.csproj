@@ -66,7 +66,7 @@
     <Compile Include="ErrorLogController.cs" />
     <Compile Include="ErrorLogFilter.cs" />
     <Compile Include="ErrorLogRoute.cs" />
-    <Compile Include="ErrorLogsResult.cs" />
+    <Compile Include="ErrorLogResult.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="ErrorLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
