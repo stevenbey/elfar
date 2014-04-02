@@ -61,14 +61,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionResults\DashboardResult.cs" />
+    <Compile Include="ActionResults\DetailResult.cs" />
     <Compile Include="Dictionary.cs" />
+    <Compile Include="ActionResults\EmbeddedResourceResult.cs" />
     <Compile Include="ErrorLogController.cs" />
     <Compile Include="ErrorLogFilter.cs" />
     <Compile Include="ErrorLogRoute.cs" />
+    <Compile Include="ActionResults\ErrorLogsResult.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="ErrorLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\Provider.cs" />
     <Compile Include="RouteConstraints\AdminConstraint.cs" />
     <Compile Include="RouteConstraints\DeveloperConstraint.cs" />
     <Compile Include="RouteConstraints\IPConstraint.cs" />
@@ -96,12 +99,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Scripts\Default.js" />
-    <EmbeddedResource Include="Resources\Scripts\HighChart.js" />
-    <EmbeddedResource Include="Resources\Scripts\Index.js" />
-    <EmbeddedResource Include="Resources\Scripts\JavaScript.js" />
-    <EmbeddedResource Include="Resources\Scripts\Linq.js" />
-    <EmbeddedResource Include="Resources\Stylesheets\Stylesheet.css" />
+    <Content Include="Resources\Scripts\Default.js" />
+    <Content Include="Resources\Scripts\HighChart.js" />
+    <Content Include="Resources\Scripts\Index.js" />
+    <Content Include="Resources\Scripts\JavaScript.js" />
+    <Content Include="Resources\Scripts\Linq.js" />
+    <Content Include="Resources\StyleSheets\StyleSheet.css" />
     <EmbeddedResource Include="Resources\Images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <EmbeddedResource Include="Resources\Images\ui-bg_flat_75_ffffff_40x100.png" />
     <EmbeddedResource Include="Resources\Images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -115,6 +118,8 @@
     <EmbeddedResource Include="Resources\Images\ui-icons_454545_256x240.png" />
     <EmbeddedResource Include="Resources\Images\ui-icons_888888_256x240.png" />
     <EmbeddedResource Include="Resources\Images\ui-icons_cd0a0a_256x240.png" />
+    <EmbeddedResource Include="Resources\Script.js" />
+    <EmbeddedResource Include="Resources\Styles.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

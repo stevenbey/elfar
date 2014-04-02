@@ -38,23 +38,19 @@ namespace Elfar.Mvc.Views.ErrorLog
         }
         public override void Execute()
         {
-WriteLiteral("<!DOCTYPE html>\r\n<html>\r\n    <head>\r\n        <title>Error Logging Filter and Rout" +
-"e</title>\r\n        <link href=\"");
+
+
+WriteLiteral("\r\n");
+
+
+
+WriteLiteral("\r\n<!DOCTYPE html>\r\n<html>\r\n    <head>\r\n        <title>Error Logging Filter and Ro" +
+"ute</title>\r\n        <link href=\"");
 
 
             
-            #line 5 "..\..\Views\ErrorLog\Default.cshtml"
-               Write(Url.Content("~/Styles/StyleSheet.css"));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\" type=\"text/css\" rel=\"stylesheet\" />\r\n        <link href=\"");
-
-
-            
-            #line 6 "..\..\Views\ErrorLog\Default.cshtml"
-               Write(Url.Content("~/elfar/StyleSheet.css"));
+            #line 7 "..\..\Views\ErrorLog\Default.cshtml"
+               Write(Url.Content("~/elfar/styles.css"));
 
             
             #line default
@@ -65,7 +61,7 @@ WriteLiteral("\" type=\"text/css\" rel=\"stylesheet\" />\r\n    </head>\r\n    <
 
 
             
-            #line 10 "..\..\Views\ErrorLog\Default.cshtml"
+            #line 11 "..\..\Views\ErrorLog\Default.cshtml"
                                                                                                                           Write(ErrorLogProvider.Application);
 
             
@@ -75,7 +71,7 @@ WriteLiteral("</strong> &nbsp;/&nbsp; <strong title=\"The name of the server\">"
 
 
             
-            #line 10 "..\..\Views\ErrorLog\Default.cshtml"
+            #line 11 "..\..\Views\ErrorLog\Default.cshtml"
                                                                                                                                                                                                                       Write(Server.MachineName);
 
             
@@ -121,7 +117,7 @@ WriteLiteral("\r\n        </div>\r\n        <footer>Error Logging Filter and Rou
 
 
             
-            #line 130 "..\..\Views\ErrorLog\Default.cshtml"
+            #line 131 "..\..\Views\ErrorLog\Default.cshtml"
                                              Write(this.Version());
 
             
@@ -131,14 +127,36 @@ WriteLiteral(") &#169; 2012&ndash;");
 
 
             
-            #line 130 "..\..\Views\ErrorLog\Default.cshtml"
+            #line 131 "..\..\Views\ErrorLog\Default.cshtml"
                                                                                  Write(DateTime.Now.Year);
 
             
             #line default
             #line hidden
-WriteLiteral("  Beyond395 Limited &nbsp;&middot;&nbsp; All rights reserved</footer>\r\n    </body" +
-">\r\n</html>");
+WriteLiteral("  Beyond395 Limited &nbsp;&middot;&nbsp; All rights reserved</footer>\r\n        <s" +
+"cript src=\"");
+
+
+            
+            #line 132 "..\..\Views\ErrorLog\Default.cshtml"
+                Write(Url.Content("~/elfar/script.js"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\" type=\"text/javascript\"></script>\r\n        <script type=\"text/javascript\">\r\n    " +
+"        $(function () {\r\n                $.post(\"");
+
+
+            
+            #line 135 "..\..\Views\ErrorLog\Default.cshtml"
+                   Write(Url.Action("Dashboard"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\", null, function(data) {\r\n                    alert(data);\r\n                });\r" +
+"\n            });\r\n        </script>\r\n    </body>\r\n</html>");
 
 
         }

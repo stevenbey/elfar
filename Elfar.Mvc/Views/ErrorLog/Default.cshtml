@@ -1,9 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@* ReSharper disable Mvc.ActionNotResolved *@
+@* ReSharper disable Html.PathError *@
+<!DOCTYPE html>
 <html>
     <head>
         <title>Error Logging Filter and Route</title>
-        <link href="@Url.Content("~/Styles/StyleSheet.css")" type="text/css" rel="stylesheet" />
-        <link href="@Url.Content("~/elfar/StyleSheet.css")" type="text/css" rel="stylesheet" />
+        <link href="@Url.Content("~/elfar/styles.css")" type="text/css" rel="stylesheet" />
     </head>
     <body>
         <header>
@@ -128,5 +129,13 @@
             </div>*@
         </div>
         <footer>Error Logging Filter and Route (v@(this.Version())) &#169; 2012&ndash;@DateTime.Now.Year  Beyond395 Limited &nbsp;&middot;&nbsp; All rights reserved</footer>
+        <script src="@Url.Content("~/elfar/script.js")" type="text/javascript"></script>
+        <script type="text/javascript">
+            $(function () {
+                $.post("@Url.Action("Dashboard")", null, function(data) {
+                    alert(data);
+                });
+            });
+        </script>
     </body>
 </html>

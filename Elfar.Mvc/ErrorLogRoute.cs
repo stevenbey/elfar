@@ -21,20 +21,15 @@ namespace Elfar.Mvc
 
             public override RouteData GetRouteData(HttpContextBase httpContext)
             {
-                return css.GetRouteData(httpContext)
-                    ?? js.GetRouteData(httpContext)
-                    ?? base.GetRouteData(httpContext);
+                return res.GetRouteData(httpContext) ?? base.GetRouteData(httpContext);
             }
 
             public override VirtualPathData GetVirtualPath(RequestContext requestContext, RouteValueDictionary values)
             {
-                return css.GetVirtualPath(requestContext, values)
-                    ?? js.GetVirtualPath(requestContext, values)
-                    ?? base.GetVirtualPath(requestContext, values);
+                return res.GetVirtualPath(requestContext, values) ?? base.GetVirtualPath(requestContext, values);
             }
 
-            static readonly Route css = new Route("elfar/{filename}.css", new RouteValueDictionary { { "action", "StyleSheet" } }, new _RouteHandler());
-            static readonly Route js = new Route("elfar/{filename}.js", new RouteValueDictionary { { "action", "JavaScript" } }, new _RouteHandler());
+            static readonly Route res = new Route("elfar/{filename}.{ext}", new RouteValueDictionary { { "action", "Resource" } }, new _RouteHandler());
 
             class _RouteHandler : IRouteHandler
             {

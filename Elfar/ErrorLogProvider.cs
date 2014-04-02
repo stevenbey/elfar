@@ -55,33 +55,43 @@ namespace Elfar
             set { settings = value; }
         }
 
-        public static IEnumerable<string> Details
+        internal static IEnumerable<string> Details
         {
             get { return All.Select(i => i.Detail); }
         }
-        internal static IEnumerable<ErrorLog.Storage> All
+        internal static string Application
+        {
+            get
+            {
+                var path = HttpRuntime.AppDomainAppVirtualPath;
+                if (path != null)
+                {
+                    path = path.Trim('/');
+                    return string.IsNullOrWhiteSpace(path) ? HttpRuntime.AppDomainAppId : path;
+                }
+                return path;
+            }
+        }
+
+        internal static IEnumerable<string> Summaries
+        {
+            get { return All.Select(i => i.Summary); }
+        }
+
+        static IEnumerable<ErrorLog.Storage> All
         {
             get
             {
                 try
                 {
                     var provider = Instance as IStorageProvider;
-                    if(provider != null) return provider.Items;
-                    if(Instance != null) return Instance.All.Select(l => new ErrorLog.Storage(l));
+                    if (provider != null) return provider.Items;
+                    if (Instance != null) return Instance.All.Select(l => new ErrorLog.Storage(l));
                 }
-                catch(Exception) {}
+                catch (Exception) { }
                 return empty;
             }
         }
-        internal static string Application
-        {
-            get
-            {
-                var path = HttpRuntime.AppDomainAppVirtualPath.Trim('/');
-                return string.IsNullOrWhiteSpace(path) ? HttpRuntime.AppDomainAppId : path;
-            }
-        }
-
         static IErrorLogProvider Instance
         {
             get { return instance ?? (instance = Components.Create<IErrorLogProvider>() ?? new Cache()); }

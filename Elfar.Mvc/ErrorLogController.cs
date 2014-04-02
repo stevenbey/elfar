@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using Elfar.Mvc.ActionResults;
 
 namespace Elfar.Mvc
 {
@@ -13,46 +13,18 @@ namespace Elfar.Mvc
         {
             return new DetailResult(id);
         }
+        [HttpPost]
         public DashboardResult Dashboard()
         {
             return new DashboardResult();
         }
+        public EmbeddedResourceResult Resource(string filename, string ext)
+        {
+            return new EmbeddedResourceResult(filename, ext);
+        }
         public void Test()
         {
             throw new TestException();
-        }
-
-        internal class DetailResult : ErrorLogsResult
-        {
-            public DetailResult(int id)
-            {
-                this.id = id;
-            }
-
-            protected override string Content
-            {
-                get { return ErrorLogProvider.All.Single(i => i.ID == id).Detail; }
-            }
-            
-            readonly int id;
-        }
-        internal class DashboardResult : ErrorLogsResult
-        {
-            protected override string Content
-            {
-                get { return "[" + string.Join(",", ErrorLogProvider.All.Select(i => i.Summary)) + "]"; }
-            }
-        }
-        internal abstract class ErrorLogsResult : ActionResult
-        {
-            public sealed override void ExecuteResult(ControllerContext context)
-            {
-                var response = context.HttpContext.Response;
-                response.ContentType = "application/json";
-                response.Write(Content);
-            }
-            
-            protected abstract string Content { get; }
         }
     }
 }
