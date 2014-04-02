@@ -155,8 +155,19 @@ WriteLiteral("\" type=\"text/javascript\"></script>\r\n        <script type=\"te
             
             #line default
             #line hidden
-WriteLiteral("\", null, function(data) {\r\n                    alert(data);\r\n                });\r" +
-"\n            });\r\n        </script>\r\n    </body>\r\n</html>");
+WriteLiteral("\", function(data) {\r\n                    $.post(\"");
+
+
+            
+            #line 136 "..\..\Views\ErrorLog\Default.cshtml"
+                       Write(Url.Action("Details"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\", { id: data[0].ID }, function(details) {\r\n                        alert(details" +
+");\r\n                    });\r\n                });\r\n            });\r\n        </scr" +
+"ipt>\r\n    </body>\r\n</html>");
 
 
         }

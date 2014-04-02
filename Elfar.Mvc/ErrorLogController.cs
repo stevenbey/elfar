@@ -1,5 +1,6 @@
-﻿using System.Web.Mvc;
-using Elfar.Mvc.ActionResults;
+﻿using System.Linq;
+using System.Web.Mvc;
+using Elfar.Mvc.Resources;
 
 namespace Elfar.Mvc
 {
@@ -9,18 +10,19 @@ namespace Elfar.Mvc
         {
             return View();
         }
-        public DetailResult Details(int id)
+        [HttpPost]
+        public ErrorLogResult Details(int id)
         {
-            return new DetailResult(id);
+            return new ErrorLogResult(ErrorLogProvider.All.Single(i => i.ID == id).Detail);
         }
         [HttpPost]
-        public DashboardResult Dashboard()
+        public ErrorLogResult Dashboard()
         {
-            return new DashboardResult();
+            return new ErrorLogResult("[" + string.Join(",", ErrorLogProvider.All.Select(i => i.Summary)) + "]");
         }
-        public EmbeddedResourceResult Resource(string filename, string ext)
+        public Result Resource(string filename, string ext)
         {
-            return new EmbeddedResourceResult(filename, ext);
+            return new Result(filename, ext);
         }
         public void Test()
         {

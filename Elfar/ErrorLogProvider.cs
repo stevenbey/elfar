@@ -55,9 +55,19 @@ namespace Elfar
             set { settings = value; }
         }
 
-        internal static IEnumerable<string> Details
+        internal static IEnumerable<ErrorLog.Storage> All
         {
-            get { return All.Select(i => i.Detail); }
+            get
+            {
+                try
+                {
+                    var provider = Instance as IStorageProvider;
+                    if (provider != null) return provider.Items;
+                    if (Instance != null) return Instance.All.Select(l => new ErrorLog.Storage(l));
+                }
+                catch (Exception) { }
+                return empty;
+            }
         }
         internal static string Application
         {
@@ -73,25 +83,6 @@ namespace Elfar
             }
         }
 
-        internal static IEnumerable<string> Summaries
-        {
-            get { return All.Select(i => i.Summary); }
-        }
-
-        static IEnumerable<ErrorLog.Storage> All
-        {
-            get
-            {
-                try
-                {
-                    var provider = Instance as IStorageProvider;
-                    if (provider != null) return provider.Items;
-                    if (Instance != null) return Instance.All.Select(l => new ErrorLog.Storage(l));
-                }
-                catch (Exception) { }
-                return empty;
-            }
-        }
         static IErrorLogProvider Instance
         {
             get { return instance ?? (instance = Components.Create<IErrorLogProvider>() ?? new Cache()); }
