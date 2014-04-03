@@ -14,7 +14,13 @@ namespace Elfar.Mvc
             if(httpException != null)
             {
                 Code = httpException.GetHttpCode();
-                Html = Regex.Replace(httpException.GetHtmlErrorMessage(), @"\s{2}", string.Empty);
+                Html = httpException.GetHtmlErrorMessage();
+                if (Html != null)
+                {
+                    Html = Regex.Replace(Regex.Replace(Html, @">\s+", ">"), @"\s+<", "<"); // remove spaces/new lines between tags
+                    Html = Regex.Replace(Regex.Replace(Html, @"}\s+", "}"), @"\s+{", "{"); // remove spaces/new lines between style rules
+                    Html = Regex.Replace(Regex.Replace(Html, @"\s+}", "}"), @"{\s+", "{"); // remove spaces/new lines between style media rules
+                }
             }
 
             if(data != null)
