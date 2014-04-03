@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Security;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Web;
 using System.Web.Script.Serialization;
@@ -25,7 +22,7 @@ namespace Elfar
 
             Message = @base.Message;
             Source = @base.Source;
-            StackTrace = new StackTraceBuilder(@base).ToString();
+            StackTrace = @base.ToString().Replace(Environment.NewLine, "\n");
             Type = @base.GetType().ToString();
 
             User = Thread.CurrentPrincipal.Identity.Name;
@@ -50,7 +47,7 @@ namespace Elfar
         public string RouteUrl { get; set; }
         public IDictionary<string, string> ServerVariables { get; set; }
         public string Source { get; private set; }
-        public string StackTrace { get; set; }
+        public string StackTrace { get; private set; }
         public DateTime Time { get; private set; }
         public string Type { get; private set; }
         public Uri Url { get; set; }
@@ -116,66 +113,6 @@ namespace Elfar
             static readonly JavaScriptSerializer serializer = new JavaScriptSerializer();
 
             const string separator = "¬";
-        }
-
-        class StackTraceBuilder
-        {
-            public StackTraceBuilder(Exception exception)
-            {
-                lines = WebUtility.HtmlEncode(exception.ToString()).Replace("\r", "").Split('\n').Select(CreateLine);
-            }
-
-            public override string ToString()
-            {
-                return string.Join(Environment.NewLine, lines);
-            }
-
-            static StackTraceLine CreateLine(string line)
-            {
-                return line.StartsWith("   at") ? new MethodLine(line) : new StackTraceLine(line);
-            }
-
-            readonly IEnumerable<StackTraceLine> lines;
-
-            class StackTraceLine
-            {
-                public StackTraceLine(string line)
-                {
-                    Line = line;
-                }
-
-                public override string ToString()
-                {
-                    return Line;
-                }
-
-                protected string Line { get; private set; }
-            }
-
-            class MethodLine : StackTraceLine
-            {
-                public MethodLine(string line) : base(line) { }
-
-                public override string ToString()
-                {
-                    var line = Line;
-                    line = Regex.Replace(line, @"(?<=(at\s))(([a-zA-Z0-9_`]|&lt;&gt;)*\.)*", m => Span("type", m.Value));
-                    line = Regex.Replace(line, @"(?<=(</span>)).*?(?=\()", m => Span("method", m.Value));
-                    line = Regex.Replace(line, @"(?<=(\(|,\s)).*?(?=\s)", m => Span("type", m.Value));
-                    line = Regex.Replace(line, @"(?<=(</span>\s)).*?(?=(,|\)))", m => Span("name", m.Value));
-                    if(line.IndexOf(" in ", StringComparison.Ordinal) > 0)
-                    {
-                        line = Regex.Replace(line, @"(?<=(in\s)).*?(?=(\:line))", m => Span("file", m.Value));
-                        line = Regex.Replace(line, @"(?<=(\:line\s)).*", m => Span("line", m.Value));
-                    }
-                    return line;
-                }
-
-                static string Span(string @class, string value)
-                {
-                    return string.Format(@"<span class=""{0}"">{1}</span>", @class, value);
-                }
-            }
         }
     }
 }
