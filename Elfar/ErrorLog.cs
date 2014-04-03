@@ -95,7 +95,7 @@ namespace Elfar
             }
 
             public int ID { get; protected set; }
-            public string Json
+            public string Value
             {
                 get { return string.Concat(Detail, separator, Summary); }
                 protected set

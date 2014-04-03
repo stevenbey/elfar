@@ -51,13 +51,13 @@ namespace Elfar.Csv
             {
                 var parts = value.Split(',');
                 ID = int.Parse(parts[0]);
-                Json = parts[1].Decompress();
+                Value = parts[1].Decompress();
             }
             internal errorLog(ErrorLog errorLog) : base(errorLog) {}
 
             public override string ToString()
             {
-                return string.Format("{0},{1}", ID, Json.Compress());
+                return string.Format("{0},{1}", ID, Value.Compress());
             }
         }
     }

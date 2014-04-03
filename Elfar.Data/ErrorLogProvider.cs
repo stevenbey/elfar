@@ -42,14 +42,14 @@ namespace Elfar.Data
 
             public string ErrorLog
             {
-                get { return Json.Compress(); }
-                set { Json = value.Decompress(); }
+                get { return Value.Compress(); }
+                set { Value = value.Decompress(); }
             }
 
-            new string Json // Hides the base property
+            new string Value // Hides the base property
             {
-                get { return base.Json; }
-                set { base.Json = value; }
+                get { return base.Value; }
+                set { base.Value = value; }
             }
         }
     }

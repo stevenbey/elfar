@@ -88,12 +88,12 @@ namespace Elfar.Xml
             public void ReadXml(XmlReader reader)
             {
                 ID = int.Parse(reader.GetAttribute("id"), CultureInfo.InvariantCulture);
-                Json = reader.ReadElementContentAsString().Decompress();
+                Value = reader.ReadElementContentAsString().Decompress();
             }
             public void WriteXml(XmlWriter writer)
             {
                 writer.WriteAttributeString("id", ID.ToString(CultureInfo.InvariantCulture));
-                writer.WriteString(Json.Compress());
+                writer.WriteString(Value.Compress());
             }
         }
     }
