@@ -13,7 +13,9 @@ namespace Elfar
         {
             if(exception == null) throw new ArgumentNullException("exception");
 
-            Time = DateTime.Now;
+            var now = DateTime.Now;
+            Date = now.ToShortDateString();
+            Time = now.ToShortTimeString();
 
             try { Host = Environment.MachineName; }
             catch(SecurityException) { }
@@ -36,6 +38,7 @@ namespace Elfar
         public string Controller { get; set; }
         public IDictionary<string, string> Cookies { get; set; }
         public IDictionary<string, object> DataTokens { get; set; }
+        public string Date { get; private set; }
         public IDictionary<string, string> Form { get; set; }
         public string Host { get; protected set; }
         public string Html { get; set; }
@@ -48,7 +51,7 @@ namespace Elfar
         public IDictionary<string, string> ServerVariables { get; set; }
         public string Source { get; private set; }
         public string StackTrace { get; private set; }
-        public DateTime Time { get; private set; }
+        public string Time { get; private set; }
         public string Type { get; private set; }
         public Uri Url { get; set; }
         public string User { get; protected set; }
@@ -82,6 +85,7 @@ namespace Elfar
                     errorLog.Action,
                     errorLog.Area,
                     errorLog.Controller,
+                    errorLog.Date,
                     errorLog.ID,
                     errorLog.Host,
                     errorLog.Time,
