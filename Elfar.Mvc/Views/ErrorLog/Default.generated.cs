@@ -134,40 +134,27 @@ WriteLiteral(") &#169; 2012&ndash;");
             #line default
             #line hidden
 WriteLiteral("  Beyond395 Limited &nbsp;&middot;&nbsp; All rights reserved</footer>\r\n        <s" +
-"cript src=\"");
+"cript type=\"text/javascript\">\r\n            var elfar = { Path: \'");
 
 
             
-            #line 132 "..\..\Views\ErrorLog\Default.cshtml"
+            #line 133 "..\..\Views\ErrorLog\Default.cshtml"
+                            Write(Url.Content("~/elfar"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\' };\r\n        </script>\r\n        <script src=\"");
+
+
+            
+            #line 135 "..\..\Views\ErrorLog\Default.cshtml"
                 Write(Url.Content("~/elfar/script.js"));
 
             
             #line default
             #line hidden
-WriteLiteral("\" type=\"text/javascript\"></script>\r\n        <script type=\"text/javascript\">\r\n    " +
-"        $(function () {\r\n                $.post(\"");
-
-
-            
-            #line 135 "..\..\Views\ErrorLog\Default.cshtml"
-                   Write(Url.Action("Dashboard"));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\", function(data) {\r\n                    $.post(\"");
-
-
-            
-            #line 136 "..\..\Views\ErrorLog\Default.cshtml"
-                       Write(Url.Action("Details"));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\", { id: data[0].ID }, function(details) {\r\n                        alert(details" +
-");\r\n                    });\r\n                });\r\n            });\r\n        </scr" +
-"ipt>\r\n    </body>\r\n</html>");
+WriteLiteral("\" type=\"text/javascript\"></script>\r\n    </body>\r\n</html>");
 
 
         }

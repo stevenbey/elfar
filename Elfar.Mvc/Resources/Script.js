@@ -35,3 +35,13 @@
 //    Console.WriteLine("Line: {0}", parts[1]);
 //}
 */
+
+(function() {
+    $.post(elfar.Path + "/Dashboard", function (data) {
+        elfar.Data = data;
+        $.post(elfar.Path + "/Details", { id: data[0].ID }, function (details) {
+            data[0].Details = details;
+            alert(elfar.Data[0].Details.Url);
+        });
+    });
+})();

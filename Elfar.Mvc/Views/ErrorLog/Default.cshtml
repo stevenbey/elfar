@@ -129,15 +129,9 @@
             </div>*@
         </div>
         <footer>Error Logging Filter and Route (v@(this.Version())) &#169; 2012&ndash;@DateTime.Now.Year  Beyond395 Limited &nbsp;&middot;&nbsp; All rights reserved</footer>
-        <script src="@Url.Content("~/elfar/script.js")" type="text/javascript"></script>
         <script type="text/javascript">
-            $(function () {
-                $.post("@Url.Action("Dashboard")", function(data) {
-                    $.post("@Url.Action("Details")", { id: data[0].ID }, function(details) {
-                        alert(details);
-                    });
-                });
-            });
+            var elfar = { Path: '@Url.Content("~/elfar")' };
         </script>
+        <script src="@Url.Content("~/elfar/script.js")" type="text/javascript"></script>
     </body>
 </html>
