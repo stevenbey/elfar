@@ -28,7 +28,8 @@ namespace Elfar
         }
         public static string ToTitle(this object value)
         {
-            return value == null || !(value is string) ? null : Regex.Replace((string) value, @"^[a-z]", m => m.Value.ToUpper());
+            var s = value as string;
+            return string.IsNullOrWhiteSpace(s) ? null : Regex.Replace(s, @"^[a-z]", m => m.Value.ToUpper());
         }
     }
 }
