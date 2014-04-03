@@ -77,7 +77,7 @@ namespace Elfar
                 if (path != null)
                 {
                     path = path.Trim('/');
-                    return string.IsNullOrWhiteSpace(path) ? HttpRuntime.AppDomainAppId : path;
+                    return string.IsNullOrWhiteSpace(path) ? HttpRuntime.AppDomainAppId.Trim('/') : path;
                 }
                 return path;
             }
