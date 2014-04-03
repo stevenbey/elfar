@@ -55,14 +55,14 @@ WriteLiteral("\r\n<!DOCTYPE html>\r\n<html>\r\n    <head>\r\n        <title>Erro
             
             #line default
             #line hidden
-WriteLiteral("\" type=\"text/css\" rel=\"stylesheet\" />\r\n    </head>\r\n    <body>\r\n        <header>\r" +
-"\n            <div id=\"elfar\">Error Logging Filter and Route &nbsp;/&nbsp; <stron" +
-"g title=\"The name or id of the web application\">");
+WriteLiteral("\" type=\"text/css\" rel=\"stylesheet\" />\r\n    </head>\r\n<body>\r\n    <header>\r\n       " +
+" <div id=\"elfar\">Error Logging Filter and Route &nbsp;/&nbsp; <strong title=\"The" +
+" name or id of the web application\">");
 
 
             
             #line 11 "..\..\Views\ErrorLog\Default.cshtml"
-                                                                                                                          Write(ErrorLogProvider.Application);
+                                                                                                                      Write(ErrorLogProvider.Application);
 
             
             #line default
@@ -72,53 +72,53 @@ WriteLiteral("</strong> &nbsp;/&nbsp; <strong title=\"The name of the server\">"
 
             
             #line 11 "..\..\Views\ErrorLog\Default.cshtml"
-                                                                                                                                                                                                                      Write(Server.MachineName);
+                                                                                                                                                                                                                  Write(Server.MachineName);
 
             
             #line default
             #line hidden
 WriteLiteral(@"</strong></div>
-            <ul id=""tabs"">
-                <li class=""selected"">Dashboard</li>
-            </ul>
-        </header>
-        <div id=""content"">
-            <div id=""dashboard"">
-                <p>
-                    Trends:
-                    <ul>
-                        <li>90 days</li>
-                        <li>30 days</li>
-                        <li>7 days</li>
-                        <li>today</li>
-                    </ul>
-                </p>
-                <p>
-                    Donut charts:
-                    <ul>
-                        <li>Areas</li>
-                        <li>Controllers (per Area)</li>
-                        <li>Actions (per Controller & Area)</li>
-                    </ul>
-                </p>
-                <p>
-                    List:
-                    <ul>
-                        <li>last 10 errors</li>
-                        <li>10 most common errors</li>
-                    </ul>
-                </p>
-            </div>
-            ");
+        <ul id=""tabs"">
+            <li class=""selected"">Dashboard</li>
+        </ul>
+    </header>
+    <div id=""content"">
+        <div id=""dashboard"">
+            <p>
+                Trends:
+                <ul>
+                    <li>90 days</li>
+                    <li>30 days</li>
+                    <li>7 days</li>
+                    <li>today</li>
+                </ul>
+            </p>
+            <p>
+                Donut charts:
+                <ul>
+                    <li>Areas</li>
+                    <li>Controllers (per Area)</li>
+                    <li>Actions (per Controller & Area)</li>
+                </ul>
+            </p>
+            <p>
+                List:
+                <ul>
+                    <li>last 10 errors</li>
+                    <li>10 most common errors</li>
+                </ul>
+            </p>
+        </div>
+        ");
 
 
 
-WriteLiteral("\r\n        </div>\r\n        <footer>Error Logging Filter and Route (v");
+WriteLiteral("\r\n    </div>\r\n    <footer>Error Logging Filter and Route (v");
 
 
             
             #line 131 "..\..\Views\ErrorLog\Default.cshtml"
-                                             Write(this.Version());
+                                         Write(this.Version());
 
             
             #line default
@@ -128,33 +128,33 @@ WriteLiteral(") &#169; 2012&ndash;");
 
             
             #line 131 "..\..\Views\ErrorLog\Default.cshtml"
-                                                                                 Write(DateTime.Now.Year);
+                                                                             Write(DateTime.Now.Year);
 
             
             #line default
             #line hidden
-WriteLiteral("  Beyond395 Limited &nbsp;&middot;&nbsp; All rights reserved</footer>\r\n        <s" +
-"cript type=\"text/javascript\">\r\n            var elfar = { Path: \'");
+WriteLiteral("  Beyond395 Limited &nbsp;&middot;&nbsp; All rights reserved</footer>\r\n    <scrip" +
+"t type=\"application/json\">{\"Path\":\"");
+
+
+            
+            #line 132 "..\..\Views\ErrorLog\Default.cshtml"
+                                        Write(Url.Content("~/elfar"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\"}</script>\r\n    <script src=\"");
 
 
             
             #line 133 "..\..\Views\ErrorLog\Default.cshtml"
-                            Write(Url.Content("~/elfar"));
+            Write(Url.Content("~/elfar/script.js"));
 
             
             #line default
             #line hidden
-WriteLiteral("\' };\r\n        </script>\r\n        <script src=\"");
-
-
-            
-            #line 135 "..\..\Views\ErrorLog\Default.cshtml"
-                Write(Url.Content("~/elfar/script.js"));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\" type=\"text/javascript\"></script>\r\n    </body>\r\n</html>");
+WriteLiteral("\" type=\"text/javascript\"></script>\r\n</body>\r\n</html>");
 
 
         }
