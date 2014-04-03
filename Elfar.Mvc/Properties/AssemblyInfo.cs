@@ -14,4 +14,4 @@ using System.Web;
 [assembly: Guid("369b6b75-7b12-433e-857a-c124e069d590")]
 [assembly: AssemblyVersion("2.0.*")]
 [assembly: AssemblyFileVersion("2.0")]
-[assembly: PreApplicationStartMethod(typeof(Elfar.Mvc.Helper), "Init")]
+[assembly: PreApplicationStartMethod(typeof(Elfar.Mvc.Library), "Init")]

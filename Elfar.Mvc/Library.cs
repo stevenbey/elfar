@@ -7,7 +7,7 @@ using Elfar.Mvc.Views;
 
 namespace Elfar.Mvc
 {
-    public static class Helper
+    public static class Library
     {
         public static void Init()
         {
