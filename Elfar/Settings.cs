@@ -12,6 +12,11 @@ namespace Elfar
             return AppSettings["elfar:" + name];
         }
 
+        public string Application
+        {
+            get { return application ?? (application = GetAppSetting("Application")); }
+            set { application = value; }
+        }
         public string FilePath
         {
             get { return filePath ?? (filePath = GetAppSetting("FilePath")); }
@@ -23,6 +28,7 @@ namespace Elfar
             get { return appSettings ?? (appSettings = ConfigurationManager.AppSettings); }
         }
 
+        string application;
         NameValueCollection appSettings;
         string filePath;
     }

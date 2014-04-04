@@ -31,35 +31,40 @@ namespace Elfar.Mvc.Views.ErrorLog
     using Elfar.Mvc.Properties;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/ErrorLog/Scripts.cshtml")]
-    public partial class Scripts : System.Web.Mvc.WebViewPage<dynamic>
+    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/ErrorLog/Dashboard.cshtml")]
+    public partial class Dashboard : System.Web.Mvc.WebViewPage<dynamic>
     {
-        public Scripts()
+        public Dashboard()
         {
         }
         public override void Execute()
         {
-WriteLiteral("<script type=\"application/json\">{\"Path\":\"");
-
-
-            
-            #line 1 "..\..\Views\ErrorLog\Scripts.cshtml"
-                                    Write(Url.Content("~/elfar"));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\"}</script>\r\n<script src=\"");
-
-
-            
-            #line 2 "..\..\Views\ErrorLog\Scripts.cshtml"
-        Write(Url.Content("~/elfar/script.js"));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\" type=\"text/javascript\"></script>");
+WriteLiteral(@"<div id=""dashboard"">
+    <p>
+        Trends:
+        <ul>
+            <li>90 days</li>
+            <li>30 days</li>
+            <li>7 days</li>
+            <li>today</li>
+        </ul>
+    </p>
+    <p>
+        Donut charts:
+        <ul>
+            <li>Areas</li>
+            <li>Controllers (per Area)</li>
+            <li>Actions (per Controller & Area)</li>
+        </ul>
+    </p>
+    <p>
+        List:
+        <ul>
+            <li>last 10 errors</li>
+            <li>10 most common errors</li>
+        </ul>
+    </p>
+</div>");
 
 
         }

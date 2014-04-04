@@ -1,6 +1,7 @@
 ﻿<header>
-    @Html.Partial("Title")
+    <div>Error Logging Filter and Route / @Strong(ErrorLogProvider.Application, "The name or id of the web application") / @Strong(@Server.MachineName, "The name of the server")</div>
     <ul id="tabs">
         <li class="selected">Dashboard</li>
     </ul>
 </header>
+@helper Strong(string text, string title) { <strong title="@title">@text</strong> }

@@ -31,36 +31,15 @@ namespace Elfar.Mvc.Views.ErrorLog
     using Elfar.Mvc.Properties;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/ErrorLog/Title.cshtml")]
-    public partial class Title : System.Web.Mvc.WebViewPage<dynamic>
+    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/ErrorLog/List.cshtml")]
+    public partial class List : System.Web.Mvc.WebViewPage<dynamic>
     {
-        public Title()
+        public List()
         {
         }
         public override void Execute()
         {
-WriteLiteral("<div>Error Logging Filter and Route &nbsp;/&nbsp; <strong title=\"The name or id o" +
-"f the web application\">");
 
-
-            
-            #line 1 "..\..\Views\ErrorLog\Title.cshtml"
-                                                                                                   Write(ErrorLogProvider.Application);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</strong> &nbsp;/&nbsp; <strong title=\"The name of the server\">");
-
-
-            
-            #line 1 "..\..\Views\ErrorLog\Title.cshtml"
-                                                                                                                                                                                               Write(Server.MachineName);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</strong></div>");
 
 
         }

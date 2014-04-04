@@ -34,23 +34,75 @@ namespace Elfar.Mvc.Views.ErrorLog
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/ErrorLog/Header.cshtml")]
     public partial class Header : System.Web.Mvc.WebViewPage<dynamic>
     {
+
+public System.Web.WebPages.HelperResult Strong(string text, string title) {
+return new System.Web.WebPages.HelperResult(__razor_helper_writer => {
+
+
+
+WriteLiteralTo(@__razor_helper_writer, " <strong title=\"");
+
+
+
+#line 7 "..\..\Views\ErrorLog\Header.cshtml"
+                            WriteTo(@__razor_helper_writer, title);
+
+#line default
+#line hidden
+
+WriteLiteralTo(@__razor_helper_writer, "\">");
+
+
+
+#line 7 "..\..\Views\ErrorLog\Header.cshtml"
+                                    WriteTo(@__razor_helper_writer, text);
+
+#line default
+#line hidden
+
+WriteLiteralTo(@__razor_helper_writer, "</strong> ");
+
+
+
+#line 7 "..\..\Views\ErrorLog\Header.cshtml"
+                                                                                  
+#line default
+#line hidden
+
+});
+
+                                                                                  }
+
+
         public Header()
         {
         }
         public override void Execute()
         {
-WriteLiteral("<header>\r\n    ");
+WriteLiteral("<header>\r\n    <div>Error Logging Filter and Route / ");
 
 
             
             #line 2 "..\..\Views\ErrorLog\Header.cshtml"
-Write(Html.Partial("Title"));
+                                     Write(Strong(ErrorLogProvider.Application, "The name or id of the web application"));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n    <ul id=\"tabs\">\r\n        <li class=\"selected\">Dashboard</li>\r\n    </ul>\r\n</h" +
-"eader>");
+WriteLiteral(" / ");
+
+
+            
+            #line 2 "..\..\Views\ErrorLog\Header.cshtml"
+                                                                                                                      Write(Strong(@Server.MachineName, "The name of the server"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n    <ul id=\"tabs\">\r\n        <li class=\"selected\">Dashboard</li>\r\n    </ul" +
+">\r\n</header>\r\n");
+
+
 
 
         }

@@ -40,11 +40,21 @@ namespace Elfar.Mvc.Views.ErrorLog
         public override void Execute()
         {
 WriteLiteral("<!DOCTYPE html>\r\n<html>\r\n<head>\r\n    <title>Error Logging Filter and Route</title" +
-">\r\n    <link href=\"");
+">\r\n    <script type=\"application/json\">{\"Path\":\"");
 
 
             
             #line 5 "..\..\Views\ErrorLog\Default.cshtml"
+                                        Write(Url.Content("~/elfar"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\"}</script>\r\n    <link href=\"");
+
+
+            
+            #line 6 "..\..\Views\ErrorLog\Default.cshtml"
            Write(Url.Content("~/elfar/styles.css"));
 
             
@@ -54,65 +64,53 @@ WriteLiteral("\" type=\"text/css\" rel=\"stylesheet\" />\r\n</head>\r\n<body>\r\
 
 
             
-            #line 8 "..\..\Views\ErrorLog\Default.cshtml"
+            #line 9 "..\..\Views\ErrorLog\Default.cshtml"
 Write(Html.Partial("Header"));
 
             
             #line default
             #line hidden
-WriteLiteral(@"
-    <div>
-        <div id=""dashboard"">
-            <p>
-                Trends:
-                <ul>
-                    <li>90 days</li>
-                    <li>30 days</li>
-                    <li>7 days</li>
-                    <li>today</li>
-                </ul>
-            </p>
-            <p>
-                Donut charts:
-                <ul>
-                    <li>Areas</li>
-                    <li>Controllers (per Area)</li>
-                    <li>Actions (per Controller & Area)</li>
-                </ul>
-            </p>
-            <p>
-                List:
-                <ul>
-                    <li>last 10 errors</li>
-                    <li>10 most common errors</li>
-                </ul>
-            </p>
-        </div>
-        ");
+WriteLiteral("\r\n    <div>\r\n        ");
 
 
+            
+            #line 11 "..\..\Views\ErrorLog\Default.cshtml"
+   Write(Html.Partial("Dashboard"));
 
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n        ");
+
+
+            
+            #line 12 "..\..\Views\ErrorLog\Default.cshtml"
+   Write(Html.Partial("List"));
+
+            
+            #line default
+            #line hidden
 WriteLiteral("\r\n    </div>\r\n    ");
 
 
             
-            #line 124 "..\..\Views\ErrorLog\Default.cshtml"
+            #line 14 "..\..\Views\ErrorLog\Default.cshtml"
 Write(Html.Partial("Footer"));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n    ");
+WriteLiteral("\r\n    <script src=\"");
 
 
             
-            #line 125 "..\..\Views\ErrorLog\Default.cshtml"
-Write(Html.Partial("Scripts"));
+            #line 15 "..\..\Views\ErrorLog\Default.cshtml"
+            Write(Url.Content("~/elfar/script.js"));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n</body>\r\n</html>");
+WriteLiteral("\" type=\"text/javascript\"></script>\r\n</body>\r\n</html>");
 
 
         }

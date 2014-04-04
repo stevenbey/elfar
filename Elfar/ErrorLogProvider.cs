@@ -73,13 +73,13 @@ namespace Elfar
         {
             get
             {
-                var path = HttpRuntime.AppDomainAppVirtualPath;
-                if (path != null)
+                var application = Settings.Application ?? HttpRuntime.AppDomainAppVirtualPath;
+                if (application != null)
                 {
-                    path = path.Trim('/');
-                    return string.IsNullOrWhiteSpace(path) ? HttpRuntime.AppDomainAppId.Trim('/') : path;
+                    application = application.Trim('/');
+                    return string.IsNullOrWhiteSpace(application) ? HttpRuntime.AppDomainAppId.Trim('/') : application;
                 }
-                return path;
+                return application;
             }
         }
 

@@ -90,6 +90,11 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Views\Engine.cs" />
+    <Compile Include="Views\ErrorLog\Dashboard.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Dashboard.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ErrorLog\Default.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -105,15 +110,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Header.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ErrorLog\Scripts.generated.cs">
+    <Compile Include="Views\ErrorLog\List.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Scripts.cshtml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ErrorLog\Title.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Title.cshtml</DependentUpon>
+      <DependentUpon>List.cshtml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -163,14 +163,14 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>ErrorLog.Text.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\ErrorLog\Dashboard.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Dashboard.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Views\ErrorLog\Default.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Default.generated.cs</LastGenOutput>
     </None>
-    <Content Include="Views\ErrorLog\Title.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>Title.generated.cs</LastGenOutput>
-    </Content>
     <Content Include="Views\ErrorLog\Header.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Header.generated.cs</LastGenOutput>
@@ -179,9 +179,9 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Footer.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\ErrorLog\Scripts.cshtml">
+    <Content Include="Views\ErrorLog\List.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>Scripts.generated.cs</LastGenOutput>
+      <LastGenOutput>List.generated.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <PropertyGroup>
