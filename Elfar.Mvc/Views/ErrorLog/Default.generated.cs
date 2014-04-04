@@ -39,51 +39,29 @@ namespace Elfar.Mvc.Views.ErrorLog
         }
         public override void Execute()
         {
-
-
-WriteLiteral("\r\n");
-
-
-
-WriteLiteral("\r\n<!DOCTYPE html>\r\n<html>\r\n    <head>\r\n        <title>Error Logging Filter and Ro" +
-"ute</title>\r\n        <link href=\"");
+WriteLiteral("<!DOCTYPE html>\r\n<html>\r\n<head>\r\n    <title>Error Logging Filter and Route</title" +
+">\r\n    <link href=\"");
 
 
             
-            #line 7 "..\..\Views\ErrorLog\Default.cshtml"
-               Write(Url.Content("~/elfar/styles.css"));
+            #line 5 "..\..\Views\ErrorLog\Default.cshtml"
+           Write(Url.Content("~/elfar/styles.css"));
 
             
             #line default
             #line hidden
-WriteLiteral("\" type=\"text/css\" rel=\"stylesheet\" />\r\n    </head>\r\n<body>\r\n    <header>\r\n       " +
-" <div id=\"elfar\">Error Logging Filter and Route &nbsp;/&nbsp; <strong title=\"The" +
-" name or id of the web application\">");
+WriteLiteral("\" type=\"text/css\" rel=\"stylesheet\" />\r\n</head>\r\n<body>\r\n    ");
 
 
             
-            #line 11 "..\..\Views\ErrorLog\Default.cshtml"
-                                                                                                                      Write(ErrorLogProvider.Application);
+            #line 8 "..\..\Views\ErrorLog\Default.cshtml"
+Write(Html.Partial("Header"));
 
             
             #line default
             #line hidden
-WriteLiteral("</strong> &nbsp;/&nbsp; <strong title=\"The name of the server\">");
-
-
-            
-            #line 11 "..\..\Views\ErrorLog\Default.cshtml"
-                                                                                                                                                                                                                  Write(Server.MachineName);
-
-            
-            #line default
-            #line hidden
-WriteLiteral(@"</strong></div>
-        <ul id=""tabs"">
-            <li class=""selected"">Dashboard</li>
-        </ul>
-    </header>
-    <div id=""content"">
+WriteLiteral(@"
+    <div>
         <div id=""dashboard"">
             <p>
                 Trends:
@@ -114,37 +92,27 @@ WriteLiteral(@"</strong></div>
 
 
 
-WriteLiteral("\r\n    </div>\r\n    <footer>");
+WriteLiteral("\r\n    </div>\r\n    ");
 
 
             
-            #line 131 "..\..\Views\ErrorLog\Default.cshtml"
-       Write(AssemblyInfo.Value);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</footer>\r\n    <script type=\"application/json\">{\"Path\":\"");
-
-
-            
-            #line 132 "..\..\Views\ErrorLog\Default.cshtml"
-                                        Write(Url.Content("~/elfar"));
+            #line 124 "..\..\Views\ErrorLog\Default.cshtml"
+Write(Html.Partial("Footer"));
 
             
             #line default
             #line hidden
-WriteLiteral("\"}</script>\r\n    <script src=\"");
+WriteLiteral("\r\n    ");
 
 
             
-            #line 133 "..\..\Views\ErrorLog\Default.cshtml"
-            Write(Url.Content("~/elfar/script.js"));
+            #line 125 "..\..\Views\ErrorLog\Default.cshtml"
+Write(Html.Partial("Scripts"));
 
             
             #line default
             #line hidden
-WriteLiteral("\" type=\"text/javascript\"></script>\r\n</body>\r\n</html>");
+WriteLiteral("\r\n</body>\r\n</html>");
 
 
         }

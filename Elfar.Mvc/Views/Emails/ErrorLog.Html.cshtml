@@ -14,14 +14,9 @@ Content-Type: text/html
 	</head>
 	<body>
 		<p id="errorMessage">@Model.Subject</p>
-    @if(Model.Time > DateTime.MinValue)
-    {
-        <p>Generated: @Model.Time.ToString("r")</p>
-    }
+        <p>Generated: @Model.Date @Model.Time</p>
         <p>@Model.Source</p>
-        <pre id="errorDetail">
-@Html.Raw(Model.StackTrace)
-        </pre>
-		<p id="Footer">@AssemblyInfo.Value</p>
+        <pre id="errorDetail">@Model.StackTrace</pre>
+		<p>@AssemblyInfo.Value</p>
 	</body>
 </html>

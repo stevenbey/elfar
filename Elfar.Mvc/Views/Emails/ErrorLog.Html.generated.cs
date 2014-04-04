@@ -70,63 +70,52 @@ WriteLiteral(@"</title>
             
             #line default
             #line hidden
-WriteLiteral("</p>\r\n");
+WriteLiteral("</p>\r\n        <p>Generated: ");
 
 
             
             #line 17 "..\..\Views\Emails\ErrorLog.Html.cshtml"
-     if(Model.Time > DateTime.MinValue)
-    {
+                 Write(Model.Date);
 
             
             #line default
             #line hidden
-WriteLiteral("        <p>Generated: ");
+WriteLiteral(" ");
 
 
             
-            #line 19 "..\..\Views\Emails\ErrorLog.Html.cshtml"
-                 Write(Model.Time.ToString("r"));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</p>\r\n");
-
-
-            
-            #line 20 "..\..\Views\Emails\ErrorLog.Html.cshtml"
-    }
+            #line 17 "..\..\Views\Emails\ErrorLog.Html.cshtml"
+                             Write(Model.Time);
 
             
             #line default
             #line hidden
-WriteLiteral("        <p>");
+WriteLiteral("</p>\r\n        <p>");
 
 
             
-            #line 21 "..\..\Views\Emails\ErrorLog.Html.cshtml"
+            #line 18 "..\..\Views\Emails\ErrorLog.Html.cshtml"
       Write(Model.Source);
 
             
             #line default
             #line hidden
-WriteLiteral("</p>\r\n        <pre id=\"errorDetail\">\r\n");
+WriteLiteral("</p>\r\n        <pre id=\"errorDetail\">");
 
 
             
-            #line 23 "..\..\Views\Emails\ErrorLog.Html.cshtml"
-Write(Html.Raw(Model.StackTrace));
+            #line 19 "..\..\Views\Emails\ErrorLog.Html.cshtml"
+                         Write(Model.StackTrace);
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n        </pre>\r\n\t\t<p id=\"Footer\">");
+WriteLiteral("</pre>\r\n\t\t<p>");
 
 
             
-            #line 25 "..\..\Views\Emails\ErrorLog.Html.cshtml"
-            Write(AssemblyInfo.Value);
+            #line 20 "..\..\Views\Emails\ErrorLog.Html.cshtml"
+Write(AssemblyInfo.Value);
 
             
             #line default

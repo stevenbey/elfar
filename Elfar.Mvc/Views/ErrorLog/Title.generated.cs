@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Elfar.Mvc.Views.Emails
+namespace Elfar.Mvc.Views.ErrorLog
 {
     using System;
     using System.Collections.Generic;
@@ -31,75 +31,37 @@ namespace Elfar.Mvc.Views.Emails
     using Elfar.Mvc.Properties;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Emails/ErrorLog.Text.cshtml")]
-    public partial class ErrorLog_Text : System.Web.Mvc.WebViewPage<dynamic>
+    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/ErrorLog/Title.cshtml")]
+    public partial class Title : System.Web.Mvc.WebViewPage<dynamic>
     {
-        public ErrorLog_Text()
+        public Title()
         {
         }
         public override void Execute()
         {
-
-WriteLiteral("Content-Type: text/plain\n\n");
-
-
-            
-            #line 4 "..\..\Views\Emails\ErrorLog.Text.cshtml"
-Write(Model.Subject);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\n\r\nGenerated: ");
+WriteLiteral("<div>Error Logging Filter and Route &nbsp;/&nbsp; <strong title=\"The name or id o" +
+"f the web application\">");
 
 
             
-            #line 6 "..\..\Views\Emails\ErrorLog.Text.cshtml"
-      Write(Model.Date);
+            #line 1 "..\..\Views\ErrorLog\Title.cshtml"
+                                                                                                   Write(ErrorLogProvider.Application);
 
             
             #line default
             #line hidden
-WriteLiteral(" ");
+WriteLiteral("</strong> &nbsp;/&nbsp; <strong title=\"The name of the server\">");
 
 
             
-            #line 6 "..\..\Views\Emails\ErrorLog.Text.cshtml"
-                  Write(Model.Time);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n\n");
-
-
-            
-            #line 8 "..\..\Views\Emails\ErrorLog.Text.cshtml"
-Write(Model.Source);
+            #line 1 "..\..\Views\ErrorLog\Title.cshtml"
+                                                                                                                                                                                               Write(Server.MachineName);
 
             
             #line default
             #line hidden
-WriteLiteral("\n\n");
+WriteLiteral("</strong></div>");
 
-
-            
-            #line 10 "..\..\Views\Emails\ErrorLog.Text.cshtml"
-Write(Model.StackTrace);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\n\n");
-
-
-            
-            #line 12 "..\..\Views\Emails\ErrorLog.Text.cshtml"
-Write(AssemblyInfo.Value);
-
-            
-            #line default
-            #line hidden
 
         }
     }

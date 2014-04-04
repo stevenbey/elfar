@@ -95,6 +95,26 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Default.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ErrorLog\Footer.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Footer.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ErrorLog\Header.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Header.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ErrorLog\Scripts.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Scripts.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ErrorLog\Title.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Title.cshtml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Scripts\Default.js" />
@@ -147,6 +167,22 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Default.generated.cs</LastGenOutput>
     </None>
+    <Content Include="Views\ErrorLog\Title.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Title.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\ErrorLog\Header.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Header.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\ErrorLog\Footer.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Footer.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\ErrorLog\Scripts.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Scripts.generated.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

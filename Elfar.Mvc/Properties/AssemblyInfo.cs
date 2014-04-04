@@ -32,9 +32,9 @@ namespace Elfar.Mvc.Properties
             RouteTable.Routes.Insert(0, new ErrorLogRoute());
         }
 
-        static T GetAttribute<T>(this ICustomAttributeProvider assembly, bool inherit = false) where T : Attribute
+        static T GetAttribute<T>(this ICustomAttributeProvider provider, bool inherit = false) where T : Attribute
         {
-            return assembly.GetCustomAttributes(typeof(T), inherit).OfType<T>().FirstOrDefault();
+            return provider.GetCustomAttributes(typeof(T), inherit).OfType<T>().FirstOrDefault();
         }
 
         public static string Value

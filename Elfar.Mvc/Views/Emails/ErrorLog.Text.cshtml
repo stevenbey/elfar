@@ -2,11 +2,11 @@
 Content-Type: text/plain
 
 @Model.Subject
-@if(Model.Time > DateTime.MinValue)
-{
-@:Generated: @Model.Time.ToString("r")
-}
-Source:
+
+Generated: @Model.Date @Model.Time
+
 @Model.Source
+
+@Model.StackTrace
 
 @AssemblyInfo.Value
