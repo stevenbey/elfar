@@ -22,6 +22,6 @@ Content-Type: text/html
         <pre id="errorDetail">
 @Html.Raw(Model.StackTrace)
         </pre>
-		<p id="Footer">Error Logging Filter and Route (v@(this.Version())) &#169; 2012&ndash;@DateTime.Now.Year Beyond395 Limited &nbsp;&middot;&nbsp; All rights reserved</p>
+		<p id="Footer">@AssemblyInfo.Value</p>
 	</body>
 </html>

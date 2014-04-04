@@ -28,6 +28,7 @@ namespace Elfar.Mvc.Views.ErrorLog
     using System.Web.WebPages;
     using Elfar;
     using Elfar.Mvc;
+    using Elfar.Mvc.Properties;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/ErrorLog/Default.cshtml")]
@@ -113,28 +114,17 @@ WriteLiteral(@"</strong></div>
 
 
 
-WriteLiteral("\r\n    </div>\r\n    <footer>Error Logging Filter and Route (v");
+WriteLiteral("\r\n    </div>\r\n    <footer>");
 
 
             
             #line 131 "..\..\Views\ErrorLog\Default.cshtml"
-                                         Write(this.Version());
+       Write(AssemblyInfo.Value);
 
             
             #line default
             #line hidden
-WriteLiteral(") &#169; 2012&ndash;");
-
-
-            
-            #line 131 "..\..\Views\ErrorLog\Default.cshtml"
-                                                                             Write(DateTime.Now.Year);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("  Beyond395 Limited &nbsp;&middot;&nbsp; All rights reserved</footer>\r\n    <scrip" +
-"t type=\"application/json\">{\"Path\":\"");
+WriteLiteral("</footer>\r\n    <script type=\"application/json\">{\"Path\":\"");
 
 
             
