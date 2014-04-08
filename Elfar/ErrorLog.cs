@@ -14,7 +14,7 @@ namespace Elfar
             if(exception == null) throw new ArgumentNullException("exception");
 
             var now = DateTime.Now;
-            Date = now.ToShortDateString();
+            Date = now.ToString("yyyy-MM-dd");
             Time = now.ToShortTimeString();
 
             try { Host = Environment.MachineName; }
