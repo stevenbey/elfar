@@ -29,7 +29,7 @@ var getTimelineData = function(){
 var renderTimelineChart = function() {
     var dataPoints = getTimelineData();
     var maximum = dataPoints.select(function(i){return i.y;}).max();
-    var interval = Math.round(maximum / 10) || 1;
+    var interval = Math.round(maximum / 5) || 1;
     new CanvasJS.Chart("timeline",{
         title:{ text: null },
         axisX:{ valueFormatString: "YYYY-MM-DD", lineThickness: 1 },
