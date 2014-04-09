@@ -49,7 +49,8 @@ WriteLiteral(@"<div id=""dashboard"">
             <li>today</li>
         </ul>
         <div id=""timeline"" style=""min-width: 310px; height: 150px; margin: 0 auto""></div>
-    </p>
+        <div id=""donut"" style=""height: 300px; width: 100%;""></div>
+</p>
     <p>
         Donut charts:
         <ul>
