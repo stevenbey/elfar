@@ -13,7 +13,7 @@ namespace Elfar.Mvc.RouteConstraints
 
         public bool Match(HttpContextBase httpContext, Route route, string parameterName, RouteValueDictionary values, RouteDirection routeDirection)
         {
-            return ips.Contains(httpContext.Request.UserHostAddress);
+            return routeDirection == RouteDirection.IncomingRequest && ips.Contains(httpContext.Request.UserHostAddress);
         }
 
         readonly string[] ips;

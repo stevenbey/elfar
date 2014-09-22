@@ -7,7 +7,7 @@ namespace Elfar.Mvc.RouteConstraints
     {
         public bool Match(HttpContextBase httpContext, Route route, string parameterName, RouteValueDictionary values, RouteDirection routeDirection)
         {
-            return httpContext.Request.IsLocal;
+            return routeDirection == RouteDirection.IncomingRequest && httpContext.Request.IsLocal;
         }
     }
 }
