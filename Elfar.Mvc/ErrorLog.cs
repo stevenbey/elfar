@@ -26,25 +26,25 @@ namespace Elfar.Mvc
             if(data != null)
             {
                 var route = data.Route as Route;
-                if(route != null) RouteUrl = route.Url;
+                if (route != null)
+                {
+                    RouteConstraints = route.Constraints;
+                    RouteDefaults = route.Defaults;
+                    RouteUrl = route.Url;
+                }
 
-                var values = data.Values;
+                Action = data.GetRequiredString("action").ToPascal();
+                Controller = data.GetRequiredString("controller").ToPascal();
 
-                Action = values["action"].ToTitle();
-                Controller = values["controller"].ToTitle();
-
-                RouteData = values;
+                RouteData = data.Values;
                 DataTokens = data.DataTokens;
 
-                if(DataTokens.ContainsKey("area")) Area = DataTokens["area"].ToTitle();
+                if(DataTokens.ContainsKey("area")) Area = DataTokens["area"].ToPascal();
             }
 
             if(context == null)
             {
-                Cookies =
-                Form =
-                QueryString =
-                ServerVariables = empty;
+                Cookies = Form = QueryString = ServerVariables = Dictionary.Empty;
                 return;
             }
 
@@ -64,7 +64,5 @@ namespace Elfar.Mvc
             QueryString = (Dictionary) request.QueryString;
             ServerVariables = (Dictionary) request.ServerVariables;
         }
-
-        static readonly Dictionary empty = new Dictionary();
     }
 }
