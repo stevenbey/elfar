@@ -3,8 +3,6 @@ using Simple.Data;
 
 namespace Elfar.Data
 {
-    // ReSharper disable InconsistentNaming
-    // ReSharper disable UnusedMember.Local
     public class ErrorLogProvider : IErrorLogProvider, IStorageProvider
     {
         static ErrorLogProvider()
@@ -35,9 +33,11 @@ namespace Elfar.Data
 
         static readonly dynamic errorLogs;
 
+        // ReSharper disable InconsistentNaming
         class errorLog : ErrorLog.Storage
         {
-            public errorLog() {}
+            // ReSharper disable UnusedMember.Local
+            public errorLog() { }
             public errorLog(ErrorLog errorLog) : base(errorLog) {}
 
             public string ErrorLog

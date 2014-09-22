@@ -44,7 +44,6 @@
     <Compile Include="ErrorLogPlugins.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="IStorageProvider.cs" />
-    <Compile Include="FileErrorLogProvider.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="ErrorLog.cs" />
     <Compile Include="ErrorLogProvider.cs" />

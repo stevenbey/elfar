@@ -6,6 +6,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
+using Elfar.IO;
 
 namespace Elfar.Xml
 {
@@ -75,6 +76,7 @@ namespace Elfar.Xml
         static readonly XmlDocument document = new XmlDocument();
         static readonly XmlSerializer serializer = new XmlSerializer(typeof(errorLog));
 
+        // ReSharper disable once InconsistentNaming
         public class errorLog : ErrorLog.Storage, IXmlSerializable
         {
             public errorLog() { }

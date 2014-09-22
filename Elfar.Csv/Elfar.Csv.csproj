@@ -38,6 +38,10 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Elfar.IO\Elfar.IO.csproj">
+      <Project>{a0ca5c2a-3dcd-48dd-b4c1-e3d1a5c0d5ea}</Project>
+      <Name>Elfar.IO</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Elfar\Elfar.csproj">
       <Project>{41B3A539-7A37-48FA-AF45-C214C3BBE6B0}</Project>
       <Name>Elfar</Name>

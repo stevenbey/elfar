@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Web.Hosting;
 
-namespace Elfar
+namespace Elfar.IO
 {
     public abstract class FileErrorLogProvider : IErrorLogProvider
     {
         protected FileErrorLogProvider()
         {
-            var settings = ErrorLogProvider.Settings;
-            var path = settings.FilePath ?? DefaultFilePath;
+            var settings = ErrorLogProvider.Settings as Settings;
+            var path = settings == null ? DefaultFilePath : settings.FilePath;
             if(string.IsNullOrWhiteSpace(path)) return;
             if(path.StartsWith("~/")) path = HostingEnvironment.MapPath(path);
             else if(path.StartsWith(".")) path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, path.Substring(2));
