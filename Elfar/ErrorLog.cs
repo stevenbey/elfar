@@ -46,7 +46,9 @@ namespace Elfar
         public int ID { get; private set; }
         public string Message { get; private set; }
         public IDictionary<string, string> QueryString { get; set; }
+        public IDictionary<string, object> RouteConstraints { get; set; }
         public IDictionary<string, object> RouteData { get; set; }
+        public IDictionary<string, object> RouteDefaults { get; set; }
         public string RouteUrl { get; set; }
         public IDictionary<string, string> ServerVariables { get; set; }
         public string Source { get; private set; }
@@ -72,7 +74,9 @@ namespace Elfar
                     errorLog.HttpMethod,
                     errorLog.Message,
                     errorLog.QueryString,
+                    errorLog.RouteConstraints,
                     errorLog.RouteData,
+                    errorLog.RouteDefaults,
                     errorLog.RouteUrl,
                     errorLog.ServerVariables,
                     errorLog.Source,
