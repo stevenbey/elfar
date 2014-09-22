@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
-using System.Web;
 
 namespace Elfar
 {
+    // ReSharper disable EmptyGeneralCatchClause
     public static class ErrorLogProvider
     {
         internal static bool Delete(int id)
@@ -17,7 +17,7 @@ namespace Elfar
                     Instance.Delete(id);
                     return true;
                 }
-                catch(Exception) { }
+                catch { }
             }
             return false;
         }
@@ -65,22 +65,13 @@ namespace Elfar
                     if (provider != null) return provider.Items;
                     if (Instance != null) return Instance.All.Select(l => new ErrorLog.Storage(l));
                 }
-                catch (Exception) { }
+                catch { }
                 return empty;
             }
         }
         internal static string Application
         {
-            get
-            {
-                var application = Settings.Application ?? HttpRuntime.AppDomainAppVirtualPath;
-                if (application != null)
-                {
-                    application = application.Trim('/');
-                    return string.IsNullOrWhiteSpace(application) ? HttpRuntime.AppDomainAppId.Trim('/') : application;
-                }
-                return application;
-            }
+            get { return Settings.Application; }
         }
 
         static IErrorLogProvider Instance

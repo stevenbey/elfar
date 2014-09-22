@@ -26,7 +26,7 @@ namespace Elfar
                 return Encoding.UTF8.GetString(mso.ToArray());
             }
         }
-        public static string ToTitle(this object value)
+        public static string ToPascal(this object value)
         {
             var s = value as string;
             return string.IsNullOrWhiteSpace(s) ? null : Regex.Replace(s, @"^[a-z]", m => m.Value.ToUpper());

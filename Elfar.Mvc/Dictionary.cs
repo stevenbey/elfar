@@ -32,15 +32,22 @@ namespace Elfar.Mvc
         public static explicit operator Dictionary(RouteValueDictionary routeValues)
         {
             var nvc = new NameValueCollection();
-            if(routeValues != null) foreach(var key in routeValues.Keys) Add(key, routeValues[key], nvc);
+            if (routeValues != null) foreach (var key in routeValues.Keys) Add(nvc, key, routeValues[key]);
             return (Dictionary) nvc;
         }
 
-        static void Add(string key, object value, NameValueCollection nvc)
+        static void Add(NameValueCollection nvc, string key, object value)
         {
-            if(value is string) nvc.Add(key, (string) value);
-            else if(value is IEnumerable) foreach(var item in (IEnumerable) value) Add(key, item, nvc);
-            else nvc.Add(key, value.ToString());
+            var s = value as string;
+            if (s == null)
+            {
+                var items = value as IEnumerable;
+                if (items != null) foreach (var item in items) Add(nvc, key, item);
+                else nvc.Add(key, value.ToString());
+            }
+            else nvc.Add(key, s);
         }
+
+        public static Dictionary Empty = new Dictionary();
     }
 }

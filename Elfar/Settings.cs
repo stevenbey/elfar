@@ -1,7 +1,7 @@
 #pragma warning disable 649
-
 using System.Collections.Specialized;
 using System.Configuration;
+using System.Web;
 
 namespace Elfar
 {
@@ -14,13 +14,24 @@ namespace Elfar
 
         public string Application
         {
-            get { return application ?? (application = GetAppSetting("Application")); }
+            get
+            {
+                return application ?? (application = GetAppSetting("Application") ?? AppDomainAppVirtualPath ?? AppDomainAppId);
+            }
             set { application = value; }
         }
-        public string FilePath
+
+        static string AppDomainAppId
         {
-            get { return filePath ?? (filePath = GetAppSetting("FilePath")); }
-            set { filePath = value; }
+            get { return HttpRuntime.AppDomainAppId.Trim('/'); }
+        }
+        static string AppDomainAppVirtualPath
+        {
+            get
+            {
+                var appDomainAppVirtualPath = (HttpRuntime.AppDomainAppVirtualPath ?? "").Trim('/');
+                return string.IsNullOrWhiteSpace(appDomainAppVirtualPath) ? null : appDomainAppVirtualPath;
+            }
         }
 
         NameValueCollection AppSettings
@@ -30,6 +41,5 @@ namespace Elfar
 
         string application;
         NameValueCollection appSettings;
-        string filePath;
     }
 }
