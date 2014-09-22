@@ -1,4 +1,5 @@
-﻿body { font-family: Verdana; font-size: 70%; background-color: #fff; }
+﻿html, body { min-height: 100%; }
+body { font-family: Verdana; font-size: 70%; background-color: #fff; }
 h1 { font-family: Verdana; font-weight: normal; color: #0A6CCE; font-size: 175%; }
 pre, code { font-family: "Courier New",Courier; }
 a { color: #CCCCCC; text-decoration: none; }
