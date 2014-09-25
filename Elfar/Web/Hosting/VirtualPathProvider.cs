@@ -28,21 +28,15 @@ namespace Elfar.Web.Hosting
             return resource == null ? base.GetFile(virtualPath) : resource.VirtualFile;
         }
 
-        static bool IsMatch(string resource, string virtualPath)
+        static bool IsMatch(Resource resource, string virtualPath)
         {
-            return virtualPath.StartsWith("/") 
-                ? resource.EndsWith(virtualPath.Replace("/", "."), StringComparison.OrdinalIgnoreCase)
-                : resource == virtualPath;
+            if (resource.VirtualPath == null && ((virtualPath[0] == '/' && resource.Name.EndsWith(virtualPath.Replace("/", "."))) || resource.Name == virtualPath)) resource.VirtualPath = virtualPath;
+            return resource.VirtualPath == virtualPath;
         }
 
         Resource this[string virtualPath]
         {
-            get
-            {
-                var resource = resources.FirstOrDefault(r => IsMatch(r.Name, virtualPath));
-                if (resource != null && resource.VirtualFile == null) resource.SetVirtualFile(virtualPath);
-                return resource;
-            }
+            get { return resources.FirstOrDefault(r => IsMatch(r, virtualPath)); }
         }
 
         static readonly IEnumerable<Resource> resources;
@@ -55,19 +49,24 @@ namespace Elfar.Web.Hosting
                 Name = name;
             }
 
-            public void SetVirtualFile(string virtualPath)
-            {
-                VirtualFile = new VirtualFile(virtualPath, this);
-            }
-
             public string Name { get; private set; }
             public Stream Stream
             {
                 get { return func(Name); }
             }
             public VirtualFile VirtualFile { get; private set; }
-            
+            public string VirtualPath
+            {
+                get { return virtualPath; }
+                set
+                {
+                    virtualPath = value;
+                    VirtualFile = new VirtualFile(value, this);
+                }
+            }
+
             readonly Func<string, Stream> func;
+            string virtualPath;
         }
 
         class VirtualFile : System.Web.Hosting.VirtualFile
