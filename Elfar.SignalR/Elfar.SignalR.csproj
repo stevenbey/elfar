@@ -34,11 +34,6 @@
     <Compile Include="ErrorLogHub.cs" />
     <Compile Include="ErrorLogPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\ErrorLog\SignalR.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SignalR.cshtml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
@@ -63,10 +58,7 @@
     <EmbeddedResource Include="Resources\SignalR.css" />
     <EmbeddedResource Include="Resources\SignalR.js" />
     <None Include="app.config" />
-    <Content Include="Views\ErrorLog\SignalR.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>SignalR.generated.cs</LastGenOutput>
-    </Content>
+    <EmbeddedResource Include="Views\ErrorLog\SignalR.cshtml" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>

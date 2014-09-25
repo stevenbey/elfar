@@ -69,10 +69,6 @@ namespace Elfar
                 return empty;
             }
         }
-        internal static string Application
-        {
-            get { return Settings.Application; }
-        }
 
         static IErrorLogProvider Instance
         {

@@ -5,14 +5,18 @@ using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Elfar.Web.Mvc;
+using Elfar.Web.Routing;
 
 [assembly: PreApplicationStartMethod(typeof(Elfar.Tests.UI.Elfar), "Init")]
+
 namespace Elfar.Tests.UI
 {
     public static class Elfar
     {
         public static void Init()
         {
+            ErrorLogRoute.Constraints = new[] {new LocalConstraint()};
             RegisterRoutes(RouteTable.Routes);
             UpdateViewEngines(ViewEngines.Engines);
         }

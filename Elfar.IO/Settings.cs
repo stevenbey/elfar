@@ -4,7 +4,7 @@
     {
         public string FilePath
         {
-            get { return filePath ?? (filePath = GetAppSetting("FilePath")); }
+            get { return filePath ?? (filePath = this["FilePath"]); }
             set { filePath = value; }
         }
 

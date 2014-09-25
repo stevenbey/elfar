@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Beyond395 Limited")]
 [assembly: AssemblyProduct("Elfar.Tests")]
-[assembly: AssemblyCopyright("Copyright © Beyond395 Limited 2013")]
+[assembly: AssemblyCopyright("© 2012–2014 Beyond395 Limited")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]

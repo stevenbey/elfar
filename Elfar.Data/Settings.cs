@@ -6,7 +6,7 @@ namespace Elfar.Data
     {
         public string ConnectionString
         {
-            get { return connectionString ?? (ConnectionString = GetAppSetting("ConnectionString")); }
+            get { return connectionString ?? (ConnectionString = this["ConnectionString"]); }
             set
             {
                 if (string.IsNullOrWhiteSpace(value)) value = null;
@@ -18,12 +18,12 @@ namespace Elfar.Data
         }
         public string Schema
         {
-            get { return schema ?? (schema = GetAppSetting("Schema")); }
+            get { return schema ?? (schema = this["Schema"]); }
             set { schema = value; }
         }
         public string Table
         {
-            get { return table ?? (Table = GetAppSetting("Table")); }
+            get { return table ?? (Table = this["Table"]); }
             set { table = string.IsNullOrWhiteSpace(value) ? "Elfar_ErrorLogs" : value; }
         }
         

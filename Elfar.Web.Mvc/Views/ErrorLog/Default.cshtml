@@ -1,0 +1,17 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Error Logging Filter and Route</title>
+    <link href="@Url.Action("styles")?css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+    @Html.Partial("Header")
+    <div>
+        @Html.Partial("Dashboard")
+        @Html.Partial("List")
+    </div>
+    @Html.Partial("Footer")
+    <script type="application/json">[@Html.Raw(Model)]</script>
+    <script src="@Url.Action("script")?js" type="text/javascript"></script>
+</body>
+</html>
