@@ -29,7 +29,7 @@ namespace Elfar
 
             User = Thread.CurrentPrincipal.Identity.Name;
 
-            ID = Math.Abs((HttpRuntime.AppDomainAppId + Host + Type + Time + User).GetHashCode() + @base.GetHashCode());
+            ID = Math.Abs((HttpRuntime.AppDomainAppId + Host + Date + Time + User).GetHashCode() + @base.GetHashCode());
         }
 
         public string Action { get; set; }
@@ -70,8 +70,8 @@ namespace Elfar
                     errorLog.Cookies,
                     errorLog.DataTokens,
                     errorLog.Form,
+                    errorLog.Host,
                     errorLog.Html,
-                    errorLog.HttpMethod,
                     errorLog.Message,
                     errorLog.QueryString,
                     errorLog.RouteConstraints,
@@ -90,8 +90,8 @@ namespace Elfar
                     errorLog.Area,
                     errorLog.Controller,
                     errorLog.Date,
+                    errorLog.HttpMethod,
                     errorLog.ID,
-                    errorLog.Host,
                     errorLog.Time,
                     errorLog.Type
                 });
