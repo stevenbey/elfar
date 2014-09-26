@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -10,6 +11,7 @@ using Elfar.IO;
 
 namespace Elfar.Xml
 {
+    [DisplayName("XML")]
     public sealed class XmlErrorLogProvider : FileErrorLogProvider, IStorageProvider
     {
         public XmlErrorLogProvider()

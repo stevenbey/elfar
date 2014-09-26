@@ -4,13 +4,13 @@ body { margin: 0; padding: 0; font-family: Segoe UI,Tahoma,Arial,Verdana; font-s
 header, footer { position: fixed; width: 100%; z-index: 999; }
 header { font-size: 14px; padding-bottom: 0; }
 footer { bottom: 0; padding: 10px; font-size: 11px; text-align: center; }
-pre { width: 95%;overflow: scroll; }
+pre { width: 95%; overflow: scroll; }
 header > div { height: 31px; line-height: 31px; padding: 0 10px 0 20px; background: #007acc; color: #fff; }
 header > ul { margin: 10px 0 0; padding: 0 0 0 20px; list-style: none; }
 header > ul li { display: inline-block; box-sizing: border-box; margin: 0 5px; padding-bottom: 3px; }
 header > ul li.selected { border-bottom: 3px solid #007acc; }
 body > div { position: absolute; top: 66px; bottom: 36px; left: 25px; right: 0; background-color: #fff; overflow: hidden; }
-#type { float: right; }
+#type { float: right; font-size: x-small; }
 #list { position: absolute; top: 80px; bottom: 0; width: 300px; border-right: 5px solid #f1f1f1; padding: 2px; overflow: auto; }
 #item { position: absolute; top: 80px; right: 0; bottom: 0; left: 300px; border-left: 1px solid #999; overflow: hidden; }
 #summary { position: absolute; left: 0; right: 0; height: 100px; padding: 2px; }

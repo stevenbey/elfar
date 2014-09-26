@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Simple.Data;
 
 namespace Elfar.Data
 {
+    [DisplayName("Simple.Data")]
     public class ErrorLogProvider : IErrorLogProvider, IStorageProvider
     {
         static ErrorLogProvider()

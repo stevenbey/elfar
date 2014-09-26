@@ -44,9 +44,9 @@ namespace Elfar.Web.Mvc.Properties
             get
             {
                 return string.Format(
-                    "{0} [v{1}] · {2} · All rights reserved",
+                    "{0} v{1} · {2} · All rights reserved",
                     assembly.GetAttribute<AssemblyDescriptionAttribute>().Description,
-                    assembly.GetName().Version.ToString(2),
+                    assembly.GetName().Version,
                     assembly.GetAttribute<AssemblyCopyrightAttribute>().Copyright
                 );
             }

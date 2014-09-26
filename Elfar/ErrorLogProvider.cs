@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Linq;
 
@@ -56,7 +57,13 @@ namespace Elfar
         }
         public static string Name
         {
-            get { return Instance == null ? null : Instance.GetType().Name; }
+            get
+            {
+                if(Instance == null) return null;
+                var type = Instance.GetType();
+                var attr = (DisplayNameAttribute)type.GetCustomAttributes(typeof(DisplayNameAttribute), false).FirstOrDefault();
+                return attr == null ? type.Name : attr.DisplayName;
+            }
         }
 
         internal static IEnumerable<ErrorLog.Storage> All
@@ -70,15 +77,15 @@ namespace Elfar
 
         static IErrorLogProvider Instance
         {
-            get { return instance ?? (instance = Composition.CreateMany<IErrorLogProvider>().FirstOrDefault() ?? new DefaultErrorLogProvider()); }
+            get { return instance ?? (instance = Composition.CreateMany<IErrorLogProvider>().First()); }
         }
 
         static readonly ErrorLog.Storage[] empty = new ErrorLog.Storage[0];
         static IErrorLogProvider instance;
         static Settings settings;
 
-        [PartNotDiscoverable]
-        class DefaultErrorLogProvider : Dictionary<int, ErrorLog.Storage>, IErrorLogProvider, IStorageProvider
+        [DisplayName("Memory")]
+        class MemoryErrorLogProvider : Dictionary<int, ErrorLog.Storage>, IErrorLogProvider, IStorageProvider
         {
             void IErrorLogProvider.Delete(int id)
             {

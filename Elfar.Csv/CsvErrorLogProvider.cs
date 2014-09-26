@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using Elfar.IO;
@@ -6,6 +7,7 @@ using Elfar.IO;
 namespace Elfar.Csv
 {
     // ReSharper disable InconsistentNaming
+    [DisplayName("CSV")]
     public sealed class CsvErrorLogProvider : FileErrorLogProvider, IStorageProvider
     {
         public CsvErrorLogProvider()
