@@ -56,6 +56,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Elfar.Tests.UI.Dev", "http:
 		Release.AspNetCompiler.Debug = "False"
 		SlnRelativePath = "Elfar.Tests.UI.Dev\"
 		DefaultWebSiteLanguage = "Visual C#"
+		StartServerOnDebug = "false"
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.Web.Mvc", "Elfar.Web.Mvc\Elfar.Web.Mvc.csproj", "{7C6FCD11-4C1A-46E8-8587-E2639628E5C4}"
