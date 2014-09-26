@@ -14,11 +14,16 @@ namespace Elfar.Xml
     {
         public XmlErrorLogProvider()
         {
-            if(File.Exists(FilePath)) document.Load(FilePath);
+            if (File.Exists(FilePath))
+            {
+                document.Load(FilePath);
+                errorLogs = DocumentElement.ChildNodes.Cast<XmlNode>().Select(n => (errorLog) serializer.Deserialize(new XmlNodeReader(n))).ToList();
+            }
             else
             {
                 document.LoadXml(markup);
                 document.Save(FilePath);
+                errorLogs = new List<errorLog>();
             }
         }
 
@@ -29,6 +34,10 @@ namespace Elfar.Xml
                 DocumentElement.RemoveChild(FindNode(id));
                 document.Save(FilePath);
             }
+        }
+        public new IEnumerator<ErrorLog.Storage> GetEnumerator()
+        {
+            return errorLogs.GetEnumerator();
         }
         public override void Save(ErrorLog errorLog)
         {
@@ -57,11 +66,6 @@ namespace Elfar.Xml
             return document.SelectSingleNode(string.Format("errorLogs/errorLog[@id='{0}']", id));
         }
 
-        IEnumerable<ErrorLog.Storage> IStorageProvider.Items
-        {
-            get { return DocumentElement.ChildNodes.Cast<XmlNode>().Select(n => (errorLog) serializer.Deserialize(new XmlNodeReader(n))); }
-        }
-
         static XmlElement DocumentElement
         {
             get
@@ -69,6 +73,8 @@ namespace Elfar.Xml
                 return document.DocumentElement;
             }
         }
+
+        readonly IList<errorLog> errorLogs;
 
         const string defaultFilePath = "|DataDirectory|Elfar.xml";
         const string markup = @"<?xml version=""1.0"" encoding=""utf-8""?><errorLogs></errorLogs>";

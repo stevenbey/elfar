@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using Simple.Data;
 
 namespace Elfar.Data
@@ -22,13 +23,17 @@ namespace Elfar.Data
             errorLogs.Insert(new errorLog(errorLog));
         }
 
-        IEnumerable<ErrorLog> IErrorLogProvider.All
+        IEnumerator<ErrorLog> IEnumerable<ErrorLog>.GetEnumerator()
         {
-            get { throw new System.NotImplementedException(); }
+            throw new System.NotImplementedException();
         }
-        IEnumerable<ErrorLog.Storage> IStorageProvider.Items
+        IEnumerator<ErrorLog.Storage> IEnumerable<ErrorLog.Storage>.GetEnumerator()
         {
-            get { return ((errorLog[]) errorLogs.All().ToArray<errorLog>()); }
+            return ((IEnumerable<errorLog>)errorLogs.All().ToArray<errorLog>()).GetEnumerator();
+        }
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return ((IStorageProvider) this).GetEnumerator();
         }
 
         static readonly dynamic errorLogs;

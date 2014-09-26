@@ -4,11 +4,9 @@ using System.ComponentModel.Composition;
 namespace Elfar
 {
     [InheritedExport]
-    public interface IErrorLogProvider
+    public interface IErrorLogProvider : IEnumerable<ErrorLog>
     {
         void Delete(int id);
         void Save(ErrorLog errorLog);
-
-        IEnumerable<ErrorLog> All { get; }
     }
 }

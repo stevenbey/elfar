@@ -6,7 +6,7 @@ namespace Elfar
     {
         static ErrorLogPlugins()
         {
-            plugins = Components.CreateMany<IErrorLogPlugin>().ToArray();
+            plugins = Composition.CreateMany<IErrorLogPlugin>().ToArray();
         }
         
         internal static void Execute(ErrorLog errorLog)

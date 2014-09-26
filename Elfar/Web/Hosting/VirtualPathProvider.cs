@@ -11,7 +11,7 @@ namespace Elfar.Web.Hosting
     {
         static VirtualPathProvider()
         {
-            resources = Components.Assemblies.SelectMany(a => a.GetManifestResourceNames().Select(n => new Resource(n, a.GetManifestResourceStream)));
+            resources = Composition.Assemblies.SelectMany(a => a.GetManifestResourceNames().Select(n => new Resource(n, a.GetManifestResourceStream)));
         }
         
         public override bool FileExists(string virtualPath)

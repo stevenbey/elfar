@@ -1,7 +1,8 @@
 ﻿<header>
+    <div id="type">@Strong(Elfar.ErrorLogProvider.Name)</div>
     <div>Error Logging Filter and Route / @Strong(Elfar.ErrorLogProvider.Settings.Application, "The name or id of the web application") / @Strong(@Server.MachineName, "The name of the server")</div>
     <ul id="tabs">
         <li class="selected">Dashboard</li>
     </ul>
 </header>
-@helper Strong(string text, string title) { <strong title="@title">@text</strong> }
+@helper Strong(string text, string title = null) { <strong title="@(title ?? text)">@text</strong> }

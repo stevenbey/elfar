@@ -54,25 +54,23 @@ namespace Elfar
             get { return settings ?? (settings = new Settings()); }
             set { settings = value; }
         }
+        public static string Name
+        {
+            get { return Instance == null ? null : Instance.GetType().Name; }
+        }
 
         internal static IEnumerable<ErrorLog.Storage> All
         {
             get
             {
-                try
-                {
-                    var provider = Instance as IStorageProvider;
-                    if (provider != null) return provider.Items;
-                    if (Instance != null) return Instance.All.Select(l => new ErrorLog.Storage(l));
-                }
-                catch { }
-                return empty;
+                try { return Instance as IStorageProvider ?? Instance.Select(l => new ErrorLog.Storage(l)); }
+                catch { return empty; }
             }
         }
 
         static IErrorLogProvider Instance
         {
-            get { return instance ?? (instance = Components.Create<IErrorLogProvider>() ?? new Cache()); }
+            get { return instance ?? (instance = Composition.CreateMany<IErrorLogProvider>().FirstOrDefault() ?? new DefaultErrorLogProvider()); }
         }
 
         static readonly ErrorLog.Storage[] empty = new ErrorLog.Storage[0];
@@ -80,24 +78,23 @@ namespace Elfar
         static Settings settings;
 
         [PartNotDiscoverable]
-        class Cache : Dictionary<int, ErrorLog.Storage>, IErrorLogProvider, IStorageProvider
+        class DefaultErrorLogProvider : Dictionary<int, ErrorLog.Storage>, IErrorLogProvider, IStorageProvider
         {
             void IErrorLogProvider.Delete(int id)
             {
                 Remove(id);
             }
+            IEnumerator<ErrorLog> IEnumerable<ErrorLog>.GetEnumerator()
+            {
+                throw new NotImplementedException();
+            }
+            IEnumerator<ErrorLog.Storage> IEnumerable<ErrorLog.Storage>.GetEnumerator()
+            {
+                return Values.GetEnumerator();
+            }
             void IErrorLogProvider.Save(ErrorLog errorLog)
             {
                 Add(errorLog.ID, new ErrorLog.Storage(errorLog));
-            }
-
-            IEnumerable<ErrorLog> IErrorLogProvider.All
-            {
-                get { throw new NotImplementedException(); }
-            }
-            IEnumerable<ErrorLog.Storage> IStorageProvider.Items
-            {
-                get { return Values; }
             }
         }
     }

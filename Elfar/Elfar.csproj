@@ -40,7 +40,7 @@
     <Reference Include="System.Web.Extensions" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Components.cs" />
+    <Compile Include="Composition.cs" />
     <Compile Include="Dictionary.cs" />
     <Compile Include="ErrorLogPlugins.cs" />
     <Compile Include="Extensions.cs" />

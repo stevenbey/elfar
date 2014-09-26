@@ -106,6 +106,10 @@
       <Project>{7C6FCD11-4C1A-46E8-8587-E2639628E5C4}</Project>
       <Name>Elfar.Web.Mvc</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Elfar.Xml\Elfar.Xml.csproj">
+      <Project>{31b17b39-4395-447d-8796-2c2ea275801e}</Project>
+      <Name>Elfar.Xml</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Elfar\Elfar.csproj">
       <Project>{41B3A539-7A37-48FA-AF45-C214C3BBE6B0}</Project>
       <Name>Elfar</Name>

@@ -2,8 +2,5 @@
 
 namespace Elfar
 {
-    interface IStorageProvider
-    {
-        IEnumerable<ErrorLog.Storage> Items { get; }
-    }
+    interface IStorageProvider : IEnumerable<ErrorLog.Storage> { }
 }

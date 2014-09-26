@@ -20,6 +20,10 @@ namespace Elfar.Csv
             errorLogs.Remove(errorLog);
             Save();
         }
+        public new IEnumerator<ErrorLog.Storage> GetEnumerator()
+        {
+            return errorLogs.GetEnumerator();
+        }
         public override void Save(ErrorLog errorLog)
         {
             errorLogs.Add(new errorLog(errorLog));
@@ -36,11 +40,6 @@ namespace Elfar.Csv
             File.WriteAllLines(FilePath, new[] { columns }.Concat(errorLogs.Select(l => l.ToString())));
         }
 
-        IEnumerable<ErrorLog.Storage> IStorageProvider.Items
-        {
-            get { return errorLogs; }
-        }
-        
         readonly IList<errorLog> errorLogs;
 
         const string columns = "ID,Value";

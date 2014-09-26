@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Web.Hosting;
@@ -23,16 +24,21 @@ namespace Elfar.IO
             FilePath = path;
         }
 
+        public void Add(object obj) { }
         public abstract void Delete(int id);
+        public virtual IEnumerator<ErrorLog> GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
         public abstract void Save(ErrorLog errorLog);
-        
+
         protected abstract string GetDefaultFilePath();
 
-        public virtual IEnumerable<ErrorLog> All
+        IEnumerator IEnumerable.GetEnumerator()
         {
-            get { throw new NotImplementedException(); }
+            return ((IEnumerable<ErrorLog>) this).GetEnumerator();
         }
-
+        
         protected string FilePath { get; private set; }
         
         static string DataDirectory
