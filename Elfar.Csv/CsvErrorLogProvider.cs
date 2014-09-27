@@ -1,35 +1,31 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using Elfar.IO;
 
 namespace Elfar.Csv
 {
-    // ReSharper disable InconsistentNaming
     [DisplayName("CSV")]
     public sealed class CsvErrorLogProvider : FileErrorLogProvider, IStorageProvider
     {
         public CsvErrorLogProvider()
         {
-            errorLogs = File.Exists(FilePath) ? File.ReadLines(FilePath).Skip(1).Select(s => new errorLog(s)).ToList() : new List<errorLog>();
+            if (!File.Exists(FilePath)) File.WriteAllText(FilePath, columns);
         }
         
         public override void Delete(int id)
         {
-            var errorLog = errorLogs.FirstOrDefault(l => l.ID == id);
-            if(errorLog == null) return;
-            errorLogs.Remove(errorLog);
-            Save();
+            File.WriteAllLines(FilePath, Remove(id.ToString(CultureInfo.InvariantCulture)));
         }
         public new IEnumerator<ErrorLog.Storage> GetEnumerator()
         {
-            return errorLogs.GetEnumerator();
+            return File.ReadLines(FilePath).Skip(1).Select(s => new errorLog(s)).GetEnumerator();
         }
         public override void Save(ErrorLog errorLog)
         {
-            errorLogs.Add(new errorLog(errorLog));
-            Save();
+            File.AppendAllLines(FilePath, new[] { new errorLog(errorLog).ToString() });
         }
 
         protected override string GetDefaultFilePath()
@@ -37,16 +33,16 @@ namespace Elfar.Csv
             return defaultFilePath;
         }
 
-        void Save()
+        IEnumerable<string> Remove(string id)
         {
-            File.WriteAllLines(FilePath, new[] { columns }.Concat(errorLogs.Select(l => l.ToString())));
+            id += ",";
+            return File.ReadAllLines(FilePath).Where(l => !l.StartsWith(id));
         }
-
-        readonly IList<errorLog> errorLogs;
 
         const string columns = "ID,Value";
         const string defaultFilePath = "|DataDirectory|Elfar.csv";
 
+        // ReSharper disable once InconsistentNaming
         class errorLog : ErrorLog.Storage
         {
             internal errorLog(string value)

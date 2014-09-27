@@ -14,21 +14,6 @@ namespace Elfar.Xml
     [DisplayName("XML")]
     public sealed class XmlErrorLogProvider : FileErrorLogProvider, IStorageProvider
     {
-        public XmlErrorLogProvider()
-        {
-            if (File.Exists(FilePath))
-            {
-                document.Load(FilePath);
-                errorLogs = DocumentElement.ChildNodes.Cast<XmlNode>().Select(n => (errorLog) serializer.Deserialize(new XmlNodeReader(n))).ToList();
-            }
-            else
-            {
-                document.LoadXml(markup);
-                document.Save(FilePath);
-                errorLogs = new List<errorLog>();
-            }
-        }
-
         public override void Delete(int id)
         {
             lock(Key)
@@ -39,7 +24,7 @@ namespace Elfar.Xml
         }
         public new IEnumerator<ErrorLog.Storage> GetEnumerator()
         {
-            return errorLogs.GetEnumerator();
+            return DocumentElement.ChildNodes.Cast<XmlNode>().Select(n => (errorLog)serializer.Deserialize(new XmlNodeReader(n))).GetEnumerator();
         }
         public override void Save(ErrorLog errorLog)
         {
@@ -68,15 +53,26 @@ namespace Elfar.Xml
             return document.SelectSingleNode(string.Format("errorLogs/errorLog[@id='{0}']", id));
         }
 
-        static XmlElement DocumentElement
+        XmlElement DocumentElement
         {
             get
             {
-                return document.DocumentElement;
+                var element = document.DocumentElement;
+                if (element == null)
+                {
+                    if (File.Exists(FilePath))
+                    {
+                        document.Load(FilePath);
+                    }
+                    else
+                    {
+                        document.LoadXml(markup);
+                        document.Save(FilePath);
+                    }
+                }
+                return element;
             }
         }
-
-        readonly IList<errorLog> errorLogs;
 
         const string defaultFilePath = "|DataDirectory|Elfar.xml";
         const string markup = @"<?xml version=""1.0"" encoding=""utf-8""?><errorLogs></errorLogs>";
