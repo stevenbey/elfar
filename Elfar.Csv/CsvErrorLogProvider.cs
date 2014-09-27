@@ -21,7 +21,7 @@ namespace Elfar.Csv
         }
         public new IEnumerator<ErrorLog.Storage> GetEnumerator()
         {
-            return File.ReadLines(FilePath).Skip(1).Select(s => new errorLog(s)).GetEnumerator();
+            return File.ReadLines(FilePath).Skip(1).Select(l => new errorLog(l)).GetEnumerator();
         }
         public override void Save(ErrorLog errorLog)
         {
@@ -33,7 +33,7 @@ namespace Elfar.Csv
             return defaultFilePath;
         }
 
-        IEnumerable<string> Remove(string id)
+        static IEnumerable<string> Remove(string id)
         {
             id += ",";
             return File.ReadAllLines(FilePath).Where(l => !l.StartsWith(id));
