@@ -14,9 +14,22 @@ namespace Elfar.Xml
     [DisplayName("XML")]
     public sealed class XmlErrorLogProvider : FileErrorLogProvider, IStorageProvider
     {
+        public XmlErrorLogProvider()
+        {
+            if (File.Exists(FilePath))
+            {
+                document.Load(FilePath);
+            }
+            else
+            {
+                document.LoadXml(markup);
+                document.Save(FilePath);
+            }
+        }
+
         public override void Delete(int id)
         {
-            lock(Key)
+            lock (Key)
             {
                 DocumentElement.RemoveChild(FindNode(id));
                 document.Save(FilePath);
@@ -28,7 +41,7 @@ namespace Elfar.Xml
         }
         public override void Save(ErrorLog errorLog)
         {
-            lock(Key)
+            lock (Key)
             {
                 DocumentElement.AppendChild(CreateNode(errorLog));
                 document.Save(FilePath);
@@ -53,24 +66,11 @@ namespace Elfar.Xml
             return document.SelectSingleNode(string.Format("errorLogs/errorLog[@id='{0}']", id));
         }
 
-        XmlElement DocumentElement
+        static XmlElement DocumentElement
         {
             get
             {
-                var element = document.DocumentElement;
-                if (element == null)
-                {
-                    if (File.Exists(FilePath))
-                    {
-                        document.Load(FilePath);
-                    }
-                    else
-                    {
-                        document.LoadXml(markup);
-                        document.Save(FilePath);
-                    }
-                }
-                return element;
+                return document.DocumentElement;
             }
         }
 
@@ -84,8 +84,8 @@ namespace Elfar.Xml
         public class errorLog : ErrorLog.Storage, IXmlSerializable
         {
             public errorLog() { }
-            
-            internal errorLog(ErrorLog errorLog) : base(errorLog) {}
+
+            internal errorLog(ErrorLog errorLog) : base(errorLog) { }
 
             public XmlSchema GetSchema()
             {
