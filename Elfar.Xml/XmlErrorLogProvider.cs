@@ -14,19 +14,6 @@ namespace Elfar.Xml
     [DisplayName("XML")]
     public sealed class XmlErrorLogProvider : FileErrorLogProvider, IStorageProvider
     {
-        public XmlErrorLogProvider()
-        {
-            if (File.Exists(FilePath))
-            {
-                document.Load(FilePath);
-            }
-            else
-            {
-                document.LoadXml(markup);
-                document.Save(FilePath);
-            }
-        }
-
         public override void Delete(int id)
         {
             lock (Key)
@@ -66,10 +53,22 @@ namespace Elfar.Xml
             return document.SelectSingleNode(string.Format("errorLogs/errorLog[@id='{0}']", id));
         }
 
-        static XmlElement DocumentElement
+        XmlElement DocumentElement
         {
             get
             {
+                if (document.DocumentElement == null)
+                {
+                    if (File.Exists(FilePath))
+                    {
+                        document.Load(FilePath);
+                    }
+                    else
+                    {
+                        document.LoadXml(markup);
+                        document.Save(FilePath);
+                    }
+                }
                 return document.DocumentElement;
             }
         }
