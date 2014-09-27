@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Web.Hosting;
 
 namespace Elfar.IO
 {
@@ -10,18 +8,7 @@ namespace Elfar.IO
     {
         protected FileErrorLogProvider()
         {
-            var settings = ErrorLogProvider.Settings as Settings;
-            var path = settings == null ? DefaultFilePath : settings.FilePath;
-            if(string.IsNullOrWhiteSpace(path)) return;
-            if(path.StartsWith("~/")) path = HostingEnvironment.MapPath(path);
-            else if(path.StartsWith(".")) path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, path.Substring(2));
-            else if(path.StartsWith(dataDirectoryMacroString))
-            {
-                var index = dataDirectoryMacroString.Length;
-                if(path[index] == 92) index++;
-                path = Path.Combine(DataDirectory, path.Substring(index));
-            }
-            FilePath = path;
+            if (Settings.FilePath == null) Settings.FilePath = DefaultFilePath;
         }
 
         public void Add(object obj) { }
@@ -38,26 +25,23 @@ namespace Elfar.IO
         {
             return ((IEnumerable<ErrorLog>) this).GetEnumerator();
         }
-        
-        protected string FilePath { get; private set; }
-        
-        static string DataDirectory
+
+        protected static string FilePath
         {
-            get
-            {
-                var currentDomain = AppDomain.CurrentDomain;
-                var dataDirectory = currentDomain.GetData(dataDirectoryMacroString.Trim('|')) as string;
-                if(String.IsNullOrEmpty(dataDirectory)) dataDirectory = currentDomain.BaseDirectory;
-                return dataDirectory;
-            }
+            get { return Settings.FilePath; }
         }
+        
         string DefaultFilePath
         {
             get { return GetDefaultFilePath(); }
         }
+        static Settings Settings
+        {
+            get { return settings ?? (settings = new Settings()); }
+        }
 
         protected static readonly object Key = new object();
 
-        const string dataDirectoryMacroString = "|DataDirectory|";
+        static Settings settings;
     }
 }
