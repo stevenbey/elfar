@@ -77,14 +77,14 @@ namespace Elfar
 
         static IErrorLogProvider Instance
         {
-            get { return instance ?? (instance = Composition.CreateMany<IErrorLogProvider>().First()); }
+            get { return instance ?? (instance = Composition.CreateMany<IErrorLogProvider>().FirstOrDefault() ?? new MemoryErrorLogProvider()); }
         }
 
         static readonly ErrorLog.Storage[] empty = new ErrorLog.Storage[0];
         static IErrorLogProvider instance;
         static Settings settings;
 
-        [DisplayName("Memory")]
+        [PartNotDiscoverable, DisplayName("Memory")]
         class MemoryErrorLogProvider : Dictionary<int, ErrorLog.Storage>, IErrorLogProvider, IStorageProvider
         {
             void IErrorLogProvider.Delete(int id)
