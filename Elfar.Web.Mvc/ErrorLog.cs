@@ -6,6 +6,8 @@ using System.Web.Routing;
 
 namespace Elfar.Web.Mvc
 {
+    using dictionary = System.Collections.Generic.Dictionary<string, object>;
+
     class ErrorLog : Elfar.ErrorLog
     {
         public ErrorLog(Exception exception, RouteData data, HttpContextBase context) : base(exception)
@@ -23,23 +25,26 @@ namespace Elfar.Web.Mvc
                 var route = data.Route as Route;
                 if (route != null)
                 {
-                    RouteConstraints = route.Constraints;
-                    RouteDefaults = route.Defaults;
+                    RouteConstraints = new dictionary(route.Constraints); ;
+                    RouteDefaults = new dictionary(route.Defaults);
                     RouteUrl = route.Url;
                 }
 
                 Action = data.GetRequiredString("action").ToPascal();
                 Controller = data.GetRequiredString("controller").ToPascal();
 
-                RouteData = data.Values;
-                DataTokens = data.DataTokens;
+                RouteData = new dictionary(data.Values);
+                DataTokens = new dictionary(data.DataTokens);
 
                 if(DataTokens.ContainsKey("area")) Area = DataTokens["area"].ToPascal();
             }
 
             if(context == null)
             {
-                Cookies = Form = QueryString = ServerVariables = Dictionary.Empty;
+                Cookies =
+                Form =
+                QueryString =
+                ServerVariables = Dictionary.Empty;
                 return;
             }
 

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Security;
 using System.Threading;
-using System.Web;
 using System.Web.Script.Serialization;
 
 namespace Elfar
@@ -12,6 +11,8 @@ namespace Elfar
         internal ErrorLog(Exception exception)
         {
             if(exception == null) throw new ArgumentNullException("exception");
+
+            ID = Guid.NewGuid();
 
             var now = DateTime.Now;
             Date = now.ToString("yyyy-MM-dd");
@@ -28,29 +29,27 @@ namespace Elfar
             Type = @base.GetType().ToString();
 
             User = Thread.CurrentPrincipal.Identity.Name;
-
-            ID = Math.Abs((HttpRuntime.AppDomainAppId + Host + Date + Time + User).GetHashCode() + @base.GetHashCode());
         }
 
         public string Action { get; set; }
         public string Area { get; set; }
         public int? Code { get; set; }
         public string Controller { get; set; }
-        public IDictionary<string, string> Cookies { get; set; }
-        public IDictionary<string, object> DataTokens { get; set; }
+        public Dictionary<string, string> Cookies { get; set; }
+        public Dictionary<string, object> DataTokens { get; set; }
         public string Date { get; private set; }
-        public IDictionary<string, string> Form { get; set; }
+        public Dictionary<string, string> Form { get; set; }
         public string Host { get; protected set; }
         public string Html { get; set; }
         public string HttpMethod { get; set; }
-        public int ID { get; private set; }
+        public Guid ID { get; private set; }
         public string Message { get; private set; }
-        public IDictionary<string, string> QueryString { get; set; }
-        public IDictionary<string, object> RouteConstraints { get; set; }
-        public IDictionary<string, object> RouteData { get; set; }
-        public IDictionary<string, object> RouteDefaults { get; set; }
+        public Dictionary<string, string> QueryString { get; set; }
+        public Dictionary<string, object> RouteConstraints { get; set; }
+        public Dictionary<string, object> RouteData { get; set; }
+        public Dictionary<string, object> RouteDefaults { get; set; }
         public string RouteUrl { get; set; }
-        public IDictionary<string, string> ServerVariables { get; set; }
+        public Dictionary<string, string> ServerVariables { get; set; }
         public string Source { get; private set; }
         public string StackTrace { get; private set; }
         public string Time { get; private set; }
@@ -60,10 +59,11 @@ namespace Elfar
 
         public class Storage
         {
-            internal Storage() { }
-            internal Storage(ErrorLog errorLog)
+            public Storage() { }
+            
+            Storage(ErrorLog errorLog)
             {
-                ID = errorLog.ID;
+                ID = errorLog.ID.ToString();
                 Detail = serializer.Serialize(new
                 {
                     errorLog.Code,
@@ -102,25 +102,11 @@ namespace Elfar
                 return new Storage(errorLog);
             }
 
-            public int ID { get; protected set; }
-            public string Value
-            {
-                get { return string.Concat(Detail, separator, Summary); }
-                protected set
-                {
-                    var parts = value.Split(separator[0]);
-                    if(parts.Length < 2) return;
-                    Detail = parts[0];
-                    Summary = parts[1];
-                }
-            }
-            
-            internal string Detail { get; set; }
-            internal string Summary { get; set; }
+            public string Detail { get; set; }
+            public string ID { get; protected set; }
+            public string Summary { get; set; }
 
             static readonly JavaScriptSerializer serializer = new JavaScriptSerializer();
-
-            const string separator = "¬";
         }
     }
 }

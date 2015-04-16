@@ -7,14 +7,13 @@ using System.Web.Hosting;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Elfar.Web.Mvc.Properties;
-using VirtualPathProvider = Elfar.Web.Hosting.VirtualPathProvider;
 
 [assembly: AssemblyTitle("Elfar.Mvc")]
 [assembly: AssemblyDescription("Error Logging Filter and Route (ELFAR) for ASP.NET MVC")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Beyond395 Limited")]
 [assembly: AssemblyProduct("Elfar.Mvc")]
-[assembly: AssemblyCopyright("© 2012–2014 Beyond395 Limited")]
+[assembly: AssemblyCopyright("© 2012–2015 Beyond395 Limited")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
@@ -29,7 +28,7 @@ namespace Elfar.Web.Mvc.Properties
     {
         public static void Init()
         {
-            HostingEnvironment.RegisterVirtualPathProvider(new VirtualPathProvider());
+            HostingEnvironment.RegisterVirtualPathProvider(new Hosting.VirtualPathProvider(assembly));
             GlobalFilters.Filters.Add(new ErrorLogFilter());
             RouteTable.Routes.Insert(0, new ErrorLogRoute());
         }
@@ -44,9 +43,8 @@ namespace Elfar.Web.Mvc.Properties
             get
             {
                 return string.Format(
-                    "{0} v{1} · {2} · All rights reserved",
+                    "{0} · {1}",
                     assembly.GetAttribute<AssemblyDescriptionAttribute>().Description,
-                    assembly.GetName().Version,
                     assembly.GetAttribute<AssemblyCopyrightAttribute>().Copyright
                 );
             }

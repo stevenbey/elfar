@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -28,16 +27,16 @@ namespace Elfar.Web.Mvc
 
         public ViewResult Default()
         {
-            return View((object)string.Join(",", ErrorLogProvider.All.Select(i => i.Summary)));
+            return View((object) ErrorLogProvider.Summaries);
         }
-        public ErrorLogResult Details(int id)
+        public ContentResult Detail(Guid id)
         {
-            return new ErrorLogResult(ErrorLogProvider.All.Single(i => i.ID == id).Detail);
+            return new ContentResult { Content = ErrorLogProvider.Get(id), ContentType = "application/json" };
         }
         [HttpPost]
-        public void Details(int id, string content)
+        public JsonResult Detail(Guid id, string detail)
         {
-            
+            return new JsonResult { Data = ErrorLogProvider.Save(id, detail) };
         }
         public FileStreamResult Resource(string name)
         {

@@ -1,25 +1,28 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 
 namespace Elfar.Data
 {
     public class Settings : Elfar.Settings
     {
+        static string Resolve(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value)) value = null;
+            var settings = ConnectionStrings[value ?? "Elfar"];
+            if (settings != null) value = settings.ConnectionString;
+            if (string.IsNullOrWhiteSpace(value)) value = DefaultConnectionString;
+            return value;
+        }
+
         public string ConnectionString
         {
-            get { return connectionString ?? (ConnectionString = this["ConnectionString"]); }
-            set
-            {
-                if (string.IsNullOrWhiteSpace(value)) value = null;
-                var settings = ConnectionStrings[value ?? "Elfar"];
-                if (settings != null) value = settings.ConnectionString;
-                if (string.IsNullOrWhiteSpace(value)) value = DefaultConnectionString;
-                connectionString = value;
-            }
+            get { return Resolve(connectionString ?? (ConnectionString = this["ConnectionString"])); }
+            set { connectionString = value; }
         }
         public string Schema
         {
-            get { return schema ?? (schema = this["Schema"]); }
-            set { schema = value; }
+            get { return schema ?? (Schema = this["Schema"]); }
+            set { schema = string.IsNullOrWhiteSpace(value) ? "dbo" : value; }
         }
         public string Table
         {

@@ -9,7 +9,7 @@ using Elfar.Web.Http.Properties;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Beyond395 Limited")]
 [assembly: AssemblyProduct("Elfar.WebApi")]
-[assembly: AssemblyCopyright("© 2012–2014 Beyond395 Limited")]
+[assembly: AssemblyCopyright("© 2012–2015 Beyond395 Limited")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]

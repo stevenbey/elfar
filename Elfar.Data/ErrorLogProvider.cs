@@ -1,63 +1,41 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel;
 using Simple.Data;
 
 namespace Elfar.Data
 {
     [DisplayName("Simple.Data")]
-    public class ErrorLogProvider : IErrorLogProvider, IStorageProvider
+    public class ErrorLogProvider : IErrorLogProvider
     {
         static ErrorLogProvider()
         {
             var settings = Elfar.ErrorLogProvider.Settings as Settings ?? new Settings();
-            var obj = Database.OpenConnection(settings.ConnectionString);
-            if(!string.IsNullOrWhiteSpace(settings.Schema)) obj = obj[settings.Schema];
+            var connectionString = settings.ConnectionString;
+            if (string.IsNullOrWhiteSpace(connectionString)) return;
+            var obj = Database.OpenConnection(connectionString);
+            if (!string.IsNullOrWhiteSpace(settings.Schema)) obj = obj[settings.Schema];
             errorLogs = obj[settings.Table];
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
-            errorLogs.Delete(ID: id);
+            errorLogs.Delete(ID: id.ToString());
         }
-        public void Save(ErrorLog errorLog)
+        public void Save(ErrorLog.Storage errorLog)
         {
-            errorLogs.Insert(new errorLog(errorLog));
+            errorLogs.Insert(errorLog);
         }
 
-        IEnumerator<ErrorLog> IEnumerable<ErrorLog>.GetEnumerator()
+        public string Summaries
         {
-            throw new System.NotImplementedException();
+            get { return string.Concat("[", string.Join(",", errorLogs.Select(errorLogs.Summary).ToScalarList<string>()), "]"); }
         }
-        IEnumerator<ErrorLog.Storage> IEnumerable<ErrorLog.Storage>.GetEnumerator()
+        public string this[Guid id]
         {
-            return ((IEnumerable<errorLog>)errorLogs.All().ToArray<errorLog>()).GetEnumerator();
-        }
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return ((IStorageProvider) this).GetEnumerator();
+            get { return errorLogs.Get(id.ToString()).Detail; }
+            set { errorLogs.Update(new {ID = id.ToString(), Detail = value}); }
         }
 
         static readonly dynamic errorLogs;
-
-        // ReSharper disable InconsistentNaming
-        class errorLog : ErrorLog.Storage
-        {
-            // ReSharper disable UnusedMember.Local
-            public errorLog() { }
-            public errorLog(ErrorLog errorLog) : base(errorLog) {}
-
-            public string ErrorLog
-            {
-                get { return Value.Compress(); }
-                set { Value = value.Decompress(); }
-            }
-
-            new string Value // Hides the base property
-            {
-                get { return base.Value; }
-                set { base.Value = value; }
-            }
-        }
     }
 }

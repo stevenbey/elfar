@@ -1,10 +1,11 @@
 using System;
 using System.Web.Http.Controllers;
 using System.Web.Http.Routing;
-using Elfar;
 
 namespace Elfar.Web.Http
 {
+    using dictionary = System.Collections.Generic.Dictionary<string, object>;
+
     class ErrorLog : Elfar.ErrorLog
     {
         public ErrorLog(Exception exception, HttpControllerContext context) : base(exception)
@@ -19,7 +20,7 @@ namespace Elfar.Web.Http
                 if (route != null)
                 {
                     RouteUrl = route.RouteTemplate;
-                    DataTokens = route.DataTokens;
+                    DataTokens = new dictionary(route.DataTokens);
                 }
 
                 var values = data.Values;
@@ -27,7 +28,7 @@ namespace Elfar.Web.Http
                 Action = values["action"].ToPascal();
                 Controller = values["controller"].ToPascal();
 
-                RouteData = values;
+                RouteData = new dictionary(values);
             }
 
             var request = context.Request;

@@ -1,12 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 
 namespace Elfar
 {
     [InheritedExport]
-    public interface IErrorLogProvider : IEnumerable<ErrorLog>
+    public interface IErrorLogProvider
     {
-        void Delete(int id);
-        void Save(ErrorLog errorLog);
+        void Delete(Guid id);
+        void Save(ErrorLog.Storage errorLog);
+
+        string Summaries { get; }
+        string this[Guid id] { get; set; }
     }
 }

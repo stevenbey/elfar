@@ -3,15 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Web.Caching;
 
 namespace Elfar.Web.Hosting
 {
     class VirtualPathProvider : System.Web.Hosting.VirtualPathProvider
     {
-        static VirtualPathProvider()
+        public VirtualPathProvider(Assembly assembly)
         {
-            resources = Composition.Assemblies.SelectMany(a => a.GetManifestResourceNames().Select(n => new Resource(n, a.GetManifestResourceStream)));
+            getManifestResourceStream = assembly.GetManifestResourceStream;
+            manifestResourceNames = assembly.GetManifestResourceNames();
         }
         
         public override bool FileExists(string virtualPath)
@@ -24,64 +26,42 @@ namespace Elfar.Web.Hosting
         }
         public override System.Web.Hosting.VirtualFile GetFile(string virtualPath)
         {
-            var resource = this[virtualPath];
-            return resource == null ? base.GetFile(virtualPath) : resource.VirtualFile;
+            return this[virtualPath] ?? base.GetFile(virtualPath);
         }
 
-        static bool IsMatch(Resource resource, string virtualPath)
+        VirtualFile this[string virtualPath]
         {
-            if (resource.VirtualPath == null && ((virtualPath[0] == '/' && resource.Name.EndsWith(virtualPath.Replace("/", "."))) || resource.Name == virtualPath)) resource.VirtualPath = virtualPath;
-            return resource.VirtualPath == virtualPath;
+            get
+            {
+                if (virtualFiles.ContainsKey(virtualPath)) return virtualFiles[virtualPath];
+                var manifestResourceName = virtualPath.Replace("/", ".");
+                manifestResourceName = manifestResourceNames.FirstOrDefault(n => n.EndsWith(manifestResourceName));
+                if (manifestResourceName == null) return null;
+                var virtualFile = new VirtualFile(virtualPath, manifestResourceName, getManifestResourceStream);
+                virtualFiles.Add(virtualPath, virtualFile);
+                return virtualFile;
+            }
         }
 
-        Resource this[string virtualPath]
-        {
-            get { return resources.FirstOrDefault(r => IsMatch(r, virtualPath)); }
-        }
-
-        static readonly IEnumerable<Resource> resources;
-
-        class Resource
-        {
-            public Resource(string name, Func<string, Stream> func)
-            {
-                this.func = func;
-                Name = name;
-            }
-
-            public string Name { get; private set; }
-            public Stream Stream
-            {
-                get { return func(Name); }
-            }
-            public VirtualFile VirtualFile { get; private set; }
-            public string VirtualPath
-            {
-                get { return virtualPath; }
-                set
-                {
-                    virtualPath = value;
-                    VirtualFile = new VirtualFile(value, this);
-                }
-            }
-
-            readonly Func<string, Stream> func;
-            string virtualPath;
-        }
+        readonly Func<string, Stream> getManifestResourceStream;
+        readonly string[] manifestResourceNames;
+        readonly Dictionary<string, VirtualFile> virtualFiles = new Dictionary<string, VirtualFile>();
 
         class VirtualFile : System.Web.Hosting.VirtualFile
         {
-            public VirtualFile(string virtualPath, Resource resource) : base(virtualPath)
+            public VirtualFile(string virtualPath, string manifestResourceName, Func<string, Stream> getManifestResourceStream) : base(virtualPath)
             {
-                this.resource = resource;
+                this.manifestResourceName = manifestResourceName;
+                this.getManifestResourceStream = getManifestResourceStream;
             }
 
             public override Stream Open()
             {
-                return resource.Stream;
+                return getManifestResourceStream(manifestResourceName);
             }
-            
-            readonly Resource resource;
+
+            readonly string manifestResourceName;
+            readonly Func<string, Stream> getManifestResourceStream;
         }
     }
 }

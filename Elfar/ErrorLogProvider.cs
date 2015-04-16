@@ -1,108 +1,81 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.Composition;
 using System.Linq;
 
 namespace Elfar
 {
     // ReSharper disable EmptyGeneralCatchClause
+    // ReSharper disable ParameterHidesMember
     public static class ErrorLogProvider
     {
-        internal static bool Delete(int id)
+        static ErrorLogProvider()
         {
-            if(Instance != null)
+            Instance = Composition.CreateMany<IErrorLogProvider>().FirstOrDefault();
+            plugins = Composition.CreateMany<IErrorLogPlugin>().ToArray();
+            if (Settings != null) application = Settings.Application;
+            if (string.IsNullOrWhiteSpace(application)) application = Settings.AppDomainAppVirtualPath ?? Settings.AppDomainAppId;
+        }
+        
+        internal static bool Delete(Guid id)
+        {
+            try
             {
-                try
-                {
-                    Instance.Delete(id);
-                    return true;
-                }
-                catch { }
+                Instance.Delete(id);
+                return true;
             }
+            catch { }
             return false;
         }
-        internal static void Save(ErrorLog errorLog)
+        internal static string Get(Guid id)
         {
-            Save(errorLog, true);
+            return Instance[id];
+        }
+        internal static void Save(ErrorLog errorLog, bool plugins = true)
+        {
+            if (plugins) Plugins(errorLog);
+            if (Instance == null) return;
+            try { Instance.Save(errorLog); }
+            catch (Exception e) { Plugins(new ErrorLog(e), false); }
+        }
+        internal static bool Save(Guid id, string detail)
+        {
+            try
+            {
+                Instance[id] = detail;
+                return true;
+            }
+            catch { }
+            return false;
         }
 
         static void Plugins(ErrorLog errorLog, bool save = true)
         {
-            try { ErrorLogPlugins.Execute(errorLog); }
-            catch(Exception e) { if(save) Save(e); }
-        }
-        static void Plugins(Exception exception)
-        {
-            Plugins(new ErrorLog(exception), false);
-        }
-        static void Save(ErrorLog errorLog, bool plugins)
-        {
-            if(plugins) Plugins(errorLog);
-            
-            if(Instance == null) return;
-            
-            try { Instance.Save(errorLog); }
-            catch(Exception e) { Plugins(e); }
-        }
-        static void Save(Exception exception)
-        {
-            Save(new ErrorLog(exception), false);
+            try { Array.ForEach(plugins, p => p.Execute(errorLog)); }
+            catch (Exception e) { if (save) Save(new ErrorLog(e), false); }
         }
 
-        public static Settings Settings
+        public static string Application
         {
-            get { return settings ?? (settings = new Settings()); }
-            set { settings = value; }
+            get { return application; }
         }
         public static string Name
         {
             get
             {
-                if(Instance == null) return null;
                 var type = Instance.GetType();
-                var attr = (DisplayNameAttribute)type.GetCustomAttributes(typeof(DisplayNameAttribute), false).FirstOrDefault();
-                return attr == null ? type.Name : attr.DisplayName;
+                var attribute = (DisplayNameAttribute) type.GetCustomAttributes(typeof(DisplayNameAttribute), true).FirstOrDefault();
+                return attribute == null ? type.Name.Replace("ErrorLogProvider", "") : attribute.DisplayName;
             }
         }
+        public static Settings Settings { get; set; }
 
-        internal static IEnumerable<ErrorLog.Storage> All
+        internal static IErrorLogProvider Instance { get; private set; }
+        internal static string Summaries
         {
-            get
-            {
-                try { return Instance as IStorageProvider ?? Instance.Select(l => new ErrorLog.Storage(l)); }
-                catch { return empty; }
-            }
+            get { return Instance.Summaries; }
         }
 
-        static IErrorLogProvider Instance
-        {
-            get { return instance ?? (instance = Composition.CreateMany<IErrorLogProvider>().FirstOrDefault() ?? new MemoryErrorLogProvider()); }
-        }
-
-        static readonly ErrorLog.Storage[] empty = new ErrorLog.Storage[0];
-        static IErrorLogProvider instance;
-        static Settings settings;
-
-        [PartNotDiscoverable, DisplayName("Memory")]
-        class MemoryErrorLogProvider : Dictionary<int, ErrorLog.Storage>, IErrorLogProvider, IStorageProvider
-        {
-            void IErrorLogProvider.Delete(int id)
-            {
-                Remove(id);
-            }
-            IEnumerator<ErrorLog> IEnumerable<ErrorLog>.GetEnumerator()
-            {
-                throw new NotImplementedException();
-            }
-            IEnumerator<ErrorLog.Storage> IEnumerable<ErrorLog.Storage>.GetEnumerator()
-            {
-                return Values.GetEnumerator();
-            }
-            void IErrorLogProvider.Save(ErrorLog errorLog)
-            {
-                Add(errorLog.ID, new ErrorLog.Storage(errorLog));
-            }
-        }
+        private static readonly string application;
+        static readonly IErrorLogPlugin[] plugins;
     }
 }

@@ -9,7 +9,7 @@ namespace Elfar
         {
             get
             {
-                return application ?? (application = this["Application"] ?? AppDomainAppVirtualPath ?? AppDomainAppId);
+                return application ?? (application = this["Application"]);
             }
             set { application = value; }
         }
@@ -19,11 +19,11 @@ namespace Elfar
             get { return ConfigurationManager.AppSettings["elfar:" + name]; }
         }
 
-        static string AppDomainAppId
+        internal static string AppDomainAppId
         {
             get { return string.Concat("[", HttpRuntime.AppDomainAppId.Trim('/'), "]"); }
         }
-        static string AppDomainAppVirtualPath
+        internal static string AppDomainAppVirtualPath
         {
             get
             {

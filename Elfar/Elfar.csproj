@@ -42,9 +42,9 @@
   <ItemGroup>
     <Compile Include="Composition.cs" />
     <Compile Include="Dictionary.cs" />
-    <Compile Include="ErrorLogPlugins.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="IStorageProvider.cs" />
+    <Compile Include="IO\FileErrorLogProvider.cs" />
+    <Compile Include="IO\Settings.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="ErrorLog.cs" />
     <Compile Include="ErrorLogProvider.cs" />

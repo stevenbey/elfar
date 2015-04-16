@@ -8,25 +8,6 @@ namespace Elfar.Web.Mvc
     // ReSharper disable InconsistentNaming
     public class ErrorLogRoute
     {
-        class _Route : Route
-        {
-            public _Route() : base
-            (
-                "elfar/{action}",
-                new RouteValueDictionary { { "controller", "ErrorLog" }, { "action", "Default" }, { "namespaces", new[] { "Elfar" } } },
-                new RouteValueDictionary { { "", new ErrorLogConstraint() } },
-                new _RouteHandler()
-            ) {}
-
-            class _RouteHandler : IRouteHandler
-            {
-                public IHttpHandler GetHttpHandler(RequestContext requestContext)
-                {
-                    return new ErrorLogController(requestContext);
-                }
-            }
-        }
-
         public static implicit operator Route(ErrorLogRoute route)
         {
             return new _Route();
@@ -40,6 +21,26 @@ namespace Elfar.Web.Mvc
 
         static IEnumerable<Routing.IRouteConstraint> constraints;
         static readonly Routing.IRouteConstraint[] empty = new Routing.IRouteConstraint[0];
+
+        class _Route : Route
+        {
+            public _Route()
+                : base
+                    (
+                    "elfar/{action}",
+                    new RouteValueDictionary { { "controller", "ErrorLog" }, { "action", "Default" }, { "namespaces", new[] { "Elfar" } } },
+                    new RouteValueDictionary { { "", new ErrorLogConstraint() } },
+                    new _RouteHandler()
+                    ) { }
+
+            class _RouteHandler : IRouteHandler
+            {
+                public IHttpHandler GetHttpHandler(RequestContext requestContext)
+                {
+                    return new ErrorLogController(requestContext);
+                }
+            }
+        }
 
         class ErrorLogConstraint : IRouteConstraint
         {

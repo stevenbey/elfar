@@ -4,18 +4,25 @@ using System.Web;
 
 namespace Elfar
 {
+    // ReSharper disable LoopCanBePartlyConvertedToQuery
+    // ReSharper disable InvertIf
     public sealed class Dictionary : Dictionary<string, string>
     {
         public static explicit operator Dictionary(NameValueCollection nvc)
         {
             var dictionary = new Dictionary();
-            if (nvc != null) foreach (var key in nvc.AllKeys) dictionary.Add(key ?? "", nvc[key]);
+            if (nvc != null) foreach (string key in nvc) dictionary.Add(key ?? "", nvc[key]);
             return dictionary;
         }
         public static explicit operator Dictionary(HttpCookieCollection cookies)
         {
             var nvc = new NameValueCollection();
-            if(cookies != null) foreach(HttpCookie cookie in cookies) nvc.Add(cookie.Name, cookie.Value);
+            if(cookies != null)
+                foreach (string name in cookies)
+                {
+                    var cookie = cookies[name];
+                    if (cookie != null) nvc.Add(cookie.Name, cookie.Value);
+                }
             return (Dictionary) nvc;
         }
 
