@@ -21,13 +21,13 @@ namespace Elfar.IO
             else if (value.StartsWith("~/")) value = HostingEnvironment.MapPath(value);
             else if (value.StartsWith(dataDirectoryMacroString)) value = Combine(DataDirectory, Remainder(value, dataDirectoryMacroString.Length));
             // ReSharper disable once PossibleNullReferenceException
-            return System.IO.Path.GetDirectoryName(value.Replace("/", @"\"));
+            return value.Replace("/", @"\");
         }
 
         public string Path
         {
-            get { return Resolve(path ?? (Path = this["Path"])); }
-            set { path = value; }
+            get { return path ?? (path = Resolve(this["Path"])); }
+            set { path = Resolve(value); }
         }
 
         static string DataDirectory
