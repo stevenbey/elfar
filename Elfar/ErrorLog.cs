@@ -102,6 +102,19 @@ namespace Elfar
                 return new Storage(errorLog);
             }
 
+            internal Storage Decompress()
+            {
+                Detail = Detail.Decompress();
+                Summary = Summary.Decompress();
+                return this;
+            }
+            internal Storage Compress()
+            {
+                Detail = Detail.Compress();
+                Summary = Summary.Compress();
+                return this;
+            }
+
             public string Detail { get; set; }
             public string ID { get; protected set; }
             public string Summary { get; set; }
