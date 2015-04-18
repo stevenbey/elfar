@@ -7,10 +7,7 @@ namespace Elfar
     {
         public string Application
         {
-            get
-            {
-                return application ?? (application = this["Application"]);
-            }
+            get { return application ?? (application = this["Application"]); }
             set { application = value; }
         }
 

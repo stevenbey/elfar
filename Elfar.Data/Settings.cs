@@ -1,5 +1,4 @@
-﻿using System;
-using System.Configuration;
+﻿using System.Configuration;
 
 namespace Elfar.Data
 {
@@ -16,8 +15,8 @@ namespace Elfar.Data
 
         public string ConnectionString
         {
-            get { return Resolve(connectionString ?? (ConnectionString = this["ConnectionString"])); }
-            set { connectionString = value; }
+            get { return connectionString ?? (connectionString = Resolve(this["ConnectionString"])); }
+            set { connectionString = Resolve(value); }
         }
         public string Schema
         {
