@@ -12,3 +12,8 @@ Backup/
 
 # mstest test results
 TestResults
+
+/Elfar.Web.Mvc/Resources/Elfar.js
+/Elfar.Web.Mvc/Resources/Script.js
+/Elfar.Web.Mvc/Resources/~Script.js
+*.map
