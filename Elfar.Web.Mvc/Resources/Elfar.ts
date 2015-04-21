@@ -28,7 +28,7 @@ module Elfar {
             this.name = name;
             this.title = title;
         }
-        get disposable(): boolean {
+        get closeable(): boolean {
             return true;
         }
         name: string;
@@ -49,7 +49,7 @@ module Elfar {
             });
             this.selected(true);
         }
-        get disposable(): boolean {
+        get closeable(): boolean {
             return false;
         }
         ninety = ko.observableArray<any>();
