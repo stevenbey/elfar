@@ -1,18 +1,26 @@
-﻿@model string
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <title>Error Logging Filter and Route</title>
-    <link href="@Url.Action("styles")?css" type="text/css" rel="stylesheet" />
+    <link type="text/css" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link type="text/css" rel="stylesheet" href="@Url.Action("styles")">
 </head>
 <body>
     @Html.Partial("Header")
-    <div>
-        @Html.Partial("Dashboard")
-        @Html.Partial("List")
+    <div data-bind="foreach: tabs">
+        <div data-bind="visible: selected, template: name"></div>
     </div>
     @Html.Partial("Footer")
-    <script type="application/json">@Html.Raw(Model)</script>
-    <script src="@Url.Action("script")?js" type="text/javascript"></script>
+    <script id="dashboard" type="text/html">
+        @Html.Partial("Dashboard")
+    </script>
+    <script id="test" type="text/html">
+        <h1>Test</h1>
+    </script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="http://knockoutjs.com/downloads/knockout-3.2.0.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.4.1/canvas.min.js"></script>
+    <script type="text/javascript" src="@Url.Action("script")"></script>
 </body>
 </html>

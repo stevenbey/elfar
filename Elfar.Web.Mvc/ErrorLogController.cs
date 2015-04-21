@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.Web;
+using System.Web.Hosting;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -27,32 +29,37 @@ namespace Elfar.Web.Mvc
 
         public ViewResult Default()
         {
-            return View((object) ErrorLogProvider.Summaries);
+            return View();
         }
         public ContentResult Detail(Guid id)
         {
-            return new ContentResult { Content = ErrorLogProvider.Get(id), ContentType = "application/json" };
+            return Content(ErrorLogProvider.Get(id), "application/json");
         }
         [HttpPost]
         public JsonResult Detail(Guid id, string detail)
         {
-            return new JsonResult { Data = ErrorLogProvider.Save(id, detail) };
-        }
-        public FileStreamResult Resource(string name)
-        {
-            return new FileStreamResult(name);
+            return Json(ErrorLogProvider.Save(id, detail));
         }
         public FileStreamResult Script()
         {
-            return new FileStreamResult("Elfar.Web.Mvc.Resources.Script.js");
+            return FileStream("Elfar.Web.Mvc/Resources/Script.min.js", "text/javascript");
         }
         public FileStreamResult Styles()
         {
-            return new FileStreamResult("Elfar.Web.Mvc.Resources.Styles.css");
+            return FileStream("Elfar.Web.Mvc/Resources/Styles.min.css", "text/css");
+        }
+        public ContentResult Summaries()
+        {
+            return Content(ErrorLogProvider.Summaries, "application/json");
         }
         public void Test()
         {
             throw new TestException();
+        }
+
+        FileStreamResult FileStream(string virtualPath, string contentType)
+        {
+            return File(HostingEnvironment.VirtualPathProvider.GetFile(virtualPath).Open(), contentType);
         }
 
         public bool IsReusable

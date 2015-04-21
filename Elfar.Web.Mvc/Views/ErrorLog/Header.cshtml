@@ -1,7 +1,10 @@
 ﻿<header>
-    <div>Error Logging Filter and Route &nbsp;/&nbsp; @Strong(Elfar.ErrorLogProvider.Application, "The name or id of the web application") &nbsp;/&nbsp; @Strong(@Server.MachineName, "The name of the server")</div>
-    <ul id="tabs">
-        <li class="selected">Dashboard</li>
+    <div>Error Logging Filter and Route &nbsp; &nbsp; @Strong(@Server.MachineName, "The name of the server") &nbsp;/&nbsp; @Strong(Elfar.ErrorLogProvider.Application, "The name or id of the web application")</div>
+    <ul id="tabs" data-bind="foreach: tabs">
+        <li data-bind="css: { selected: selected }, click: $root.selectTab">
+            <span data-bind="text: title"></span>
+            <span data-bind="visible: disposable" style="display: none;">&nbsp; <i class="fa fa-close" data-bind="click: $root.removeTab"></i></span>
+        </li>
     </ul>
 </header>
 @helper Strong(string text, string title) { <strong title="@title">@text</strong> }
