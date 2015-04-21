@@ -18,14 +18,14 @@ namespace Elfar
 
         internal static string AppDomainAppId
         {
-            get { return string.Concat("[", HttpRuntime.AppDomainAppId.Trim('/'), "]"); }
+            get { return string.Concat("[AppDomainAppId: ", HttpRuntime.AppDomainAppId.Trim('/'), "]"); }
         }
         internal static string AppDomainAppVirtualPath
         {
             get
             {
                 var appDomainAppVirtualPath = (HttpRuntime.AppDomainAppVirtualPath ?? "").Trim('/');
-                return string.IsNullOrWhiteSpace(appDomainAppVirtualPath) ? null : string.Concat("[", appDomainAppVirtualPath, "]");
+                return string.IsNullOrWhiteSpace(appDomainAppVirtualPath) ? null : string.Concat("[AppDomainAppVirtualPath: ", appDomainAppVirtualPath, "]");
             }
         }
 
