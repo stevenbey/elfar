@@ -89,7 +89,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="Resources\Date.ts" />
     <TypeScriptCompile Include="Resources\Elfar.ts" />
-    <TypeScriptCompile Include="Resources\Linq.ts" />
+    <TypeScriptCompile Include="Resources\Array.ts" />
     <TypeScriptCompile Include="Scripts\typings\canvasjs\canvasjs.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\knockout\knockout.d.ts" />
