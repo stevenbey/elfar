@@ -2,7 +2,7 @@
     <div>Error Logging Filter and Route &nbsp; &nbsp; @Strong(@Server.MachineName, "The name of the server") &nbsp;/&nbsp; @Strong(Elfar.ErrorLogProvider.Application, "The name or id of the web application")</div>
     <ul id="tabs" data-bind="foreach: tabs">
         <li data-bind="css: { selected: selected }, click: $root.selectTab">
-            <span data-bind="text: title"></span>&nbsp; <i class="fa fa-close" data-bind="visible: closeable, click: $root.removeTab" style="display: none;"></i>
+            <span data-bind="text: title"></span>&nbsp; <i data-bind="visible: closeable, click: $root.removeTab" style="display: none;">&times;</i>
         </li>
     </ul>
 </header>

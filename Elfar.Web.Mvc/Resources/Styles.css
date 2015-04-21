@@ -9,9 +9,11 @@ header > div { height: 31px; line-height: 31px; padding: 0 10px 0 20px; backgrou
 ul#tabs { margin: 10px 0 0; padding: 0 0 0 20px; list-style: none; }
 ul#tabs li { display: inline-block; box-sizing: border-box; padding: 0 5px 3px;border-bottom: 2px solid #bbb;cursor: pointer; }
 ul#tabs li:hover { background-color: #ddd; }
-ul#tabs i:hover { background-color: #ccc; }
+ul#tabs i {display: inline-block;height: 12px;line-height: 10px;}
+ul#tabs i:hover { background-color: #ccc;}
 ul#tabs li:first-child { margin-left: 5px; }
-ul#tabs li.selected { background-color: #ddd; border-bottom: 3px solid #007acc; }
+ul#tabs li.selected { border-bottom: 3px solid #007acc; }
+ul#tabs li.selected:hover { background-color: transparent; }
 body > div { position: absolute; top: 66px; bottom: 36px; left: 25px; right: 0; background-color: #fff; overflow: hidden; }
 #list { position: absolute; top: 80px; bottom: 0; width: 300px; border-right: 5px solid #f1f1f1; padding: 2px; overflow: auto; }
 #item { position: absolute; top: 80px; right: 0; bottom: 0; left: 300px; border-left: 1px solid #999; overflow: hidden; }
