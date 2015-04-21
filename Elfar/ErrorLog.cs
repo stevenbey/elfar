@@ -14,7 +14,7 @@ namespace Elfar
 
             ID = Guid.NewGuid();
 
-            var now = DateTime.UtcNow;
+            var now = DateTime.Now;
             Date = now.ToString("yyyy-MM-dd");
             Time = now.ToShortTimeString();
 
