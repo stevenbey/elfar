@@ -63,7 +63,7 @@ namespace Elfar
             
             Storage(ErrorLog errorLog)
             {
-                ID = errorLog.ID.ToString();
+                ID = errorLog.ID.ToString("N");
                 Detail = serializer.Serialize(new
                 {
                     errorLog.Code,
@@ -91,7 +91,7 @@ namespace Elfar
                     errorLog.Controller,
                     errorLog.Date,
                     errorLog.HttpMethod,
-                    errorLog.ID,
+                    ID,
                     errorLog.Time,
                     errorLog.Type
                 });
