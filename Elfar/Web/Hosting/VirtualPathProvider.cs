@@ -33,17 +33,18 @@ namespace Elfar.Web.Hosting
         {
             get
             {
-                if (virtualFiles.ContainsKey(virtualPath)) return virtualFiles[virtualPath];
+                lock (key) if (virtualFiles.ContainsKey(virtualPath)) return virtualFiles[virtualPath];
                 var manifestResourceName = virtualPath.Replace("/", ".");
                 manifestResourceName = manifestResourceNames.FirstOrDefault(n => n.EndsWith(manifestResourceName));
                 if (manifestResourceName == null) return null;
                 var virtualFile = new VirtualFile(virtualPath, manifestResourceName, getManifestResourceStream);
-                virtualFiles.Add(virtualPath, virtualFile);
+                lock (key) virtualFiles.Add(virtualPath, virtualFile);
                 return virtualFile;
             }
         }
 
         readonly Func<string, Stream> getManifestResourceStream;
+        static readonly object key = new object();
         readonly string[] manifestResourceNames;
         readonly Dictionary<string, VirtualFile> virtualFiles = new Dictionary<string, VirtualFile>();
 
