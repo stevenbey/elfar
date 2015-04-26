@@ -9,18 +9,19 @@
 <body>
     @Html.Partial("Header")
     <div data-bind="foreach: tabs">
-        <div data-bind="visible: selected, template: name"></div>
+        <div data-bind="visible: selected, template: template"></div>
     </div>
     @Html.Partial("Footer")
-    <script id="dashboard" type="text/html">
+    <script id="dashboard-template" type="text/html">
         @Html.Partial("Dashboard")
     </script>
-    <script id="test" type="text/html">
-        <h1>Test</h1>
+    <script id="term-tab-template" type="text/html">
+        @Html.Partial("Term")
     </script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script type="text/javascript" src="http://knockoutjs.com/downloads/knockout-3.2.0.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.4.1/canvas.min.js"></script>
+    <script type="text/javascript" src="http://code.highcharts.com/highcharts.js"></script>
+    <script type="text/javascript" src="https://rawgit.com/stevenbey/linq.js/master/linq.js"></script>
     <script type="text/javascript" src="@Url.Action("script")"></script>
 </body>
 </html>
