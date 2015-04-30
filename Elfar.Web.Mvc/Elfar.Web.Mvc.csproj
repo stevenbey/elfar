@@ -92,11 +92,11 @@
   <ItemGroup>
     <TypeScriptCompile Include="Resources\Date.ts" />
     <TypeScriptCompile Include="Resources\Elfar.ts" />
-    <TypeScriptCompile Include="Scripts\typings\highcharts\highcharts.d.ts" />
-    <TypeScriptCompile Include="Scripts\typings\highcharts\highstock.d.ts" />
-    <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
-    <TypeScriptCompile Include="Scripts\typings\knockout\knockout.d.ts" />
-    <TypeScriptCompile Include="Scripts\typings\linq\linq.d.ts" />
+    <TypeScriptCompile Include="Resources\typings\highcharts\highcharts.d.ts" />
+    <TypeScriptCompile Include="Resources\typings\highcharts\highstock.d.ts" />
+    <TypeScriptCompile Include="Resources\typings\jquery\jquery.d.ts" />
+    <TypeScriptCompile Include="Resources\typings\knockout\knockout.d.ts" />
+    <TypeScriptCompile Include="Resources\typings\linq\linq.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\ErrorLog\Dashboard.cshtml" />
@@ -104,6 +104,9 @@
     <EmbeddedResource Include="Views\ErrorLog\Header.cshtml" />
     <EmbeddedResource Include="Views\ErrorLog\Footer.cshtml" />
     <EmbeddedResource Include="Views\ErrorLog\List.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Scripts\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
