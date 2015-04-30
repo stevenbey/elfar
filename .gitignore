@@ -17,3 +17,4 @@ TestResults
 /Elfar.Web.Mvc/Resources/Script.js
 /Elfar.Web.Mvc/Resources/~Script.js
 *.map
+/Elfar.Web.Mvc/Resources/Elfar.css

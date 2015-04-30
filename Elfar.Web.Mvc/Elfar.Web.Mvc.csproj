@@ -70,11 +70,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Styles.css" />
-    <EmbeddedResource Include="Resources\Styles.min.css">
-      <DependentUpon>Styles.css</DependentUpon>
+    <Content Include="Resources\Elfar.less" />
+    <EmbeddedResource Include="Resources\Elfar.min.js">
+      <DependentUpon>Elfar.ts</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Script.min.js" />
+    <EmbeddedResource Include="Resources\Elfar.min.css">
+      <DependentUpon>Elfar.less</DependentUpon>
+    </EmbeddedResource>
     <Content Include="Views\Web.config" />
     <EmbeddedResource Include="Views\ErrorLog\Term.cshtml" />
   </ItemGroup>
@@ -110,7 +112,7 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptSourceMap>False</TypeScriptSourceMap>
-    <TypeScriptOutFile>Resources/Script.js</TypeScriptOutFile>
+    <TypeScriptOutFile>Resources/Elfar.js</TypeScriptOutFile>
     <TypeScriptRemoveComments>True</TypeScriptRemoveComments>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />

@@ -1,50 +1,57 @@
 ﻿<div id="dashboard" data-bind="foreach: sections">
     <div class="section" data-bind="attr: { id: name }">
-        <div class="section">
-            <div class="section-title" data-bind="text: title"></div>
-            <div class="section-content" data-bind="template: template"></div>
-        </div>
+        <div class="head" data-bind="text: title"></div>
+        <div class="body" data-bind="template: template"></div>
     </div>
 </div>
-<script type="text/html" id="statistics-template">
+<script type="text/html" id="summary-template">
     <ul data-bind="foreach: items">
         <li data-bind="template: { name: template, data: content }, css: size"></li>
     </ul>
 </script>
 <script type="text/html" id="term-tile-template">
-    <div data-bind="click: count ? $root.addTab : null, css: css"><span data-bind="text: title"></span> <span class="count" data-bind="text: count"></span></div>
+    <div data-bind="click: count ? $root.addTab : null, css: css">
+        <div class="head" data-bind="attr: { title: title }, text: title"></div>
+        <div class="body" data-bind="text: count"></div>
+        <div class="foot">Error Logs</div>
+    </div>
 </script>
-<script type="text/html" id="donut-template">
-    <div id="donut"></div>
+<script type="text/html" id="chart-template">
+    <div class="chart" data-bind="attr: { id: id }"></div>
 </script>
-
-@*<div id="timeline" style="min-width: 310px; height: 150px; margin: 0 auto"></div>
-<p>
-    Donut charts:
-    <ul>
-        <li>Areas</li>
-        <li>Controllers (per Area)</li>
-        <li>Actions (per Controller & Area)</li>
-    </ul>
-</p>
-<p>
-    List:
-    <ul>
-        <li>last 10 errors</li>
-        <li>10 most common errors</li>
-    </ul>
+<script type="text/html" id="latest-template">
     <table>
         <thead>
             <tr>
-                <td>Type</td>
-                <td>Date</td>
+                <td class="type">Type</td>
+                <td class="small centre">Date</td>
+                <td class="small centre">Time</td>
             </tr>
         </thead>
-        <tbody data-bind="foreach: latest">
+        @*<tbody data-bind="foreach: summaries">
             <tr>
                 <td data-bind="text: Type"></td>
-                <td data-bind="text: dateTime"></td>
+                <td data-bind="text: Date"></td>
+                <td data-bind="text: Time"></td>
             </tr>
-        </tbody>
+            </tbody>*@
     </table>
-</p>*@
+</script>
+<script type="text/html" id="common-template">
+    <table>
+        <thead>
+            <tr>
+                <td class="type">Type</td>
+                <td class="small centre">Count</td>
+            </tr>
+        </thead>
+        @*<tbody data-bind="foreach: summaries">
+                <tr>
+                    <td data-bind="text: key"></td>
+                    <td data-bind="text: length"></td>
+                </tr>
+            </tbody>*@
+    </table>
+</script>
+
+@*<div id="timeline" style="min-width: 310px; height: 150px; margin: 0 auto"></div>*@

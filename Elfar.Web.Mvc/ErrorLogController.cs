@@ -42,11 +42,11 @@ namespace Elfar.Web.Mvc
         }
         public FileStreamResult Script()
         {
-            return FileStream("Elfar.Web.Mvc/Resources/Script.min.js", "text/javascript");
+            return FileStream("Elfar.Web.Mvc/Resources/Elfar.min.js", "text/javascript");
         }
         public FileStreamResult Styles()
         {
-            return FileStream("Elfar.Web.Mvc/Resources/Styles.min.css", "text/css");
+            return FileStream("Elfar.Web.Mvc/Resources/Elfar.min.css", "text/css");
         }
         public ContentResult Summaries()
         {
