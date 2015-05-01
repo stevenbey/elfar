@@ -6,10 +6,9 @@ module Elfar {
         private _dashboard: Dashboard;
         private tabs = ko.observableArray<Tab>([]);
         selectTab = (selection: string | Tab) => {
-            var tab: Tab;
-            tab = typeof selection === "string" ? this.tabs().first((t: Tab) => t.name === selection) : selection;
-            ko.utils.arrayForEach(this.tabs(), (i: Tab) => i.selected(false));
-            if (!tab) { tab = this.tabs()[0]; }
+            var tab = typeof selection === "string" ? this.tabs().first((t: Tab) => t.name === selection) : selection;
+            if (!tab) { return; }
+            ko.utils.arrayForEach(this.tabs(), (t: Tab) => t.selected(false));
             tab.selected(true);
         };
         addTab = (tab: Tab) => {
@@ -49,19 +48,23 @@ module Elfar {
         }
     }
     export class Tab extends _Object {
-        constructor(name: string, title: string) {
+        _selected = ko.observable(false);
+        constructor(name: string, title: string, selected: boolean = false) {
             super(name, title);
+            this._selected(selected);
         }
         get closeable(): boolean {
             return true;
         }
-        selected = ko.observable(false);
+        get selected(): KnockoutObservable<boolean> {
+            return this._selected;
+        }
     }
     export class Dashboard extends Tab {
         sections = ko.observableArray<Section>();
         private summaries: _Summary[];
         constructor() {
-            super("dashboard", "Dashboard");
+            super("dashboard", "Dashboard", true);
             $.get(App.path + "/Summaries",(data: any[]) => {
                 this.summaries = data.select((i: any) => new _Summary(i)).orderByDescending((i: any) => i.Date);
                 this.sections.push(new Summary(this.summaries));
@@ -70,7 +73,6 @@ module Elfar {
                 // this.latest(this.summaries.take(10));
                 // this.common(this.summaries.groupBy(i => i.Type).orderBy(g => g.length).take(10));
             });
-            this.selected(true);
         }
         add(section: Section) {
             this.sections.push(section);
@@ -98,11 +100,16 @@ module Elfar {
     }
     class Summary extends Section {
         items = ko.observableArray<Tile>();
-        constructor(data: any[]) {
-            super("summary", "_Summary");
+        constructor(data: _Summary[]) {
+            super("summary", "Summary");
 
-            var areas = data.groupBy((i: any) => `~/${i.Area ? i.Area + "/" : ""}`).select((g, i) => new Area(g, Chart.colours[i]));
-            this.items.push(new Tile(new Donut("Controllers", areas), "chart", TileSize.Large));
+            var key = function(area: string, controller: string) {
+                this.area = area,
+                this.controller = controller,
+                this.toString = () => { return `~/${this.area ? this.area + "/" : ""}${this.controller}`; };
+            };
+            var controllers = data.groupBy((i: any) => new key(i.Area, i.Controller)).select((g: _Summary[], i: number) => new Controller(g, Chart.colours[i]));
+            this.items.push(new Tile(new Donut("Controllers", controllers), "donut", TileSize.Large));
             // this.items.push(new Tile(new Actions(areas.selectMany(a => a.controllers).selectMany(c => c.actions)), "chart", TileSize.Large));
             this.items.push(new Tile(new Chart(1), "chart", TileSize.Large));
             this.items.push(new Tile(new Chart(2), "chart", TileSize.Wide));
@@ -141,71 +148,45 @@ module Elfar {
             return this.count ? "lightblue-bg clickable" : "grey-bg";
         }
     }
-    class Chart {
+    class Chart extends Tab {
         constructor(public id: any) {
+            super(id, id);
+        }
+        toString() {
+            return this.id;
         }
         static get colours(): string[] {
             return ["#68217A", "#007ACC", "#217167", "#A83A95", "#1BA1E2", "#571C75", "#009CCC", "#9ACD32", "#F2700F"].concat(Highcharts.getOptions().colors);
         }
     }
     class Donut extends Chart {
-        constructor(id: any, data: Area[]) {
+        constructor(id: any, public series: Series[]) {
             super(id);
             var donutOptions: HighchartsOptions = {
                 chart: { type: "pie", backgroundColor: "#F1F1F1", animation: false },
                 credits: { enabled: false },
-                title: { text: this.id, floating: true, align: "left", style: { fontSize: "16px" } },
-                tooltip: { formatter() { return this.point.name + " (<b>" + this.point.y + "</b>)"; } },
-                plotOptions: { pie: { shadow: false, center: ["50%", "55%"], dataLabels: { enabled: false }, showInLegend: true }, series: { animation: false } },
-                series: [
-                    { name: "Areas", data: data.select((a: Series) => a.data), size: "59%", showInLegend: false },
-                    { name: "Controllers", data: data.selectMany((a: Area) => a.controllers).select((c: Series) => c.data), size: "84%", innerSize: "60%" }
-                ]
+                title: { text: `${series.sum((s: Series) => s.value)}`, y: 27, verticalAlign: "middle", style: { fontSize: "33px" } },
+                plotOptions: { pie: { shadow: false, center: ["50%", "56%"] }, series: { animation: false } },
+                series: [{ name: this.id, data: series.select((c: Series) => c.data), size: "64%", innerSize: "53%", dataLabels: { color: "#FFF", format: "{y}", distance: -24, style: { fontWeight: "normal", textShadow: "none" } } } ]
             };
             setTimeout(() => $(`#${this.id}`).highcharts(donutOptions), 1);
         }
     }
-    // class Controllers extends Donut {
-    //     constructor(data: Area[]) {
-    //        super("Controllers", data);
-    //     }
-    // }
-    // class Actions extends Donut {
-    //     constructor(data: Series[]) {
-    //         super("Actions", data);
-    //     }
-    // }
     class Series {
-        value: number;
-        name: string;
-        constructor(data: any[], public colour: string) {
-            this.name = data.key;
-            this.value = data.length;
-        }
+        constructor(public key: any, public value: number, public colour: string) {}
         get data(): any {
-            return { name: this.name, y: this.value, color: this.colour };
-        }
-    }
-    class Area extends Series {
-        controllers: Controller[];
-        constructor(data: _Summary[], colour: string) {
-            super(data, colour);
-            var gradient: HighchartsGradient = Highcharts.Color(colour);
-            this.controllers = data.groupBy((i: _Summary) => data.key + i.Controller).select((g: _Summary[], i: number) => {
-                var c: HighchartsGradient = gradient.brighten(0.1 - (i / g.length / 50));
-                return new Controller(g, c.get(null));
-            });
+            return { name: this.key.toString(), y: this.value, color: this.colour };
         }
     }
     class Controller extends Series {
-        actions: Series[];
+        //actions: Series[];
         constructor(data: _Summary[], colour: string) {
-            super(data, colour);
-            var gradient: HighchartsGradient = Highcharts.Color(colour);
-            this.actions = data.groupBy((i: _Summary) => data.key + "/" + i.Action).select((g: _Summary[], i: number) => {
-                var c: HighchartsGradient = gradient.brighten(0.1 - (i / g.length / 50));
-                return new Series(g, c.get(null));
-            });
+            super(data.key, data.length, colour);
+            //var gradient: HighchartsGradient = Highcharts.Color(colour);
+            //this.actions = data.groupBy((i: _Summary) => data.key + "/" + i.Action).select((g: _Summary[], i: number) => {
+            //    var c: HighchartsGradient = gradient.brighten(0.1 - (i / g.length / 50));
+            //    return new Series(g.key, g.length, c.get(null));
+            //});
         }
     }
     enum TileSize { Large, Small, Wide }

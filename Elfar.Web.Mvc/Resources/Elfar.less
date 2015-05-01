@@ -69,22 +69,22 @@ ul#tabs {
         padding: 0 5px 3px;
         border-bottom: 2px solid #BBB;
         cursor: default;
+    }
 
-        :first-child {
-            margin-left: 15px;
-        }
+    li:first-child {
+        margin-left: 15px;
+    }
 
-        :hover {
-            background-color: #DDD;
-        }
+    li:hover {
+        background-color: #DDD;
     }
 
     li.selected {
         border-bottom: 3px solid #007ACC;
+    }
 
-        :hover {
-            background-color: transparent;
-        }
+    li.selected:hover {
+        background-color: transparent;
     }
 
     i {
@@ -96,10 +96,6 @@ ul#tabs {
             background-color: #CCC;
         }
     }
-}
-
-#summary.section {
-    width: 640px;
 }
 
 #summary {
@@ -148,6 +144,40 @@ ul#tabs {
                 font-size: 16px;
             }
         }
+
+        div.title {
+            padding-top: 7px;
+            padding-left: 11px;
+            color: #000;
+            font-size: 16px;
+        }
+
+        ul.legend {
+            position: absolute;
+            top: 32px;
+            left: 11px;
+            margin: 0;
+            padding: 0;
+            width: inherit;
+
+            li {
+                float: left;
+                width: auto;
+                height: auto;
+                list-style-type: none;
+                max-width: 93px;
+                color: #000;
+
+                span:first-child {
+                    display: block;
+                    width: 12px;
+                    height: 12px;
+                    float: left;
+                    margin-top: 3px;
+                    margin-right: 4px;
+                }
+            }
+        }
     }
 
     li.wide {
@@ -158,6 +188,10 @@ ul#tabs {
         width: 312px;
         height: 312px;
     }
+}
+
+#summary.section {
+    width: 640px;
 }
 
 .section {
@@ -220,18 +254,18 @@ body > div, .white-bg {
     background-color: #FFF;
 }
 
-header > div, #summary li > div, .white-fg {
+header > div, #summary li > div {
     color: #FFF;
 }
 
-td.type, #summary li .header, #summary li .content, #summary li .footer, .section, .section-head {
+td.type, #summary li .header, #summary li .content, #summary li .footer, .section, .section > .head, ul.legend li {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     word-wrap: normal;
 }
 
-#summary li .content, .section-head {
+#summary li .content, .section > .head {
     font-family: Segoe UI Light,Segoe UI,Tahoma,Arial,Verdana;
 }
 

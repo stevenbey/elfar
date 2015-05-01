@@ -16,6 +16,18 @@
         <div class="foot">Error Logs</div>
     </div>
 </script>
+<script type="text/html" id="donut-template">
+    <div class="chart" data-bind="attr: { id: id }"></div>
+    <div class="clickable" data-bind="click: $root.addTab">
+        <div class="title" data-bind="text: $data"></div>
+        <ul class="legend" data-bind="foreach: series">
+            <li data-bind="attr: { title: key }">
+                <span data-bind="style: { backgroundColor: colour }"></span>
+                <span data-bind="text: key.controller"></span>
+            </li>
+        </ul>
+    </div>
+</script>
 <script type="text/html" id="chart-template">
     <div class="chart" data-bind="attr: { id: id }"></div>
 </script>

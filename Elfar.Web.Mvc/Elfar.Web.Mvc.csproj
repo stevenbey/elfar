@@ -70,9 +70,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\Elfar.css">
+      <DependentUpon>Elfar.less</DependentUpon>
+    </Content>
+    <Content Include="Resources\Elfar.js">
+      <DependentUpon>Elfar.ts</DependentUpon>
+    </Content>
     <Content Include="Resources\Elfar.less" />
     <EmbeddedResource Include="Resources\Elfar.min.js">
-      <DependentUpon>Elfar.ts</DependentUpon>
+      <DependentUpon>Elfar.js</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Elfar.min.css">
       <DependentUpon>Elfar.less</DependentUpon>
@@ -105,9 +111,7 @@
     <EmbeddedResource Include="Views\ErrorLog\Footer.cshtml" />
     <EmbeddedResource Include="Views\ErrorLog\List.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Scripts\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
