@@ -79,7 +79,7 @@ ul#tabs i {
   height: 12px;
   line-height: 10px;
 }
-ul#tabs i :hover {
+ul#tabs i:hover {
   background-color: #CCC;
 }
 #summary ul {

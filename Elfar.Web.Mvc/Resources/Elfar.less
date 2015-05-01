@@ -69,22 +69,22 @@ ul#tabs {
         padding: 0 5px 3px;
         border-bottom: 2px solid #BBB;
         cursor: default;
-    }
 
-    li:first-child {
-        margin-left: 15px;
-    }
+        &:first-child {
+            margin-left: 15px;
+        }
 
-    li:hover {
-        background-color: #DDD;
-    }
+        &:hover {
+            background-color: #DDD;
+        }
 
-    li.selected {
-        border-bottom: 3px solid #007ACC;
-    }
+        &.selected {
+            border-bottom: 3px solid #007ACC;
 
-    li.selected:hover {
-        background-color: transparent;
+            &:hover {
+                background-color: transparent;
+            }
+        }
     }
 
     i {
@@ -92,7 +92,7 @@ ul#tabs {
         height: 12px;
         line-height: 10px;
 
-        :hover {
+        &:hover {
             background-color: #CCC;
         }
     }
@@ -188,10 +188,10 @@ ul#tabs {
         width: 312px;
         height: 312px;
     }
-}
 
-#summary.section {
-    width: 640px;
+    &.section {
+        width: 640px;
+    }
 }
 
 .section {
