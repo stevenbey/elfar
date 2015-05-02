@@ -41,6 +41,16 @@ module Elfar {
             return this[0x0];
         }
     }
+    export class _Summary {
+        Action: string;
+        Area: string;
+        Controller: string;
+        dateTime: Date;
+        constructor(obj: any) {
+            $.extend(this, obj);
+            this.dateTime = new Date(obj.Date + " " + obj.Time);
+        }
+    }
     export class _Object {
         constructor(public name: string, public title: string, template?: string) {
             this[0x0] = (template || name) + "-template";
@@ -62,24 +72,32 @@ module Elfar {
         }
     }
     export class Dashboard extends Tab {
-        sections = ko.observableArray<Section>();
-        private summaries: _Summary[];
+        add = (section: Section) => {
+            var sections = this.sections;
+            if (sections.indexOf(section) === -1) {
+                sections.push(section);
+            }
+        };
         constructor() {
             super("dashboard", "Dashboard", true);
+            this[0x2] = ko.observableArray<Section>();
             $.get(App.path + "/Summaries",(data: any[]) => {
-                this.summaries = data.select((i: any) => new _Summary(i)).orderByDescending((i: any) => i.Date);
-                this.sections.push(new Summary(this.summaries));
-                this.sections.push(new Section(null, "Latest", "latest"));
-                this.sections.push(new Section(null, "Most Common", "common"));
+                data = data.reverse().select((i: any) => new _Summary(i));
+                this.add(this[0x3] = new Summary(data));
+                this.add(new Section(null, "Latest", "latest"));
+                this.add(new Section(null, "Most Common", "common"));
                 // this.latest(this.summaries.take(10));
                 // this.common(this.summaries.groupBy(i => i.Type).orderBy(g => g.length).take(10));
             });
         }
-        add(section: Section) {
-            this.sections.push(section);
-        }
         get closeable(): boolean {
             return false;
+        }
+        get sections(): KnockoutObservableArray<Section> {
+            return this[0x2];
+        }
+        get summary(): Summary {
+            return this[0x3];
         }
         // latest = ko.observableArray<_Summary>();
         // common = ko.observableArray<_Summary>();
@@ -89,17 +107,7 @@ module Elfar {
             super(name, title, template);
         }
     }
-    class _Summary {
-        Action: string;
-        Area: string;
-        Controller: string;
-        dateTime: Date;
-        constructor(obj: any) {
-            $.extend(this, obj);
-            this.dateTime = new Date(obj.Date + " " + obj.Time);
-        }
-    }
-    class Summary extends Section {
+    export class Summary extends Section {
         items = ko.observableArray<Tile>();
         constructor(data: _Summary[]) {
             super("summary", "Summary");

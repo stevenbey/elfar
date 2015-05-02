@@ -70,6 +70,14 @@ var Elfar;
         return App;
     })();
     Elfar.App = App;
+    var _Summary = (function () {
+        function _Summary(obj) {
+            $.extend(this, obj);
+            this.dateTime = new Date(obj.Date + " " + obj.Time);
+        }
+        return _Summary;
+    })();
+    Elfar._Summary = _Summary;
     var _Object = (function () {
         function _Object(name, title, template) {
             this.name = name;
@@ -115,20 +123,37 @@ var Elfar;
         function Dashboard() {
             var _this = this;
             _super.call(this, "dashboard", "Dashboard", true);
-            this.sections = ko.observableArray();
+            this.add = function (section) {
+                var sections = _this.sections;
+                if (sections.indexOf(section) === -1) {
+                    sections.push(section);
+                }
+            };
+            this[0x2] = ko.observableArray();
             $.get(App.path + "/Summaries", function (data) {
-                _this.summaries = data.select(function (i) { return new _Summary(i); }).orderByDescending(function (i) { return i.Date; });
-                _this.sections.push(new Summary(_this.summaries));
-                _this.sections.push(new Section(null, "Latest", "latest"));
-                _this.sections.push(new Section(null, "Most Common", "common"));
+                data = data.reverse().select(function (i) { return new _Summary(i); });
+                _this.add(_this[0x3] = new Summary(data));
+                _this.add(new Section(null, "Latest", "latest"));
+                _this.add(new Section(null, "Most Common", "common"));
             });
         }
-        Dashboard.prototype.add = function (section) {
-            this.sections.push(section);
-        };
         Object.defineProperty(Dashboard.prototype, "closeable", {
             get: function () {
                 return false;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Dashboard.prototype, "sections", {
+            get: function () {
+                return this[0x2];
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Dashboard.prototype, "summary", {
+            get: function () {
+                return this[0x3];
             },
             enumerable: true,
             configurable: true
@@ -144,13 +169,6 @@ var Elfar;
         return Section;
     })(_Object);
     Elfar.Section = Section;
-    var _Summary = (function () {
-        function _Summary(obj) {
-            $.extend(this, obj);
-            this.dateTime = new Date(obj.Date + " " + obj.Time);
-        }
-        return _Summary;
-    })();
     var Summary = (function (_super) {
         __extends(Summary, _super);
         function Summary(data) {
@@ -176,6 +194,7 @@ var Elfar;
         }
         return Summary;
     })(Section);
+    Elfar.Summary = Summary;
     var Tile = (function (_super) {
         __extends(Tile, _super);
         function Tile(content, template, _size) {
