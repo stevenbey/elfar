@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace Elfar.Web.Mvc
@@ -24,14 +25,13 @@ namespace Elfar.Web.Mvc
 
         class _Route : Route
         {
-            public _Route()
-                : base
-                    (
-                    "elfar/{action}",
-                    new RouteValueDictionary { { "controller", "ErrorLog" }, { "action", "Default" }, { "namespaces", new[] { "Elfar" } } },
-                    new RouteValueDictionary { { "", new ErrorLogConstraint() } },
-                    new _RouteHandler()
-                    ) { }
+            public _Route() : base
+            (
+                "elfar/{action}/{id}",
+                new RouteValueDictionary(new { controller = "ErrorLog", action = "Default", id = UrlParameter.Optional, namespaces = new[] { "Elfar" } }),
+                new RouteValueDictionary{ { "", new ErrorLogConstraint() } },
+                new _RouteHandler()
+            ) { }
 
             class _RouteHandler : IRouteHandler
             {
