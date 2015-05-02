@@ -2,35 +2,35 @@
 module Elfar {
     "use strict";
     export var app: App;
+    export function registerPlugin(): void {
+    }
     export class App {
         private _dashboard: Dashboard;
         private tabs = ko.observableArray<Tab>([]);
-        selectTab = (selection: string | Tab) => {
+        select = (selection: string | Tab) => {
             var tab = typeof selection === "string" ? this.tabs().first((t: Tab) => t.name === selection) : selection;
             if (!tab) { return; }
             ko.utils.arrayForEach(this.tabs(), (t: Tab) => t.selected(false));
             tab.selected(true);
         };
-        addTab = (tab: Tab) => {
+        add = (tab: Tab) => {
             var tabs = this.tabs;
             if (tabs.indexOf(tab) === -1) {
                 tabs.push(tab);
             }
-            this.selectTab(tab);
+            this.select(tab);
         };
-        removeTab = (tab: Tab) => {
+        remove = (tab: Tab) => {
             var tabs = this.tabs;
             var i = tabs.indexOf(tab);
             tabs.remove(tab);
             if (tab.selected()) { tabs()[--i].selected(true); }
         };
         constructor() {
-            this.addTab(this._dashboard = new Dashboard());
+            this.add(this._dashboard = new Dashboard());
         }
         static init() {
-            console.log("Elfar.App initialising...");
             ko.applyBindings(app = new App());
-            console.log("Elfar.App initialised");
         }
         get dashboard(): Dashboard {
             return this._dashboard;

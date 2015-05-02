@@ -11,11 +11,14 @@ var Elfar;
 (function (Elfar) {
     "use strict";
     Elfar.app;
+    function registerPlugin() {
+    }
+    Elfar.registerPlugin = registerPlugin;
     var App = (function () {
         function App() {
             var _this = this;
             this.tabs = ko.observableArray([]);
-            this.selectTab = function (selection) {
+            this.select = function (selection) {
                 var tab = typeof selection === "string" ? _this.tabs().first(function (t) { return t.name === selection; }) : selection;
                 if (!tab) {
                     return;
@@ -23,14 +26,14 @@ var Elfar;
                 ko.utils.arrayForEach(_this.tabs(), function (t) { return t.selected(false); });
                 tab.selected(true);
             };
-            this.addTab = function (tab) {
+            this.add = function (tab) {
                 var tabs = _this.tabs;
                 if (tabs.indexOf(tab) === -1) {
                     tabs.push(tab);
                 }
-                _this.selectTab(tab);
+                _this.select(tab);
             };
-            this.removeTab = function (tab) {
+            this.remove = function (tab) {
                 var tabs = _this.tabs;
                 var i = tabs.indexOf(tab);
                 tabs.remove(tab);
@@ -38,12 +41,10 @@ var Elfar;
                     tabs()[--i].selected(true);
                 }
             };
-            this.addTab(this._dashboard = new Dashboard());
+            this.add(this._dashboard = new Dashboard());
         }
         App.init = function () {
-            console.log("Elfar.App initialising...");
             ko.applyBindings(Elfar.app = new App());
-            console.log("Elfar.App initialised");
         };
         Object.defineProperty(App.prototype, "dashboard", {
             get: function () {
