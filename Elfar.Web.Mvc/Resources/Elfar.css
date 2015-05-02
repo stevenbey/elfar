@@ -219,10 +219,9 @@ header > div,
   color: #FFF;
 }
 td.type,
-#summary li .header,
-#summary li .content,
-#summary li .footer,
-.section,
+#summary li > div .header,
+#summary li > div .body,
+#summary li > div .footer,
 .section > .head,
 ul.legend li {
   overflow: hidden;
@@ -230,7 +229,7 @@ ul.legend li {
   white-space: nowrap;
   word-wrap: normal;
 }
-#summary li .content,
+#summary li > div .body,
 .section > .head {
   font-family: Segoe UI Light,Segoe UI,Tahoma,Arial,Verdana;
 }
