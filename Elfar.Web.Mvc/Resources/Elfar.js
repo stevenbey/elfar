@@ -17,7 +17,6 @@ var Elfar;
     var App = (function () {
         function App() {
             var _this = this;
-            this.tabs = ko.observableArray([]);
             this.select = function (selection) {
                 var tab = typeof selection === "string" ? _this.tabs().first(function (t) { return t.name === selection; }) : selection;
                 if (!tab) {
@@ -41,14 +40,15 @@ var Elfar;
                     tabs()[--i].selected(true);
                 }
             };
-            this.add(this._dashboard = new Dashboard());
+            this[0x0] = ko.observableArray([]);
+            this.add(this[0x1] = new Dashboard());
         }
         App.init = function () {
             ko.applyBindings(Elfar.app = new App());
         };
         Object.defineProperty(App.prototype, "dashboard", {
             get: function () {
-                return this._dashboard;
+                return this[0x1];
             },
             enumerable: true,
             configurable: true
@@ -56,6 +56,13 @@ var Elfar;
         Object.defineProperty(App, "path", {
             get: function () {
                 return location.pathname;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(App.prototype, "tabs", {
+            get: function () {
+                return this[0x0];
             },
             enumerable: true,
             configurable: true

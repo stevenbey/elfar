@@ -5,8 +5,6 @@ module Elfar {
     export function registerPlugin(): void {
     }
     export class App {
-        private _dashboard: Dashboard;
-        private tabs = ko.observableArray<Tab>([]);
         select = (selection: string | Tab) => {
             var tab = typeof selection === "string" ? this.tabs().first((t: Tab) => t.name === selection) : selection;
             if (!tab) { return; }
@@ -27,16 +25,20 @@ module Elfar {
             if (tab.selected()) { tabs()[--i].selected(true); }
         };
         constructor() {
-            this.add(this._dashboard = new Dashboard());
+            this[0x0] = ko.observableArray<Tab>([]);
+            this.add(this[0x1] = new Dashboard());
         }
         static init() {
             ko.applyBindings(app = new App());
         }
         get dashboard(): Dashboard {
-            return this._dashboard;
+            return this[0x1];
         }
         static get path(): string {
             return location.pathname;
+        }
+        get tabs(): KnockoutObservableArray<Tab> {
+            return this[0x0];
         }
     }
     export class _Object {
