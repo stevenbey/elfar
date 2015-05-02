@@ -30,29 +30,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Providers", "Providers", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{BB61C097-BEBA-4102-88C3-2D3085EC0F38}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Elfar.Tests.UI.Dev", "http://localhost:1036", "{B0182498-0D72-4061-9E8D-A120B59C8F7E}"
-	ProjectSection(WebsiteProperties) = preProject
-		UseIISExpress = "true"
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
-		Debug.AspNetCompiler.VirtualPath = "/localhost_1036"
-		Debug.AspNetCompiler.PhysicalPath = "Elfar.Tests.UI.Dev\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_1036\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/localhost_1036"
-		Release.AspNetCompiler.PhysicalPath = "Elfar.Tests.UI.Dev\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_1036\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.Debug = "False"
-		SlnRelativePath = "Elfar.Tests.UI.Dev\"
-		DefaultWebSiteLanguage = "Visual C#"
-		StartServerOnDebug = "false"
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.Web.Mvc", "Elfar.Web.Mvc\Elfar.Web.Mvc.csproj", "{7C6FCD11-4C1A-46E8-8587-E2639628E5C4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elfar.Web.Http", "Elfar.Web.Http\Elfar.Web.Http.csproj", "{67FC3686-AD3F-44C1-93B9-C86A43BE378B}"
@@ -139,16 +116,6 @@ Global
 		{A00C7893-6A44-4A03-A6A6-8E97966D8605}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{A00C7893-6A44-4A03-A6A6-8E97966D8605}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{A00C7893-6A44-4A03-A6A6-8E97966D8605}.Release|x86.ActiveCfg = Release|Any CPU
-		{B0182498-0D72-4061-9E8D-A120B59C8F7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B0182498-0D72-4061-9E8D-A120B59C8F7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B0182498-0D72-4061-9E8D-A120B59C8F7E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{B0182498-0D72-4061-9E8D-A120B59C8F7E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{B0182498-0D72-4061-9E8D-A120B59C8F7E}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{B0182498-0D72-4061-9E8D-A120B59C8F7E}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{B0182498-0D72-4061-9E8D-A120B59C8F7E}.Release|Any CPU.Build.0 = Debug|Any CPU
-		{B0182498-0D72-4061-9E8D-A120B59C8F7E}.Release|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{B0182498-0D72-4061-9E8D-A120B59C8F7E}.Release|Mixed Platforms.Build.0 = Debug|Any CPU
-		{B0182498-0D72-4061-9E8D-A120B59C8F7E}.Release|x86.ActiveCfg = Debug|Any CPU
 		{7C6FCD11-4C1A-46E8-8587-E2639628E5C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7C6FCD11-4C1A-46E8-8587-E2639628E5C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C6FCD11-4C1A-46E8-8587-E2639628E5C4}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -190,7 +157,6 @@ Global
 		{0F38C418-F77B-473F-949E-81854091A364} = {4017D361-5027-454A-BCE2-34130CE1647E}
 		{E1CD9E2F-5E5B-4437-B124-20CEFE5FC91C} = {AB067325-8584-4D24-ADA9-C54C37683996}
 		{A00C7893-6A44-4A03-A6A6-8E97966D8605} = {AB067325-8584-4D24-ADA9-C54C37683996}
-		{B0182498-0D72-4061-9E8D-A120B59C8F7E} = {AB067325-8584-4D24-ADA9-C54C37683996}
 		{4A6BDF79-506F-4E6B-9313-1F2AA32E3745} = {4017D361-5027-454A-BCE2-34130CE1647E}
 	EndGlobalSection
 EndGlobal
