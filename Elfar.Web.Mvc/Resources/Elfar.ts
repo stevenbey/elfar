@@ -108,31 +108,36 @@ module Elfar {
         }
     }
     export class Summary extends Section {
-        items = ko.observableArray<Tile>();
+        add = (content: any, template?: string, size: TileSize = TileSize.Small) => {
+            this.tiles.push(new Tile(content, template, size));
+        };
         constructor(data: _Summary[]) {
             super("summary", "Summary");
-
+            this[0x1] = ko.observableArray<Tile>();
             var key = function(area: string, controller: string) {
                 this.area = area,
                 this.controller = controller,
                 this.toString = () => { return `~/${this.area ? this.area + "/" : ""}${this.controller}`; };
             };
             var controllers = data.groupBy((i: any) => new key(i.Area, i.Controller)).select((g: _Summary[], i: number) => new Controller(g, Chart.colours[i]));
-            this.items.push(new Tile(new Donut("Controllers", controllers), "donut", TileSize.Large));
-            // this.items.push(new Tile(new Actions(areas.selectMany(a => a.controllers).selectMany(c => c.actions)), "chart", TileSize.Large));
-            this.items.push(new Tile(new Chart(1), "chart", TileSize.Large));
-            this.items.push(new Tile(new Chart(2), "chart", TileSize.Wide));
-            this.items.push(new Tile(new Chart(3), "chart", TileSize.Small));
-            this.items.push(new Tile(new Chart(4), "chart", TileSize.Small));
+            this.add(new Donut("Controllers", controllers), "donut", TileSize.Large);
+            // this.add(new Actions(areas.selectMany(a => a.controllers).selectMany(c => c.actions)), "chart", TileSize.Large));
+            this.add(new Chart(1), "chart", TileSize.Large);
+            this.add(new Chart(2), "chart", TileSize.Wide);
+            this.add(new Chart(3), "chart");
+            this.add(new Chart(4), "chart");
 
             var today = new Date().setHours(0, 0, 0, 0);
-            this.items.push(new Tile(new Term(90, data.where((i: any) => today <= i.dateTime.addDays(90))), "term-tile"));
-            this.items.push(new Tile(new Term(30, data.where((i: any) => today <= i.dateTime.addDays(30))), "term-tile"));
-            this.items.push(new Tile(new Term(7, data.where((i: any) => today <= i.dateTime.addDays(7))), "term-tile"));
-            this.items.push(new Tile(new Term(1, data.where((i: any) => today <= i.dateTime.valueOf())), "term-tile"));
+            this.add(new Term(90, data.where((i: any) => today <= i.dateTime.addDays(90))), "term-tile");
+            this.add(new Term(30, data.where((i: any) => today <= i.dateTime.addDays(30))), "term-tile");
+            this.add(new Term(7, data.where((i: any) => today <= i.dateTime.addDays(7))), "term-tile");
+            this.add(new Term(1, data.where((i: any) => today <= i.dateTime.valueOf())), "term-tile");
+        }
+        get tiles(): KnockoutObservableArray<Tile> {
+            return this[0x1];
         }
     }
-    class Tile extends _Object {
+    export class Tile extends _Object {
         constructor(public content: any, template: string, private _size: TileSize = TileSize.Small) {
             super(null, null, template);
         }

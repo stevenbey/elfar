@@ -172,8 +172,13 @@ var Elfar;
     var Summary = (function (_super) {
         __extends(Summary, _super);
         function Summary(data) {
+            var _this = this;
             _super.call(this, "summary", "Summary");
-            this.items = ko.observableArray();
+            this.add = function (content, template, size) {
+                if (size === void 0) { size = 1 /* Small */; }
+                _this.tiles.push(new Tile(content, template, size));
+            };
+            this[0x1] = ko.observableArray();
             var key = function (area, controller) {
                 var _this = this;
                 this.area = area, this.controller = controller, this.toString = function () {
@@ -181,17 +186,24 @@ var Elfar;
                 };
             };
             var controllers = data.groupBy(function (i) { return new key(i.Area, i.Controller); }).select(function (g, i) { return new Controller(g, Chart.colours[i]); });
-            this.items.push(new Tile(new Donut("Controllers", controllers), "donut", 0 /* Large */));
-            this.items.push(new Tile(new Chart(1), "chart", 0 /* Large */));
-            this.items.push(new Tile(new Chart(2), "chart", 2 /* Wide */));
-            this.items.push(new Tile(new Chart(3), "chart", 1 /* Small */));
-            this.items.push(new Tile(new Chart(4), "chart", 1 /* Small */));
+            this.add(new Donut("Controllers", controllers), "donut", 0 /* Large */);
+            this.add(new Chart(1), "chart", 0 /* Large */);
+            this.add(new Chart(2), "chart", 2 /* Wide */);
+            this.add(new Chart(3), "chart");
+            this.add(new Chart(4), "chart");
             var today = new Date().setHours(0, 0, 0, 0);
-            this.items.push(new Tile(new Term(90, data.where(function (i) { return today <= i.dateTime.addDays(90); })), "term-tile"));
-            this.items.push(new Tile(new Term(30, data.where(function (i) { return today <= i.dateTime.addDays(30); })), "term-tile"));
-            this.items.push(new Tile(new Term(7, data.where(function (i) { return today <= i.dateTime.addDays(7); })), "term-tile"));
-            this.items.push(new Tile(new Term(1, data.where(function (i) { return today <= i.dateTime.valueOf(); })), "term-tile"));
+            this.add(new Term(90, data.where(function (i) { return today <= i.dateTime.addDays(90); })), "term-tile");
+            this.add(new Term(30, data.where(function (i) { return today <= i.dateTime.addDays(30); })), "term-tile");
+            this.add(new Term(7, data.where(function (i) { return today <= i.dateTime.addDays(7); })), "term-tile");
+            this.add(new Term(1, data.where(function (i) { return today <= i.dateTime.valueOf(); })), "term-tile");
         }
+        Object.defineProperty(Summary.prototype, "tiles", {
+            get: function () {
+                return this[0x1];
+            },
+            enumerable: true,
+            configurable: true
+        });
         return Summary;
     })(Section);
     Elfar.Summary = Summary;
@@ -216,6 +228,7 @@ var Elfar;
         });
         return Tile;
     })(_Object);
+    Elfar.Tile = Tile;
     var Term = (function (_super) {
         __extends(Term, _super);
         function Term(length, data) {
