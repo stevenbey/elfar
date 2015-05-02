@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Text;
 using Elfar.IO;
 
@@ -12,7 +11,7 @@ namespace Elfar.Json
             if (!Directory.Exists(Path)) Directory.CreateDirectory(Path);
         }
 
-        public override void Delete(Guid id)
+        public override void Delete(string id)
         {
             File.Delete(GetFilePath(id));
         }
@@ -25,7 +24,7 @@ namespace Elfar.Json
             this[errorLog.ID] = errorLog.Detail;
         }
 
-        string GetFilePath<T>(T name)
+        string GetFilePath(string name)
         {
             return System.IO.Path.Combine(Path, name + ".json");
         }
@@ -39,13 +38,7 @@ namespace Elfar.Json
             }
             set { File.WriteAllText(GetFilePath("summaries"), value); }
         }
-        public override string this[Guid id]
-        {
-            get { return this[id.ToString()]; }
-            set { this[id.ToString()] = value; }
-        }
-
-        string this[string id]
+        public override string this[string id]
         {
             get { return File.ReadAllText(GetFilePath(id)); }
             set { File.WriteAllText(GetFilePath(id), value); }

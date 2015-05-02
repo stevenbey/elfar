@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
@@ -31,12 +30,12 @@ namespace Elfar.Web.Mvc
         {
             return View();
         }
-        public ContentResult Detail(Guid id)
+        public ContentResult Detail(string id)
         {
             return Content(ErrorLogProvider.Get(id), "application/json");
         }
         [HttpPost]
-        public JsonResult Detail(Guid id, string detail)
+        public JsonResult Detail(string id, string detail)
         {
             return Json(ErrorLogProvider.Save(id, detail));
         }

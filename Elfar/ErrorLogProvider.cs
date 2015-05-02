@@ -16,7 +16,7 @@ namespace Elfar
             if (string.IsNullOrWhiteSpace(application)) application = Settings.AppDomainAppVirtualPath ?? Settings.AppDomainAppId;
         }
         
-        internal static bool Delete(Guid id)
+        internal static bool Delete(string id)
         {
             try
             {
@@ -26,7 +26,7 @@ namespace Elfar
             catch { }
             return false;
         }
-        internal static string Get(Guid id)
+        internal static string Get(string id)
         {
             return Instance[id];
         }
@@ -37,7 +37,7 @@ namespace Elfar
             try { Instance.Save(errorLog); }
             catch (Exception e) { Plugins(new ErrorLog(e), false); }
         }
-        internal static bool Save(Guid id, string detail)
+        internal static bool Save(string id, string detail)
         {
             try
             {

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Simple.Data;
@@ -19,9 +18,9 @@ namespace Elfar.Data
             errorLogs = obj[settings.Table];
         }
 
-        public void Delete(Guid id)
+        public void Delete(string id)
         {
-            errorLogs.Delete(ID: id.ToString());
+            errorLogs.Delete(ID: id);
         }
         public void Save(ErrorLog.Storage errorLog)
         {
@@ -36,10 +35,10 @@ namespace Elfar.Data
                 return string.Concat("[", string.Join(",", summaries.Select(s => s.Decompress())), "]");
             }
         }
-        public string this[Guid id]
+        public string this[string id]
         {
-            get { return errorLogs.Get(id.ToString()).Detail.Decompress(); }
-            set { errorLogs.Update(new {ID = id.ToString(), Detail = value.Compress() }); }
+            get { return errorLogs.Get(id).Detail.Decompress(); }
+            set { errorLogs.Update(new {ID = id, Detail = value.Compress() }); }
         }
 
         static readonly dynamic errorLogs;
