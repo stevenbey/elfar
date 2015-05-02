@@ -27,7 +27,7 @@ var Elfar;
             };
             this.add = function (tab) {
                 var tabs = _this.tabs;
-                if (tabs.indexOf(tab) === -1) {
+                if (!tabs().contains(tab)) {
                     tabs.push(tab);
                 }
                 _this.select(tab);
@@ -125,7 +125,7 @@ var Elfar;
             _super.call(this, "dashboard", "Dashboard", true);
             this.add = function (section) {
                 var sections = _this.sections;
-                if (sections.indexOf(section) === -1) {
+                if (!sections().contains(section)) {
                     sections.push(section);
                 }
             };
@@ -317,7 +317,7 @@ var Elfar;
         __extends(Common, _super);
         function Common(summaries) {
             _super.call(this, "common", "Most Common");
-            this.summaries = summaries.groupBy(function (i) { return i.Type; }).orderBy(function (g) { return g.length; }).take(10);
+            this.summaries = summaries.groupBy(function (i) { return i.Type; }).orderByDescending(function (g) { return g.length; }).take(10);
         }
         return Common;
     })(Section);

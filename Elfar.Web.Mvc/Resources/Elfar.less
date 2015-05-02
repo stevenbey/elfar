@@ -14,6 +14,7 @@ body {
     margin: 0;
     padding: 0;
     overflow: hidden;
+    cursor: default;
 
     > div {
         position: absolute;
@@ -50,8 +51,13 @@ header, footer {
     z-index: 999;
 }
 
-a { 
+a {
     color: #007acc;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
 }
 
 pre {
@@ -72,7 +78,6 @@ ul#tabs {
         display: inline-block;
         padding: 0 5px 3px;
         border-bottom: 2px solid #BBB;
-        cursor: default;
 
         &:first-child {
             margin-left: 15px;
@@ -102,12 +107,16 @@ ul#tabs {
     }
 }
 
-#common td:last-child{
-    text-align: right;
-}
+#common, #latest {
+    ul {
+        margin: 0;
+        padding: 0 0 0 4px;
+        list-style-type: none;
 
-#latest td:first-child > div {
-    width: 203px;
+        li {
+            max-width: 308px;
+        }
+    }
 }
 
 #summary {
@@ -279,7 +288,7 @@ header > div, #summary li > div {
     color: #FFF;
 }
 
-ul.legend li, #latest td:first-child > div, #summary li > div .header, #summary li > div .body, #summary li > div .footer, .section > .head {
+ul.legend li, #latest li, #summary li > div .header, #summary li > div .body, #summary li > div .footer, .section > .head {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

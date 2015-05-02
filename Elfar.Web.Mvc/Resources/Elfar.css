@@ -13,6 +13,7 @@ body {
   margin: 0;
   padding: 0;
   overflow: hidden;
+  cursor: default;
 }
 body > div {
   position: absolute;
@@ -46,6 +47,10 @@ footer {
 }
 a {
   color: #007acc;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
 }
 pre {
   width: 95%;
@@ -63,7 +68,6 @@ ul#tabs li {
   display: inline-block;
   padding: 0 5px 3px;
   border-bottom: 2px solid #BBB;
-  cursor: default;
 }
 ul#tabs li:first-child {
   margin-left: 15px;
@@ -85,11 +89,15 @@ ul#tabs i {
 ul#tabs i:hover {
   background-color: #CCC;
 }
-#common td:last-child {
-  text-align: right;
+#common ul,
+#latest ul {
+  margin: 0;
+  padding: 0 0 0 4px;
+  list-style-type: none;
 }
-#latest td:first-child > div {
-  width: 203px;
+#common ul li,
+#latest ul li {
+  max-width: 308px;
 }
 #summary ul {
   margin: 0;
@@ -235,7 +243,7 @@ header > div,
   color: #FFF;
 }
 ul.legend li,
-#latest td:first-child > div,
+#latest li,
 #summary li > div .header,
 #summary li > div .body,
 #summary li > div .footer,

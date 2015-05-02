@@ -13,7 +13,7 @@ module Elfar {
         };
         add = (tab: Tab) => {
             var tabs = this.tabs;
-            if (tabs.indexOf(tab) === -1) {
+            if (!tabs().contains(tab)) {
                 tabs.push(tab);
             }
             this.select(tab);
@@ -75,7 +75,7 @@ module Elfar {
     export class Dashboard extends Tab {
         add = (section: Section) => {
             var sections = this.sections;
-            if (sections.indexOf(section) === -1) {
+            if (!sections().contains(section)) {
                 sections.push(section);
             }
         };
@@ -207,7 +207,7 @@ module Elfar {
         summaries: _Summary[];
         constructor(summaries: _Summary[]) {
             super("common", "Most Common");
-            this.summaries = summaries.groupBy(i => i.Type).orderBy(g => g.length).take(10);
+            this.summaries = summaries.groupBy(i => i.Type).orderByDescending(g => g.length).take(10);
         }
     }
     enum TileSize { Large, Small, Wide }

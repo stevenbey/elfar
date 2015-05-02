@@ -30,41 +30,14 @@
     <div class="chart" data-bind="attr: { id: id }"></div>
 </script>
 <script type="text/html" id="latest-template">
-    <table id="latest">
-        <colgroup>
-           <col class="type" />
-        </colgroup>
-        <thead>
-            <tr>
-                <th class="type">Type</th>
-                <th class="small centre">Date</th>
-                <th class="small centre">Time</th>
-            </tr>
-        </thead>
-        <tbody data-bind="foreach: summaries">
-            <tr>
-                <td data-bind="attr: { title: Type }"><div><a data-bind="text: Type"></a></div></td>
-                <td data-bind="text: Date"></td>
-                <td data-bind="text: Time"></td>
-            </tr>
-        </tbody>
-    </table>
+    <ul data-bind="foreach: summaries">
+        <li data-bind="attr: { title: Type }"><a href="#" data-bind="text: Type"></a></li>
+    </ul>
 </script>
 <script type="text/html" id="common-template">
-    <table id="common">
-        <thead>
-            <tr>
-                <th class="type">Type</th>
-                <th class="small centre">Count</th>
-            </tr>
-        </thead>
-        <tbody data-bind="foreach: summaries">
-            <tr>
-                <td data-bind="attr: { title: key }"><a data-bind="text: key"></a></td>
-                <td data-bind="text: length"></td>
-            </tr>
-        </tbody>
-    </table>
+    <ul data-bind="foreach: summaries">
+        <li data-bind="attr: { title: key }"><a href="#" data-bind="text: key"></a></li>
+    </ul>
 </script>
 
 @*<div id="timeline" style="min-width: 310px; height: 150px; margin: 0 auto"></div>*@
