@@ -57,6 +57,7 @@ a {
 
     &:hover {
         text-decoration: underline;
+        cursor: pointer;
     }
 }
 
@@ -107,7 +108,7 @@ ul#tabs {
     }
 }
 
-#common, #latest {
+#frequent, #latest {
     ul {
         margin: 0;
         padding: 0 0 0 4px;
@@ -117,6 +118,10 @@ ul#tabs {
             max-width: 308px;
         }
     }
+}
+
+#content > div {
+    max-width: 1280px;
 }
 
 #summary {
@@ -167,6 +172,8 @@ ul#tabs {
         }
 
         div.title {
+            width: auto;
+            height: auto;
             padding-top: 7px;
             padding-left: 11px;
             color: #000;
@@ -187,7 +194,10 @@ ul#tabs {
                 height: auto;
                 list-style-type: none;
                 max-width: 93px;
-                color: #000;
+
+                a {
+                    color: #000;
+                } 
 
                 span:first-child {
                     display: block;
@@ -264,6 +274,10 @@ ul#tabs {
     background-color: #1BA1E2 !important;
 }
 
+.modal-content {
+    border-radius: 0;
+}
+
 header > div, .blue-bg {
     background-color: #007ACC !important;
 }
@@ -280,7 +294,7 @@ body, .chart, .lightgrey-bg {
     background-color: #009CCC !important;
 }
 
-body > div, .white-bg {
+#content, .white-bg {
     background-color: #FFF;
 }
 

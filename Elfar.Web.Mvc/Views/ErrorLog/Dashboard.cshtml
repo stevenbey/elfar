@@ -9,7 +9,7 @@
         <li data-bind="template: { name: template, data: content }, css: size"></li>
     </ul>
 </script>
-<script type="text/html" id="term-tile-template">
+<script type="text/html" id="term-template">
     <div data-bind="click: count ? $root.add : null, css: css">
         <div class="head" data-bind="attr: { title: title }, text: title"></div>
         <div class="body" data-bind="text: count"></div>
@@ -18,11 +18,11 @@
 </script>
 <script type="text/html" id="donut-template">
     <div class="chart" data-bind="attr: { id: id }"></div>
-    <div class="title" data-bind="text: $data"></div>
-    <ul class="legend" data-bind="foreach: series">
-        <li data-bind="attr: { title: key }">
+    <div class="title" data-bind="text: id"></div>
+    <ul class="legend" data-bind="foreach: series[0].points">
+        <li data-bind="attr: { title: title }">
             <span data-bind="style: { backgroundColor: colour }"></span>
-            <span data-bind="text: key.controller"></span>
+            <a data-bind="text: name, click: $root.add"></a>
         </li>
     </ul>
 </script>
@@ -30,13 +30,13 @@
     <div class="chart" data-bind="attr: { id: id }"></div>
 </script>
 <script type="text/html" id="latest-template">
-    <ul data-bind="foreach: summaries">
-        <li data-bind="attr: { title: Type }"><a href="#" data-bind="text: Type"></a></li>
+    <ul data-bind="foreach: errorLogs">
+        <li data-bind="attr: { title: Type }"><a data-bind="text: Type, click: $root.show" data-toggle="modal" data-target="#myModal"></a></li>
     </ul>
 </script>
-<script type="text/html" id="common-template">
-    <ul data-bind="foreach: summaries">
-        <li data-bind="attr: { title: key }"><a href="#" data-bind="text: key"></a></li>
+<script type="text/html" id="frequent-template">
+    <ul data-bind="foreach: errorLogs">
+        <li data-bind="attr: { title: key }"><a data-bind="text: key"></a></li>
     </ul>
 </script>
 

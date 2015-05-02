@@ -81,10 +81,10 @@
       <DependentUpon>Elfar.js</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Elfar.min.css">
-      <DependentUpon>Elfar.less</DependentUpon>
+      <DependentUpon>Elfar.css</DependentUpon>
     </EmbeddedResource>
     <Content Include="Views\Web.config" />
-    <EmbeddedResource Include="Views\ErrorLog\Term.cshtml" />
+    <EmbeddedResource Include="Views\ErrorLog\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Elfar\Elfar.csproj">
@@ -109,9 +109,10 @@
     <EmbeddedResource Include="Views\ErrorLog\Default.cshtml" />
     <EmbeddedResource Include="Views\ErrorLog\Header.cshtml" />
     <EmbeddedResource Include="Views\ErrorLog\Footer.cshtml" />
-    <EmbeddedResource Include="Views\ErrorLog\List.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ErrorLog\Modal.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

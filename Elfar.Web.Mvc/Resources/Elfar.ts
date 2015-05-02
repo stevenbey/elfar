@@ -1,28 +1,43 @@
 ﻿// ReSharper disable InconsistentNaming
 module Elfar {
     "use strict";
-    export var app: App;
-    export function registerPlugin(): void {
-    }
+    var app: App;
+    //export function registerPlugin(): void {
+    //}
     export class App {
+        errorLog = ko.observable<ErrorLog>();
         select = (selection: string | Tab) => {
             var tab = typeof selection === "string" ? this.tabs().first((t: Tab) => t.name === selection) : selection;
             if (!tab) { return; }
-            ko.utils.arrayForEach(this.tabs(), (t: Tab) => t.selected(false));
+            this.tabs().forEach((t: Tab) => t.selected(false));
             tab.selected(true);
         };
-        add = (tab: Tab) => {
-            var tabs = this.tabs;
-            if (!tabs().contains(tab)) {
-                tabs.push(tab);
+        add = (item: Tab | Section | Tile) => {
+            if (item instanceof Tab) {
+                var tabs = this.tabs;
+                if (!tabs().contains(item)) {
+                    tabs.push(item);
+                }
+                this.select(item);
+                return;
             }
-            this.select(tab);
+            this.dashboard.add(item);
         };
         remove = (tab: Tab) => {
             var tabs = this.tabs;
             var i = tabs.indexOf(tab);
             tabs.remove(tab);
             if (tab.selected()) { tabs()[--i].selected(true); }
+        };
+        show = (errorLog: ErrorLog) => {
+            if (errorLog.Url) {
+                this.errorLog(errorLog);
+                return;
+            }
+            $.get(App.path + "/Detail/" + errorLog.ID, (data: any) => {
+                $.extend(errorLog, data);
+                this.errorLog(errorLog);
+            });
         };
         constructor() {
             this[0x0] = ko.observableArray<Tab>([]);
@@ -41,14 +56,17 @@ module Elfar {
             return this[0x0];
         }
     }
-    export class _Summary {
+    export class ErrorLog {
         Action: string;
         Area: string;
         Controller: string;
         dateTime: Date;
+        ID: string;
         Type: string;
+        Url: string;
         constructor(obj: any) {
             $.extend(this, obj);
+            if(this.Area) this.Area = `/${this.Area}`;
             this.dateTime = new Date(obj.Date + " " + obj.Time);
         }
     }
@@ -61,8 +79,8 @@ module Elfar {
         }
     }
     export class Tab extends _Object {
-        constructor(name: string, title: string, selected: boolean = false) {
-            super(name, title);
+        constructor(name: string, title: string, template?: string, selected: boolean = false) {
+            super(name, title, template);
             this[0x1] = ko.observable(selected);
         }
         get closeable(): boolean {
@@ -73,20 +91,27 @@ module Elfar {
         }
     }
     export class Dashboard extends Tab {
-        add = (section: Section) => {
-            var sections = this.sections;
-            if (!sections().contains(section)) {
-                sections.push(section);
+        add = (item: Section | Tile) => {
+            if (item instanceof Section) {
+                var sections = this.sections;
+                if (!sections().contains(item)) {
+                    sections.push(item);
+                }
+                return;
             }
+            this.summary.add(item);
         };
         constructor() {
-            super("dashboard", "Dashboard", true);
+            super("dashboard", "Dashboard", null, true);
             this[0x2] = ko.observableArray<Section>();
-            $.get(App.path + "/Summaries",(data: any[]) => {
-                data = data.reverse().select((i: any) => new _Summary(i));
+            $.get(App.path + "/Summaries", (data: any[]) => {
+                data = data.reverse().select((i: any) => new ErrorLog(i));
                 this.add(this[0x3] = new Summary(data));
                 this.add(new Latest(data));
-                this.add(new Common(data));
+                //this.add(new Frequent("Area", data, e => new key(e.Area)));
+                //this.add(new Frequent("Controller", data, e => new key(e.Area, e.Controller)));
+                //this.add(new Frequent("Action", data, e => new key(e.Area, e.Controller, e.Action)));
+                //this.add(new Frequent("Type", data, e => e.Type));
             });
         }
         get closeable(): boolean {
@@ -106,28 +131,23 @@ module Elfar {
     }
     export class Summary extends Section {
         add = (content: any, template?: string, size: TileSize = TileSize.Small) => {
-            this.tiles.push(new Tile(content, template, size));
+            if (!(content instanceof Tile)) content = new Tile(content, template, size);
+            this.tiles.push(content);
         };
-        constructor(data: _Summary[]) {
+        constructor(errorLogs: ErrorLog[]) {
             super("summary", "Summary");
             this[0x1] = ko.observableArray<Tile>();
-            var key = function(area: string, controller: string) {
-                this.area = area,
-                this.controller = controller,
-                this.toString = () => { return `~/${this.area ? this.area + "/" : ""}${this.controller}`; };
-            };
-            var controllers = data.groupBy((i: any) => new key(i.Area, i.Controller)).select((g: _Summary[], i: number) => new Controller(g, Chart.colours[i]));
-            this.add(new Donut("Controllers", controllers), "donut", TileSize.Large);
-            // this.add(new Actions(areas.selectMany(a => a.controllers).selectMany(c => c.actions)), "chart", TileSize.Large));
-            this.add(new Chart(1), "chart", TileSize.Large);
-            this.add(new Chart(2), "chart", TileSize.Wide);
-            this.add(new Chart(3), "chart");
-            this.add(new Chart(4), "chart");
+            this.add(new Donut("Actions", errorLogs.groupBy((e: ErrorLog) => new key(e.Area, e.Controller, e.Action))), "donut", TileSize.Large);
+            this.add(new Donut("Controllers", errorLogs.groupBy((e: ErrorLog) => new key(e.Area, e.Controller))), "donut", TileSize.Large);
+            this.add(new Donut("Areas", errorLogs.groupBy((e: ErrorLog) => new key(e.Area))), "donut", TileSize.Large);
+            //this.add(new Chart(1), "chart", TileSize.Wide);
+            //this.add(new Chart(2), "chart");
+            //this.add(new Chart(3), "chart");
             var today = new Date().setHours(0, 0, 0, 0);
-            this.add(new Term(90, data.where((i: any) => today <= i.dateTime.addDays(90))), "term-tile");
-            this.add(new Term(30, data.where((i: any) => today <= i.dateTime.addDays(30))), "term-tile");
-            this.add(new Term(7, data.where((i: any) => today <= i.dateTime.addDays(7))), "term-tile");
-            this.add(new Term(1, data.where((i: any) => today <= i.dateTime.valueOf())), "term-tile");
+            this.add(new Term(90, errorLogs = errorLogs.where((e: ErrorLog) => today <= e.dateTime.addDays(90))), "term");
+            this.add(new Term(30, errorLogs = errorLogs.where((e: ErrorLog) => today <= e.dateTime.addDays(30))), "term");
+            this.add(new Term(7, errorLogs = errorLogs.where((e: ErrorLog) => today <= e.dateTime.addDays(7))), "term");
+            this.add(new Term(1, errorLogs.where((e: ErrorLog) => today <= e.dateTime.valueOf())), "term");
         }
         get tiles(): KnockoutObservableArray<Tile> {
             return this[0x1];
@@ -142,72 +162,91 @@ module Elfar {
             return TileSize[this[0x1]].toLowerCase();
         }
     }
-    class Chart extends Tab {
-        constructor(public id: any) {
-            super(id, id);
-        }
-        toString() {
-            return this.id;
-        }
+    class Chart {
+        constructor(public id: any, public series?: Series[]) {}
         static get colours(): string[] {
             return ["#68217A", "#007ACC", "#217167", "#A83A95", "#1BA1E2", "#571C75", "#009CCC", "#9ACD32", "#F2700F"].concat(Highcharts.getOptions().colors);
         }
     }
     class Donut extends Chart {
-        constructor(id: any, public series: Series[]) {
-            super(id);
+        constructor(id: string, groups: ErrorLog[][]) {
+            super(id, [new Series(id, groups)]);
+            var series = this.series[0];
+            var click = (event: HighchartsAreaClickEvent) => app.add(series.points.first((p: Point) => p.title === event.point.name));
             var donutOptions: HighchartsOptions = {
                 chart: { type: "pie", backgroundColor: "#F1F1F1", animation: false },
                 credits: { enabled: false },
-                title: { text: `${series.sum((s: Series) => s.value)}`, y: 27, verticalAlign: "middle", style: { fontSize: "33px" } },
-                plotOptions: { pie: { shadow: false, center: ["50%", "56%"] }, series: { animation: false } },
-                series: [{ name: this.id, data: series.select((c: Series) => c.data), size: "64%", innerSize: "53%", dataLabels: { color: "#FFF", format: "{y}", distance: -24, style: { fontWeight: "normal", textShadow: "none" } } } ]
+                tooltip: { enabled: false },
+                title: { text: series.count.toString(), y: 27, verticalAlign: "middle", style: { fontSize: "33px" } },
+                plotOptions: { pie: { shadow: false, center: ["50%", "56%"], cursor: "pointer", events: { click: click } }, series: { animation: false } },
+                series: [{ name: this.id, data: series.data, size: "64%", innerSize: "53%", dataLabels: { color: "#FFF", format: "{y}", distance: -24, style: { fontWeight: "normal", textShadow: "none" } } } ]
             };
             setTimeout(() => $(`#${this.id}`).highcharts(donutOptions), 1);
         }
     }
     class Series {
-        constructor(public key: any, public value: number, public colour: string) {}
-        get data(): any {
-            return { name: this.key.toString(), y: this.value, color: this.colour };
+        points: Point[];
+        constructor(name: string, groups: ErrorLog[][]) {
+            this.points = groups.select((g: ErrorLog[], i: number) => new Point(name, g, Chart.colours[i]));
         }
-    }
-    class Controller extends Series {
-        //actions: Series[];
-        constructor(data: _Summary[], colour: string) {
-            super(data.key, data.length, colour);
-            //var gradient: HighchartsGradient = Highcharts.Color(colour);
-            //this.actions = data.groupBy((i: _Summary) => data.key + "/" + i.Action).select((g: _Summary[], i: number) => {
-            //    var c: HighchartsGradient = gradient.brighten(0.1 - (i / g.length / 50));
-            //    return new Series(g.key, g.length, c.get(null));
-            //});
-        }
-    }
-    class Term extends Tab {
-        summaries = ko.observableArray<any>();
-        constructor(length: number, summaries: _Summary[]) {
-            super("term-tab", length === 1 ? "Today" : `Last ${length} days`);
-            this.summaries(summaries);
+        get data(): any[] {
+            return this.points.select((p: Point) => ({ name: p.title, y: p.value, color: p.colour }));
         }
         get count(): number {
-            return this.summaries().length;
+            return this.points.length;
+        }
+    }
+    class List extends Tab {
+        errorLogs = ko.observableArray<ErrorLog>();
+        constructor(name: string, title: string, errorLogs: ErrorLog[]) {
+            super(name, title, "list");
+            this.errorLogs(errorLogs);
+        }
+    }
+    class Point extends List {
+        constructor(name: string, errorLogs: ErrorLog[], public colour: string) {
+            super(errorLogs.key[name.slice(0, -1)] || "[root]", errorLogs.key.toString(), errorLogs);
+        }
+        get value(): number {
+            return this.errorLogs().length;
+        }
+    }
+    class Term extends List {
+        constructor(length: number, errorLogs: ErrorLog[]) {
+            super(`term-${length}`, length === 1 ? "Today" : `Last ${length} days`, errorLogs);
+        }
+        get count(): number {
+            return this.errorLogs().length;
         }
         get css(): string {
             return this.count ? "lightblue-bg clickable" : "grey-bg";
         }
     }
     class Latest extends Section {
-        summaries: _Summary[];
-        constructor(summaries: _Summary[]) {
+        errorLogs: ErrorLog[];
+        constructor(errorLogs: ErrorLog[]) {
             super("latest", "Most recent");
-            this.summaries = summaries.take(10);
+            this.errorLogs = errorLogs.take(10);
         }
     }
-    class Common extends Section {
-        summaries: _Summary[];
-        constructor(summaries: _Summary[]) {
-            super("common", "Most Common");
-            this.summaries = summaries.groupBy(i => i.Type).orderByDescending(g => g.length).take(10);
+    //class Frequent extends Section {
+    //    errorLogs: ErrorLog[];
+    //    constructor(type: string, errorLogs: ErrorLog[], keySelector: (item: ErrorLog) => any) {
+    //        super("frequent", `Most frequent (by ${type})`);
+    //        this.errorLogs = errorLogs.groupBy(keySelector).orderByDescending(g => g.length).take(10);
+    //    }
+    //}
+    class key {
+        toString: () => string;
+        Action: string;
+        Controller: string;
+        Area: string;
+        constructor(area: string, controller?: string, action?: string) {
+            var prefix = (value: string, enforce: boolean = false) => (value ? `/${value}` : (enforce ? "/" : ""));
+            this.Area = area,
+            this.Controller = controller,
+            this.Action = action;
+            this.toString = () => { return "~" + prefix(this.Area, !this.Controller) + prefix(this.Controller) + prefix(this.Action); };
         }
     }
     enum TileSize { Large, Small, Wide }

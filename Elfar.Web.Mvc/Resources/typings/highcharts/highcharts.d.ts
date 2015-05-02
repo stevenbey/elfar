@@ -1274,6 +1274,7 @@ declare var Highcharts: HighchartsStatic;
 
 interface HighchartsPointObject {
     category: string | number;
+    name: string;
     percentage: number;
     remove(): void;
     remove(redraw: boolean): void;

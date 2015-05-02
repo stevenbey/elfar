@@ -12,7 +12,7 @@
     min(selector: (item: T) => number): number;
     orderBy(selector: (item: T) => any): any[];
     orderByDescending(selector: (item: T) => any): any[];
-    select(selector: (item: T, index: number) => any): T[];
+    select(selector: (item: T, index: number) => any): any[];
     selectMany(collectionSelector: (item: T, index: number) => any[], resultSelector?: (item: T, array: any[]) => any): any[];
     skip(count: number): T[];
     skipWhile(predicate: (item: T, index: number) => boolean): T[];

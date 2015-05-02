@@ -2,5 +2,5 @@
     addDays(value: number): number;
 }
 Date.prototype.addDays = function (value: number) {
-    return new Date().setDate(this.getDate() + value);
+    return new Date(this.valueOf()).setDate(this.getDate() + value);
 }

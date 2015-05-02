@@ -51,6 +51,7 @@ a {
 }
 a:hover {
   text-decoration: underline;
+  cursor: pointer;
 }
 pre {
   width: 95%;
@@ -89,15 +90,18 @@ ul#tabs i {
 ul#tabs i:hover {
   background-color: #CCC;
 }
-#common ul,
+#frequent ul,
 #latest ul {
   margin: 0;
   padding: 0 0 0 4px;
   list-style-type: none;
 }
-#common ul li,
+#frequent ul li,
 #latest ul li {
   max-width: 308px;
+}
+#content > div {
+  max-width: 1280px;
 }
 #summary ul {
   margin: 0;
@@ -141,6 +145,8 @@ ul#tabs i:hover {
   font-size: 16px;
 }
 #summary li div.title {
+  width: auto;
+  height: auto;
   padding-top: 7px;
   padding-left: 11px;
   color: #000;
@@ -160,6 +166,8 @@ ul#tabs i:hover {
   height: auto;
   list-style-type: none;
   max-width: 93px;
+}
+#summary li ul.legend li a {
   color: #000;
 }
 #summary li ul.legend li span:first-child {
@@ -219,6 +227,9 @@ ul#tabs i:hover {
 .lightblue-bg {
   background-color: #1BA1E2 !important;
 }
+.modal-content {
+  border-radius: 0;
+}
 header > div,
 .blue-bg {
   background-color: #007ACC !important;
@@ -234,7 +245,7 @@ body,
 .teal-bg {
   background-color: #009CCC !important;
 }
-body > div,
+#content,
 .white-bg {
   background-color: #FFF;
 }
