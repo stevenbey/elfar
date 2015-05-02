@@ -71,15 +71,14 @@ var Elfar;
     })();
     Elfar.App = App;
     var _Object = (function () {
-        function _Object(name, title, _template) {
+        function _Object(name, title, template) {
             this.name = name;
             this.title = title;
-            this._template = _template;
-            this._template = (_template || name) + "-template";
+            this[0x0] = (template || name) + "-template";
         }
         Object.defineProperty(_Object.prototype, "template", {
             get: function () {
-                return this._template;
+                return this[0x0];
             },
             enumerable: true,
             configurable: true

@@ -42,11 +42,11 @@ module Elfar {
         }
     }
     export class _Object {
-        constructor(public name: string, public title: string, private _template?: string) {
-            this._template = (_template || name) + "-template";
+        constructor(public name: string, public title: string, template?: string) {
+            this[0x0] = (template || name) + "-template";
         }
         get template(): string {
-            return this._template;
+            return this[0x0];
         }
     }
     export class Tab extends _Object {
