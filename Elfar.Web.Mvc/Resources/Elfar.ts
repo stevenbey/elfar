@@ -50,16 +50,15 @@ module Elfar {
         }
     }
     export class Tab extends _Object {
-        _selected = ko.observable(false);
         constructor(name: string, title: string, selected: boolean = false) {
             super(name, title);
-            this._selected(selected);
+            this[0x1] = ko.observable(selected);
         }
         get closeable(): boolean {
             return true;
         }
         get selected(): KnockoutObservable<boolean> {
-            return this._selected;
+            return this[0x1];
         }
     }
     export class Dashboard extends Tab {

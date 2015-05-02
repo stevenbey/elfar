@@ -91,8 +91,7 @@ var Elfar;
         function Tab(name, title, selected) {
             if (selected === void 0) { selected = false; }
             _super.call(this, name, title);
-            this._selected = ko.observable(false);
-            this._selected(selected);
+            this[0x1] = ko.observable(selected);
         }
         Object.defineProperty(Tab.prototype, "closeable", {
             get: function () {
@@ -103,7 +102,7 @@ var Elfar;
         });
         Object.defineProperty(Tab.prototype, "selected", {
             get: function () {
-                return this._selected;
+                return this[0x1];
             },
             enumerable: true,
             configurable: true
