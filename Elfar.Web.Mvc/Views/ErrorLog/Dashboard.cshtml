@@ -30,37 +30,40 @@
     <div class="chart" data-bind="attr: { id: id }"></div>
 </script>
 <script type="text/html" id="latest-template">
-    <table>
+    <table id="latest">
+        <colgroup>
+           <col class="type" />
+        </colgroup>
         <thead>
             <tr>
-                <td class="type">Type</td>
-                <td class="small centre">Date</td>
-                <td class="small centre">Time</td>
+                <th class="type">Type</th>
+                <th class="small centre">Date</th>
+                <th class="small centre">Time</th>
             </tr>
         </thead>
-        @*<tbody data-bind="foreach: summaries">
+        <tbody data-bind="foreach: summaries">
             <tr>
-                <td data-bind="text: Type"></td>
+                <td data-bind="attr: { title: Type }"><div><a data-bind="text: Type"></a></div></td>
                 <td data-bind="text: Date"></td>
                 <td data-bind="text: Time"></td>
             </tr>
-            </tbody>*@
+        </tbody>
     </table>
 </script>
 <script type="text/html" id="common-template">
-    <table>
+    <table id="common">
         <thead>
             <tr>
-                <td class="type">Type</td>
-                <td class="small centre">Count</td>
+                <th class="type">Type</th>
+                <th class="small centre">Count</th>
             </tr>
         </thead>
-        @*<tbody data-bind="foreach: summaries">
-                <tr>
-                    <td data-bind="text: key"></td>
-                    <td data-bind="text: length"></td>
-                </tr>
-            </tbody>*@
+        <tbody data-bind="foreach: summaries">
+            <tr>
+                <td data-bind="attr: { title: key }"><a data-bind="text: key"></a></td>
+                <td data-bind="text: length"></td>
+            </tr>
+        </tbody>
     </table>
 </script>
 

@@ -44,6 +44,9 @@ footer {
   width: 100%;
   z-index: 999;
 }
+a {
+  color: #007acc;
+}
 pre {
   width: 95%;
   overflow: scroll;
@@ -81,6 +84,12 @@ ul#tabs i {
 }
 ul#tabs i:hover {
   background-color: #CCC;
+}
+#common td:last-child {
+  text-align: right;
+}
+#latest td:first-child > div {
+  width: 203px;
 }
 #summary ul {
   margin: 0;
@@ -169,7 +178,14 @@ ul#tabs i:hover {
   padding: 4px;
 }
 .section table {
-  width: 100%;
+  margin: 0 2px;
+  width: 308px;
+}
+.section table th {
+  font-weight: normal;
+}
+.section table th:first-child {
+  text-align: left;
 }
 .section > .body {
   width: inherit;
@@ -218,12 +234,12 @@ header > div,
 #summary li > div {
   color: #FFF;
 }
-td.type,
+ul.legend li,
+#latest td:first-child > div,
 #summary li > div .header,
 #summary li > div .body,
 #summary li > div .footer,
-.section > .head,
-ul.legend li {
+.section > .head {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

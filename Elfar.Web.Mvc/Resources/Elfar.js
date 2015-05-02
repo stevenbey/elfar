@@ -133,8 +133,8 @@ var Elfar;
             $.get(App.path + "/Summaries", function (data) {
                 data = data.reverse().select(function (i) { return new _Summary(i); });
                 _this.add(_this[0x3] = new Summary(data));
-                _this.add(new Section(null, "Latest", "latest"));
-                _this.add(new Section(null, "Most Common", "common"));
+                _this.add(new Latest(data));
+                _this.add(new Common(data));
             });
         }
         Object.defineProperty(Dashboard.prototype, "closeable", {
@@ -225,29 +225,6 @@ var Elfar;
         return Tile;
     })(_Object);
     Elfar.Tile = Tile;
-    var Term = (function (_super) {
-        __extends(Term, _super);
-        function Term(length, data) {
-            _super.call(this, "term-tab", length === 1 ? "Today" : "Last " + length + " days");
-            this.data = ko.observableArray();
-            this.data(data);
-        }
-        Object.defineProperty(Term.prototype, "count", {
-            get: function () {
-                return this.data().length;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Term.prototype, "css", {
-            get: function () {
-                return this.count ? "lightblue-bg clickable" : "grey-bg";
-            },
-            enumerable: true,
-            configurable: true
-        });
-        return Term;
-    })(Tab);
     var Chart = (function (_super) {
         __extends(Chart, _super);
         function Chart(id) {
@@ -305,6 +282,45 @@ var Elfar;
         }
         return Controller;
     })(Series);
+    var Term = (function (_super) {
+        __extends(Term, _super);
+        function Term(length, summaries) {
+            _super.call(this, "term-tab", length === 1 ? "Today" : "Last " + length + " days");
+            this.summaries = ko.observableArray();
+            this.summaries(summaries);
+        }
+        Object.defineProperty(Term.prototype, "count", {
+            get: function () {
+                return this.summaries().length;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Term.prototype, "css", {
+            get: function () {
+                return this.count ? "lightblue-bg clickable" : "grey-bg";
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return Term;
+    })(Tab);
+    var Latest = (function (_super) {
+        __extends(Latest, _super);
+        function Latest(summaries) {
+            _super.call(this, "latest", "Most recent");
+            this.summaries = summaries.take(10);
+        }
+        return Latest;
+    })(Section);
+    var Common = (function (_super) {
+        __extends(Common, _super);
+        function Common(summaries) {
+            _super.call(this, "common", "Most Common");
+            this.summaries = summaries.groupBy(function (i) { return i.Type; }).orderBy(function (g) { return g.length; }).take(10);
+        }
+        return Common;
+    })(Section);
     var TileSize;
     (function (TileSize) {
         TileSize[TileSize["Large"] = 0] = "Large";

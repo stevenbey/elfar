@@ -46,6 +46,7 @@ module Elfar {
         Area: string;
         Controller: string;
         dateTime: Date;
+        Type: string;
         constructor(obj: any) {
             $.extend(this, obj);
             this.dateTime = new Date(obj.Date + " " + obj.Time);
@@ -84,10 +85,8 @@ module Elfar {
             $.get(App.path + "/Summaries",(data: any[]) => {
                 data = data.reverse().select((i: any) => new _Summary(i));
                 this.add(this[0x3] = new Summary(data));
-                this.add(new Section(null, "Latest", "latest"));
-                this.add(new Section(null, "Most Common", "common"));
-                // this.latest(this.summaries.take(10));
-                // this.common(this.summaries.groupBy(i => i.Type).orderBy(g => g.length).take(10));
+                this.add(new Latest(data));
+                this.add(new Common(data));
             });
         }
         get closeable(): boolean {
@@ -99,8 +98,6 @@ module Elfar {
         get summary(): Summary {
             return this[0x3];
         }
-        // latest = ko.observableArray<_Summary>();
-        // common = ko.observableArray<_Summary>();
     }
     export class Section extends _Object {
         constructor(name: string, title: string, template?: string) {
@@ -126,7 +123,6 @@ module Elfar {
             this.add(new Chart(2), "chart", TileSize.Wide);
             this.add(new Chart(3), "chart");
             this.add(new Chart(4), "chart");
-
             var today = new Date().setHours(0, 0, 0, 0);
             this.add(new Term(90, data.where((i: any) => today <= i.dateTime.addDays(90))), "term-tile");
             this.add(new Term(30, data.where((i: any) => today <= i.dateTime.addDays(30))), "term-tile");
@@ -144,19 +140,6 @@ module Elfar {
         }
         get size(): string {
             return TileSize[this[0x1]].toLowerCase();
-        }
-    }
-    class Term extends Tab {
-        data = ko.observableArray<any>();
-        constructor(length: number, data: any[]) {
-            super("term-tab", length === 1 ? "Today" : `Last ${length} days`);
-            this.data(data);
-        }
-        get count(): number {
-            return this.data().length;
-        }
-        get css(): string {
-            return this.count ? "lightblue-bg clickable" : "grey-bg";
         }
     }
     class Chart extends Tab {
@@ -198,6 +181,33 @@ module Elfar {
             //    var c: HighchartsGradient = gradient.brighten(0.1 - (i / g.length / 50));
             //    return new Series(g.key, g.length, c.get(null));
             //});
+        }
+    }
+    class Term extends Tab {
+        summaries = ko.observableArray<any>();
+        constructor(length: number, summaries: _Summary[]) {
+            super("term-tab", length === 1 ? "Today" : `Last ${length} days`);
+            this.summaries(summaries);
+        }
+        get count(): number {
+            return this.summaries().length;
+        }
+        get css(): string {
+            return this.count ? "lightblue-bg clickable" : "grey-bg";
+        }
+    }
+    class Latest extends Section {
+        summaries: _Summary[];
+        constructor(summaries: _Summary[]) {
+            super("latest", "Most recent");
+            this.summaries = summaries.take(10);
+        }
+    }
+    class Common extends Section {
+        summaries: _Summary[];
+        constructor(summaries: _Summary[]) {
+            super("common", "Most Common");
+            this.summaries = summaries.groupBy(i => i.Type).orderBy(g => g.length).take(10);
         }
     }
     enum TileSize { Large, Small, Wide }
