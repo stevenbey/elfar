@@ -209,19 +209,15 @@ var Elfar;
     Elfar.Summary = Summary;
     var Tile = (function (_super) {
         __extends(Tile, _super);
-        function Tile(content, template, _size) {
-            if (_size === void 0) { _size = 1 /* Small */; }
+        function Tile(content, template, size) {
+            if (size === void 0) { size = 1 /* Small */; }
             _super.call(this, null, null, template);
             this.content = content;
-            this._size = _size;
+            this[0x1] = size;
         }
         Object.defineProperty(Tile.prototype, "size", {
             get: function () {
-                switch (this._size) {
-                    case 0 /* Large */: return "large";
-                    case 2 /* Wide */: return "wide";
-                    default: return "small";
-                }
+                return TileSize[this[0x1]].toLowerCase();
             },
             enumerable: true,
             configurable: true

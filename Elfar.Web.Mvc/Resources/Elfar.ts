@@ -138,15 +138,12 @@ module Elfar {
         }
     }
     export class Tile extends _Object {
-        constructor(public content: any, template: string, private _size: TileSize = TileSize.Small) {
+        constructor(public content: any, template: string, size: TileSize = TileSize.Small) {
             super(null, null, template);
+            this[0x1] = size;
         }
         get size(): string {
-            switch (this._size) {
-                case TileSize.Large: return "large";
-                case TileSize.Wide: return "wide";
-                default: return "small";
-            }
+            return TileSize[this[0x1]].toLowerCase();
         }
     }
     class Term extends Tab {
