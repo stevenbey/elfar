@@ -30,13 +30,12 @@ namespace Elfar.Web.Mvc
                     RouteUrl = route.Url;
                 }
 
-                Action = data.GetRequiredString("action").ToPascal();
-                Controller = data.GetRequiredString("controller").ToPascal();
-
                 RouteData = new dictionary(data.Values);
                 DataTokens = new dictionary(data.DataTokens);
 
-                if(DataTokens.ContainsKey("area")) Area = DataTokens["area"].ToPascal();
+                Action = data.GetRequiredString("action").ToPascal();
+                Controller = data.GetRequiredString("controller").ToPascal();
+                Area = DataTokens.ContainsKey("area") ? DataTokens["area"].ToPascal() : "";
             }
 
             if(context == null)
