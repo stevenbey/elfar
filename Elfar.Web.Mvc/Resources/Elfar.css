@@ -76,8 +76,14 @@ ul#tabs li:first-child {
 ul#tabs li:hover {
   background-color: #DDD;
 }
+ul#tabs li:hover i {
+  visibility: visible;
+}
 ul#tabs li.selected {
   border-bottom: 3px solid #007ACC;
+}
+ul#tabs li.selected i {
+  visibility: visible;
 }
 ul#tabs li.selected:hover {
   background-color: transparent;
@@ -86,6 +92,7 @@ ul#tabs i {
   display: inline-block;
   height: 12px;
   line-height: 10px;
+  visibility: hidden;
 }
 ul#tabs i:hover {
   background-color: #CCC;

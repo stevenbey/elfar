@@ -86,10 +86,18 @@ ul#tabs {
 
         &:hover {
             background-color: #DDD;
+
+            i {
+                visibility: visible;
+            }
         }
 
         &.selected {
             border-bottom: 3px solid #007ACC;
+
+            i {
+                visibility: visible;
+            }
 
             &:hover {
                 background-color: transparent;
@@ -101,6 +109,7 @@ ul#tabs {
         display: inline-block;
         height: 12px;
         line-height: 10px;
+        visibility:hidden;
 
         &:hover {
             background-color: #CCC;
