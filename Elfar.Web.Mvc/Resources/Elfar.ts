@@ -69,7 +69,9 @@ module Elfar {
         Url: string;
         constructor(obj: any) {
             $.extend(this, obj);
-            if(this.Area) this.Area = `/${this.Area}`;
+            if(this.Area) {
+                this.Area = `/${this.Area}`;
+            }
             this.dateTime = new Date(obj.Date + " " + obj.Time);
         }
     }
@@ -94,16 +96,6 @@ module Elfar {
         }
     }
     export class Dashboard extends Tab {
-        add = (item: Section | Tile) => {
-            if (item instanceof Section) {
-                var sections = this.sections;
-                if (!sections().contains(item)) {
-                    sections.push(item);
-                }
-                return;
-            }
-            this.summary.add(item);
-        };
         constructor() {
             super("dashboard", "Dashboard", null, true);
             this[0x2] = ko.observableArray<Section>();
@@ -116,6 +108,16 @@ module Elfar {
                 //this.add(new Frequent("Action", data, e => new key(e.Area, e.Controller, e.Action)));
                 //this.add(new Frequent("Type", data, e => e.Type));
             });
+        }
+        add(item: Section | Tile) {
+            if (item instanceof Section) {
+                var sections = this.sections;
+                if (!sections().contains(item)) {
+                    sections.push(item);
+                }
+                return;
+            }
+            this.summary.add(item);
         }
         get closeable(): boolean {
             return false;
@@ -133,10 +135,6 @@ module Elfar {
         }
     }
     export class Summary extends Section {
-        add = (content: any, template?: string, size: TileSize = TileSize.Small) => {
-            if (!(content instanceof Tile)) content = new Tile(content, template, size);
-            this.tiles.push(content);
-        };
         constructor(errorLogs: ErrorLog[]) {
             super("summary", "Summary");
             this[0x1] = ko.observableArray<Tile>();
@@ -152,6 +150,12 @@ module Elfar {
             this.add(new Term(7, errorLogs = errorLogs.where((e: ErrorLog) => today <= e.dateTime.addDays(7))), "term");
             this.add(new Term(1, errorLogs.where((e: ErrorLog) => today <= e.dateTime.valueOf())), "term");
         }
+        add(content: any, template?: string, size: TileSize = TileSize.Small) {
+            if (!(content instanceof Tile)) {
+                content = new Tile(content, template, size);
+            }
+            this.tiles.push(content);
+        }
         get tiles(): KnockoutObservableArray<Tile> {
             return this[0x1];
         }
@@ -166,9 +170,10 @@ module Elfar {
         }
     }
     class Chart {
+        private static _colours = ["#68217A", "#007ACC", "#217167", "#A83A95", "#1BA1E2", "#571C75", "#009CCC", "#9ACD32", "#F2700F"].concat(Highcharts.getOptions().colors);
         constructor(public id: any, public series?: Series[]) {}
         static get colours(): string[] {
-            return ["#68217A", "#007ACC", "#217167", "#A83A95", "#1BA1E2", "#571C75", "#009CCC", "#9ACD32", "#F2700F"].concat(Highcharts.getOptions().colors);
+            return Chart._colours;
         }
     }
     class Donut extends Chart {
@@ -240,16 +245,17 @@ module Elfar {
     //    }
     //}
     class key {
-        toString: () => string;
         Action: string;
         Controller: string;
         Area: string;
+        private static prefix = (value: string, enforce: boolean = false) => value? `/${value}` : (enforce ? "/" : "");
         constructor(area: string, controller?: string, action?: string) {
-            var prefix = (value: string, enforce: boolean = false) => (value ? `/${value}` : (enforce ? "/" : ""));
             this.Area = area,
             this.Controller = controller,
             this.Action = action;
-            this.toString = () => { return "~" + prefix(this.Area, !this.Controller) + prefix(this.Controller) + prefix(this.Action); };
+        }
+        toString() {
+            return "~" + key.prefix(this.Area, !this.Controller) + key.prefix(this.Controller) + key.prefix(this.Action);
         }
     }
     enum TileSize { Large, Small, Wide }

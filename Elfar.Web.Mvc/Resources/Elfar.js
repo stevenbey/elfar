@@ -92,8 +92,9 @@ var Elfar;
     var ErrorLog = (function () {
         function ErrorLog(obj) {
             $.extend(this, obj);
-            if (this.Area)
+            if (this.Area) {
                 this.Area = "/" + this.Area;
+            }
             this.dateTime = new Date(obj.Date + " " + obj.Time);
         }
         return ErrorLog;
@@ -144,16 +145,6 @@ var Elfar;
         function Dashboard() {
             var _this = this;
             _super.call(this, "dashboard", "Dashboard", null, true);
-            this.add = function (item) {
-                if (item instanceof Section) {
-                    var sections = _this.sections;
-                    if (!sections().contains(item)) {
-                        sections.push(item);
-                    }
-                    return;
-                }
-                _this.summary.add(item);
-            };
             this[0x2] = ko.observableArray();
             $.get(App.path + "/Summaries", function (data) {
                 data = data.reverse().select(function (i) { return new ErrorLog(i); });
@@ -161,6 +152,16 @@ var Elfar;
                 _this.add(new Latest(data));
             });
         }
+        Dashboard.prototype.add = function (item) {
+            if (item instanceof Section) {
+                var sections = this.sections;
+                if (!sections().contains(item)) {
+                    sections.push(item);
+                }
+                return;
+            }
+            this.summary.add(item);
+        };
         Object.defineProperty(Dashboard.prototype, "closeable", {
             get: function () {
                 return false;
@@ -196,14 +197,7 @@ var Elfar;
     var Summary = (function (_super) {
         __extends(Summary, _super);
         function Summary(errorLogs) {
-            var _this = this;
             _super.call(this, "summary", "Summary");
-            this.add = function (content, template, size) {
-                if (size === void 0) { size = 1 /* Small */; }
-                if (!(content instanceof Tile))
-                    content = new Tile(content, template, size);
-                _this.tiles.push(content);
-            };
             this[0x1] = ko.observableArray();
             this.add(new Donut("Actions", errorLogs.groupBy(function (e) { return new key(e.Area, e.Controller, e.Action); })), "donut", 0 /* Large */);
             this.add(new Donut("Controllers", errorLogs.groupBy(function (e) { return new key(e.Area, e.Controller); })), "donut", 0 /* Large */);
@@ -214,6 +208,13 @@ var Elfar;
             this.add(new Term(7, errorLogs = errorLogs.where(function (e) { return today <= e.dateTime.addDays(7); })), "term");
             this.add(new Term(1, errorLogs.where(function (e) { return today <= e.dateTime.valueOf(); })), "term");
         }
+        Summary.prototype.add = function (content, template, size) {
+            if (size === void 0) { size = 1 /* Small */; }
+            if (!(content instanceof Tile)) {
+                content = new Tile(content, template, size);
+            }
+            this.tiles.push(content);
+        };
         Object.defineProperty(Summary.prototype, "tiles", {
             get: function () {
                 return this[0x1];
@@ -249,11 +250,12 @@ var Elfar;
         }
         Object.defineProperty(Chart, "colours", {
             get: function () {
-                return ["#68217A", "#007ACC", "#217167", "#A83A95", "#1BA1E2", "#571C75", "#009CCC", "#9ACD32", "#F2700F"].concat(Highcharts.getOptions().colors);
+                return Chart._colours;
             },
             enumerable: true,
             configurable: true
         });
+        Chart._colours = ["#68217A", "#007ACC", "#217167", "#A83A95", "#1BA1E2", "#571C75", "#009CCC", "#9ACD32", "#F2700F"].concat(Highcharts.getOptions().colors);
         return Chart;
     })();
     var Donut = (function (_super) {
@@ -350,16 +352,15 @@ var Elfar;
     })(Section);
     var key = (function () {
         function key(area, controller, action) {
-            var _this = this;
-            var prefix = function (value, enforce) {
-                if (enforce === void 0) { enforce = false; }
-                return (value ? "/" + value : (enforce ? "/" : ""));
-            };
             this.Area = area, this.Controller = controller, this.Action = action;
-            this.toString = function () {
-                return "~" + prefix(_this.Area, !_this.Controller) + prefix(_this.Controller) + prefix(_this.Action);
-            };
         }
+        key.prototype.toString = function () {
+            return "~" + key.prefix(this.Area, !this.Controller) + key.prefix(this.Controller) + key.prefix(this.Action);
+        };
+        key.prefix = function (value, enforce) {
+            if (enforce === void 0) { enforce = false; }
+            return value ? "/" + value : (enforce ? "/" : "");
+        };
         return key;
     })();
     var TileSize;
