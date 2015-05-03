@@ -63,7 +63,7 @@ module Elfar {
         Action: string;
         Area: string;
         Controller: string;
-        dateTime: Date;
+        DateTime: Date;
         ID: string;
         Type: string;
         Url: string;
@@ -72,7 +72,7 @@ module Elfar {
             if(this.Area) {
                 this.Area = `/${this.Area}`;
             }
-            this.dateTime = new Date(obj.Date + " " + obj.Time);
+            this.DateTime = new Date(obj.Date + " " + obj.Time);
         }
     }
     export class _Object {
@@ -145,10 +145,10 @@ module Elfar {
             //this.add(new Chart(2), "chart");
             //this.add(new Chart(3), "chart");
             var today = new Date().setHours(0, 0, 0, 0);
-            this.add(new Term(90, errorLogs = errorLogs.where((e: ErrorLog) => today <= e.dateTime.addDays(90))), "term");
-            this.add(new Term(30, errorLogs = errorLogs.where((e: ErrorLog) => today <= e.dateTime.addDays(30))), "term");
-            this.add(new Term(7, errorLogs = errorLogs.where((e: ErrorLog) => today <= e.dateTime.addDays(7))), "term");
-            this.add(new Term(1, errorLogs.where((e: ErrorLog) => today <= e.dateTime.valueOf())), "term");
+            this.add(new Term(90, errorLogs = errorLogs.where((e: ErrorLog) => today <= e.DateTime.addDays(90))), "term");
+            this.add(new Term(30, errorLogs = errorLogs.where((e: ErrorLog) => today <= e.DateTime.addDays(30))), "term");
+            this.add(new Term(7, errorLogs = errorLogs.where((e: ErrorLog) => today <= e.DateTime.addDays(7))), "term");
+            this.add(new Term(1, errorLogs.where((e: ErrorLog) => today <= e.DateTime.valueOf())), "term");
         }
         add(content: any, template?: string, size: TileSize = TileSize.Small) {
             if (!(content instanceof Tile)) {
@@ -246,16 +246,18 @@ module Elfar {
     //}
     class key {
         Action: string;
-        Controller: string;
         Area: string;
+        Controller: string;
+        Method: string
         private static prefix = (value: string, enforce: boolean = false) => value? `/${value}` : (enforce ? "/" : "");
-        constructor(area: string, controller?: string, action?: string) {
+        constructor(area: string, controller?: string, action?: string, method?: string) {
             this.Area = area,
             this.Controller = controller,
             this.Action = action;
+            this.Method = method;
         }
         toString() {
-            return "~" + key.prefix(this.Area, !this.Controller) + key.prefix(this.Controller) + key.prefix(this.Action);
+            return "~" + key.prefix(this.Area, !this.Controller) + key.prefix(this.Controller) + key.prefix(this.Action) + (this.Method ? ` [${this.Method}]` : "");
         }
     }
     enum TileSize { Large, Small, Wide }

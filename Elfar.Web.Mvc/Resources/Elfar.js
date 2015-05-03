@@ -95,7 +95,7 @@ var Elfar;
             if (this.Area) {
                 this.Area = "/" + this.Area;
             }
-            this.dateTime = new Date(obj.Date + " " + obj.Time);
+            this.DateTime = new Date(obj.Date + " " + obj.Time);
         }
         return ErrorLog;
     })();
@@ -203,10 +203,10 @@ var Elfar;
             this.add(new Donut("Controllers", errorLogs.groupBy(function (e) { return new key(e.Area, e.Controller); })), "donut", 0 /* Large */);
             this.add(new Donut("Areas", errorLogs.groupBy(function (e) { return new key(e.Area); })), "donut", 0 /* Large */);
             var today = new Date().setHours(0, 0, 0, 0);
-            this.add(new Term(90, errorLogs = errorLogs.where(function (e) { return today <= e.dateTime.addDays(90); })), "term");
-            this.add(new Term(30, errorLogs = errorLogs.where(function (e) { return today <= e.dateTime.addDays(30); })), "term");
-            this.add(new Term(7, errorLogs = errorLogs.where(function (e) { return today <= e.dateTime.addDays(7); })), "term");
-            this.add(new Term(1, errorLogs.where(function (e) { return today <= e.dateTime.valueOf(); })), "term");
+            this.add(new Term(90, errorLogs = errorLogs.where(function (e) { return today <= e.DateTime.addDays(90); })), "term");
+            this.add(new Term(30, errorLogs = errorLogs.where(function (e) { return today <= e.DateTime.addDays(30); })), "term");
+            this.add(new Term(7, errorLogs = errorLogs.where(function (e) { return today <= e.DateTime.addDays(7); })), "term");
+            this.add(new Term(1, errorLogs.where(function (e) { return today <= e.DateTime.valueOf(); })), "term");
         }
         Summary.prototype.add = function (content, template, size) {
             if (size === void 0) { size = 1 /* Small */; }
@@ -351,11 +351,12 @@ var Elfar;
         return Latest;
     })(Section);
     var key = (function () {
-        function key(area, controller, action) {
+        function key(area, controller, action, method) {
             this.Area = area, this.Controller = controller, this.Action = action;
+            this.Method = method;
         }
         key.prototype.toString = function () {
-            return "~" + key.prefix(this.Area, !this.Controller) + key.prefix(this.Controller) + key.prefix(this.Action);
+            return "~" + key.prefix(this.Area, !this.Controller) + key.prefix(this.Controller) + key.prefix(this.Action) + (this.Method ? " [" + this.Method + "]" : "");
         };
         key.prefix = function (value, enforce) {
             if (enforce === void 0) { enforce = false; }
