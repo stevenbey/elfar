@@ -5,7 +5,6 @@ module Elfar {
     //export function registerPlugin(): void {
     //}
     export class App {
-        errorLog = ko.observable<ErrorLog>();
         select = (selection: string | Tab) => {
             var tab = typeof selection === "string" ? this.tabs().first((t: Tab) => t.name === selection) : selection;
             if (!tab) { return; }
@@ -42,12 +41,16 @@ module Elfar {
         constructor() {
             this[0x0] = ko.observableArray<Tab>([]);
             this.add(this[0x1] = new Dashboard());
+            this[0x2] = ko.observable<ErrorLog>();
         }
         static init() {
             ko.applyBindings(app = new App());
         }
         get dashboard(): Dashboard {
             return this[0x1];
+        }
+        get errorLog(): KnockoutObservable<ErrorLog> {
+            return this[0x2];
         }
         static get path(): string {
             return location.pathname;

@@ -14,7 +14,6 @@ var Elfar;
     var App = (function () {
         function App() {
             var _this = this;
-            this.errorLog = ko.observable();
             this.select = function (selection) {
                 var tab = typeof selection === "string" ? _this.tabs().first(function (t) { return t.name === selection; }) : selection;
                 if (!tab) {
@@ -54,6 +53,7 @@ var Elfar;
             };
             this[0x0] = ko.observableArray([]);
             this.add(this[0x1] = new Dashboard());
+            this[0x2] = ko.observable();
         }
         App.init = function () {
             ko.applyBindings(app = new App());
@@ -61,6 +61,13 @@ var Elfar;
         Object.defineProperty(App.prototype, "dashboard", {
             get: function () {
                 return this[0x1];
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(App.prototype, "errorLog", {
+            get: function () {
+                return this[0x2];
             },
             enumerable: true,
             configurable: true
