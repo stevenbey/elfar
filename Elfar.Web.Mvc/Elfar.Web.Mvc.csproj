@@ -83,6 +83,9 @@
     <EmbeddedResource Include="Resources\Elfar.min.css">
       <DependentUpon>Elfar.css</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\header.png" />
+    <EmbeddedResource Include="Resources\icons.png" />
+    <EmbeddedResource Include="Resources\close.png" />
     <Content Include="Views\Web.config" />
     <EmbeddedResource Include="Views\ErrorLog\List.cshtml" />
   </ItemGroup>

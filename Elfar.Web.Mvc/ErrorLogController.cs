@@ -39,6 +39,10 @@ namespace Elfar.Web.Mvc
         {
             return Json(ErrorLogProvider.Save(id, detail));
         }
+        public FileStreamResult Icons(string id)
+        {
+            return FileStream("Elfar.Web.Mvc/Resources/" + (string.IsNullOrWhiteSpace(id) ? "icons" : id) + ".png", "image/png");
+        }
         public FileStreamResult Script()
         {
             return FileStream("Elfar.Web.Mvc/Resources/Elfar.min.js", "text/javascript");

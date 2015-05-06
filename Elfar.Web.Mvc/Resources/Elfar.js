@@ -20,7 +20,14 @@ var Elfar;
                     return;
                 }
                 _this.tabs().forEach(function (t) { return t.selected(false); });
+                var list = tab instanceof List;
+                if (list) {
+                    tab.blur();
+                }
                 tab.selected(true);
+                if (list) {
+                    tab.activate();
+                }
             };
             this.add = function (item) {
                 if (item instanceof Tab) {
@@ -34,8 +41,14 @@ var Elfar;
                 _this.dashboard.add(item);
             };
             this.remove = function (tab) {
+                if (!tab) {
+                    return;
+                }
                 var tabs = _this.tabs;
                 var i = tabs.indexOf(tab);
+                if (tab instanceof List) {
+                    tab.clear();
+                }
                 tabs.remove(tab);
                 if (tab.selected()) {
                     tabs()[--i].selected(true);
@@ -95,7 +108,7 @@ var Elfar;
             if (this.Area) {
                 this.Area = "/" + this.Area;
             }
-            this.DateTime = new Date(obj.Date + " " + obj.Time);
+            this.DateTime = new Date(obj.Date + "T" + obj.Time);
         }
         return ErrorLog;
     })();
@@ -300,10 +313,75 @@ var Elfar;
     var List = (function (_super) {
         __extends(List, _super);
         function List(name, title, errorLogs) {
+            var _this = this;
             _super.call(this, name, title, "list");
-            this.errorLogs = ko.observableArray();
-            this.errorLogs(errorLogs);
+            this.select = function (errorLog, event) {
+                _this.clear();
+                (_this[0x4] = event.currentTarget).className = "current selected";
+            };
+            this[0x2] = errorLogs;
+            this[0x3] = ko.observable("");
+            this.errorLogs = ko.computed(function () {
+                var filter = _this.filter().toLowerCase();
+                if (!filter || filter.length < 3)
+                    return _this[0x2];
+                var props = List.props;
+                return _this[0x2].where(function (errorLog) {
+                    for (var i = 0; i < props.length; i++) {
+                        if (errorLog[props[i]].toLowerCase().indexOf(filter) !== -1) {
+                            return true;
+                        }
+                    }
+                    return false;
+                });
+            });
         }
+        List.prototype.activate = function () {
+            var _this = this;
+            var timeout;
+            var div = $("#" + this.name + " .filter");
+            var input = $("input", div).focus(function () {
+                input.removeAttr("placeholder");
+                div.addClass("active");
+            }).blur(function () {
+                if (!_this.filter()) {
+                    timeout = setTimeout(function () {
+                        div.removeClass("active");
+                        input.attr("placeholder", "Filter");
+                    }, 150);
+                }
+            });
+            $("span", div).click(function () {
+                if (_this.filter()) {
+                    _this.filter("");
+                    input.blur();
+                }
+                else {
+                    if (div.hasClass("active")) {
+                        clearTimeout(timeout);
+                    }
+                    input.focus();
+                }
+            });
+        };
+        List.prototype.blur = function () {
+            if (this[0x4]) {
+                this[0x4].className = "selected";
+            }
+        };
+        List.prototype.clear = function () {
+            if (this[0x4]) {
+                this[0x4].className = null;
+            }
+        };
+        Object.defineProperty(List.prototype, "filter", {
+            get: function () {
+                return this[0x3];
+            },
+            enumerable: true,
+            configurable: true
+        });
+        List.props = ["Type", "Action", "Controller", "Area", "HttpMethod", "Date"];
         return List;
     })(Tab);
     var Point = (function (_super) {

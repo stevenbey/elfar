@@ -109,12 +109,16 @@ ul#tabs {
         display: inline-block;
         height: 12px;
         line-height: 10px;
-        visibility:hidden;
+        visibility: hidden;
 
         &:hover {
             background-color: #CCC;
         }
     }
+}
+
+#dashboard {
+    max-width: 1280px;
 }
 
 #frequent, #latest {
@@ -127,10 +131,6 @@ ul#tabs {
             max-width: 308px;
         }
     }
-}
-
-#content > div {
-    max-width: 1280px;
 }
 
 #summary {
@@ -206,7 +206,7 @@ ul#tabs {
 
                 a {
                     color: #000;
-                } 
+                }
 
                 span:first-child {
                     display: block;
@@ -267,6 +267,151 @@ ul#tabs {
     }
 }
 
+.list {
+    overflow: hidden;
+    margin: 0 -10px;
+
+    .toolbar {
+        height: 32px;
+        margin: 0 10px 5px 10px;
+        border-bottom: 1px solid #ccc;
+    }
+    
+    .filter {
+        position: relative;
+        float: right;
+        height: 24px;
+        background-color: #F0F0F0;
+        border: 1px solid transparent;
+
+        &.active,
+        &.filtering {
+            background-color: #FFFFFF; /* FIX */
+            border-color: #F0F0F0;
+            border: 1px solid #F0F0F0;
+        }
+
+        &.filtering span {
+            background: url('./icons/close') no-repeat 3px 50% !important;
+        }
+
+        input {
+            padding: 3px 3px 4px 3px;
+            border-style: none;
+            outline: 0; /* Prevents the outline from showing when typing in the field */
+            width: 250px;
+            color: #7F7F7F;
+            background-color: transparent;
+        }
+
+        input::-ms-clear {
+            display: none; /* Prevents IE10 x (clear) icon from showing up as to not confuse users */
+        }
+
+        span {
+            width: 16px;
+            height: 16px;
+            position: absolute;
+            right: 4px;
+            top: 2px;
+            cursor: pointer;
+            background: url('./icons/header') no-repeat -256px -16px !important;
+        }
+    }
+
+    .head {
+        padding-left: 20px;
+        margin-bottom: 1px;
+
+        > div {
+            display: inline-block;
+            padding-left: 5px;
+            padding-right: 12px;
+            font-weight: normal;
+            color: #8c8c8c;
+
+            &.date, &.time {
+                padding: inherit 0;
+                text-align: center;
+            }
+
+            &:hover {
+                background-color: #E6E6E6;
+            }
+        }
+    }
+
+    .body {
+        clear: both;
+        overflow: auto;
+
+        > div {
+            clear: both;
+            width: 100%;
+
+            > div {
+                display: inline-block;
+                background-color: inherit;
+
+                &:first-child {
+                    width: 20px;
+                }
+
+                &.method {
+                    text-align: center;
+                }
+            }
+
+            &:hover {
+                background-color: #F2F7FD;
+
+                > div:first-child {
+                    background-color: #FFF;
+                }
+            }
+
+            &.selected {
+                background-color: #E6E6E6;
+
+                &.current, &.current:hover {
+                    background-color: #DCEBFC;
+                }
+
+                &:hover {
+                    background-color: #F2F7FD;
+                }
+
+                > div:first-child {
+                    background: url('./icons') no-repeat -1358px 50% #FFF !important;
+                }
+            }
+        }
+    }
+
+    .head, .body > div {
+        > div {
+            width: 150px;
+            padding: 5px;
+
+            &.method {
+                width: 50px;
+            }
+
+            &.type {
+                width: 300px;
+            }
+
+            &.date {
+                width: 72px;
+            }
+
+            &.time {
+                width: 39px;
+            }
+        }
+    }
+}
+
 .centre {
     text-align: center;
 }
@@ -311,7 +456,7 @@ header > div, #summary li > div {
     color: #FFF;
 }
 
-ul.legend li, #latest li, #summary li > div .header, #summary li > div .body, #summary li > div .footer, .section > .head {
+ul.legend li, #latest li, #summary li > div .header, #summary li > div .body, #summary li > div .footer, .section > .head, .list td {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

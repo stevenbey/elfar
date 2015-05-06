@@ -9,22 +9,25 @@ module Elfar {
             var tab = typeof selection === "string" ? this.tabs().first((t: Tab) => t.name === selection) : selection;
             if (!tab) { return; }
             this.tabs().forEach((t: Tab) => t.selected(false));
+            var list = tab instanceof List;
+            if (list) { tab.blur(); }
             tab.selected(true);
+            if (list) { tab.activate(); }
         };
         add = (item: Tab | Section | Tile) => {
             if (item instanceof Tab) {
                 var tabs = this.tabs;
-                if (!tabs().contains(item)) {
-                    tabs.push(item);
-                }
+                if (!tabs().contains(item)) { tabs.push(item); }
                 this.select(item);
                 return;
             }
             this.dashboard.add(item);
         };
         remove = (tab: Tab) => {
+            if (!tab) { return; }
             var tabs = this.tabs;
             var i = tabs.indexOf(tab);
+            if (tab instanceof List) { tab.clear(); }
             tabs.remove(tab);
             if (tab.selected()) { tabs()[--i].selected(true); }
         };
@@ -46,16 +49,16 @@ module Elfar {
         static init() {
             ko.applyBindings(app = new App());
         }
-        get dashboard(): Dashboard {
+        get dashboard() {
             return this[0x1];
         }
-        get errorLog(): KnockoutObservable<ErrorLog> {
+        get errorLog() {
             return this[0x2];
         }
-        static get path(): string {
+        static get path() {
             return location.pathname;
         }
-        get tabs(): KnockoutObservableArray<Tab> {
+        get tabs() {
             return this[0x0];
         }
     }
@@ -69,17 +72,15 @@ module Elfar {
         Url: string;
         constructor(obj: any) {
             $.extend(this, obj);
-            if(this.Area) {
-                this.Area = `/${this.Area}`;
-            }
-            this.DateTime = new Date(obj.Date + " " + obj.Time);
+            if(this.Area) { this.Area = `/${this.Area}`; }
+            this.DateTime = new Date(obj.Date + "T" + obj.Time);
         }
     }
     export class _Object {
         constructor(public name: string, public title: string, template?: string) {
             this[0x0] = (template || name) + "-template";
         }
-        get template(): string {
+        get template() {
             return this[0x0];
         }
     }
@@ -88,10 +89,10 @@ module Elfar {
             super(name, title, template);
             this[0x1] = ko.observable(selected);
         }
-        get closeable(): boolean {
+        get closeable() {
             return true;
         }
-        get selected(): KnockoutObservable<boolean> {
+        get selected() {
             return this[0x1];
         }
     }
@@ -112,20 +113,18 @@ module Elfar {
         add(item: Section | Tile) {
             if (item instanceof Section) {
                 var sections = this.sections;
-                if (!sections().contains(item)) {
-                    sections.push(item);
-                }
+                if (!sections().contains(item)) { sections.push(item); }
                 return;
             }
             this.summary.add(item);
         }
-        get closeable(): boolean {
+        get closeable() {
             return false;
         }
-        get sections(): KnockoutObservableArray<Section> {
+        get sections() {
             return this[0x2];
         }
-        get summary(): Summary {
+        get summary() {
             return this[0x3];
         }
     }
@@ -151,12 +150,10 @@ module Elfar {
             this.add(new Term(1, errorLogs.where((e: ErrorLog) => today <= e.DateTime.valueOf())), "term");
         }
         add(content: any, template?: string, size: TileSize = TileSize.Small) {
-            if (!(content instanceof Tile)) {
-                content = new Tile(content, template, size);
-            }
+            if (!(content instanceof Tile)) { content = new Tile(content, template, size); }
             this.tiles.push(content);
         }
-        get tiles(): KnockoutObservableArray<Tile> {
+        get tiles() {
             return this[0x1];
         }
     }
@@ -165,14 +162,14 @@ module Elfar {
             super(null, null, template);
             this[0x1] = size;
         }
-        get size(): string {
+        get size() {
             return TileSize[this[0x1]].toLowerCase();
         }
     }
     class Chart {
         private static _colours = ["#68217A", "#007ACC", "#217167", "#A83A95", "#1BA1E2", "#571C75", "#009CCC", "#9ACD32", "#F2700F"].concat(Highcharts.getOptions().colors);
         constructor(public id: any, public series?: Series[]) {}
-        static get colours(): string[] {
+        static get colours() {
             return Chart._colours;
         }
     }
@@ -197,25 +194,76 @@ module Elfar {
         constructor(name: string, groups: ErrorLog[][]) {
             this.points = groups.select((g: ErrorLog[], i: number) => new Point(name, g, Chart.colours[i]));
         }
-        get data(): any[] {
+        get data() {
             return this.points.select((p: Point) => ({ name: p.title, y: p.value, color: p.colour }));
         }
-        get count(): number {
+        get count() {
             return this.points.length;
         }
     }
     class List extends Tab {
-        errorLogs = ko.observableArray<ErrorLog>();
+        errorLogs: KnockoutComputed<ErrorLog[]>;
+        select = (errorLog: ErrorLog, event: any) => {
+            this.clear();
+            (this[0x4] = <HTMLDivElement> event.currentTarget).className = "current selected";
+        }
+        static props = ["Type", "Action", "Controller", "Area", "HttpMethod", "Date"];
         constructor(name: string, title: string, errorLogs: ErrorLog[]) {
             super(name, title, "list");
-            this.errorLogs(errorLogs);
+            this[0x2] = errorLogs;
+            this[0x3] = ko.observable("");
+            this.errorLogs = ko.computed(() => {
+                var filter = this.filter().toLowerCase();
+                if (!filter || filter.length < 3) return this[0x2];
+                var props = List.props;
+                return this[0x2].where((errorLog: ErrorLog) => {
+                    for (var i = 0; i < props.length; i++) {
+                        if (errorLog[props[i]].toLowerCase().indexOf(filter) !== -1) { return true; }
+                    }
+                    return false;
+                });
+            });
+        }
+        activate() {
+            var timeout: number;
+            var div = $(`#${this.name} .filter`);
+            var input = $("input", div)
+                .focus(() => {
+                    input.removeAttr("placeholder");
+                    div.addClass("active");
+                }).blur(() => {
+                    if (!this.filter()) {
+                        timeout = setTimeout(() => {
+                            div.removeClass("active");
+                            input.attr("placeholder", "Filter");
+                        }, 150);
+                    }
+                });
+            $("span", div).click(() => {
+                if (this.filter()) {
+                    this.filter("");
+                    input.blur();
+                } else {
+                    if (div.hasClass("active")) { clearTimeout(timeout); }
+                    input.focus();
+                }
+            });
+        }
+        blur() {
+            if (this[0x4]) { this[0x4].className = "selected"; }
+        }
+        clear() {
+            if (this[0x4]) { this[0x4].className = null; }
+        }
+        get filter() {
+            return this[0x3];
         }
     }
     class Point extends List {
         constructor(name: string, errorLogs: ErrorLog[], public colour: string) {
             super(errorLogs.key[name.slice(0, -1)] || "[root]", errorLogs.key.toString(), errorLogs);
         }
-        get value(): number {
+        get value() {
             return this.errorLogs().length;
         }
     }
@@ -223,10 +271,10 @@ module Elfar {
         constructor(length: number, errorLogs: ErrorLog[]) {
             super(`term-${length}`, length === 1 ? "Today" : `Last ${length} days`, errorLogs);
         }
-        get count(): number {
+        get count() {
             return this.errorLogs().length;
         }
-        get css(): string {
+        get css() {
             return this.count ? "lightblue-bg clickable" : "grey-bg";
         }
     }
@@ -248,7 +296,7 @@ module Elfar {
         Action: string;
         Area: string;
         Controller: string;
-        Method: string
+        Method: string;
         private static prefix = (value: string, enforce: boolean = false) => value? `/${value}` : (enforce ? "/" : "");
         constructor(area: string, controller?: string, action?: string, method?: string) {
             this.Area = area,

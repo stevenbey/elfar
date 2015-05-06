@@ -1,16 +1,29 @@
-﻿<div class="term">
-    <table>
-        <thead>
-            <tr>
-                <td>Type</td>
-                <td>Date</td>
-            </tr>
-        </thead>
-        <tbody data-bind="foreach: errorLogs">
-            <tr>
-                <td data-bind="text: Type"></td>
-                <td data-bind="text: DateTime"></td>
-            </tr>
-        </tbody>
-    </table>
+﻿<div class="list" data-bind="attr: { id: name }">
+    <div class="toolbar">
+        <div class="filter" data-bind="css: { filtering: filter }">
+            <input type="text" title="Filter" placeholder="Filter" tabindex="0" data-bind="textInput: filter">
+            <span></span>
+        </div>
+    </div>
+    <div class="head">
+        <div class="type" title="Type">Type</div>
+        <div class="action" title="Action">Action</div>
+        <div class="controller" title="Controller">Controller</div>
+        <div class="area" title="Area">Area</div>
+        <div class="method" title="Method">Method</div>
+        <div class="date" title="Date">Date</div>
+        <div class="time" title="Time">Time</div>
+    </div>
+    <div class="body" data-bind="foreach: errorLogs">
+        <div data-bind="click: $parent.select">
+            <div>&nbsp;</div>
+            <div class="type" data-bind="text: Type, attr: { title: Type }"></div>
+            <div class="action" data-bind="text: Action, attr: { title: Action }"></div>
+            <div class="controller" data-bind="text: Controller, attr: { title: Controller }"></div>
+            <div class="area" data-bind="text: Area, attr: { title: Area }"></div>
+            <div class="method" data-bind="text: HttpMethod, attr: { title: HttpMethod }"></div>
+            <div class="date" data-bind="text: Date, attr: { title: Date }"></div>
+            <div class="time" data-bind="text: Time, attr: { title: Time }"></div>
+        </div>
+    </div>
 </div>

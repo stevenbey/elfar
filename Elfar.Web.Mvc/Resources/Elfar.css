@@ -97,6 +97,9 @@ ul#tabs i {
 ul#tabs i:hover {
   background-color: #CCC;
 }
+#dashboard {
+  max-width: 1280px;
+}
 #frequent ul,
 #latest ul {
   margin: 0;
@@ -106,9 +109,6 @@ ul#tabs i:hover {
 #frequent ul li,
 #latest ul li {
   max-width: 308px;
-}
-#content > div {
-  max-width: 1280px;
 }
 #summary ul {
   margin: 0;
@@ -222,6 +222,131 @@ ul#tabs i:hover {
   margin-left: 4px;
   border-bottom: 1px solid #DDD;
 }
+.list {
+  overflow: hidden;
+  margin: 0 -10px;
+}
+.list .toolbar {
+  height: 32px;
+  margin: 0 10px 5px 10px;
+  border-bottom: 1px solid #ccc;
+}
+.list .filter {
+  position: relative;
+  float: right;
+  height: 24px;
+  background-color: #F0F0F0;
+  border: 1px solid transparent;
+}
+.list .filter.active,
+.list .filter.filtering {
+  background-color: #FFFFFF;
+  /* FIX */
+  border-color: #F0F0F0;
+  border: 1px solid #F0F0F0;
+}
+.list .filter.filtering span {
+  background: url('icons/close') no-repeat 3px 50% !important;
+}
+.list .filter input {
+  padding: 3px 3px 4px 3px;
+  border-style: none;
+  outline: 0;
+  /* Prevents the outline from showing when typing in the field */
+  width: 250px;
+  color: #7F7F7F;
+  background-color: transparent;
+}
+.list .filter input::-ms-clear {
+  display: none;
+  /* Prevents IE10 x (clear) icon from showing up as to not confuse users */
+}
+.list .filter span {
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  right: 4px;
+  top: 2px;
+  cursor: pointer;
+  background: url('icons/header') no-repeat -256px -16px !important;
+}
+.list .head {
+  padding-left: 20px;
+  margin-bottom: 1px;
+}
+.list .head > div {
+  display: inline-block;
+  padding-left: 5px;
+  padding-right: 12px;
+  font-weight: normal;
+  color: #8c8c8c;
+}
+.list .head > div.date,
+.list .head > div.time {
+  padding: inherit 0;
+  text-align: center;
+}
+.list .head > div:hover {
+  background-color: #E6E6E6;
+}
+.list .body {
+  clear: both;
+  overflow: auto;
+}
+.list .body > div {
+  clear: both;
+  width: 100%;
+}
+.list .body > div > div {
+  display: inline-block;
+  background-color: inherit;
+}
+.list .body > div > div:first-child {
+  width: 20px;
+}
+.list .body > div > div.method {
+  text-align: center;
+}
+.list .body > div:hover {
+  background-color: #F2F7FD;
+}
+.list .body > div:hover > div:first-child {
+  background-color: #FFF;
+}
+.list .body > div.selected {
+  background-color: #E6E6E6;
+}
+.list .body > div.selected.current,
+.list .body > div.selected.current:hover {
+  background-color: #DCEBFC;
+}
+.list .body > div.selected:hover {
+  background-color: #F2F7FD;
+}
+.list .body > div.selected > div:first-child {
+  background: url('icons') no-repeat -1358px 50% #ffffff !important;
+}
+.list .head > div,
+.list .body > div > div {
+  width: 150px;
+  padding: 5px;
+}
+.list .head > div.method,
+.list .body > div > div.method {
+  width: 50px;
+}
+.list .head > div.type,
+.list .body > div > div.type {
+  width: 300px;
+}
+.list .head > div.date,
+.list .body > div > div.date {
+  width: 72px;
+}
+.list .head > div.time,
+.list .body > div > div.time {
+  width: 39px;
+}
 .centre {
   text-align: center;
 }
@@ -265,7 +390,8 @@ ul.legend li,
 #summary li > div .header,
 #summary li > div .body,
 #summary li > div .footer,
-.section > .head {
+.section > .head,
+.list td {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
