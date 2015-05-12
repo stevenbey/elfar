@@ -19,15 +19,8 @@ var Elfar;
                 if (!tab) {
                     return;
                 }
-                _this.tabs().forEach(function (t) { return t.selected(false); });
-                var list = tab instanceof List;
-                if (list) {
-                    tab.blur();
-                }
-                tab.selected(true);
-                if (list) {
-                    tab.activate();
-                }
+                _this.tabs().forEach(function (t) { return t.blur(); });
+                tab.focus();
             };
             this.add = function (item) {
                 if (item instanceof Tab) {
@@ -136,6 +129,12 @@ var Elfar;
             _super.call(this, name, title, template);
             this[0x1] = ko.observable(selected);
         }
+        Tab.prototype.blur = function () {
+            this.selected(false);
+        };
+        Tab.prototype.focus = function () {
+            this.selected(true);
+        };
         Object.defineProperty(Tab.prototype, "closeable", {
             get: function () {
                 return true;
@@ -336,8 +335,20 @@ var Elfar;
                 });
             });
         }
-        List.prototype.activate = function () {
+        List.prototype.blur = function () {
+            _super.prototype.blur.call(this);
+            if (this[0x4]) {
+                this[0x4].className = "selected";
+            }
+        };
+        List.prototype.clear = function () {
+            if (this[0x4]) {
+                this[0x4].className = null;
+            }
+        };
+        List.prototype.focus = function () {
             var _this = this;
+            _super.prototype.focus.call(this);
             var timeout;
             var div = $("#" + this.id + " .filter");
             var input = $("input", div).focus(function () {
@@ -363,16 +374,6 @@ var Elfar;
                     input.focus();
                 }
             });
-        };
-        List.prototype.blur = function () {
-            if (this[0x4]) {
-                this[0x4].className = "selected";
-            }
-        };
-        List.prototype.clear = function () {
-            if (this[0x4]) {
-                this[0x4].className = null;
-            }
         };
         Object.defineProperty(List.prototype, "filter", {
             get: function () {

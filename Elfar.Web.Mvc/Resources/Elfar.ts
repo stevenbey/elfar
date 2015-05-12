@@ -6,11 +6,8 @@ module Elfar {
         select = (selection: string | Tab) => {
             var tab = typeof selection === "string" ? this.tabs().first((t: Tab) => t.name === selection) : selection;
             if (!tab) { return; }
-            this.tabs().forEach((t: Tab) => t.selected(false));
-            var list = tab instanceof List;
-            if (list) { tab.blur(); }
-            tab.selected(true);
-            if (list) { tab.activate(); }
+            this.tabs().forEach((t: Tab) => t.blur());
+            tab.focus();
         };
         add = (item: Tab | Section | Tile) => {
             if (item instanceof Tab) {
@@ -46,6 +43,7 @@ module Elfar {
         }
         static init() {
             ko.applyBindings(app = new App());
+            //window.onhashchange = () => app.select(location.hash.replace(/^#/, ""));
         }
         get dashboard() {
             return this[0x1];
@@ -86,6 +84,12 @@ module Elfar {
         constructor(name: string, title: string, template?: string, selected: boolean = false) {
             super(name, title, template);
             this[0x1] = ko.observable(selected);
+        }
+        blur() {
+            this.selected(false);
+        }
+        focus() {
+            this.selected(true);
         }
         get closeable() {
             return true;
@@ -222,21 +226,29 @@ module Elfar {
                 });
             });
         }
-        activate() {
+        blur() {
+            super.blur();
+            if (this[0x4]) { this[0x4].className = "selected"; }
+        }
+        clear() {
+            if (this[0x4]) { this[0x4].className = null; }
+        }
+        focus() {
+            super.focus();
             var timeout: number;
             var div = $(`#${this.id} .filter`);
             var input = $("input", div)
                 .focus(() => {
-                    input.removeAttr("placeholder");
-                    div.addClass("active");
-                }).blur(() => {
-                    if (!this.filter()) {
-                        timeout = setTimeout(() => {
-                            div.removeClass("active");
-                            input.attr("placeholder", "Filter");
-                        }, 150);
-                    }
-                });
+                input.removeAttr("placeholder");
+                div.addClass("active");
+            }).blur(() => {
+                if (!this.filter()) {
+                    timeout = setTimeout(() => {
+                        div.removeClass("active");
+                        input.attr("placeholder", "Filter");
+                    }, 150);
+                }
+            });
             $("span", div).click(() => {
                 if (this.filter()) {
                     this.filter("");
@@ -246,12 +258,6 @@ module Elfar {
                     input.focus();
                 }
             });
-        }
-        blur() {
-            if (this[0x4]) { this[0x4].className = "selected"; }
-        }
-        clear() {
-            if (this[0x4]) { this[0x4].className = null; }
         }
         get filter() {
             return this[0x3];
