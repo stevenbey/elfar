@@ -3,6 +3,7 @@ module Elfar {
     "use strict";
     var app: App;
     export class App {
+        private static _path = location.pathname;
         select = (selection: string | Tab) => {
             var tab = typeof selection === "string" ? this.tabs().first((t: Tab) => t.name === selection) : selection;
             if (!tab) { return; }
@@ -52,7 +53,7 @@ module Elfar {
             return this[0x2];
         }
         static get path() {
-            return location.pathname;
+            return App._path;
         }
         get tabs() {
             return this[0x0];

@@ -80,7 +80,7 @@ var Elfar;
         });
         Object.defineProperty(App, "path", {
             get: function () {
-                return location.pathname;
+                return App._path;
             },
             enumerable: true,
             configurable: true
@@ -92,6 +92,7 @@ var Elfar;
             enumerable: true,
             configurable: true
         });
+        App._path = location.pathname;
         return App;
     })();
     Elfar.App = App;
