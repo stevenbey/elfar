@@ -339,7 +339,7 @@ var Elfar;
         List.prototype.activate = function () {
             var _this = this;
             var timeout;
-            var div = $("#" + this.name + " .filter");
+            var div = $("#" + this.id + " .filter");
             var input = $("input", div).focus(function () {
                 input.removeAttr("placeholder");
                 div.addClass("active");
@@ -377,6 +377,13 @@ var Elfar;
         Object.defineProperty(List.prototype, "filter", {
             get: function () {
                 return this[0x3];
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(List.prototype, "id", {
+            get: function () {
+                return this.title.replace(/~?\//g, "_");
             },
             enumerable: true,
             configurable: true

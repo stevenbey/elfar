@@ -2,8 +2,6 @@
 module Elfar {
     "use strict";
     var app: App;
-    //export function registerPlugin(): void {
-    //}
     export class App {
         select = (selection: string | Tab) => {
             var tab = typeof selection === "string" ? this.tabs().first((t: Tab) => t.name === selection) : selection;
@@ -226,7 +224,7 @@ module Elfar {
         }
         activate() {
             var timeout: number;
-            var div = $(`#${this.name} .filter`);
+            var div = $(`#${this.id} .filter`);
             var input = $("input", div)
                 .focus(() => {
                     input.removeAttr("placeholder");
@@ -257,6 +255,9 @@ module Elfar {
         }
         get filter() {
             return this[0x3];
+        }
+        get id() {
+            return this.title.replace(/~?\//g, "_");
         }
     }
     class Point extends List {
@@ -309,5 +310,7 @@ module Elfar {
         }
     }
     enum TileSize { Large, Small, Wide }
+    //export interface IErrorLogPlugin { }
+    //export function register(plugin: IErrorLogPlugin): void {}
 }
 $(() => Elfar.App.init());
