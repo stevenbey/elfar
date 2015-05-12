@@ -383,7 +383,7 @@ var Elfar;
         });
         Object.defineProperty(List.prototype, "id", {
             get: function () {
-                return this.title.replace(/~?\//g, "_");
+                return this.title.replace(/~?\//g, "") || "root";
             },
             enumerable: true,
             configurable: true

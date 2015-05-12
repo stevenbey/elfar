@@ -257,7 +257,7 @@ module Elfar {
             return this[0x3];
         }
         get id() {
-            return this.title.replace(/~?\//g, "_");
+            return this.title.replace(/~?\//g, "") || "root";
         }
     }
     class Point extends List {
