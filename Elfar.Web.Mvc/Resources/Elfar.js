@@ -14,13 +14,17 @@ var Elfar;
     var App = (function () {
         function App() {
             var _this = this;
-            this.select = function (selection) {
-                var tab = typeof selection === "string" ? _this.tabs().first(function (t) { return t.name === selection; }) : selection;
+            this._dashboard = new Dashboard();
+            this._errorLog = ko.observable();
+            this._tabs = ko.observableArray([]);
+            this.select = function (tab) {
                 if (!tab) {
                     return;
                 }
-                _this.tabs().forEach(function (t) { return t.blur(); });
-                tab.focus();
+                if (_this._currentTab) {
+                    _this._currentTab.blur();
+                }
+                (_this._currentTab = tab).focus();
             };
             this.add = function (item) {
                 if (item instanceof Tab) {
@@ -34,7 +38,7 @@ var Elfar;
                 _this.dashboard.add(item);
             };
             this.remove = function (tab) {
-                if (!tab) {
+                if (!tab || tab === _this.dashboard) {
                     return;
                 }
                 var tabs = _this.tabs;
@@ -44,7 +48,7 @@ var Elfar;
                 }
                 tabs.remove(tab);
                 if (tab.selected()) {
-                    tabs()[--i].selected(true);
+                    _this.select(tabs()[--i]);
                 }
             };
             this.show = function (errorLog) {
@@ -52,28 +56,32 @@ var Elfar;
                     _this.errorLog(errorLog);
                     return;
                 }
-                $.get(App.path + "/Detail/" + errorLog.ID, function (data) {
-                    $.extend(errorLog, data);
-                    _this.errorLog(errorLog);
+                $.get(App.path + "Detail/" + errorLog.ID, function (data) {
+                    _this.errorLog($.extend(errorLog, data));
                 });
             };
-            this[0x0] = ko.observableArray([]);
-            this.add(this[0x1] = new Dashboard());
-            this[0x2] = ko.observable();
+            this.add(this.dashboard);
         }
         App.init = function () {
+            ko.bindingHandlers.content = {
+                init: function (element, valueAccessor) {
+                    var document = element.contentWindow.document;
+                    document.close();
+                    document.write(ko.unwrap(valueAccessor()));
+                }
+            };
             ko.applyBindings(app = new App());
         };
         Object.defineProperty(App.prototype, "dashboard", {
             get: function () {
-                return this[0x1];
+                return this._dashboard;
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(App.prototype, "errorLog", {
             get: function () {
-                return this[0x2];
+                return this._errorLog;
             },
             enumerable: true,
             configurable: true
@@ -87,12 +95,12 @@ var Elfar;
         });
         Object.defineProperty(App.prototype, "tabs", {
             get: function () {
-                return this[0x0];
+                return this._tabs;
             },
             enumerable: true,
             configurable: true
         });
-        App._path = location.pathname;
+        App._path = location.pathname + "/";
         return App;
     })();
     Elfar.App = App;
@@ -104,6 +112,9 @@ var Elfar;
             }
             this.DateTime = new Date(obj.Date + "T" + obj.Time);
         }
+        ErrorLog.prototype.show = function (obj) {
+            return !!Object.keys(obj).length;
+        };
         return ErrorLog;
     })();
     Elfar.ErrorLog = ErrorLog;
@@ -111,11 +122,13 @@ var Elfar;
         function _Object(name, title, template) {
             this.name = name;
             this.title = title;
-            this[0x0] = (template || name) + "-template";
+            this._template = (template || name) + "-template";
+            if (!title)
+                this.title = name;
         }
         Object.defineProperty(_Object.prototype, "template", {
             get: function () {
-                return this[0x0];
+                return this._template;
             },
             enumerable: true,
             configurable: true
@@ -128,7 +141,7 @@ var Elfar;
         function Tab(name, title, template, selected) {
             if (selected === void 0) { selected = false; }
             _super.call(this, name, title, template);
-            this[0x1] = ko.observable(selected);
+            this._selected = ko.observable(selected);
         }
         Tab.prototype.blur = function () {
             this.selected(false);
@@ -145,7 +158,7 @@ var Elfar;
         });
         Object.defineProperty(Tab.prototype, "selected", {
             get: function () {
-                return this[0x1];
+                return this._selected;
             },
             enumerable: true,
             configurable: true
@@ -158,11 +171,12 @@ var Elfar;
         function Dashboard() {
             var _this = this;
             _super.call(this, "dashboard", "Dashboard", null, true);
-            this[0x2] = ko.observableArray();
-            $.get(App.path + "/Summaries", function (data) {
+            this._sections = ko.observableArray();
+            $.get(App.path + "Summaries", function (data) {
                 data = data.reverse().select(function (i) { return new ErrorLog(i); });
-                _this.add(_this[0x3] = new Summary(data));
+                _this.add(_this._summary = new Summary(data));
                 _this.add(new Latest(data));
+                _this.add(new Frequent("Type", data, function (l) { return l.Type; }));
             });
         }
         Dashboard.prototype.add = function (item) {
@@ -184,14 +198,14 @@ var Elfar;
         });
         Object.defineProperty(Dashboard.prototype, "sections", {
             get: function () {
-                return this[0x2];
+                return this._sections;
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(Dashboard.prototype, "summary", {
             get: function () {
-                return this[0x3];
+                return this._summary;
             },
             enumerable: true,
             configurable: true
@@ -211,7 +225,7 @@ var Elfar;
         __extends(Summary, _super);
         function Summary(errorLogs) {
             _super.call(this, "summary", "Summary");
-            this[0x1] = ko.observableArray();
+            this._tiles = ko.observableArray();
             this.add(new Donut("Actions", errorLogs.groupBy(function (e) { return new key(e.Area, e.Controller, e.Action); })), "donut", 0 /* Large */);
             this.add(new Donut("Controllers", errorLogs.groupBy(function (e) { return new key(e.Area, e.Controller); })), "donut", 0 /* Large */);
             this.add(new Donut("Areas", errorLogs.groupBy(function (e) { return new key(e.Area); })), "donut", 0 /* Large */);
@@ -230,7 +244,7 @@ var Elfar;
         };
         Object.defineProperty(Summary.prototype, "tiles", {
             get: function () {
-                return this[0x1];
+                return this._tiles;
             },
             enumerable: true,
             configurable: true
@@ -244,11 +258,11 @@ var Elfar;
             if (size === void 0) { size = 1 /* Small */; }
             _super.call(this, null, null, template);
             this.content = content;
-            this[0x1] = size;
+            this._size = size;
         }
         Object.defineProperty(Tile.prototype, "size", {
             get: function () {
-                return TileSize[this[0x1]].toLowerCase();
+                return TileSize[this._size].toLowerCase();
             },
             enumerable: true,
             configurable: true
@@ -312,21 +326,22 @@ var Elfar;
     })();
     var List = (function (_super) {
         __extends(List, _super);
-        function List(name, title, errorLogs) {
+        function List(_errorLogs, name, title) {
             var _this = this;
             _super.call(this, name, title, "list");
+            this._errorLogs = _errorLogs;
             this.select = function (errorLog, event) {
                 _this.clear();
-                (_this[0x4] = event.currentTarget).className = "current selected";
+                (_this._row = event.currentTarget).className = "current selected";
             };
-            this[0x2] = errorLogs;
-            this[0x3] = ko.observable("");
+            this._filter = ko.observable("");
             this.errorLogs = ko.computed(function () {
                 var filter = _this.filter().toLowerCase();
-                if (!filter || filter.length < 3)
-                    return _this[0x2];
+                if (!filter || filter.length < 3) {
+                    return _this._errorLogs;
+                }
                 var props = List.props;
-                return _this[0x2].where(function (errorLog) {
+                return _this._errorLogs.where(function (errorLog) {
                     for (var i = 0; i < props.length; i++) {
                         if (errorLog[props[i]].toLowerCase().indexOf(filter) !== -1) {
                             return true;
@@ -338,13 +353,13 @@ var Elfar;
         }
         List.prototype.blur = function () {
             _super.prototype.blur.call(this);
-            if (this[0x4]) {
-                this[0x4].className = "selected";
+            if (this._row) {
+                this._row.className = "selected";
             }
         };
         List.prototype.clear = function () {
-            if (this[0x4]) {
-                this[0x4].className = null;
+            if (this._row) {
+                this._row.className = null;
             }
         };
         List.prototype.focus = function () {
@@ -378,7 +393,7 @@ var Elfar;
         };
         Object.defineProperty(List.prototype, "filter", {
             get: function () {
-                return this[0x3];
+                return this._filter;
             },
             enumerable: true,
             configurable: true
@@ -396,7 +411,7 @@ var Elfar;
     var Point = (function (_super) {
         __extends(Point, _super);
         function Point(name, errorLogs, colour) {
-            _super.call(this, errorLogs.key[name.slice(0, -1)] || "[root]", errorLogs.key.toString(), errorLogs);
+            _super.call(this, errorLogs, errorLogs.key[name.slice(0, -1)] || "[root]", errorLogs.key.toString());
             this.colour = colour;
         }
         Object.defineProperty(Point.prototype, "value", {
@@ -411,7 +426,7 @@ var Elfar;
     var Term = (function (_super) {
         __extends(Term, _super);
         function Term(length, errorLogs) {
-            _super.call(this, "term-" + length, length === 1 ? "Today" : "Last " + length + " days", errorLogs);
+            _super.call(this, errorLogs, "term-" + length, length === 1 ? "Today" : "Last " + length + " days");
         }
         Object.defineProperty(Term.prototype, "count", {
             get: function () {
@@ -436,6 +451,14 @@ var Elfar;
             this.errorLogs = errorLogs.take(10);
         }
         return Latest;
+    })(Section);
+    var Frequent = (function (_super) {
+        __extends(Frequent, _super);
+        function Frequent(type, errorLogs, keySelector) {
+            _super.call(this, "frequent", "Most frequent (by " + type + ")");
+            this.items = errorLogs.groupBy(keySelector).orderByDescending(function (g) { return g.length; }).take(10).select(function (g) { return new List(g, g.key); });
+        }
+        return Frequent;
     })(Section);
     var key = (function () {
         function key(area, controller, action, method) {

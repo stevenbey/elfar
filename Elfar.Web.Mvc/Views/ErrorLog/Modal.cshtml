@@ -1,805 +1,136 @@
-﻿<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bind="with: errorLog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel" data-bind="text: Url"></h4>
-            </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+﻿<div class="modal" id="errorLog" tabindex="-1" role="dialog" aria-labelledby="errorLog-title" aria-hidden="true" data-bind="with: errorLog">
+    <div>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="errorLog-title">
+                        <span data-bind="text: Type + ':'"></span>
+                        <span data-bind="text: Url"></span>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <label>Message</label><input readonly="readonly" data-bind="value: Message" />
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <label>Type</label><input readonly="readonly" data-bind="value: Type" />
+                        </div>
+                        <div class="col-xs-6">
+                            <label>Date</label><input readonly="readonly" data-bind="value: Date" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <label>Source</label><input readonly="readonly" data-bind="value: Source" />
+                        </div>
+                        <div class="col-xs-6">
+                            <label>Time</label><input readonly="readonly" data-bind="value: Time" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <label>Url</label><input readonly="readonly" data-bind="value: Url" />
+                        </div>
+                        <div class="col-xs-6">
+                            <label>Host</label><input readonly="readonly" data-bind="value: Host" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <label>Action</label><input readonly="readonly" data-bind="value: Action" />
+                        </div>
+                        <div class="col-xs-6">
+                            <label>Area</label><input readonly="readonly" data-bind="value: Area" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <label>Controller</label><input readonly="readonly" data-bind="value: Controller" />
+                        </div>
+                        <div class="col-xs-6">
+                            <label>Method</label><input readonly="readonly" data-bind="value: HttpMethod" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <label>Code</label><input readonly="readonly" data-bind="value: Code" />
+                        </div>
+                        <div class="col-xs-6">
+                            <label>User</label><input readonly="readonly" data-bind="value: User" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <pre data-bind="text: StackTrace">Stack Trace</pre>
+                        </div>
+                        <div class="col-xs-6 tabs">
+                            <div role="tabpanel">
+                                <ul class="nav nav-pills" role="tablist">
+                                    <li role="presentation" class="active"><a href="#routeData" aria-controls="routeData" role="tab" data-toggle="tab">Route Data</a></li>
+                                    <li role="presentation" data-bind="visible: show(RouteDefaults)"><a href="#routeDefaults" aria-controls="routeDefaults" role="tab" data-toggle="tab">Route Defaults</a></li>
+                                    <li role="presentation" data-bind="visible: show(RouteConstraints)"><a href="#routeConstraints" aria-controls="routeConstraints" role="tab" data-toggle="tab">Route Constraints</a></li>
+                                    <li role="presentation" data-bind="visible: show(DataTokens)"><a href="#dataTokens" aria-controls="dataTokens" role="tab" data-toggle="tab">Data Tokens</a></li>
+                                    <li role="presentation" data-bind="visible: show(QueryString)"><a href="#queryString" aria-controls="queryString" role="tab" data-toggle="tab">QueryString</a></li>
+                                    <li role="presentation" data-bind="visible: show(Form)"><a href="#form" aria-controls="form" role="tab" data-toggle="tab">Form</a></li>
+                                    <li role="presentation" data-bind="visible: show(Cookies)"><a href="#cookies" aria-controls="cookies" role="tab" data-toggle="tab">Cookies</a></li>
+                                    <li role="presentation"><a href="#serverVariables" aria-controls="serverVariables" role="tab" data-toggle="tab">Server Variables</a></li>
+                                </ul>
+                            </div>
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="routeData" data-bind="template: { name: 'dictionary', data: RouteData }"></div>
+                                <div role="tabpanel" class="tab-pane" id="routeDefaults" data-bind="template: { name: 'dictionary', data: RouteDefaults }"></div>
+                                <div role="tabpanel" class="tab-pane" id="routeConstraints" data-bind="template: { name: 'dictionary', data: RouteConstraints }"></div>
+                                <div role="tabpanel" class="tab-pane" id="dataTokens" data-bind="template: { name: 'dictionary', data: DataTokens }"></div>
+                                <div role="tabpanel" class="tab-pane" id="queryString" data-bind="template: { name: 'dictionary', data: QueryString }"></div>
+                                <div role="tabpanel" class="tab-pane" id="form" data-bind="template: { name: 'dictionary', data: Form }"></div>
+                                <div role="tabpanel" class="tab-pane" id="cookies" data-bind="template: { name: 'dictionary', data: Cookies }"></div>
+                                <div role="tabpanel" class="tab-pane" id="serverVariables" data-bind="template: { name: 'dictionary', data: ServerVariables }"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" role="button" aria-disabled="false" data-toggle="modal" data-target="#aspnet-html" data-bind="visible: !!Html"><span>ASP.NET HTML Error Page</span></button>
+                    <div>
+                        @*<button type="button" id="wit-dialog-save74" disabled="" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-disabled ui-state-disabled ui-button-text-only" role="button" aria-disabled="true"><span class="ui-button-text">Save</span></button>
+                            <button type="button" id="wit-dialog-save-close75" disabled="" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-disabled ui-state-disabled ui-button-text-only" role="button" aria-disabled="true"><span class="ui-button-text">Save and close</span></button>*@
+                        <button type="button" role="button" aria-disabled="false" data-dismiss="modal"><span>Close</span></button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
-@*<div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front workitem-dialog ui-dialog-buttons ui-draggable ui-resizable" tabindex="-1" role="dialog" aria-describedby="173" aria-labelledby="ui-id-1" style="position: absolute; height: auto; width: 1920px; top: 90px; left: 239px; display: block; z-index: 1002;">
-    <div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
-        <span id="ui-id-1" class="ui-dialog-title">Product Backlog Item 4655: Customer UI &gt; Standardise command button placement</span>
-        <button class="ui-button ui-widget ui-state-default ui-corner-all ui-dialog-titlebar-close ui-button-icon-only" role="button" aria-disabled="false" title="Close">
-            <span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span><span class="ui-button-text">Close</span>
-        </button>
-        <div class="ui-dialog-titlebar-progress-container">
-            <div class="ui-dialog-titlebar-progress-element" style="display: none;"></div>
-        </div>
-    </div>
-    <div id="173" class="dialog ajax-panel ui-dialog-content ui-widget-content" style="display: block; width: auto; min-height: 0px; max-height: none; height: 657.4px;">
-        <div id="175" class="work-item-form">
-            <div id="176" class="workitem-info-bar" title="Customer UI > Standardise command button placement" style="display: block;">
-                <div class="info-text-wrapper"><a href="/DefaultCollection/Sunrise/_workitems/edit/4655" class="caption">Product Backlog Item 4655:</a><span class="info-text">Customer UI &gt; Standardise command button placement</span></div>
-            </div>
-            <div id="177" class="toolbar workitem-tool-bar" style="display: block;">
-                <ul id="178" role="menubar" class="menu-bar">
-                    <li class="menu-focus-container" aria-selected="false">
-                        <div class="menu-focus-receiver" tabindex="0" role="menu"></div>
-                    </li>
-                    <li id="mi_292" role="menuitem" class="menu-item icon-only" title="Refresh" command="refresh-work-item" aria-selected="false"><span class="icon icon-refresh"></span></li>
-                    <li id="mi_294" role="menuitem" class="menu-item icon-only disabled" title="Undo changes to work item" command="revert-work-item" disabled="disabled" aria-selected="false"><span class="icon icon-undo"></span></li>
-                    <li id="mi_296" role="menuitem" class="menu-item icon-only" title="New linked work item" command="link-to-new-work-item" aria-selected="false"><span class="icon icon-tfs-work-item-new-linked"></span></li>
-                    <li id="mi_298" role="menuitem" class="menu-item icon-only" title="Create a copy of this work item (including links)" command="copy-work-item" aria-selected="false"><span class="icon icon-tfs-work-item-copy"></span></li>
-                    <li id="mi_300" role="menuitem" class="menu-item invisible disabled" title="Copy template URL" command="copy-template-url" disabled="disabled" aria-selected="false"><span class="text">Copy template URL</span></li>
-                    <li id="mi_302" role="menuitem" class="menu-item icon-only" title="Email work item" command="email-work-item" aria-selected="false"><span class="icon icon-envelope"></span></li>
-                </ul>
-            </div>
-            <div id="191" class="work-item-view" tabindex="-1">
-                <div id="192" class="tfs-tags">
-                    <div class="tags-label-container"><span class="tags-label">Tags</span></div>
-                    <div class="tags-items-container">
-                        <ul>
-                            <li class="tags-add-button tag-item-delete-experience" aria-selected="false"><span class="tag-container tag-container-selectable" tabindex="0" dir="ltr"><span class="tag-box tag-box-selectable" dir="ltr">Add...</span></span></li>
-                            <li class="tag-item-delete-experience" aria-selected="false"><input class="tags-input tag-box ui-autocomplete-input" type="text" placeholder="" autocomplete="off" style="display: none;"></li>
-                        </ul>
+<div class="modal" id="aspnet-html" tabindex="-1" role="dialog" aria-labelledby="aspnet-html-title" aria-hidden="true" data-bind="with: errorLog">
+    <div>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="aspnet-html-title"><span>ASP.NET HTML Error Message</span></h4>
+                </div>
+                <div class="modal-body">
+                    <iframe scrolling="auto" data-bind="content: Html"></iframe>
+                </div>
+                <div class="modal-footer">
+                    <div>
+                        <button type="button" role="button" aria-disabled="false" data-dismiss="modal"><span>Close</span></button>
                     </div>
-                </div><table class="witform-layout" node="layout">
-                    <tbody>
-                        <tr class="group">
-                            <td colspan="2">
-                                <table class="content">
-                                    <tbody>
-                                        <tr>
-                                            <td valign="top" class="column" style="width: 100%;">
-                                                <table class="content">
-                                                    <tbody>
-                                                        <tr class="control">
-                                                            <td class="control-cell" colspan="2">
-                                                                <div class="workitemcontrol wit-font-size-large">
-                                                                    <div id="witc_193" class="combo list text">
-                                                                        <div class="wrap">
-                                                                            <input type="text" id="witc_193_txt" autocomplete="off" class="" maxlength="255" title="Customer UI > Standardise command button placement">
-                                                                        </div>
-                                                                        <div class="drop"></div>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                        <tr class="group">
-                            <td colspan="2">
-                                <table class="content">
-                                    <tbody>
-                                        <tr>
-                                            <td valign="top" class="column" style="width: 100%;">
-                                                <table class="content">
-                                                    <tbody>
-                                                        <tr class="control">
-                                                            <td class="label-cell left-label">
-                                                                <div class="workitemlabel">
-                                                                    <label class="workitemcontrol-label" for="witc_194_txt" title="
-[Field Name: Iteration Path]" accesskey="r">Ite<u>r</u>ation</label>
-                                                                </div>
-                                                            </td>
-                                                            <td class="control-cell">
-                                                                <div class="workitemcontrol">
-                                                                    <div id="witc_194" class="combo treeSearch drop">
-                                                                        <div class="wrap">
-                                                                            <input type="text" id="witc_194_txt" autocomplete="off" maxlength="255" title="Sunrise">
-                                                                        </div>
-                                                                        <div class="drop"></div>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                        <tr class="group">
-                            <td colspan="2">
-                                <table class="content">
-                                    <tbody>
-                                        <tr>
-                                            <td valign="top" class="column" style="width: 50%;">
-                                                <table class="content">
-                                                    <tbody>
-                                                        <tr class="group">
-                                                            <td colspan="2">
-                                                                <fieldset style="width: 100%;">
-                                                                    <legend>Status</legend><table class="content">
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <td valign="top" class="column" style="width: 100%;">
-                                                                                    <table class="content">
-                                                                                        <tbody>
-                                                                                            <tr class="control">
-                                                                                                <td class="label-cell left-label">
-                                                                                                    <div class="workitemlabel">
-                                                                                                        <label class="workitemcontrol-label" for="witc_195_txt" title="
-[Field Name: Assigned To]" accesskey="g">Assi<u>g</u>ned To</label>
-                                                                                                    </div>
-                                                                                                </td>
-                                                                                                <td class="control-cell">
-                                                                                                    <div class="workitemcontrol">
-                                                                                                        <div id="witc_195" class="mru-identity-picker drop">
-                                                                                                            <div class="wrap">
-                                                                                                                <div class="text-wrapper">
-                                                                                                                    <input type="text" class="mru-identity-picker-input watermark" id="witc_195_txt" title="Select an identity" autocomplete="off">
-                                                                                                                </div>
-                                                                                                            </div>
-                                                                                                            <div class="drop"></div>
-                                                                                                            <div id="219" class="identity-picker-list-view" role="menu" aria-hidden="true" style="display: none;">
-                                                                                                                <ul class="items" aria-hidden="true">
-                                                                                                                    <li title="Ajander Singh <ajander.singh@outlook.com>" class="mru-item list-item selected" role="menuitem" alt="Ajander Singh <ajander.singh@outlook.com>" aria-selected="false">
-                                                                                                                        <div class="item-image-container" aria-hidden="true">
-                                                                                                                            <img alt="Ajander Singh" class="identity-picture small" src="/DefaultCollection/_api/_common/IdentityImage?id=0a144137-f0a8-42e1-8691-70eec9a3bae1&amp;__v=5">
-                                                                                                                        </div>
-                                                                                                                        <div class="item-text-container">
-                                                                                                                            <div class="title" aria-hidden="true">
-                                                                                                                                <b></b>Ajander Singh
-                                                                                                                            </div>
-                                                                                                                            <div class="subtitle" aria-hidden="true">
-                                                                                                                                <b></b>ajander.singh@outlook.com
-                                                                                                                            </div>
-                                                                                                                        </div>
-                                                                                                                        <div class="icon icon-delete-small" title="Remove from list" aria-hidden="true"></div>
-                                                                                                                    </li>
-                                                                                                                    <li title="Akshay Khurana <akhurana@sbrandtech.com>" class="mru-item list-item" role="menuitem" alt="Akshay Khurana <akhurana@sbrandtech.com>" aria-selected="false">
-                                                                                                                        <div class="item-image-container" aria-hidden="true">
-                                                                                                                            <img alt="Akshay Khurana" class="identity-picture small" src="/DefaultCollection/_api/_common/IdentityImage?id=59a5249e-5fa8-4380-af5e-fa2e774ad499&amp;__v=5">
-                                                                                                                        </div>
-                                                                                                                        <div class="item-text-container">
-                                                                                                                            <div class="title" aria-hidden="true">
-                                                                                                                                <b></b>Akshay Khurana
-                                                                                                                            </div>
-                                                                                                                            <div class="subtitle" aria-hidden="true">
-                                                                                                                                <b></b>akhurana@sbrandtech.com
-                                                                                                                            </div>
-                                                                                                                        </div>
-                                                                                                                        <div class="icon icon-delete-small" title="Remove from list" aria-hidden="true"></div>
-                                                                                                                    </li>
-                                                                                                                    <li title="Amit Jain <amitj@gc-solutions.net>" class="mru-item list-item" role="menuitem" alt="Amit Jain <amitj@gc-solutions.net>" aria-selected="false">
-                                                                                                                        <div class="item-image-container" aria-hidden="true">
-                                                                                                                            <img alt="Amit Jain" class="identity-picture small" src="/DefaultCollection/_api/_common/IdentityImage?id=4b829373-d8a6-4897-bb38-ac9f685dae3c&amp;__v=5">
-                                                                                                                        </div>
-                                                                                                                        <div class="item-text-container">
-                                                                                                                            <div class="title" aria-hidden="true">
-                                                                                                                                <b></b>Amit Jain
-                                                                                                                            </div>
-                                                                                                                            <div class="subtitle" aria-hidden="true">
-                                                                                                                                <b></b>amitj@gc-solutions.net
-                                                                                                                            </div>
-                                                                                                                        </div>
-                                                                                                                        <div class="icon icon-delete-small" title="Remove from list" aria-hidden="true"></div>
-                                                                                                                    </li>
-                                                                                                                    <li title="Elastic Build (sbt) <LOCAL AUTHORITY\Elastic Build (sbt)>" class="mru-item list-item" role="menuitem" alt="Elastic Build (sbt) <LOCAL AUTHORITY\Elastic Build (sbt)>" aria-selected="false">
-                                                                                                                        <div class="item-image-container" aria-hidden="true">
-                                                                                                                            <img alt="Elastic Build (sbt)" class="identity-picture small" src="/DefaultCollection/_api/_common/IdentityImage?id=cfdbc104-1b74-4e9e-9586-289c53f25a9c&amp;__v=5">
-                                                                                                                        </div>
-                                                                                                                        <div class="item-text-container">
-                                                                                                                            <div class="title" aria-hidden="true">
-                                                                                                                                <b></b>Elastic Build (sbt)
-                                                                                                                            </div>
-                                                                                                                            <div class="subtitle" aria-hidden="true">
-                                                                                                                                LOCAL AUTHORITY\<b></b>Elastic Build (sbt)
-                                                                                                                            </div>
-                                                                                                                        </div>
-                                                                                                                        <div class="icon icon-delete-small" title="Remove from list" aria-hidden="true"></div>
-                                                                                                                    </li>
-                                                                                                                    <li title="Ewa Ski <ewaskibinska@hotmail.com>" class="mru-item list-item" role="menuitem" alt="Ewa Ski <ewaskibinska@hotmail.com>" aria-selected="false">
-                                                                                                                        <div class="item-image-container" aria-hidden="true">
-                                                                                                                            <img alt="Ewa Ski" class="identity-picture small" src="/DefaultCollection/_api/_common/IdentityImage?id=6c87684a-c5e7-4bb3-b66c-3c85cb93dca3&amp;__v=5">
-                                                                                                                        </div>
-                                                                                                                        <div class="item-text-container">
-                                                                                                                            <div class="title" aria-hidden="true">
-                                                                                                                                <b></b>Ewa Ski
-                                                                                                                            </div>
-                                                                                                                            <div class="subtitle" aria-hidden="true">
-                                                                                                                                <b></b>ewaskibinska@hotmail.com
-                                                                                                                            </div>
-                                                                                                                        </div>
-                                                                                                                        <div class="icon icon-delete-small" title="Remove from list" aria-hidden="true"></div>
-                                                                                                                    </li>
-                                                                                                                    <li title="Ferhan Uddin Siddiqi <ferhans@gc-solutions.net>" class="mru-item list-item" role="menuitem" alt="Ferhan Uddin Siddiqi <ferhans@gc-solutions.net>" aria-selected="false">
-                                                                                                                        <div class="item-image-container" aria-hidden="true">
-                                                                                                                            <img alt="Ferhan Uddin Siddiqi" class="identity-picture small" src="/DefaultCollection/_api/_common/IdentityImage?id=65460830-863e-479b-87f2-60ad4f56ca62&amp;__v=5">
-                                                                                                                        </div>
-                                                                                                                        <div class="item-text-container">
-                                                                                                                            <div class="title" aria-hidden="true">
-                                                                                                                                <b></b>Ferhan Uddin Siddiqi
-                                                                                                                            </div>
-                                                                                                                            <div class="subtitle" aria-hidden="true">
-                                                                                                                                <b></b>ferhans@gc-solutions.net
-                                                                                                                            </div>
-                                                                                                                        </div>
-                                                                                                                        <div class="icon icon-delete-small" title="Remove from list" aria-hidden="true"></div>
-                                                                                                                    </li>
-                                                                                                                    <li title="Gangotri Sikheria <gangotris@gc-solutions.net>" class="mru-item list-item" role="menuitem" alt="Gangotri Sikheria <gangotris@gc-solutions.net>" aria-selected="false">
-                                                                                                                        <div class="item-image-container" aria-hidden="true">
-                                                                                                                            <img alt="Gangotri Sikheria" class="identity-picture small" src="/DefaultCollection/_api/_common/IdentityImage?id=46bf13f7-106f-49f3-b6f8-40a5c9e539d5&amp;__v=5">
-                                                                                                                        </div>
-                                                                                                                        <div class="item-text-container">
-                                                                                                                            <div class="title" aria-hidden="true">
-                                                                                                                                <b></b>Gangotri Sikheria
-                                                                                                                            </div>
-                                                                                                                            <div class="subtitle" aria-hidden="true">
-                                                                                                                                <b></b>gangotris@gc-solutions.net
-                                                                                                                            </div>
-                                                                                                                        </div>
-                                                                                                                        <div class="icon icon-delete-small" title="Remove from list" aria-hidden="true"></div>
-                                                                                                                    </li>
-                                                                                                                    <li title="Geeteshwar Singh <geeteshwars@gc-solutions.net>" class="mru-item list-item" role="menuitem" alt="Geeteshwar Singh <geeteshwars@gc-solutions.net>" aria-selected="false">
-                                                                                                                        <div class="item-image-container" aria-hidden="true">
-                                                                                                                            <img alt="Geeteshwar Singh" class="identity-picture small" src="/DefaultCollection/_api/_common/IdentityImage?id=6c89966d-b927-4dcf-b8e4-c4643150f73d&amp;__v=5">
-                                                                                                                        </div>
-                                                                                                                        <div class="item-text-container">
-                                                                                                                            <div class="title" aria-hidden="true">
-                                                                                                                                <b></b>Geeteshwar Singh
-                                                                                                                            </div>
-                                                                                                                            <div class="subtitle" aria-hidden="true">
-                                                                                                                                <b></b>geeteshwars@gc-solutions.net
-                                                                                                                            </div>
-                                                                                                                        </div>
-                                                                                                                        <div class="icon icon-delete-small" title="Remove from list" aria-hidden="true"></div>
-                                                                                                                    </li>
-                                                                                                                </ul>
-                                                                                                                <div class="search-result-status">Showing 33 results</div>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                            <tr class="control">
-                                                                                                <td class="label-cell left-label">
-                                                                                                    <div class="workitemlabel">
-                                                                                                        <label class="workitemcontrol-label" for="witc_196_txt" title="
-[Field Name: State]" accesskey="e">Stat<u>e</u></label>
-                                                                                                    </div>
-                                                                                                </td>
-                                                                                                <td class="control-cell">
-                                                                                                    <div class="workitemcontrol">
-                                                                                                        <div id="witc_196" class="combo list drop">
-                                                                                                            <div class="wrap">
-                                                                                                                <input type="text" id="witc_196_txt" autocomplete="off" maxlength="255" title="New">
-                                                                                                            </div>
-                                                                                                            <div class="drop"></div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                            <tr class="control">
-                                                                                                <td class="label-cell left-label">
-                                                                                                    <div class="workitemlabel">
-                                                                                                        <label class="workitemcontrol-label" for="witc_197_txt" title="
-[Field Name: Reason]">Reason</label>
-                                                                                                    </div>
-                                                                                                </td>
-                                                                                                <td class="control-cell">
-                                                                                                    <div class="workitemcontrol">
-                                                                                                        <div id="witc_197" class="combo list text">
-                                                                                                            <div class="wrap">
-                                                                                                                <input type="text" id="witc_197_txt" autocomplete="off" maxlength="255" title="New backlog item" readonly="readonly" class="disabled">
-                                                                                                            </div>
-                                                                                                            <div class="drop"></div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                        </tbody>
-                                                                                    </table>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </fieldset>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                            <td valign="top" class="column" style="width: 50%;">
-                                                <table class="content">
-                                                    <tbody>
-                                                        <tr class="group">
-                                                            <td colspan="2">
-                                                                <fieldset style="width: 100%;">
-                                                                    <legend>Details</legend><table class="content">
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <td valign="top" class="column" style="width: 100%;">
-                                                                                    <table class="content">
-                                                                                        <tbody>
-                                                                                            <tr class="control">
-                                                                                                <td class="label-cell left-label">
-                                                                                                    <div class="workitemlabel">
-                                                                                                        <label class="workitemcontrol-label" for="witc_198_txt" title="
-[Field Name: Effort]">Effort</label>
-                                                                                                    </div>
-                                                                                                </td>
-                                                                                                <td class="control-cell">
-                                                                                                    <div class="workitemcontrol">
-                                                                                                        <div id="witc_198" class="combo list text">
-                                                                                                            <div class="wrap">
-                                                                                                                <input type="text" id="witc_198_txt" autocomplete="off" maxlength="255" title="">
-                                                                                                            </div>
-                                                                                                            <div class="drop"></div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                            <tr class="control">
-                                                                                                <td class="label-cell left-label">
-                                                                                                    <div class="workitemlabel">
-                                                                                                        <label class="workitemcontrol-label" for="witc_199_txt" title="
-[Field Name: Business Value]">Business Value</label>
-                                                                                                    </div>
-                                                                                                </td>
-                                                                                                <td class="control-cell">
-                                                                                                    <div class="workitemcontrol">
-                                                                                                        <div id="witc_199" class="combo list text">
-                                                                                                            <div class="wrap">
-                                                                                                                <input type="text" id="witc_199_txt" autocomplete="off" maxlength="255" title="">
-                                                                                                            </div>
-                                                                                                            <div class="drop"></div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                            <tr class="control">
-                                                                                                <td class="label-cell left-label">
-                                                                                                    <div class="workitemlabel">
-                                                                                                        <label class="workitemcontrol-label" for="witc_200_txt" title="
-[Field Name: Area Path]" accesskey="A"><u>A</u>rea</label>
-                                                                                                    </div>
-                                                                                                </td>
-                                                                                                <td class="control-cell">
-                                                                                                    <div class="workitemcontrol">
-                                                                                                        <div id="witc_200" class="combo treeSearch drop">
-                                                                                                            <div class="wrap">
-                                                                                                                <input type="text" id="witc_200_txt" autocomplete="off" maxlength="255" title="Sunrise">
-                                                                                                            </div>
-                                                                                                            <div class="drop"></div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                        </tbody>
-                                                                                    </table>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </fieldset>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                        <tr class="group">
-                            <td colspan="2">
-                                <table class="content">
-                                    <tbody>
-                                        <tr>
-                                            <td valign="top" class="column" style="width: 50%;">
-                                                <table class="content">
-                                                    <tbody>
-                                                        <tr class="tab-group">
-                                                            <td colspan="2">
-                                                                <div class="tabs ui-tabs ui-widget ui-widget-content ui-corner-all">
-                                                                    <ul class="headers ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" role="tablist">
-                                                                        <li class="ui-state-default ui-corner-top ui-tabs-active ui-state-active" role="tab" tabindex="0" aria-controls="witc_tab_201" aria-labelledby="ui-id-3" aria-selected="false"><a class="header ui-tabs-anchor" href="#witc_tab_201" rawtitle="Description" role="presentation" tabindex="-1" id="ui-id-3">Description</a></li>
-                                                                        <li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="witc_tab_203" aria-labelledby="ui-id-4" aria-selected="false"><a class="header ui-tabs-anchor" href="#witc_tab_203" rawtitle="Storyboards" role="presentation" tabindex="-1" id="ui-id-4">Storyboards</a></li>
-                                                                        <li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="witc_tab_205" aria-labelledby="ui-id-5" aria-selected="false"><a class="header ui-tabs-anchor" href="#witc_tab_205" rawtitle="Test Cases" role="presentation" tabindex="-1" id="ui-id-5">Test Cases</a></li>
-                                                                        <li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="witc_tab_207" aria-labelledby="ui-id-6" aria-selected="false"><a class="header ui-tabs-anchor" href="#witc_tab_207" rawtitle="Tasks" role="presentation" tabindex="-1" id="ui-id-6">Tasks</a></li>
-                                                                    </ul>
-                                                                    <div class="tab-page workitemcountingtab ui-tabs-panel ui-widget-content ui-corner-bottom" id="witc_tab_201" rawtitle="Description" aria-labelledby="ui-id-3" role="tabpanel" aria-expanded="true" aria-hidden="false" style="display: block;">
-                                                                        <table class="content">
-                                                                            <tbody>
-                                                                                <tr class="control">
-                                                                                    <td class="control-cell" colspan="2">
-                                                                                        <div class="workitemcontrol">
-                                                                                            <div id="225" style="height: 250px;">
-                                                                                                <div id="witc_202" class="richeditor-container propagate-keydown-event" style="height: 250px;">
-                                                                                                    <div class="richeditor-toolbar" style="opacity: 0.35;">
-                                                                                                        <div class="richeditor-toolbar-group">
-                                                                                                            <span class="richeditor-toolbar-button richeditor-toolbar-bold" title="Bold" tabindex="0" unselectable="on"></span><span class="richeditor-toolbar-button richeditor-toolbar-italic" title="Italic" tabindex="0" unselectable="on"></span><span class="richeditor-toolbar-button richeditor-toolbar-underline" title="Underline" tabindex="0" unselectable="on"></span>
-                                                                                                        </div>
-                                                                                                        <div class="richeditor-toolbar-group"><span class="richeditor-toolbar-button richeditor-toolbar-createlink" title="Create link" tabindex="0" unselectable="on"></span><span class="richeditor-toolbar-button richeditor-toolbar-unlink" title="Remove link" tabindex="0" unselectable="on"></span></div>
-                                                                                                        <div class="richeditor-toolbar-group"><span class="richeditor-toolbar-button richeditor-toolbar-insertunorderedlist" title="Bulleted list" tabindex="0" unselectable="on"></span><span class="richeditor-toolbar-button richeditor-toolbar-insertorderedlist" title="Numbered list" tabindex="0" unselectable="on"></span></div>
-                                                                                                        <div class="richeditor-toolbar-group"><span class="richeditor-toolbar-button richeditor-toolbar-outdent" title="Decrease indent" tabindex="0" unselectable="on"></span><span class="richeditor-toolbar-button richeditor-toolbar-indent" title="Increase indent" tabindex="0" unselectable="on"></span></div>
-                                                                                                        <div class="richeditor-toolbar-group"><span class="richeditor-toolbar-button richeditor-toolbar-insertImage" title="Insert image" tabindex="0" unselectable="on"></span></div>
-                                                                                                        <div class="richeditor-toolbar-group"><span class="richeditor-toolbar-button richeditor-toolbar-maximize" title="Maximize" tabindex="0" unselectable="on"></span></div>
-                                                                                                    </div><textarea id="witc_202_txt" style="display: none;"></textarea>
-                                                                                                    <div class="richeditor-editarea">
-                                                                                                        <iframe frameborder="no" tabindex="0"></iframe>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </div>
-                                                                    <div class="tab-page workitemcountingtab ui-tabs-panel ui-widget-content ui-corner-bottom" id="witc_tab_203" rawtitle="Storyboards" aria-labelledby="ui-id-4" role="tabpanel" aria-expanded="false" aria-hidden="true" style="display: none;">
-                                                                        <table class="content">
-                                                                            <tbody>
-                                                                                <tr class="control">
-                                                                                    <td class="control-cell" colspan="2">
-                                                                                        <div class="workitemcontrol">
-                                                                                            <ul id="228" role="menubar" class="menu-bar">
-                                                                                                <li id="mi_230" role="menuitem" class="menu-item" title="Start storyboarding using PowerPoint" command="start-storyboarding" aria-selected="false"><span class="text">Start storyboarding</span></li>
-                                                                                                <li id="mi_232" role="menuitem" class="menu-item icon-only" title="Link to..." command="links-control-link-to-existing" aria-selected="false"><span class="icon icon-tfs-link-add"></span></li>
-                                                                                                <li id="mi_234" role="separator" class="menu-item menu-item-separator" aria-selected="false">
-                                                                                                    <div class="separator"></div>
-                                                                                                </li>
-                                                                                                <li id="mi_236" role="menuitem" class="menu-item icon-only disabled" title="Open linked item" command="open-linked" disabled="disabled" aria-selected="false"><span class="icon icon-open"></span></li>
-                                                                                                <li id="mi_238" role="menuitem" class="menu-item icon-only disabled" title="Delete link" command="delete-linked" disabled="disabled" aria-selected="false"><span class="icon icon-tfs-link-delete"></span></li>
-                                                                                                <li class="menu-focus-container" aria-selected="false">
-                                                                                                    <div class="menu-focus-receiver" tabindex="0" role="menu"></div>
-                                                                                                </li>
-                                                                                            </ul>
-                                                                                            <div id="239" class="grid has-header" style="width: 100%; height: 300px;">
-                                                                                                <div class="grid-focus" tabindex="0" role="grid"></div>
-                                                                                                <div class="grid-header">
-                                                                                                    <div class="grid-header-canvas" style="left: 0px;">
-                                                                                                        <div class="grid-header-column" title="Title" style="width: 450px;">
-                                                                                                            <div class="separator"></div>
-                                                                                                            <div class="title indented-title">Title</div>
-                                                                                                            <div class="sort-handle"></div>
-                                                                                                        </div>
-                                                                                                        <div class="grid-header-column" title="Comment" style="width: 75px;">
-                                                                                                            <div class="separator"></div>
-                                                                                                            <div class="title">Comment</div>
-                                                                                                            <div class="sort-handle"></div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="grid-canvas">
-                                                                                                    <div class="grid-content-spacer" style="width: 527px; height: 1px;"></div>
-                                                                                                </div>
-                                                                                                <div class="grid-canvas grid-canvas-droppable"></div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </div>
-                                                                    <div class="tab-page workitemcountingtab ui-tabs-panel ui-widget-content ui-corner-bottom" id="witc_tab_205" rawtitle="Test Cases" aria-labelledby="ui-id-5" role="tabpanel" aria-expanded="false" aria-hidden="true" style="display: none;">
-                                                                        <table class="content">
-                                                                            <tbody>
-                                                                                <tr class="control">
-                                                                                    <td class="control-cell" colspan="2">
-                                                                                        <div class="workitemcontrol">
-                                                                                            <ul id="241" role="menubar" class="menu-bar">
-                                                                                                <li id="mi_243" role="menuitem" class="menu-item icon-only" title="New linked work item..." command="links-control-link-to-new" aria-selected="false"><span class="icon icon-tfs-work-item-new-linked"></span></li>
-                                                                                                <li id="mi_245" role="menuitem" class="menu-item icon-only" title="Link to..." command="links-control-link-to-existing" aria-selected="false"><span class="icon icon-tfs-link-add"></span></li>
-                                                                                                <li id="mi_247" role="separator" class="menu-item menu-item-separator" aria-selected="false">
-                                                                                                    <div class="separator"></div>
-                                                                                                </li>
-                                                                                                <li id="mi_249" role="menuitem" class="menu-item icon-only disabled" title="Open linked item" command="open-linked" disabled="disabled" aria-selected="false"><span class="icon icon-open"></span></li>
-                                                                                                <li id="mi_251" role="menuitem" class="menu-item icon-only disabled" title="Delete link" command="delete-linked" disabled="disabled" aria-selected="false"><span class="icon icon-tfs-link-delete"></span></li>
-                                                                                                <li class="menu-focus-container" aria-selected="false">
-                                                                                                    <div class="menu-focus-receiver" tabindex="0" role="menu"></div>
-                                                                                                </li>
-                                                                                            </ul>
-                                                                                            <div id="252" class="grid has-header" style="width: 100%; height: 300px;">
-                                                                                                <div class="grid-focus" tabindex="0" role="grid"></div>
-                                                                                                <div class="grid-header">
-                                                                                                    <div class="grid-header-canvas" style="left: 0px;">
-                                                                                                        <div class="grid-header-column" title="ID" style="width: 70px;">
-                                                                                                            <div class="separator"></div>
-                                                                                                            <div class="title indented-title">ID</div>
-                                                                                                            <div class="sort-handle"></div>
-                                                                                                        </div>
-                                                                                                        <div class="grid-header-column" title="Work Item Type" style="width: 75px;">
-                                                                                                            <div class="separator"></div>
-                                                                                                            <div class="title">Work Item Type</div>
-                                                                                                            <div class="sort-handle"></div>
-                                                                                                        </div>
-                                                                                                        <div class="grid-header-column" title="Title" style="width: 450px;">
-                                                                                                            <div class="separator"></div>
-                                                                                                            <div class="title">Title</div>
-                                                                                                            <div class="sort-handle"></div>
-                                                                                                        </div>
-                                                                                                        <div class="grid-header-column" title="Assigned To" style="width: 125px;">
-                                                                                                            <div class="separator"></div>
-                                                                                                            <div class="title">Assigned To</div>
-                                                                                                            <div class="sort-handle"></div>
-                                                                                                        </div>
-                                                                                                        <div class="grid-header-column" title="State" style="width: 75px;">
-                                                                                                            <div class="separator"></div>
-                                                                                                            <div class="title">State</div>
-                                                                                                            <div class="sort-handle"></div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="grid-canvas">
-                                                                                                    <div class="grid-content-spacer" style="width: 797px; height: 1px;"></div>
-                                                                                                </div>
-                                                                                                <div class="grid-canvas grid-canvas-droppable"></div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </div>
-                                                                    <div class="tab-page workitemcountingtab ui-tabs-panel ui-widget-content ui-corner-bottom" id="witc_tab_207" rawtitle="Tasks" aria-labelledby="ui-id-6" role="tabpanel" aria-expanded="false" aria-hidden="true" style="display: none;">
-                                                                        <table class="content">
-                                                                            <tbody>
-                                                                                <tr class="control">
-                                                                                    <td class="control-cell" colspan="2">
-                                                                                        <div class="workitemcontrol">
-                                                                                            <ul id="254" role="menubar" class="menu-bar">
-                                                                                                <li id="mi_256" role="menuitem" class="menu-item icon-only" title="New linked work item..." command="links-control-link-to-new" aria-selected="false"><span class="icon icon-tfs-work-item-new-linked"></span></li>
-                                                                                                <li id="mi_258" role="menuitem" class="menu-item icon-only" title="Link to..." command="links-control-link-to-existing" aria-selected="false"><span class="icon icon-tfs-link-add"></span></li>
-                                                                                                <li id="mi_260" role="separator" class="menu-item menu-item-separator" aria-selected="false">
-                                                                                                    <div class="separator"></div>
-                                                                                                </li>
-                                                                                                <li id="mi_262" role="menuitem" class="menu-item icon-only disabled" title="Open linked item" command="open-linked" disabled="disabled" aria-selected="false"><span class="icon icon-open"></span></li>
-                                                                                                <li id="mi_264" role="menuitem" class="menu-item icon-only disabled" title="Delete link" command="delete-linked" disabled="disabled" aria-selected="false"><span class="icon icon-tfs-link-delete"></span></li>
-                                                                                                <li class="menu-focus-container" aria-selected="false">
-                                                                                                    <div class="menu-focus-receiver" tabindex="0" role="menu"></div>
-                                                                                                </li>
-                                                                                            </ul>
-                                                                                            <div id="265" class="grid has-header" style="width: 100%; height: 300px;">
-                                                                                                <div class="grid-focus" tabindex="0" role="grid"></div>
-                                                                                                <div class="grid-header">
-                                                                                                    <div class="grid-header-canvas" style="left: 0px;">
-                                                                                                        <div class="grid-header-column" title="ID" style="width: 70px;">
-                                                                                                            <div class="separator"></div>
-                                                                                                            <div class="title indented-title">ID</div>
-                                                                                                            <div class="sort-handle"></div>
-                                                                                                        </div>
-                                                                                                        <div class="grid-header-column" title="Title" style="width: 450px;">
-                                                                                                            <div class="separator"></div>
-                                                                                                            <div class="title">Title</div>
-                                                                                                            <div class="sort-handle"></div>
-                                                                                                        </div>
-                                                                                                        <div class="grid-header-column" title="Assigned To" style="width: 125px;">
-                                                                                                            <div class="separator"></div>
-                                                                                                            <div class="title">Assigned To</div>
-                                                                                                            <div class="sort-handle"></div>
-                                                                                                        </div>
-                                                                                                        <div class="grid-header-column" title="State" style="width: 75px;">
-                                                                                                            <div class="separator"></div>
-                                                                                                            <div class="title">State</div>
-                                                                                                            <div class="sort-handle"></div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="grid-canvas">
-                                                                                                    <div class="grid-content-spacer" style="width: 722px; height: 1px;"></div>
-                                                                                                </div>
-                                                                                                <div class="grid-canvas grid-canvas-droppable"></div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                            <td valign="top" class="column" style="width: 50%;">
-                                                <table class="content">
-                                                    <tbody>
-                                                        <tr class="tab-group">
-                                                            <td colspan="2">
-                                                                <div class="tabs ui-tabs ui-widget ui-widget-content ui-corner-all">
-                                                                    <ul class="headers ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" role="tablist">
-                                                                        <li class="ui-state-default ui-corner-top ui-tabs-active ui-state-active" role="tab" tabindex="0" aria-controls="witc_tab_209" aria-labelledby="ui-id-7" aria-selected="false"><a class="header ui-tabs-anchor" href="#witc_tab_209" rawtitle="Acceptance Criteria" role="presentation" tabindex="-1" id="ui-id-7">Acceptance Criteria</a></li>
-                                                                        <li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="witc_tab_211" aria-labelledby="ui-id-8" aria-selected="false"><a class="header ui-tabs-anchor" href="#witc_tab_211" rawtitle="History" role="presentation" tabindex="-1" id="ui-id-8">History</a></li>
-                                                                        <li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="witc_tab_212" aria-labelledby="ui-id-9" aria-selected="false"><a class="header ui-tabs-anchor" href="#witc_tab_212" rawtitle="Links" role="presentation" tabindex="-1" id="ui-id-9">Links</a></li>
-                                                                        <li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="witc_tab_214" aria-labelledby="ui-id-10" aria-selected="false"><a class="header ui-tabs-anchor" href="#witc_tab_214" rawtitle="Attachments" role="presentation" tabindex="-1" id="ui-id-10">Attachments</a></li>
-                                                                    </ul>
-                                                                    <div class="tab-page workitemcountingtab ui-tabs-panel ui-widget-content ui-corner-bottom" id="witc_tab_209" rawtitle="Acceptance Criteria" aria-labelledby="ui-id-7" role="tabpanel" aria-expanded="true" aria-hidden="false" style="display: block;">
-                                                                        <table class="content">
-                                                                            <tbody>
-                                                                                <tr class="control">
-                                                                                    <td class="control-cell" colspan="2">
-                                                                                        <div class="workitemcontrol">
-                                                                                            <div id="266" style="height: 250px;">
-                                                                                                <div id="witc_210" class="richeditor-container propagate-keydown-event" style="height: 250px;">
-                                                                                                    <div class="richeditor-toolbar" style="opacity: 0.35;">
-                                                                                                        <div class="richeditor-toolbar-group"><span class="richeditor-toolbar-button richeditor-toolbar-bold" title="Bold" tabindex="0" unselectable="on"></span><span class="richeditor-toolbar-button richeditor-toolbar-italic" title="Italic" tabindex="0" unselectable="on"></span><span class="richeditor-toolbar-button richeditor-toolbar-underline" title="Underline" tabindex="0" unselectable="on"></span></div>
-                                                                                                        <div class="richeditor-toolbar-group"><span class="richeditor-toolbar-button richeditor-toolbar-createlink" title="Create link" tabindex="0" unselectable="on"></span><span class="richeditor-toolbar-button richeditor-toolbar-unlink" title="Remove link" tabindex="0" unselectable="on"></span></div>
-                                                                                                        <div class="richeditor-toolbar-group"><span class="richeditor-toolbar-button richeditor-toolbar-insertunorderedlist" title="Bulleted list" tabindex="0" unselectable="on"></span><span class="richeditor-toolbar-button richeditor-toolbar-insertorderedlist" title="Numbered list" tabindex="0" unselectable="on"></span></div>
-                                                                                                        <div class="richeditor-toolbar-group"><span class="richeditor-toolbar-button richeditor-toolbar-outdent" title="Decrease indent" tabindex="0" unselectable="on"></span><span class="richeditor-toolbar-button richeditor-toolbar-indent" title="Increase indent" tabindex="0" unselectable="on"></span></div>
-                                                                                                        <div class="richeditor-toolbar-group"><span class="richeditor-toolbar-button richeditor-toolbar-insertImage" title="Insert image" tabindex="0" unselectable="on"></span></div>
-                                                                                                        <div class="richeditor-toolbar-group"><span class="richeditor-toolbar-button richeditor-toolbar-maximize" title="Maximize" tabindex="0" unselectable="on"></span></div>
-                                                                                                    </div><textarea id="witc_210_txt" style="display: none;"></textarea>
-                                                                                                    <div class="richeditor-editarea">
-                                                                                                        <iframe frameborder="no" tabindex="0"></iframe>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </div>
-                                                                    <div class="tab-page workitemcountingtab ui-tabs-panel ui-widget-content ui-corner-bottom" id="witc_tab_212" rawtitle="Links" aria-labelledby="ui-id-9" role="tabpanel" aria-expanded="false" aria-hidden="true" style="display: none;">
-                                                                        <table class="content">
-                                                                            <tbody>
-                                                                                <tr class="control">
-                                                                                    <td class="control-cell" colspan="2">
-                                                                                        <div class="workitemcontrol">
-                                                                                            <ul id="269" role="menubar" class="menu-bar">
-                                                                                                <li id="mi_271" role="menuitem" class="menu-item icon-only" title="New linked work item..." command="links-control-link-to-new" aria-selected="false"><span class="icon icon-tfs-work-item-new-linked"></span></li>
-                                                                                                <li id="mi_273" role="menuitem" class="menu-item icon-only" title="Link to..." command="links-control-link-to-existing" aria-selected="false"><span class="icon icon-tfs-link-add"></span></li>
-                                                                                                <li id="mi_275" role="separator" class="menu-item menu-item-separator" aria-selected="false">
-                                                                                                    <div class="separator"></div>
-                                                                                                </li>
-                                                                                                <li id="mi_277" role="menuitem" class="menu-item icon-only disabled" title="Open linked item" command="open-linked" disabled="disabled" aria-selected="false"><span class="icon icon-open"></span></li>
-                                                                                                <li id="mi_279" role="menuitem" class="menu-item icon-only disabled" title="Delete link" command="delete-linked" disabled="disabled" aria-selected="false"><span class="icon icon-tfs-link-delete"></span></li>
-                                                                                                <li class="menu-focus-container" aria-selected="false">
-                                                                                                    <div class="menu-focus-receiver" tabindex="0" role="menu"></div>
-                                                                                                </li>
-                                                                                            </ul>
-                                                                                            <div id="280" class="grid has-header" style="width: 100%; height: 300px;">
-                                                                                                <div class="grid-focus" tabindex="0" role="grid"></div>
-                                                                                                <div class="grid-header">
-                                                                                                    <div class="grid-header-canvas" style="left: 0px;">
-                                                                                                        <div class="grid-header-column" title="ID" style="width: 70px;">
-                                                                                                            <div class="separator"></div>
-                                                                                                            <div class="title indented-title">ID</div>
-                                                                                                            <div class="sort-handle"></div>
-                                                                                                        </div>
-                                                                                                        <div class="grid-header-column" title="Work Item Type" style="width: 75px;">
-                                                                                                            <div class="separator"></div>
-                                                                                                            <div class="title">Work Item Type</div>
-                                                                                                            <div class="sort-handle"></div>
-                                                                                                        </div>
-                                                                                                        <div class="grid-header-column" title="Title" style="width: 450px;">
-                                                                                                            <div class="separator"></div>
-                                                                                                            <div class="title">Title</div>
-                                                                                                            <div class="sort-handle"></div>
-                                                                                                        </div>
-                                                                                                        <div class="grid-header-column" title="Assigned To" style="width: 125px;">
-                                                                                                            <div class="separator"></div>
-                                                                                                            <div class="title">Assigned To</div>
-                                                                                                            <div class="sort-handle"></div>
-                                                                                                        </div>
-                                                                                                        <div class="grid-header-column" title="State" style="width: 75px;">
-                                                                                                            <div class="separator"></div>
-                                                                                                            <div class="title">State</div>
-                                                                                                            <div class="sort-handle"></div>
-                                                                                                        </div>
-                                                                                                        <div class="grid-header-column" title="Comment" style="width: 75px;">
-                                                                                                            <div class="separator"></div>
-                                                                                                            <div class="title">Comment</div>
-                                                                                                            <div class="sort-handle"></div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="grid-canvas">
-                                                                                                    <div class="grid-content-spacer" style="width: 872px; height: 1px;"></div>
-                                                                                                </div>
-                                                                                                <div class="grid-canvas grid-canvas-droppable"></div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </div>
-                                                                    <div class="tab-page workitemcountingtab ui-tabs-panel ui-widget-content ui-corner-bottom" id="witc_tab_214" rawtitle="Attachments" aria-labelledby="ui-id-10" role="tabpanel" aria-expanded="false" aria-hidden="true" style="display: none;">
-                                                                        <table class="content">
-                                                                            <tbody>
-                                                                                <tr class="control">
-                                                                                    <td class="control-cell" colspan="2">
-                                                                                        <div class="workitemcontrol">
-                                                                                            <ul id="281" role="menubar" class="menu-bar">
-                                                                                                <li id="mi_283" role="menuitem" class="menu-item icon-only disabled" title="Open attachment" command="open-attachments" disabled="disabled" aria-selected="false"><span class="icon icon-open"></span></li>
-                                                                                                <li id="mi_285" role="menuitem" class="menu-item icon-only" title="Add attachment..." command="add-attachment" aria-selected="false"><span class="icon icon-add"></span></li>
-                                                                                                <li id="mi_287" role="menuitem" class="menu-item icon-only disabled" title="Save copy of attachment..." command="save-attachments" disabled="disabled" aria-selected="false"><span class="icon icon-save"></span></li>
-                                                                                                <li id="mi_289" role="menuitem" class="menu-item icon-only disabled" title="Delete attachment" command="delete-attachments" disabled="disabled" aria-selected="false"><span class="icon icon-delete"></span></li>
-                                                                                                <li class="menu-focus-container" aria-selected="false">
-                                                                                                    <div class="menu-focus-receiver" tabindex="0" role="menu"></div>
-                                                                                                </li>
-                                                                                            </ul>
-                                                                                            <div id="290" class="grid has-header" style="width: 100%; height: 300px;">
-                                                                                                <div class="grid-focus" tabindex="0" role="grid"></div>
-                                                                                                <div class="grid-header">
-                                                                                                    <div class="grid-header-canvas" style="left: 0px;">
-                                                                                                        <div class="grid-header-column" title="Name" style="width: 300px;">
-                                                                                                            <div class="separator"></div>
-                                                                                                            <div class="title">Name</div>
-                                                                                                            <div class="sort-handle"></div>
-                                                                                                        </div>
-                                                                                                        <div class="grid-header-column" title="Size" style="width: 80px;">
-                                                                                                            <div class="separator"></div>
-                                                                                                            <div class="title">Size</div>
-                                                                                                            <div class="sort-handle"></div>
-                                                                                                        </div>
-                                                                                                        <div class="grid-header-column" title="Date Attached" style="width: 120px;">
-                                                                                                            <div class="separator"></div>
-                                                                                                            <div class="title">Date Attached</div>
-                                                                                                            <div class="sort-handle"></div>
-                                                                                                        </div>
-                                                                                                        <div class="grid-header-column" title="Comments" style="width: 300px;">
-                                                                                                            <div class="separator"></div>
-                                                                                                            <div class="title">Comments</div>
-                                                                                                            <div class="sort-handle"></div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="grid-canvas">
-                                                                                                    <div class="grid-content-spacer" style="width: 802px; height: 1px;"></div>
-                                                                                                </div>
-                                                                                                <div class="grid-canvas grid-canvas-droppable"></div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                </div>
             </div>
         </div>
     </div>
-    <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-
-        <div class="ui-dialog-buttonset">
-            <button type="button" id="wit-dialog-save170" disabled="" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-disabled ui-state-disabled ui-button-text-only" role="button" aria-disabled="true"><span class="ui-button-text">Save</span></button>
-            <button type="button" id="wit-dialog-save-close171" disabled="" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-disabled ui-state-disabled ui-button-text-only" role="button" aria-disabled="true"><span class="ui-button-text">Save and close</span></button>
-            <button type="button" id="wit-dialog-close172" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">Close</span></button>
-        </div>
-    </div>
-    <div class="ui-resizable-handle ui-resizable-n" style="z-index: 90;"></div>
-    <div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div>
-    <div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;"></div>
-    <div class="ui-resizable-handle ui-resizable-w" style="z-index: 90;"></div>
-    <div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se ui-icon-grip-diagonal-se" style="z-index: 90;"></div>
-    <div class="ui-resizable-handle ui-resizable-sw" style="z-index: 90;"></div>
-    <div class="ui-resizable-handle ui-resizable-ne" style="z-index: 90;"></div>
-    <div class="ui-resizable-handle ui-resizable-nw" style="z-index: 90;"></div>
-</div>*@
+</div>
+<script type="text/html" id="dictionary">
+    <table class="dictionary">
+        <tbody data-bind="template: { name: 'keyValuePair', foreach: Object.keys($data), as: 'key' }"></tbody>
+    </table>
+</script>
+<script type="text/html" id="keyValuePair">
+    <tr data-bind="visible: !($parent[key] instanceof Object)">
+        <th data-bind="text: key"></th>
+        <td data-bind="text: $parent[key]"></td>
+    </tr>
+</script>

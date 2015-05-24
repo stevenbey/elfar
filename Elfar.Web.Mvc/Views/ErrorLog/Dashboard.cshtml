@@ -31,12 +31,12 @@
 </script>
 <script type="text/html" id="latest-template">
     <ul data-bind="foreach: errorLogs">
-        <li data-bind="attr: { title: Type }"><a data-bind="text: Type, click: $root.show" data-toggle="modal" data-target="#myModal"></a></li>
+        <li data-bind="attr: { title: Type }"><a data-bind="text: Type, click: $root.show" data-toggle="modal" data-target="#errorLog"></a></li>
     </ul>
 </script>
 <script type="text/html" id="frequent-template">
-    <ul data-bind="foreach: errorLogs">
-        <li data-bind="attr: { title: key }"><a data-bind="text: key"></a></li>
+    <ul data-bind="foreach: items">
+        <li data-bind="attr: { title: name }"><a data-bind="text: name, click: $root.add"></a></li>
     </ul>
 </script>
 

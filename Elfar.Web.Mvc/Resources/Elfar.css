@@ -3,6 +3,9 @@
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+*:focus {
+  outline: none;
+}
 html,
 body {
   min-height: 100%;
@@ -54,8 +57,9 @@ a:hover {
   cursor: pointer;
 }
 pre {
-  width: 95%;
-  overflow: scroll;
+  -ms-word-wrap: normal;
+  word-wrap: normal;
+  overflow: auto;
 }
 td.small {
   width: 60px;
@@ -88,6 +92,11 @@ ul#tabs li.selected i {
 ul#tabs li.selected:hover {
   background-color: transparent;
 }
+ul#tabs li span {
+  display: inline-block;
+  float: left;
+  max-width: 150px;
+}
 ul#tabs i {
   display: inline-block;
   height: 12px;
@@ -96,6 +105,23 @@ ul#tabs i {
 }
 ul#tabs i:hover {
   background-color: #CCC;
+}
+#aspnet-html iframe {
+  border: none;
+  margin: 0;
+}
+#aspnet-html > div,
+#aspnet-html .modal-content,
+#aspnet-html iframe {
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+}
+#aspnet-html .modal-body {
+  height: 91%;
+}
+#aspnet-html .modal-title {
+  display: none;
 }
 #dashboard {
   max-width: 1280px;
@@ -271,7 +297,6 @@ ul#tabs i:hover {
   background: url('icons/header') no-repeat -256px -16px !important;
 }
 .list .head {
-  padding-left: 20px;
   margin-bottom: 1px;
 }
 .list .head > div {
@@ -301,9 +326,6 @@ ul#tabs i:hover {
   display: inline-block;
   background-color: inherit;
 }
-.list .body > div > div:first-child {
-  width: 20px;
-}
 .list .body > div > div.method {
   text-align: center;
 }
@@ -331,6 +353,10 @@ ul#tabs i:hover {
   width: 150px;
   padding: 5px;
 }
+.list .head > div:first-child,
+.list .body > div > div:first-child {
+  width: 20px;
+}
 .list .head > div.method,
 .list .body > div > div.method {
   width: 50px;
@@ -356,11 +382,174 @@ ul#tabs i:hover {
 .clickable {
   cursor: pointer !important;
 }
+.dictionary {
+  width: 100%;
+}
+.dictionary tr {
+  border-bottom: 1px solid #f1f1f1;
+}
+.dictionary th {
+  width: 160px;
+  font-weight: normal;
+  vertical-align: top;
+  border-right: 1px solid #f1f1f1;
+}
+.dictionary th,
+.dictionary td {
+  padding: 4px;
+}
 .lightblue-bg {
   background-color: #1BA1E2 !important;
 }
+.modal > div {
+  margin: 0 auto;
+  display: table;
+  height: 100%;
+  width: 100%;
+  max-width: 1500px;
+  pointer-events: none;
+}
+.modal-dialog {
+  display: table-cell;
+  vertical-align: middle;
+  pointer-events: none;
+  max-height: 80%;
+}
+.modal-header {
+  padding: 12px 20px;
+  border-bottom: none;
+}
+.modal-title span:first-child {
+  color: #007acc;
+}
 .modal-content {
+  height: inherit;
+  pointer-events: all;
   border-radius: 0;
+  box-shadow: gray 0 0 30px;
+}
+.modal-body {
+  padding: 0 20px;
+}
+.modal-body label {
+  display: block;
+  float: left;
+  width: 5%;
+  padding-top: 2px;
+  font-weight: normal;
+  color: #6D6D6D;
+}
+.modal-body input {
+  display: block;
+  float: left;
+  width: 95%;
+  border: 1px solid #E6E6E6;
+  padding: 1px 1px 1px 2px;
+}
+.modal-body legend {
+  font-size: 11px;
+  color: #000000;
+  font-weight: bold;
+  line-height: 22px;
+  border: none;
+  margin: 0;
+}
+.modal-body pre {
+  width: 100%;
+  height: 450px;
+  margin-right: 10px;
+  border-radius: 0;
+}
+.modal-body .row {
+  margin: 0;
+}
+.modal-body .col-xs-6 {
+  padding: 0 0 0 10px;
+}
+.modal-body .col-xs-6:first-child {
+  padding: 0 10px 0 0;
+}
+.modal-body .col-xs-6 label {
+  width: 10%;
+}
+.modal-body .col-xs-6 input {
+  width: 90%;
+}
+.modal-body .nav {
+  padding-left: 2px;
+  background-color: #E6E6E6;
+  font-size: 11px;
+}
+.modal-body .nav li {
+  position: relative;
+  top: 1px;
+  margin: 0 .2em 1px 0;
+}
+.modal-body .nav li a,
+.modal-body .nav li a:hover {
+  float: left;
+  padding: .3em 1em .3em .1em;
+  text-decoration: none;
+  text-align: center;
+  color: #333;
+  background-color: transparent;
+}
+.modal-body .nav li.active a {
+  color: #000;
+  font-weight: bold;
+  background-color: inherit;
+}
+.modal-body .tab-pane {
+  height: 427px;
+  border: 1px solid #E6E6E6;
+  overflow: auto;
+}
+.modal-footer {
+  background-color: #f3f3f3;
+  border-top: 1px solid #ddd;
+  text-align: left;
+  background-image: none;
+  margin: .5em 0 0 0;
+  padding: .3em 1em .5em .4em;
+}
+.modal-footer > div {
+  float: right;
+}
+.modal-footer button {
+  margin: .5em .4em;
+  cursor: pointer;
+  font-family: "Segoe UI";
+  height: 30px;
+  border: 1px solid #ccc;
+  background-color: #f8f8f8;
+  color: #333;
+  border-radius: 2px;
+  outline: 0;
+  padding: 2px 12px 2px 12px;
+  display: inline-block;
+  position: relative;
+  text-decoration: none !important;
+  text-align: center;
+  zoom: 1;
+  overflow: visible;
+}
+.modal-footer button:hover,
+.modal-footer button:focus {
+  color: #000;
+  border-color: #aaa;
+  background-color: #fefefe;
+  -moz-box-shadow: 1px 1px 1px rgba(160, 160, 160, 0.2);
+  -webkit-box-shadow: 1px 1px 1px rgba(160, 160, 160, 0.2);
+  box-shadow: 1px 1px 1px rgba(160, 160, 160, 0.2);
+}
+.modal-footer button span {
+  padding: 0;
+  line-height: normal;
+  white-space: nowrap;
+}
+.modal-backdrop.in {
+  background-color: #aaa;
+  opacity: .3;
 }
 header > div,
 .blue-bg {
@@ -385,19 +574,22 @@ header > div,
 #summary li > div {
   color: #FFF;
 }
+ul#tabs li span,
 ul.legend li,
 #latest li,
 #summary li > div .header,
 #summary li > div .body,
 #summary li > div .footer,
 .section > .head,
-.list td {
+.list td,
+.modal-header {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   word-wrap: normal;
 }
 #summary li > div .body,
-.section > .head {
+.section > .head,
+.modal-title {
   font-family: Segoe UI Light,Segoe UI,Tahoma,Arial,Verdana;
 }
