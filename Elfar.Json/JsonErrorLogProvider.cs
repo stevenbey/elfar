@@ -1,47 +1,36 @@
 ﻿using System.IO;
-using System.Text;
 using Elfar.IO;
 
 namespace Elfar.Json
 {
     public class JsonErrorLogProvider : FileErrorLogProvider
     {
-        public JsonErrorLogProvider()
-        {
-            if (!Directory.Exists(Path)) Directory.CreateDirectory(Path);
-        }
+        public JsonErrorLogProvider() : base(Init) {}
 
         public override void Delete(string id)
         {
+            base.Delete(id);
             File.Delete(GetFilePath(id));
         }
-        public override void Save(ErrorLog.Storage errorLog)
+
+        protected override string Read(string name)
         {
-            var summaries = new StringBuilder(Summaries);
-            var length = Summaries.Length;
-            summaries.Insert(length - 1, (length > 2 ? "," : null) + errorLog.Summary);
-            Summaries = summaries.ToString();
-            this[errorLog.ID] = errorLog.Detail;
+            return File.ReadAllText(GetFilePath(name));
+        }
+        protected override void Save(string name, string value)
+        {
+            File.WriteAllText(GetFilePath(name), value);
         }
 
-        string GetFilePath(string name)
+        static string GetFilePath(string name)
         {
             return System.IO.Path.Combine(Path, name + ".json");
         }
-
-        public override string Summaries
+        static bool Init()
         {
-            get
-            {
-                var filePath = GetFilePath("summaries");
-                return File.Exists(filePath) ? File.ReadAllText(filePath) : "[]";
-            }
-            set { File.WriteAllText(GetFilePath("summaries"), value); }
-        }
-        public override string this[string id]
-        {
-            get { return File.ReadAllText(GetFilePath(id)); }
-            set { File.WriteAllText(GetFilePath(id), value); }
+            if (Directory.Exists(Path)) return false;
+            Directory.CreateDirectory(Path);
+            return true;
         }
     }
 }
