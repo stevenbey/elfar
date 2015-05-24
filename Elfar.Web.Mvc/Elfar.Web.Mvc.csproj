@@ -116,9 +116,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Views\ErrorLog\Modal.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\less\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
