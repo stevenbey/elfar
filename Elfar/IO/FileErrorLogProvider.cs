@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace Elfar.IO
@@ -17,30 +18,35 @@ namespace Elfar.IO
 
         public virtual void Delete(string id)
         {
-            Summaries = Regex.Replace(Summaries, string.Format(format, id), ",").Replace(",,", ",");
+            Summaries = Regex.Replace(Regex.Replace(Summaries, string.Format(format, id), ""), @"\[,|,,|,]", m => replacements[m.Value]);
         }
         public void Save(ErrorLog.Storage errorLog)
         {
-            Summaries = Summaries.Insert(Summaries.Length - 1, "," + errorLog.Summary).Replace("[,", "[");
+            Summaries = string.Concat("[", string.Join(",", new List<string>(Summaries.Trim('[', ']').Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)) { errorLog.Summary }), "]");
             this[errorLog.ID] = errorLog.Detail;
         }
 
-        protected abstract string Read(string name);
-        protected abstract void Save(string name, string value);
+        protected abstract string Read(string fileName);
+        protected abstract void Write(string fileName, string value);
 
         public string Summaries
         {
-            get { return Read("summaries"); }
-            set { Save("summaries", value); }
+            get { return Read(summaries); }
+            set { Write(summaries, value); }
         }
         public string this[string id]
         {
-            get { return Read(id); }
-            set { Save(id, value); }
+            get { return Read(id + Ext); }
+            set { Write(id + Ext, value); }
         }
 
+        protected const string Ext = ".json";
+
         protected static readonly string Path;
+
+        const string format = @"\{{.*?""ID"":""{0}"".*?}}";
+        const string summaries = "summaries" + Ext;
         
-        const string format = @",?\{{.*?""ID"":""{0}"".*?}},?";
+        static readonly Dictionary replacements = new Dictionary { { "[,", "[" }, { ",,", "," }, { ",]", "]" } };
     }
 }

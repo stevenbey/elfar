@@ -10,21 +10,21 @@ namespace Elfar.Json
         public override void Delete(string id)
         {
             base.Delete(id);
-            File.Delete(GetFilePath(id));
+            File.Delete(GetFilePath(id + Ext));
         }
 
-        protected override string Read(string name)
+        protected override string Read(string fileName)
         {
-            return File.ReadAllText(GetFilePath(name));
+            return File.ReadAllText(GetFilePath(fileName));
         }
-        protected override void Save(string name, string value)
+        protected override void Write(string fileName, string value)
         {
-            File.WriteAllText(GetFilePath(name), value);
+            File.WriteAllText(GetFilePath(fileName), value);
         }
 
-        static string GetFilePath(string name)
+        static string GetFilePath(string fileName)
         {
-            return System.IO.Path.Combine(Path, name + ".json");
+            return System.IO.Path.Combine(Path, fileName);
         }
         static bool Init()
         {
