@@ -2,7 +2,6 @@
 interface KnockoutBindingHandlers {
     content: KnockoutBindingHandler;
 }
-
 module Elfar {
     "use strict";
     var app: App;
@@ -30,7 +29,10 @@ module Elfar {
             if (!tab || tab === this.dashboard) { return; }
             var tabs = this.tabs;
             var i = tabs.indexOf(tab);
-            if (tab instanceof List) { tab.clear(); }
+            if (tab instanceof List) {
+                tab.filter("");
+                tab.clear();
+            }
             tabs.remove(tab);
             if (tab.selected()) { this.select(tabs()[--i]); }
         };
@@ -55,6 +57,34 @@ module Elfar {
                 }
             };
             ko.applyBindings(app = new App());
+            var timeout: number;
+            $("#content").on("focus", ".filter input", function () {
+                var input = $(this);
+                input.removeAttr("placeholder");
+                input.parent().addClass("active");
+            }).on("blur", ".filter input", function () {
+                var data = ko.dataFor(this);
+                if (!data.filter()) {
+                    var input = $(this);
+                    timeout = setTimeout(() => {
+                        input.parent().removeClass("active");
+                        input.attr("placeholder", "Filter");
+                    }, 150);
+                }
+            }).on("click", ".filter span", function() {
+                var data = ko.dataFor(this);
+                if (data.filter()) {
+                    data.filter("");
+                    $(".filter input").blur();
+                } else {
+                    if ($(this).parent().hasClass("active")) { clearTimeout(timeout); }
+                    $(".filter input").focus();
+                }
+            }).on("click", ".list .body > div", function() {
+                var parent = ko.contextFor(this).$parent;
+                parent.clear();
+                parent.row = $(this).addClass("current selected");
+            });
         }
         get dashboard() {
             return this._dashboard;
@@ -73,6 +103,7 @@ module Elfar {
         Action: string;
         Area: string;
         Controller: string;
+        Date: string;
         DateTime: Date;
         ID: string;
         Type: string;
@@ -155,14 +186,15 @@ module Elfar {
         constructor(errorLogs: ErrorLog[]) {
             super("summary", "Summary");
             this._tiles = ko.observableArray<Tile>();
-            this.add(new Donut("Actions", errorLogs.groupBy((e: ErrorLog) => new key(e.Area, e.Controller, e.Action))), "donut", TileSize.Large);
-            this.add(new Donut("Controllers", errorLogs.groupBy((e: ErrorLog) => new key(e.Area, e.Controller))), "donut", TileSize.Large);
-            this.add(new Donut("Areas", errorLogs.groupBy((e: ErrorLog) => new key(e.Area))), "donut", TileSize.Large);
+            this.add(new Timeline("Timeline", errorLogs.groupBy((e: ErrorLog) => e.Date), 90), "chart", TileSize.ExtraWide);
             var today = new Date().setHours(0, 0, 0, 0);
             this.add(new Term(90, errorLogs = errorLogs.where((e: ErrorLog) => today <= e.DateTime.addDays(90))), "term");
             this.add(new Term(30, errorLogs = errorLogs.where((e: ErrorLog) => today <= e.DateTime.addDays(30))), "term");
             this.add(new Term(7, errorLogs = errorLogs.where((e: ErrorLog) => today <= e.DateTime.addDays(7))), "term");
             this.add(new Term(1, errorLogs.where((e: ErrorLog) => today <= e.DateTime.valueOf())), "term");
+            this.add(new Donut("Actions", errorLogs.groupBy((e: ErrorLog) => new key(e.Area, e.Controller, e.Action))), "donut", TileSize.Large);
+            this.add(new Donut("Controllers", errorLogs.groupBy((e: ErrorLog) => new key(e.Area, e.Controller))), "donut", TileSize.Large);
+            //this.add(new Donut("Areas", errorLogs.groupBy((e: ErrorLog) => new key(e.Area))), "donut", TileSize.Large);
         }
         add(content: any, template?: string, size: TileSize = TileSize.Small) {
             if (!(content instanceof Tile)) { content = new Tile(content, template, size); }
@@ -183,26 +215,52 @@ module Elfar {
         }
     }
     class Chart {
-        private static _colours = ["#68217A", "#007ACC", "#217167", "#A83A95", "#1BA1E2", "#571C75", "#009CCC", "#9ACD32", "#F2700F"].concat(Highcharts.getOptions().colors);
-        constructor(public id: any, public series?: Series[]) {}
+        private static _colours = ["#68217A", "#007ACC", "#217167", "#A83A95", "#1BA1E2", "#571C75", "#009CCC", "#9ACD32", "#F2700F", "#748189"].concat(Highcharts.getOptions().colors);
         static get colours() {
             return Chart._colours;
         }
     }
-    class Donut extends Chart {
-        constructor(id: string, groups: ErrorLog[][]) {
-            super(id, [new Series(id, groups)]);
-            var series = this.series[0];
+    class Donut {
+        series: Series[];
+        constructor(public id: string, groups: ErrorLog[][]) {
+            var series = (this.series = [new Series(id, groups)])[0];
             var click = (event: HighchartsAreaClickEvent) => app.add(series.points.first((p: Point) => p.title === event.point.name));
-            var donutOptions: HighchartsOptions = {
+            var options: HighchartsOptions = {
                 chart: { type: "pie", backgroundColor: "#F1F1F1", animation: false },
                 credits: { enabled: false },
                 tooltip: { enabled: false },
                 title: { text: series.count.toString(), y: 27, verticalAlign: "middle", style: { fontSize: "33px" } },
-                plotOptions: { pie: { shadow: false, center: ["50%", "56%"], cursor: "pointer", events: { click: click } }, series: { animation: false } },
-                series: [{ name: this.id, data: series.data, size: "64%", innerSize: "53%", dataLabels: { color: "#FFF", format: "{y}", distance: -24, style: { fontWeight: "normal", textShadow: "none" } } } ]
+                plotOptions: { pie: { shadow: false, center: ["50%", "56%"], cursor: "pointer", events: { click: click } }, series: { animation: false, states: { hover: { enabled: false } } } },
+                series: [{ name: id, data: series.data, size: "64%", innerSize: "53%", dataLabels: { color: "#FFF", format: "{y}", distance: -24, style: { fontWeight: "normal", textShadow: "none" } } } ]
             };
-            setTimeout(() => $(`#${this.id}`).highcharts(donutOptions), 1);
+            setTimeout(() => $(`#${id}`).highcharts(options), 1);
+        }
+    }
+    class Timeline {
+        private start: number;
+        constructor(public id: string, private groups: ErrorLog[][], private days: number) {
+            this.start = new Date().addDays(-days + 1);
+            var options: HighchartsOptions = {
+                chart: { backgroundColor: "#F1F1F1" },
+                credits: { enabled: false },
+                xAxis: { type: "datetime", labels: { enabled: false }, lineWidth: 0, tickLength: 0 },
+                yAxis: { title: "", labels: { enabled: false }, min: 0, max: groups.max((g: ErrorLog[]) => g.length), gridLineWidth: 0 },
+                legend: { enabled: false },
+                plotOptions: { area: { color: "#BBB", marker: { enabled: false, states: { hover: { enabled: false }, select: { enabled: false } } } }, series: { animation: false, states: { hover: { enabled: false } } } },
+                title: { text: "" },
+                tooltip: { enabled: false /*formatter() { return `${new Date(this.x).toISOString().split("T")[0]}:<b>${this.y}</b>`; }*/ },
+                series: [{ type: "area", name: "Error Logs", pointInterval: 86400000, pointStart: this.start, data: this.data }]
+            };
+            setTimeout(() => $(`#${id}`).highcharts(options), 1);
+        }
+        get data() {
+            var values = [], date = new Date(this.start);
+            for (var i = -this.days; i < 0; i++) {
+                var group = this.groups.first((g: ErrorLog[]) => g.key === date.toISOString().split("T")[0]);
+                values.push(group ? group.length : 0);
+                date.setDate(date.getDate() + 1);
+            }
+            return values;
         }
     }
     class Series {
@@ -218,22 +276,18 @@ module Elfar {
         }
     }
     class List extends Tab {
-        errorLogs: KnockoutComputed<ErrorLog[]>;
-        select = (errorLog: ErrorLog, event: any) => {
-            this.clear();
-            (this._row = <HTMLDivElement> event.currentTarget).className = "current selected";
-        }
+        row: JQuery;
+        rows: KnockoutComputed<ErrorLog[]>;
         static props = ["Type", "Action", "Controller", "Area", "HttpMethod", "Date"];
         private _filter: KnockoutObservable<string>;
-        private _row: HTMLDivElement;
-        constructor(private _errorLogs: ErrorLog[], name: string, title?: string) {
+        constructor(public errorLogs: ErrorLog[], name: string, title?: string) {
             super(name, title, "list");
             this._filter = ko.observable("");
-            this.errorLogs = ko.computed(() => {
+            this.rows = ko.computed(() => {
                 var filter = this.filter().toLowerCase();
-                if (!filter || filter.length < 3) { return this._errorLogs; }
+                if (!filter || filter.length < 3) { return this.errorLogs; }
                 var props = List.props;
-                return this._errorLogs.where((errorLog: ErrorLog) => {
+                return this.errorLogs.where((errorLog: ErrorLog) => {
                     for (var i = 0; i < props.length; i++) {
                         if (errorLog[props[i]].toLowerCase().indexOf(filter) !== -1) { return true; }
                     }
@@ -243,42 +297,16 @@ module Elfar {
         }
         blur() {
             super.blur();
-            if (this._row) { this._row.className = "selected"; }
+            if (this.row) { this.row.removeClass("current"); }
         }
         clear() {
-            if (this._row) { this._row.className = null; }
-        }
-        focus() {
-            super.focus();
-            var timeout: number;
-            var div = $(`#${this.id} .filter`);
-            var input = $("input", div)
-                .focus(() => {
-                input.removeAttr("placeholder");
-                div.addClass("active");
-            }).blur(() => {
-                if (!this.filter()) {
-                    timeout = setTimeout(() => {
-                        div.removeClass("active");
-                        input.attr("placeholder", "Filter");
-                    }, 150);
-                }
-            });
-            $("span", div).click(() => {
-                if (this.filter()) {
-                    this.filter("");
-                    input.blur();
-                } else {
-                    if (div.hasClass("active")) { clearTimeout(timeout); }
-                    input.focus();
-                }
-            });
+            if (this.row) { this.row.removeClass("selected"); }
         }
         get filter() {
             return this._filter;
         }
         get id() {
-            return this.title.replace(/~?\//g, "") || "root";
+            return this.title.replace(/~?\/|\s/g, "") || "root";
         }
     }
     class Point extends List {
@@ -286,7 +314,7 @@ module Elfar {
             super(errorLogs, errorLogs.key[name.slice(0, -1)] || "[root]", errorLogs.key.toString());
         }
         get value() {
-            return this.errorLogs().length;
+            return this.errorLogs.length;
         }
     }
     class Term extends List {
@@ -294,7 +322,7 @@ module Elfar {
             super(errorLogs, `term-${length}`, length === 1 ? "Today" : `Last ${length} days`);
         }
         get count() {
-            return this.errorLogs().length;
+            return this.errorLogs.length;
         }
         get css() {
             return this.count ? "lightblue-bg clickable" : "grey-bg";
@@ -330,7 +358,7 @@ module Elfar {
             return "~" + key.prefix(this.Area, !this.Controller) + key.prefix(this.Controller) + key.prefix(this.Action) + (this.Method ? ` [${this.Method}]` : "");
         }
     }
-    enum TileSize { Large, Small, Wide }
+    enum TileSize { Large, Small, Wide, ExtraWide }
     //export interface IErrorLogPlugin { }
     //export function register(plugin: IErrorLogPlugin): void {}
 }

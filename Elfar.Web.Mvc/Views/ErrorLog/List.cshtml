@@ -15,8 +15,8 @@
         <div class="date" title="Date">Date</div>
         <div class="time" title="Time">Time</div>
     </div>
-    <div class="body" data-bind="foreach: errorLogs">
-        <div data-bind="click: $parent.select">
+    <div class="body" data-bind="foreach: rows">
+        <div>
             <div>&nbsp;</div>
             <div class="type" data-bind="text: Type, attr: { title: Type }"></div>
             <div class="action" data-bind="text: Action, attr: { title: Action }"></div>

@@ -44,6 +44,7 @@ var Elfar;
                 var tabs = _this.tabs;
                 var i = tabs.indexOf(tab);
                 if (tab instanceof List) {
+                    tab.filter("");
                     tab.clear();
                 }
                 tabs.remove(tab);
@@ -71,6 +72,37 @@ var Elfar;
                 }
             };
             ko.applyBindings(app = new App());
+            var timeout;
+            $("#content").on("focus", ".filter input", function () {
+                var input = $(this);
+                input.removeAttr("placeholder");
+                input.parent().addClass("active");
+            }).on("blur", ".filter input", function () {
+                var data = ko.dataFor(this);
+                if (!data.filter()) {
+                    var input = $(this);
+                    timeout = setTimeout(function () {
+                        input.parent().removeClass("active");
+                        input.attr("placeholder", "Filter");
+                    }, 150);
+                }
+            }).on("click", ".filter span", function () {
+                var data = ko.dataFor(this);
+                if (data.filter()) {
+                    data.filter("");
+                    $(".filter input").blur();
+                }
+                else {
+                    if ($(this).parent().hasClass("active")) {
+                        clearTimeout(timeout);
+                    }
+                    $(".filter input").focus();
+                }
+            }).on("click", ".list .body > div", function () {
+                var parent = ko.contextFor(this).$parent;
+                parent.clear();
+                parent.row = $(this).addClass("current selected");
+            });
         };
         Object.defineProperty(App.prototype, "dashboard", {
             get: function () {
@@ -226,14 +258,14 @@ var Elfar;
         function Summary(errorLogs) {
             _super.call(this, "summary", "Summary");
             this._tiles = ko.observableArray();
-            this.add(new Donut("Actions", errorLogs.groupBy(function (e) { return new key(e.Area, e.Controller, e.Action); })), "donut", 0 /* Large */);
-            this.add(new Donut("Controllers", errorLogs.groupBy(function (e) { return new key(e.Area, e.Controller); })), "donut", 0 /* Large */);
-            this.add(new Donut("Areas", errorLogs.groupBy(function (e) { return new key(e.Area); })), "donut", 0 /* Large */);
+            this.add(new Timeline("Timeline", errorLogs.groupBy(function (e) { return e.Date; }), 90), "chart", 3 /* ExtraWide */);
             var today = new Date().setHours(0, 0, 0, 0);
             this.add(new Term(90, errorLogs = errorLogs.where(function (e) { return today <= e.DateTime.addDays(90); })), "term");
             this.add(new Term(30, errorLogs = errorLogs.where(function (e) { return today <= e.DateTime.addDays(30); })), "term");
             this.add(new Term(7, errorLogs = errorLogs.where(function (e) { return today <= e.DateTime.addDays(7); })), "term");
             this.add(new Term(1, errorLogs.where(function (e) { return today <= e.DateTime.valueOf(); })), "term");
+            this.add(new Donut("Actions", errorLogs.groupBy(function (e) { return new key(e.Area, e.Controller, e.Action); })), "donut", 0 /* Large */);
+            this.add(new Donut("Controllers", errorLogs.groupBy(function (e) { return new key(e.Area, e.Controller); })), "donut", 0 /* Large */);
         }
         Summary.prototype.add = function (content, template, size) {
             if (size === void 0) { size = 1 /* Small */; }
@@ -271,9 +303,7 @@ var Elfar;
     })(_Object);
     Elfar.Tile = Tile;
     var Chart = (function () {
-        function Chart(id, series) {
-            this.id = id;
-            this.series = series;
+        function Chart() {
         }
         Object.defineProperty(Chart, "colours", {
             get: function () {
@@ -282,28 +312,60 @@ var Elfar;
             enumerable: true,
             configurable: true
         });
-        Chart._colours = ["#68217A", "#007ACC", "#217167", "#A83A95", "#1BA1E2", "#571C75", "#009CCC", "#9ACD32", "#F2700F"].concat(Highcharts.getOptions().colors);
+        Chart._colours = ["#68217A", "#007ACC", "#217167", "#A83A95", "#1BA1E2", "#571C75", "#009CCC", "#9ACD32", "#F2700F", "#748189"].concat(Highcharts.getOptions().colors);
         return Chart;
     })();
-    var Donut = (function (_super) {
-        __extends(Donut, _super);
+    var Donut = (function () {
         function Donut(id, groups) {
-            var _this = this;
-            _super.call(this, id, [new Series(id, groups)]);
-            var series = this.series[0];
+            this.id = id;
+            var series = (this.series = [new Series(id, groups)])[0];
             var click = function (event) { return app.add(series.points.first(function (p) { return p.title === event.point.name; })); };
-            var donutOptions = {
+            var options = {
                 chart: { type: "pie", backgroundColor: "#F1F1F1", animation: false },
                 credits: { enabled: false },
                 tooltip: { enabled: false },
                 title: { text: series.count.toString(), y: 27, verticalAlign: "middle", style: { fontSize: "33px" } },
-                plotOptions: { pie: { shadow: false, center: ["50%", "56%"], cursor: "pointer", events: { click: click } }, series: { animation: false } },
-                series: [{ name: this.id, data: series.data, size: "64%", innerSize: "53%", dataLabels: { color: "#FFF", format: "{y}", distance: -24, style: { fontWeight: "normal", textShadow: "none" } } }]
+                plotOptions: { pie: { shadow: false, center: ["50%", "56%"], cursor: "pointer", events: { click: click } }, series: { animation: false, states: { hover: { enabled: false } } } },
+                series: [{ name: id, data: series.data, size: "64%", innerSize: "53%", dataLabels: { color: "#FFF", format: "{y}", distance: -24, style: { fontWeight: "normal", textShadow: "none" } } }]
             };
-            setTimeout(function () { return $("#" + _this.id).highcharts(donutOptions); }, 1);
+            setTimeout(function () { return $("#" + id).highcharts(options); }, 1);
         }
         return Donut;
-    })(Chart);
+    })();
+    var Timeline = (function () {
+        function Timeline(id, groups, days) {
+            this.id = id;
+            this.groups = groups;
+            this.days = days;
+            this.start = new Date().addDays(-days + 1);
+            var options = {
+                chart: { backgroundColor: "#F1F1F1" },
+                credits: { enabled: false },
+                xAxis: { type: "datetime", labels: { enabled: false }, lineWidth: 0, tickLength: 0 },
+                yAxis: { title: "", labels: { enabled: false }, min: 0, max: groups.max(function (g) { return g.length; }), gridLineWidth: 0 },
+                legend: { enabled: false },
+                plotOptions: { area: { color: "#BBB", marker: { enabled: false, states: { hover: { enabled: false }, select: { enabled: false } } } }, series: { animation: false, states: { hover: { enabled: false } } } },
+                title: { text: "" },
+                tooltip: { enabled: false },
+                series: [{ type: "area", name: "Error Logs", pointInterval: 86400000, pointStart: this.start, data: this.data }]
+            };
+            setTimeout(function () { return $("#" + id).highcharts(options); }, 1);
+        }
+        Object.defineProperty(Timeline.prototype, "data", {
+            get: function () {
+                var values = [], date = new Date(this.start);
+                for (var i = -this.days; i < 0; i++) {
+                    var group = this.groups.first(function (g) { return g.key === date.toISOString().split("T")[0]; });
+                    values.push(group ? group.length : 0);
+                    date.setDate(date.getDate() + 1);
+                }
+                return values;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return Timeline;
+    })();
     var Series = (function () {
         function Series(name, groups) {
             this.points = groups.select(function (g, i) { return new Point(name, g, Chart.colours[i]); });
@@ -326,22 +388,18 @@ var Elfar;
     })();
     var List = (function (_super) {
         __extends(List, _super);
-        function List(_errorLogs, name, title) {
+        function List(errorLogs, name, title) {
             var _this = this;
             _super.call(this, name, title, "list");
-            this._errorLogs = _errorLogs;
-            this.select = function (errorLog, event) {
-                _this.clear();
-                (_this._row = event.currentTarget).className = "current selected";
-            };
+            this.errorLogs = errorLogs;
             this._filter = ko.observable("");
-            this.errorLogs = ko.computed(function () {
+            this.rows = ko.computed(function () {
                 var filter = _this.filter().toLowerCase();
                 if (!filter || filter.length < 3) {
-                    return _this._errorLogs;
+                    return _this.errorLogs;
                 }
                 var props = List.props;
-                return _this._errorLogs.where(function (errorLog) {
+                return _this.errorLogs.where(function (errorLog) {
                     for (var i = 0; i < props.length; i++) {
                         if (errorLog[props[i]].toLowerCase().indexOf(filter) !== -1) {
                             return true;
@@ -353,43 +411,14 @@ var Elfar;
         }
         List.prototype.blur = function () {
             _super.prototype.blur.call(this);
-            if (this._row) {
-                this._row.className = "selected";
+            if (this.row) {
+                this.row.removeClass("current");
             }
         };
         List.prototype.clear = function () {
-            if (this._row) {
-                this._row.className = null;
+            if (this.row) {
+                this.row.removeClass("selected");
             }
-        };
-        List.prototype.focus = function () {
-            var _this = this;
-            _super.prototype.focus.call(this);
-            var timeout;
-            var div = $("#" + this.id + " .filter");
-            var input = $("input", div).focus(function () {
-                input.removeAttr("placeholder");
-                div.addClass("active");
-            }).blur(function () {
-                if (!_this.filter()) {
-                    timeout = setTimeout(function () {
-                        div.removeClass("active");
-                        input.attr("placeholder", "Filter");
-                    }, 150);
-                }
-            });
-            $("span", div).click(function () {
-                if (_this.filter()) {
-                    _this.filter("");
-                    input.blur();
-                }
-                else {
-                    if (div.hasClass("active")) {
-                        clearTimeout(timeout);
-                    }
-                    input.focus();
-                }
-            });
         };
         Object.defineProperty(List.prototype, "filter", {
             get: function () {
@@ -400,7 +429,7 @@ var Elfar;
         });
         Object.defineProperty(List.prototype, "id", {
             get: function () {
-                return this.title.replace(/~?\//g, "") || "root";
+                return this.title.replace(/~?\/|\s/g, "") || "root";
             },
             enumerable: true,
             configurable: true
@@ -416,7 +445,7 @@ var Elfar;
         }
         Object.defineProperty(Point.prototype, "value", {
             get: function () {
-                return this.errorLogs().length;
+                return this.errorLogs.length;
             },
             enumerable: true,
             configurable: true
@@ -430,7 +459,7 @@ var Elfar;
         }
         Object.defineProperty(Term.prototype, "count", {
             get: function () {
-                return this.errorLogs().length;
+                return this.errorLogs.length;
             },
             enumerable: true,
             configurable: true
@@ -479,6 +508,7 @@ var Elfar;
         TileSize[TileSize["Large"] = 0] = "Large";
         TileSize[TileSize["Small"] = 1] = "Small";
         TileSize[TileSize["Wide"] = 2] = "Wide";
+        TileSize[TileSize["ExtraWide"] = 3] = "ExtraWide";
     })(TileSize || (TileSize = {}));
 })(Elfar || (Elfar = {}));
 $(function () { return Elfar.App.init(); });
