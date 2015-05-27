@@ -128,13 +128,26 @@ ul#tabs i:hover {
 }
 #frequent ul,
 #latest ul {
-  margin: 0;
+  margin: 5px 0 0;
   padding: 0 0 0 4px;
   list-style-type: none;
 }
 #frequent ul li,
 #latest ul li {
   max-width: 308px;
+  line-height: 19px;
+}
+#latest .type {
+  display: inline-block;
+  width: 216px;
+}
+#latest .date {
+  display: inline-block;
+  width: 65px;
+}
+#latest .time {
+  display: inline-block;
+  width: 1px;
 }
 #summary ul {
   margin: 0;
@@ -211,6 +224,9 @@ ul#tabs i:hover {
   margin-top: 3px;
   margin-right: 4px;
 }
+#summary li.extrawide {
+  width: 632px;
+}
 #summary li.wide {
   width: 312px;
 }
@@ -229,12 +245,6 @@ ul#tabs i:hover {
 .section table {
   margin: 0 2px;
   width: 308px;
-}
-.section table th {
-  font-weight: normal;
-}
-.section table th:first-child {
-  text-align: left;
 }
 .section > .body {
   width: inherit;
@@ -577,6 +587,7 @@ header > div,
 ul#tabs li span,
 ul.legend li,
 #latest li,
+#latest .type,
 #summary li > div .header,
 #summary li > div .body,
 #summary li > div .footer,

@@ -155,13 +155,31 @@ ul#tabs {
 
 #frequent, #latest {
     ul {
-        margin: 0;
+        margin: 5px 0 0;
         padding: 0 0 0 4px;
         list-style-type: none;
 
         li {
             max-width: 308px;
+            line-height: 19px;
         }
+    }
+}
+
+#latest {
+    .type {
+        display: inline-block;
+        width: 216px;
+    }
+
+    .date {
+        display: inline-block;
+        width: 65px;
+    }
+
+    .time {
+        display: inline-block;
+        width: 1px;
     }
 }
 
@@ -252,6 +270,10 @@ ul#tabs {
         }
     }
 
+    li.extrawide {
+        width: 632px;
+    }
+
     li.wide {
         width: 312px;
     }
@@ -274,14 +296,6 @@ ul#tabs {
     table {
         margin: 0 2px;
         width: 308px;
-
-        th {
-            font-weight: normal;
-
-            &:first-child {
-                text-align: left;
-            }
-        }
     }
 
     > .body {
@@ -676,7 +690,7 @@ header > div, #summary li > div {
     color: #FFF;
 }
 
-ul#tabs li span, ul.legend li, #latest li, #summary li > div .header, #summary li > div .body, #summary li > div .footer, .section > .head, .list td, .modal-header {
+ul#tabs li span, ul.legend li, #latest li, #latest .type, #summary li > div .header, #summary li > div .body, #summary li > div .footer, .section > .head, .list td, .modal-header {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
