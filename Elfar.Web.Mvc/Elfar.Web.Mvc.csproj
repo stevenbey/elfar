@@ -30,6 +30,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <TypeScriptToolsVersion>1.4</TypeScriptToolsVersion>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -68,6 +69,7 @@
     <Compile Include="ErrorLogRoute.cs" />
     <Compile Include="ErrorLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Minify.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Elfar.css">
@@ -116,7 +118,11 @@
   <ItemGroup>
     <EmbeddedResource Include="Views\ErrorLog\Modal.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Resources\Elfar.min.js.map">
+      <DependentUpon>Elfar.min.js</DependentUpon>
+    </Content>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

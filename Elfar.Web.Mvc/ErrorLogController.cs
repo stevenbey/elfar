@@ -26,6 +26,7 @@ namespace Elfar.Web.Mvc
             Execute(requestContext);
         }
 
+        [Minify]
         public ViewResult Default()
         {
             return View();
