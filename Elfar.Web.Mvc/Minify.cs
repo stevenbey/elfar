@@ -47,9 +47,18 @@ namespace Elfar.Web.Mvc
                 inner.Write(buffer, 0, buffer.Length);
             }
 
-            public override bool CanRead => false;
-            public override bool CanSeek => false;
-            public override bool CanWrite => true;
+            public override bool CanRead
+            {
+                get { return false; }
+            }
+            public override bool CanSeek
+            {
+                get { return false; }
+            }
+            public override bool CanWrite
+            {
+                get { return true; }
+            }
             public override long Length
             {
                 get { throw new NotSupportedException(); }
@@ -61,7 +70,7 @@ namespace Elfar.Web.Mvc
             }
 
             readonly Stream inner;
-            static readonly Regex regex = new Regex(@"(?<=\s)\s+(?![^<>]*</pre>)");
+            static readonly Regex regex = new Regex(@"((?<=\s)\s+(?![^<>]*</pre>))|(<!--.*?-->)");
         }
     }
 }
