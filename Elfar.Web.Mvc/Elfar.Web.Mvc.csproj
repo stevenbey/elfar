@@ -118,11 +118,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Views\ErrorLog\Modal.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\Elfar.min.js.map">
-      <DependentUpon>Elfar.min.js</DependentUpon>
-    </Content>
-  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
