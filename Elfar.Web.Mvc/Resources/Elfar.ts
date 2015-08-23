@@ -2,6 +2,13 @@
 interface KnockoutBindingHandlers {
     content: KnockoutBindingHandler;
 }
+ko.bindingHandlers.content = {
+    init(element, valueAccessor) {
+        var document = element.contentWindow.document;
+        document.close();
+        document.write(ko.unwrap(valueAccessor()));
+    }
+};
 module Elfar {
     "use strict";
     var app: App;
@@ -49,20 +56,13 @@ module Elfar {
             this.add(this.dashboard);
         }
         static init() {
-            ko.bindingHandlers.content = {
-                init(element, valueAccessor) {
-                    var document = element.contentWindow.document;
-                    document.close();
-                    document.write(ko.unwrap(valueAccessor()));
-                }
-            };
-            ko.applyBindings(app = new App());
+            ko.applyBindings(app = new App(), $("body > div:first-child")[0]);
             var timeout: number;
-            $("#content").on("focus", ".filter input", function () {
+            $("#content").on("focus", ".filter input", () => {
                 var input = $(this);
                 input.removeAttr("placeholder");
                 input.parent().addClass("active");
-            }).on("blur", ".filter input", function () {
+            }).on("blur", ".filter input", () => {
                 var data = ko.dataFor(this);
                 if (!data.filter()) {
                     var input = $(this);
@@ -71,7 +71,7 @@ module Elfar {
                         input.attr("placeholder", "Filter");
                     }, 150);
                 }
-            }).on("click", ".filter span", function() {
+            }).on("click", ".filter span", () => {
                 var data = ko.dataFor(this);
                 if (data.filter()) {
                     data.filter("");
@@ -80,7 +80,7 @@ module Elfar {
                     if ($(this).parent().hasClass("active")) { clearTimeout(timeout); }
                     $(".filter input").focus();
                 }
-            }).on("click", ".list .body > div", function() {
+            }).on("click", ".list .body > div", () => {
                 var parent = ko.contextFor(this).$parent;
                 parent.clear();
                 parent.row = $(this).addClass("current selected");
@@ -187,11 +187,11 @@ module Elfar {
             super("summary", "Summary");
             this._tiles = ko.observableArray<Tile>();
             this.add(new Timeline("Timeline", errorLogs.groupBy((e: ErrorLog) => e.Date), 90), "chart", TileSize.ExtraWide);
-            var today = new Date().setHours(0, 0, 0, 0);
-            this.add(new Term(90, errorLogs = errorLogs.where((e: ErrorLog) => today <= e.DateTime.addDays(90))), "term");
-            this.add(new Term(30, errorLogs = errorLogs.where((e: ErrorLog) => today <= e.DateTime.addDays(30))), "term");
-            this.add(new Term(7, errorLogs = errorLogs.where((e: ErrorLog) => today <= e.DateTime.addDays(7))), "term");
-            this.add(new Term(1, errorLogs.where((e: ErrorLog) => today <= e.DateTime.valueOf())), "term");
+            var today = new Date().setHours(0, 0, 0, 0), logs = errorLogs;
+            this.add(new Term(90, logs = logs.where((e: ErrorLog) => today <= e.DateTime.addDays(90))), "term");
+            this.add(new Term(30, logs = logs.where((e: ErrorLog) => today <= e.DateTime.addDays(30))), "term");
+            this.add(new Term(7, logs = logs.where((e: ErrorLog) => today <= e.DateTime.addDays(7))), "term");
+            this.add(new Term(1, logs.where((e: ErrorLog) => today <= e.DateTime.valueOf())), "term");
             this.add(new Donut("Actions", errorLogs.groupBy((e: ErrorLog) => new key(e.Area, e.Controller, e.Action))), "donut", TileSize.Large);
             this.add(new Donut("Controllers", errorLogs.groupBy((e: ErrorLog) => new key(e.Area, e.Controller))), "donut", TileSize.Large);
             //this.add(new Donut("Areas", errorLogs.groupBy((e: ErrorLog) => new key(e.Area))), "donut", TileSize.Large);

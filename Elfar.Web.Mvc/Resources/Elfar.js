@@ -7,6 +7,13 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
+ko.bindingHandlers.content = {
+    init: function (element, valueAccessor) {
+        var document = element.contentWindow.document;
+        document.close();
+        document.write(ko.unwrap(valueAccessor()));
+    }
+};
 var Elfar;
 (function (Elfar) {
     "use strict";
@@ -64,44 +71,38 @@ var Elfar;
             this.add(this.dashboard);
         }
         App.init = function () {
-            ko.bindingHandlers.content = {
-                init: function (element, valueAccessor) {
-                    var document = element.contentWindow.document;
-                    document.close();
-                    document.write(ko.unwrap(valueAccessor()));
-                }
-            };
-            ko.applyBindings(app = new App());
+            var _this = this;
+            ko.applyBindings(app = new App(), $("body > div:first-child")[0]);
             var timeout;
             $("#content").on("focus", ".filter input", function () {
-                var input = $(this);
+                var input = $(_this);
                 input.removeAttr("placeholder");
                 input.parent().addClass("active");
             }).on("blur", ".filter input", function () {
-                var data = ko.dataFor(this);
+                var data = ko.dataFor(_this);
                 if (!data.filter()) {
-                    var input = $(this);
+                    var input = $(_this);
                     timeout = setTimeout(function () {
                         input.parent().removeClass("active");
                         input.attr("placeholder", "Filter");
                     }, 150);
                 }
             }).on("click", ".filter span", function () {
-                var data = ko.dataFor(this);
+                var data = ko.dataFor(_this);
                 if (data.filter()) {
                     data.filter("");
                     $(".filter input").blur();
                 }
                 else {
-                    if ($(this).parent().hasClass("active")) {
+                    if ($(_this).parent().hasClass("active")) {
                         clearTimeout(timeout);
                     }
                     $(".filter input").focus();
                 }
             }).on("click", ".list .body > div", function () {
-                var parent = ko.contextFor(this).$parent;
+                var parent = ko.contextFor(_this).$parent;
                 parent.clear();
-                parent.row = $(this).addClass("current selected");
+                parent.row = $(_this).addClass("current selected");
             });
         };
         Object.defineProperty(App.prototype, "dashboard", {
@@ -259,11 +260,11 @@ var Elfar;
             _super.call(this, "summary", "Summary");
             this._tiles = ko.observableArray();
             this.add(new Timeline("Timeline", errorLogs.groupBy(function (e) { return e.Date; }), 90), "chart", 3 /* ExtraWide */);
-            var today = new Date().setHours(0, 0, 0, 0);
-            this.add(new Term(90, errorLogs = errorLogs.where(function (e) { return today <= e.DateTime.addDays(90); })), "term");
-            this.add(new Term(30, errorLogs = errorLogs.where(function (e) { return today <= e.DateTime.addDays(30); })), "term");
-            this.add(new Term(7, errorLogs = errorLogs.where(function (e) { return today <= e.DateTime.addDays(7); })), "term");
-            this.add(new Term(1, errorLogs.where(function (e) { return today <= e.DateTime.valueOf(); })), "term");
+            var today = new Date().setHours(0, 0, 0, 0), logs = errorLogs;
+            this.add(new Term(90, logs = logs.where(function (e) { return today <= e.DateTime.addDays(90); })), "term");
+            this.add(new Term(30, logs = logs.where(function (e) { return today <= e.DateTime.addDays(30); })), "term");
+            this.add(new Term(7, logs = logs.where(function (e) { return today <= e.DateTime.addDays(7); })), "term");
+            this.add(new Term(1, logs.where(function (e) { return today <= e.DateTime.valueOf(); })), "term");
             this.add(new Donut("Actions", errorLogs.groupBy(function (e) { return new key(e.Area, e.Controller, e.Action); })), "donut", 0 /* Large */);
             this.add(new Donut("Controllers", errorLogs.groupBy(function (e) { return new key(e.Area, e.Controller); })), "donut", 0 /* Large */);
         }
