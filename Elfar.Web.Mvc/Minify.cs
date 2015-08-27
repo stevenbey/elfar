@@ -43,7 +43,7 @@ namespace Elfar.Web.Mvc
             }
             public override void Write(byte[] buffer, int offset, int count)
             {
-                buffer = Encoding.UTF8.GetBytes(regex.Replace(Encoding.UTF8.GetString(buffer, offset, count), string.Empty));
+                buffer = Encoding.UTF8.GetBytes(Regex.Replace(Encoding.UTF8.GetString(buffer, offset, count), pattern, string.Empty, RegexOptions.Multiline));
                 inner.Write(buffer, 0, buffer.Length);
             }
 
@@ -70,7 +70,7 @@ namespace Elfar.Web.Mvc
             }
 
             readonly Stream inner;
-            static readonly Regex regex = new Regex(@"((?<=\s)\s+(?![^<>]*</pre>))|(<!--.*?-->)");
+            const string pattern = @"((?<=\s)\s+(?![^<>]*</pre>))|(<!--.*?-->)|(<!--.*?$)|(^[^<>].*?-->)";
         }
     }
 }
