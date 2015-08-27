@@ -8,6 +8,17 @@ namespace Elfar
     // ReSharper disable InvertIf
     public sealed class Dictionary : Dictionary<string, string>
     {
+        public Dictionary(IDictionary<string, object> dictionary)
+        {
+            foreach (var pair in dictionary)
+            {
+                var value = pair.Value as string;
+                if (value != null) this.Add(pair.Key, value);
+            }
+        }
+
+        internal Dictionary() { }
+
         public static explicit operator Dictionary(NameValueCollection nvc)
         {
             var dictionary = new Dictionary();
