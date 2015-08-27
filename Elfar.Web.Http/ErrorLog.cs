@@ -20,7 +20,7 @@ namespace Elfar.Web.Http
                 if (route != null)
                 {
                     RouteUrl = route.RouteTemplate;
-                    DataTokens = new dictionary(route.DataTokens);
+                    DataTokens = new Dictionary(route.DataTokens);
                 }
 
                 var values = data.Values;
@@ -28,7 +28,7 @@ namespace Elfar.Web.Http
                 Action = values["action"].ToPascal();
                 Controller = values["controller"].ToPascal();
 
-                RouteData = new dictionary(values);
+                RouteData = new Dictionary(values);
             }
 
             var request = context.Request;
