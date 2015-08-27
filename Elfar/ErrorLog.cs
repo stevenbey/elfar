@@ -35,21 +35,21 @@ namespace Elfar
         public string Area { get; set; }
         public int? Code { get; set; }
         public string Controller { get; set; }
-        public Dictionary<string, string> Cookies { get; set; }
-        public Dictionary<string, object> DataTokens { get; set; }
+        public Dictionary Cookies { get; set; }
+        public Dictionary DataTokens { get; set; }
         public string Date { get; private set; }
-        public Dictionary<string, string> Form { get; set; }
+        public Dictionary Form { get; set; }
         public string Host { get; protected set; }
         public string Html { get; set; }
         public string HttpMethod { get; set; }
         public Guid ID { get; private set; }
         public string Message { get; private set; }
-        public Dictionary<string, string> QueryString { get; set; }
-        public Dictionary<string, object> RouteConstraints { get; set; }
-        public Dictionary<string, object> RouteData { get; set; }
-        public Dictionary<string, object> RouteDefaults { get; set; }
+        public Dictionary QueryString { get; set; }
+        public Dictionary RouteConstraints { get; set; }
+        public Dictionary RouteData { get; set; }
+        public Dictionary RouteDefaults { get; set; }
         public string RouteUrl { get; set; }
-        public Dictionary<string, string> ServerVariables { get; set; }
+        public Dictionary ServerVariables { get; set; }
         public string Source { get; private set; }
         public string StackTrace { get; private set; }
         public string Time { get; private set; }
