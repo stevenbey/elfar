@@ -14,33 +14,32 @@
     <link type="text/css" rel="stylesheet" href="@Url.Action("styles")">
 </head>
 <body>
-    <div>
+    <main>
         @Html.Partial("Header")
-        <div id="content" data-bind="foreach: tabs">
-            <div data-bind="visible: selected, template: template"></div>
+        <div id="content">
+            <div class="content(tab)"></div>
         </div>
         @Html.Partial("Footer")
         @Html.Partial("Modal")
-    </div>
+    </main>
     @Html.Partial("Dashboard")
     @Html.Partial("List")
-    <div id="Controllers-template"></div>
     @if (Request.IsLocal)
     {
-        <script type="text/javascript" src="/Scripts/jquery-2.1.3.min.js"></script>
-        <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
-        <script type="text/javascript" src="/Scripts/knockout-3.3.0.js"></script>
-        <script type="text/javascript" src="/Scripts/highcharts.js"></script>
-        <script type="text/javascript" src="/Scripts/linq.min.js"></script>
+        <script src="/Scripts/jquery-2.1.3.min.js"></script>
+        <script src="/Scripts/bootstrap.min.js"></script>
+        <script src="/Scripts/knockout-3.3.0.js"></script>
+        <script src="/Scripts/highcharts.js"></script>
+        <script src="/Scripts/linq.min.js"></script>
     }
     else
     {
-        <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
-        <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="http://knockoutjs.com/downloads/knockout-3.2.0.js"></script>
-        <script type="text/javascript" src="http://code.highcharts.com/highcharts.js"></script>
-        <script type="text/javascript" src="https://rawgit.com/stevenbey/linq.js/master/linq.js"></script>
+        <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script src="http://knockoutjs.com/downloads/knockout-3.2.0.js"></script>
+        <script src="http://code.highcharts.com/highcharts.js"></script>
+        <script src="https://rawgit.com/stevenbey/linq.js/master/linq.js"></script>
     }
-    <script type="text/javascript" src="@Url.Action("script")"></script>
+    <script src="@Url.Action("script")"></script>
 </body>
 </html>

@@ -1,22 +1,12 @@
 ﻿// ReSharper disable InconsistentNaming
-interface KnockoutBindingHandlers {
-    content: KnockoutBindingHandler;
-}
-ko.bindingHandlers.content = {
-    init(element, valueAccessor) {
-        var document = element.contentWindow.document;
-        document.close();
-        document.write(ko.unwrap(valueAccessor()));
-    }
-};
 module Elfar {
     "use strict";
     var app: App;
     export class App {
         static _path = location.pathname + "/";
         private _currentTab: Tab;
-        private _dashboard = new Dashboard();
-        private _errorLog = ko.observable<ErrorLog>();
+        private _dashboard: Dashboard;
+        private _errorLog = ko.observable().extend({ binding: "with" });
         private _tabs = ko.observableArray<Tab>([]);
         select = (tab: Tab) => {
             if (!tab) { return; }
@@ -26,11 +16,11 @@ module Elfar {
         add = (item: Tab | Section | Tile) => {
             if (item instanceof Tab) {
                 var tabs = this.tabs;
-                if (!tabs().contains(item)) { tabs.push(item); }
+                if (tabs && !tabs().contains(item)) { tabs.push(item); }
                 this.select(item);
                 return;
             }
-            this.dashboard.add(item);
+            this.dashboard.add(<Section|Tile>item);
         };
         remove = (tab: Tab) => {
             if (!tab || tab === this.dashboard) { return; }
@@ -48,21 +38,21 @@ module Elfar {
                 this.errorLog(errorLog);
                 return;
             }
-            $.get(App.path + "Detail/" + errorLog.ID, (data: any) => {
+            $.get(App.path + "Detail/" + errorLog.ID,(data: any) => {
                 this.errorLog($.extend(errorLog, data));
             });
         };
-        constructor() {
-            this.add(this.dashboard);
+        constructor(callback: () => void) {
+            this.add(this._dashboard = new Dashboard(callback));
         }
         static init() {
-            ko.applyBindings(app = new App(), $("body > div:first-child")[0]);
             var timeout: number;
-            $("#content").on("focus", ".filter input", () => {
+            // don't change function to lambda, as it breaks the filter/list
+            $("#content").on("focus", ".filter-wrapper input", function () {
                 var input = $(this);
                 input.removeAttr("placeholder");
                 input.parent().addClass("active");
-            }).on("blur", ".filter input", () => {
+            }).on("blur", ".filter-wrapper input", function () {
                 var data = ko.dataFor(this);
                 if (!data.filter()) {
                     var input = $(this);
@@ -71,20 +61,69 @@ module Elfar {
                         input.attr("placeholder", "Filter");
                     }, 150);
                 }
-            }).on("click", ".filter span", () => {
+            }).on("click", ".filter-wrapper span", function ()  {
                 var data = ko.dataFor(this);
                 if (data.filter()) {
                     data.filter("");
-                    $(".filter input").blur();
+                    $(".filter-wrapper input").blur();
                 } else {
                     if ($(this).parent().hasClass("active")) { clearTimeout(timeout); }
-                    $(".filter input").focus();
+                    $(".filter-wrapper input").focus();
                 }
-            }).on("click", ".list .body > div", () => {
+            }).on("click", ".list .table-body > div", function () {
                 var parent = ko.contextFor(this).$parent;
                 parent.clear();
                 parent.row = $(this).addClass("current selected");
             });
+            ko.bindingProvider.instance = new unobtrusiveBindingsProvider({
+                "aspnet-html": "with: errorLog",
+                chart: "attr: { id: id }",
+                "content(html)": "content: Html",
+                "content(tab)": "visible: selected, template: { name: template }",
+                "content(value)": "if: !(value instanceof Object)",
+                cookies: "template: { name: 'i', data: Cookies }",
+                dataTokens: "template: { name: 'i', data: DataTokens }",
+                "filter-wrapper": "css: { filtering: filter }",
+                form: "template: { name: 'i', data: Form }",
+                html: "visible: Html",
+                "legend-colour": "style: { backgroundColor: colour }",
+                "link(tab)": "click: $root.add",
+                "link(Type)": "click: $root.show",
+                list: "attr: { id: id }",
+                keys: "props: $data",
+                override: { bindings: "", override: true },
+                queryString: "template: { name: 'i', data: QueryString }",
+                routeData: "template: { name: 'i', data: RouteData }",
+                routeDefaults: "template: { name: 'i', data: RouteDefaults }",
+                routeConstraints: "template: { name: 'i', data: RouteConstraints }",
+                section: "attr: { id: name }",
+                "section-content": "template: template",
+                serverVariables: "template: { name: 'i', data: ServerVariables }",
+                "show(Cookies)": "visible: show(Cookies)",
+                "show(DataTokens)": "visible: show(DataTokens)",
+                "show(Form)": "visible: show(Form)",
+                "show(QueryString)": "visible: show(QueryString)",
+                "show(RouteConstraints)": "visible: show(RouteConstraints)",
+                tab: "css:{selected:selected},click:$root.select,attr:{title:title}",
+                "tab(close)": "visible: closeable, click: $root.remove",
+                term: "click: count ? $root.add : null, css: css",
+                tile: "template: { name: template, data: content }, css: size",
+                "title(Action)": "attr: { title: Action }",
+                "title(Area)": "attr: { title: Area }",
+                "title(Controller)": "attr: { title: Controller }",
+                "title(Date)": "attr: { title: Date }",
+                "title(key)": "attr: { title: key }",
+                "title(legend)": "attr: { title: title }",
+                "title(Method)": "attr: { title: HttpMethod }",
+                "title(name)": "attr: { title: name }",
+                "title(term)": "attr: { title: title }",
+                "title(Time)": "attr: { title: Time }",
+                "title(Type)": "attr: { title: Type }"
+            });
+            app = new App(() => ko.applyBindings(app, $("main")[0]));
+        }
+        get content() {
+            return this._tabs;
         }
         get dashboard() {
             return this._dashboard;
@@ -105,23 +144,50 @@ module Elfar {
         Controller: string;
         Date: string;
         DateTime: Date;
+        HttpMethod: string;
         ID: string;
+        Time: string;
         Type: string;
         Url: string;
-        constructor(obj: any) {
-            $.extend(this, obj);
-            if(this.Area) { this.Area = `/${this.Area}`; }
-            this.DateTime = new Date(obj.Date + "T" + obj.Time);
+        constructor(obj?: any) {
+            if (obj) {
+                $.extend(this, obj);
+                if (this.Area) { this.Area = `/${this.Area}`; }
+                this.DateTime = new Date(obj.Date + "T" + obj.Time);
+            }
         }
         show(obj: any) {
-            return !!Object.keys(obj).length;
+            return Object.keys(obj).where(key => !(obj[key] instanceof Object)).length;
+        }
+        get action() {
+            return this.Action;
+        }
+        get area() {
+            return this.Area;
+        }
+        get controller() {
+            return this.Controller;
+        }
+        get date() {
+            return this.Date;
+        }
+        get method() {
+            return this.HttpMethod;
+        }
+        get time() {
+            return this.Time;
+        }
+        get type() {
+            return this.Type;
         }
     }
     export class _Object {
         _template;
         constructor(public name: string, public title: string, template?: string) {
-            this._template = (template || name) + "-template";
-            if (!title) this.title = name;
+            this._template = (template || name);
+            if (!title) {
+                this.title = name;
+            }
         }
         get template() {
             return this._template;
@@ -149,13 +215,16 @@ module Elfar {
     export class Dashboard extends Tab {
         private _sections = ko.observableArray<Section>();
         private _summary: Summary;
-        constructor() {
-            super("dashboard", "Dashboard", null, true);
-            $.get(App.path + "Summaries", (data: any[]) => {
+        constructor(callback: () => void) {
+            super("dashboard", "Dashboard", "a", true);
+            $.get(App.path + "Summaries",(data: any[]) => {
                 data = data.reverse().select((i: any) => new ErrorLog(i));
                 this.add(this._summary = new Summary(data));
-                this.add(new Latest(data));
-                this.add(new Frequent("Type", data, (l: ErrorLog) => l.Type));
+                if (data.length) {
+                    this.add(new Latest(data));
+                    this.add(new Frequent("Type", data,(l: ErrorLog) => l.Type));
+                }
+                callback();
             });
         }
         add(item: Section | Tile) {
@@ -177,24 +246,25 @@ module Elfar {
         }
     }
     export class Section extends _Object {
-        constructor(name: string, title: string, template?: string) {
-            super(name, title, template);
+        constructor(name: string, public head: string, template?: string) {
+            super(name, head, template);
         }
     }
     export class Summary extends Section {
-        private _tiles: KnockoutObservableArray<Tile>;
+        private _tiles = ko.observableArray<Tile>();
         constructor(errorLogs: ErrorLog[]) {
-            super("summary", "Summary");
-            this._tiles = ko.observableArray<Tile>();
-            this.add(new Timeline("Timeline", errorLogs.groupBy((e: ErrorLog) => e.Date), 90), "chart", TileSize.ExtraWide);
+            super("summary", "Summary", "b");
+            this.add(new Timeline("Timeline", errorLogs.length ? errorLogs.groupBy((e: ErrorLog) => e.Date) : [errorLogs], 90), "c", TileSize.ExtraWide);
             var today = new Date().setHours(0, 0, 0, 0), logs = errorLogs;
-            this.add(new Term(90, logs = logs.where((e: ErrorLog) => today <= e.DateTime.addDays(90))), "term");
-            this.add(new Term(30, logs = logs.where((e: ErrorLog) => today <= e.DateTime.addDays(30))), "term");
-            this.add(new Term(7, logs = logs.where((e: ErrorLog) => today <= e.DateTime.addDays(7))), "term");
-            this.add(new Term(1, logs.where((e: ErrorLog) => today <= e.DateTime.valueOf())), "term");
-            this.add(new Donut("Actions", errorLogs.groupBy((e: ErrorLog) => new key(e.Area, e.Controller, e.Action))), "donut", TileSize.Large);
-            this.add(new Donut("Controllers", errorLogs.groupBy((e: ErrorLog) => new key(e.Area, e.Controller))), "donut", TileSize.Large);
-            //this.add(new Donut("Areas", errorLogs.groupBy((e: ErrorLog) => new key(e.Area))), "donut", TileSize.Large);
+            this.add(new Term(90, logs = logs.where((e: ErrorLog) => today <= e.DateTime.addDays(90))), "d");
+            this.add(new Term(30, logs = logs.where((e: ErrorLog) => today <= e.DateTime.addDays(30))), "d");
+            this.add(new Term(7, logs = logs.where((e: ErrorLog) => today <= e.DateTime.addDays(7))), "d");
+            this.add(new Term(1, logs.where((e: ErrorLog) => today <= e.DateTime.valueOf())), "d");
+            if (errorLogs.length) {
+                this.add(new Donut("Actions", errorLogs.groupBy((e: ErrorLog) => new key(e.Area, e.Controller, e.Action))), "e", TileSize.Large);
+                this.add(new Donut("Controllers", errorLogs.groupBy((e: ErrorLog) => new key(e.Area, e.Controller))), "e", TileSize.Large);
+                //this.add(new Donut("Areas", errorLogs.groupBy((e: ErrorLog) => new key(e.Area))), "e", TileSize.Large);
+            }
         }
         add(content: any, template?: string, size: TileSize = TileSize.Small) {
             if (!(content instanceof Tile)) { content = new Tile(content, template, size); }
@@ -235,11 +305,17 @@ module Elfar {
             };
             setTimeout(() => $(`#${id}`).highcharts(options), 1);
         }
+        get legend() {
+            return this.series[0].points;
+        }
+        get title() {
+            return this.id;
+        }
     }
     class Timeline {
         private start: number;
         constructor(public id: string, private groups: ErrorLog[][], private days: number) {
-            this.start = new Date().addDays(-days + 1);
+            this.start = new Date().addDays(-days);
             var options: HighchartsOptions = {
                 chart: { backgroundColor: "#F1F1F1" },
                 credits: { enabled: false },
@@ -255,12 +331,17 @@ module Elfar {
         }
         get data() {
             var values = [], date = new Date(this.start);
-            for (var i = -this.days; i < 0; i++) {
-                var group = this.groups.first((g: ErrorLog[]) => g.key === date.toISOString().split("T")[0]);
-                values.push(group ? group.length : 0);
-                date.setDate(date.getDate() + 1);
+            if (this.groups.length) {
+                for (var i = -this.days; i < 0; i++) {
+                    var group = this.groups.first((g: ErrorLog[]) => g.key === date.toISOString().split("T")[0]);
+                    values.push(group ? group.length : 0);
+                    date.setDate(date.getDate() + 1);
+                }
             }
             return values;
+        }
+        get title() {
+            return this.id;
         }
     }
     class Series {
@@ -281,8 +362,8 @@ module Elfar {
         static props = ["Type", "Action", "Controller", "Area", "HttpMethod", "Date"];
         private _filter: KnockoutObservable<string>;
         constructor(public errorLogs: ErrorLog[], name: string, title?: string) {
-            super(name, title, "list");
-            this._filter = ko.observable("");
+            super(name, title, "h");
+            this._filter = ko.observable("").extend({ binding: "textInput" });
             this.rows = ko.computed(() => {
                 var filter = this.filter().toLowerCase();
                 if (!filter || filter.length < 3) { return this.errorLogs; }
@@ -321,24 +402,30 @@ module Elfar {
         constructor(length: number, errorLogs: ErrorLog[]) {
             super(errorLogs, `term-${length}`, length === 1 ? "Today" : `Last ${length} days`);
         }
+        get body() {
+            return this.count;
+        }
         get count() {
             return this.errorLogs.length;
         }
         get css() {
             return this.count ? "lightblue-bg clickable" : "grey-bg";
         }
+        get head() {
+            return this.title;
+        }
     }
     class Latest extends Section {
         errorLogs: ErrorLog[];
         constructor(errorLogs: ErrorLog[]) {
-            super("latest", "Most recent");
+            super("latest", "Most recent", "f");
             this.errorLogs = errorLogs.take(10);
         }
     }
     class Frequent extends Section {
         items: Tab[];
         constructor(type: string, errorLogs: ErrorLog[], keySelector: (item: ErrorLog) => any) {
-            super("frequent", `Most frequent (by ${type})`);
+            super("frequent", `Most frequent (by ${type})`, "g");
             this.items = errorLogs.groupBy(keySelector).orderByDescending((g: any[]) => g.length).take(10).select((g: ErrorLog[]) => new List(g, g.key));
         }
     }
@@ -349,10 +436,10 @@ module Elfar {
         Method: string;
         static prefix = (value: string, enforce: boolean = false) => value ? `/${value}` : (enforce ? "/" : "");
         constructor(area: string, controller?: string, action?: string, method?: string) {
-            this.Area = area,
-            this.Controller = controller,
-            this.Action = action;
-            this.Method = method;
+            this.Area = area || "",
+            this.Controller = controller || "",
+            this.Action = action || "";
+            this.Method = method || "";
         }
         toString() {
             return "~" + key.prefix(this.Area, !this.Controller) + key.prefix(this.Controller) + key.prefix(this.Action) + (this.Method ? ` [${this.Method}]` : "");
@@ -362,4 +449,4 @@ module Elfar {
     //export interface IErrorLogPlugin { }
     //export function register(plugin: IErrorLogPlugin): void {}
 }
-$(() => Elfar.App.init());
+$(Elfar.App.init);

@@ -1,119 +1,88 @@
-﻿<div class="modal" id="errorLog" tabindex="-1" role="dialog" aria-labelledby="errorLog-title" aria-hidden="true" data-bind="with: errorLog">
+﻿<div class="modal" id="errorLog" tabindex="-1" role="dialog" aria-labelledby="errorLog-title" aria-hidden="true">
     <div>
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="errorLog-title">
-                        <span data-bind="text: Type + ':'"></span>
-                        <span data-bind="text: Url"></span>
-                    </h4>
+                    <h4 class="modal-title" id="errorLog-title"><span class="Type"></span>: <span class="Url"></span></h4>
                 </div>
                 <div class="modal-body">
+                    <div class="row"><label>Message</label><input readonly="readonly" name="Message" /></div>
                     <div class="row">
-                        <label>Message</label><input readonly="readonly" data-bind="value: Message" />
+                        <div class="col-xs-6"><label>Type</label><input readonly="readonly" name="Type" /></div>
+                        <div class="col-xs-6"><label>Date</label><input readonly="readonly" name="Date" /></div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-6">
-                            <label>Type</label><input readonly="readonly" data-bind="value: Type" />
-                        </div>
-                        <div class="col-xs-6">
-                            <label>Date</label><input readonly="readonly" data-bind="value: Date" />
-                        </div>
+                        <div class="col-xs-6"><label>Source</label><input readonly="readonly" name="Source" /></div>
+                        <div class="col-xs-6"><label>Time</label><input readonly="readonly" name="Time" /></div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-6">
-                            <label>Source</label><input readonly="readonly" data-bind="value: Source" />
-                        </div>
-                        <div class="col-xs-6">
-                            <label>Time</label><input readonly="readonly" data-bind="value: Time" />
-                        </div>
+                        <div class="col-xs-6"><label>Url</label><input readonly="readonly" name="Url" /></div>
+                        <div class="col-xs-6"><label>Host</label><input readonly="readonly" name="Host" /></div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-6">
-                            <label>Url</label><input readonly="readonly" data-bind="value: Url" />
-                        </div>
-                        <div class="col-xs-6">
-                            <label>Host</label><input readonly="readonly" data-bind="value: Host" />
-                        </div>
+                        <div class="col-xs-6"><label>Action</label><input readonly="readonly" name="Action" /></div>
+                        <div class="col-xs-6"><label>Code</label><input readonly="readonly" name="Code" /></div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-6">
-                            <label>Action</label><input readonly="readonly" data-bind="value: Action" />
-                        </div>
-                        <div class="col-xs-6">
-                            <label>Area</label><input readonly="readonly" data-bind="value: Area" />
-                        </div>
+                        <div class="col-xs-6"><label>Controller</label><input readonly="readonly" name="Controller" /></div>
+                        <div class="col-xs-6"><label>Method</label><input readonly="readonly" name="HttpMethod" /></div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-6">
-                            <label>Controller</label><input readonly="readonly" data-bind="value: Controller" />
-                        </div>
-                        <div class="col-xs-6">
-                            <label>Method</label><input readonly="readonly" data-bind="value: HttpMethod" />
-                        </div>
+                        <div class="col-xs-6"><label>Area</label><input readonly="readonly" name="Area" /></div>
+                        <div class="col-xs-6"><label>User</label><input readonly="readonly" name="User" /></div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-6">
-                            <label>Code</label><input readonly="readonly" data-bind="value: Code" />
-                        </div>
-                        <div class="col-xs-6">
-                            <label>User</label><input readonly="readonly" data-bind="value: User" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <pre data-bind="text: StackTrace">Stack Trace</pre>
-                        </div>
-                        <div class="col-xs-6 tabs">
+                        <div class="col-xs-6"><pre class="StackTrace">Stack Trace</pre></div>
+                        <div class="col-xs-6 override tabs">
                             <div role="tabpanel">
                                 <ul class="nav nav-pills" role="tablist">
                                     <li role="presentation" class="active"><a href="#routeData" aria-controls="routeData" role="tab" data-toggle="tab">Route Data</a></li>
-                                    <li role="presentation" data-bind="visible: show(RouteDefaults)"><a href="#routeDefaults" aria-controls="routeDefaults" role="tab" data-toggle="tab">Route Defaults</a></li>
-                                    <li role="presentation" data-bind="visible: show(RouteConstraints)"><a href="#routeConstraints" aria-controls="routeConstraints" role="tab" data-toggle="tab">Route Constraints</a></li>
-                                    <li role="presentation" data-bind="visible: show(DataTokens)"><a href="#dataTokens" aria-controls="dataTokens" role="tab" data-toggle="tab">Data Tokens</a></li>
-                                    <li role="presentation" data-bind="visible: show(QueryString)"><a href="#queryString" aria-controls="queryString" role="tab" data-toggle="tab">QueryString</a></li>
-                                    <li role="presentation" data-bind="visible: show(Form)"><a href="#form" aria-controls="form" role="tab" data-toggle="tab">Form</a></li>
-                                    <li role="presentation" data-bind="visible: show(Cookies)"><a href="#cookies" aria-controls="cookies" role="tab" data-toggle="tab">Cookies</a></li>
+                                    <li role="presentation"><a href="#routeDefaults" aria-controls="routeDefaults" role="tab" data-toggle="tab">Route Defaults</a></li>
+                                    <li role="presentation" class="show(RouteConstraints)"><a href="#routeConstraints" aria-controls="routeConstraints" role="tab" data-toggle="tab">Route Constraints</a></li>
+                                    <li role="presentation" class="show(DataTokens)"><a href="#dataTokens" aria-controls="dataTokens" role="tab" data-toggle="tab">Data Tokens</a></li>
+                                    <li role="presentation" class="show(QueryString)"><a href="#queryString" aria-controls="queryString" role="tab" data-toggle="tab">QueryString</a></li>
+                                    <li role="presentation" class="show(Form)"><a href="#form" aria-controls="form" role="tab" data-toggle="tab">Form</a></li>
+                                    <li role="presentation" class="show(Cookies)"><a href="#cookies" aria-controls="cookies" role="tab" data-toggle="tab">Cookies</a></li>
                                     <li role="presentation"><a href="#serverVariables" aria-controls="serverVariables" role="tab" data-toggle="tab">Server Variables</a></li>
                                 </ul>
                             </div>
-                            <div class="tab-content">
-                                <div role="tabpanel" class="tab-pane active" id="routeData" data-bind="template: { name: 'dictionary', data: RouteData }"></div>
-                                <div role="tabpanel" class="tab-pane" id="routeDefaults" data-bind="template: { name: 'dictionary', data: RouteDefaults }"></div>
-                                <div role="tabpanel" class="tab-pane" id="routeConstraints" data-bind="template: { name: 'dictionary', data: RouteConstraints }"></div>
-                                <div role="tabpanel" class="tab-pane" id="dataTokens" data-bind="template: { name: 'dictionary', data: DataTokens }"></div>
-                                <div role="tabpanel" class="tab-pane" id="queryString" data-bind="template: { name: 'dictionary', data: QueryString }"></div>
-                                <div role="tabpanel" class="tab-pane" id="form" data-bind="template: { name: 'dictionary', data: Form }"></div>
-                                <div role="tabpanel" class="tab-pane" id="cookies" data-bind="template: { name: 'dictionary', data: Cookies }"></div>
-                                <div role="tabpanel" class="tab-pane" id="serverVariables" data-bind="template: { name: 'dictionary', data: ServerVariables }"></div>
-                                <div id="dictionary">
-                                    <table class="dictionary">
-                                        <tbody data-bind="foreach: Object.keys($data)">
-                                            <tr data-bind="visible: !($parent[$data] instanceof Object)">
-                                                <th data-bind="text: $data"></th>
-                                                <td data-bind="text: $parent[$data]"></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                            <div class="override tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="routeData"></div>
+                                <div role="tabpanel" class="tab-pane" id="routeDefaults"></div>
+                                <div role="tabpanel" class="tab-pane" id="routeConstraints"></div>
+                                <div role="tabpanel" class="tab-pane" id="dataTokens"></div>
+                                <div role="tabpanel" class="tab-pane" id="queryString"></div>
+                                <div role="tabpanel" class="tab-pane" id="form"></div>
+                                <div role="tabpanel" class="tab-pane" id="cookies"></div>
+                                <div role="tabpanel" class="tab-pane" id="serverVariables"></div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" role="button" aria-disabled="false" data-toggle="modal" data-target="#aspnet-html" data-bind="visible: !!Html"><span>ASP.NET HTML Error Page</span></button>
+                    <button id="html" type="button" role="button" aria-disabled="false" data-toggle="modal" data-target="#aspnet-html"><span>ASP.NET HTML Error Page</span></button>
                     <div>
                         @*<button type="button" id="wit-dialog-save74" disabled="" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-disabled ui-state-disabled ui-button-text-only" role="button" aria-disabled="true"><span class="ui-button-text">Save</span></button>
-                            <button type="button" id="wit-dialog-save-close75" disabled="" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-disabled ui-state-disabled ui-button-text-only" role="button" aria-disabled="true"><span class="ui-button-text">Save and close</span></button>*@
+                        <button type="button" id="wit-dialog-save-close75" disabled="" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-disabled ui-state-disabled ui-button-text-only" role="button" aria-disabled="true"><span class="ui-button-text">Save and close</span></button>*@
                         <button type="button" role="button" aria-disabled="false" data-dismiss="modal"><span>Close</span></button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div id="i">
+        <table class="dictionary">
+            <tbody class="keys">
+            <tr class="content(value)">
+                <th class="key title(key)"></th>
+                <td class="value"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
-<div class="modal" id="aspnet-html" tabindex="-1" role="dialog" aria-labelledby="aspnet-html-title" aria-hidden="true" data-bind="with: errorLog">
+<div class="modal" id="aspnet-html" tabindex="-1" role="dialog" aria-labelledby="aspnet-html-title" aria-hidden="true">
     <div>
         <div class="modal-dialog">
             <div class="modal-content">
@@ -122,7 +91,7 @@
                     <h4 class="modal-title" id="aspnet-html-title"><span>ASP.NET HTML Error Message</span></h4>
                 </div>
                 <div class="modal-body">
-                    <iframe scrolling="auto" data-bind="content: Html"></iframe>
+                    <iframe name="content(html)" scrolling="auto"></iframe>
                 </div>
                 <div class="modal-footer">
                     <div>

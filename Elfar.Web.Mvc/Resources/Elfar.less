@@ -19,15 +19,13 @@ body {
     padding: 0;
     overflow: hidden;
     cursor: default;
+}
 
-    > div:first-child > div {
-        position: absolute;
-        top: 66px;
-        bottom: 36px;
-        left: 25px;
-        right: 0;
-        padding: 10px;
-        overflow: auto;
+main {
+    h1 {
+        display: none;
+        color: #888;
+        text-align: center;
     }
 }
 
@@ -63,10 +61,6 @@ a {
         text-decoration: underline;
         cursor: pointer;
     }
-}
-
-div[id$='-template']{
-    display: none;
 }
 
 pre {
@@ -132,20 +126,40 @@ ul#tabs {
     }
 }
 
+#a, #b, #c, #d, #e, #f, #g, #h, #i {
+    display: none;
+}
+
+#content {
+    position: absolute;
+    top: 66px;
+    bottom: 36px;
+    left: 25px;
+    right: 0;
+    padding: 10px;
+    overflow: auto;
+}
+
 #aspnet-html {
     iframe {
         border: none;
         margin: 0;
     }
 
-    > div, .modal-content, iframe {
+    > div, iframe {
         width: 100%;
         max-width: 100%;
         height: 100%;
     }
 
+    .modal-content {
+        width: 98%;
+        height: 98%;
+    }
+
     .modal-body {
         height: 91%;
+        padding: 0 5px;
     }
 
     .modal-title {
@@ -157,7 +171,7 @@ ul#tabs {
     max-width: 1280px;
 }
 
-#frequent, #latest {
+#frequent {
     ul {
         margin: 5px 0 0;
         padding: 0 0 0 4px;
@@ -171,7 +185,7 @@ ul#tabs {
 }
 
 #latest {
-    .type {
+    td:first-child {
         display: inline-block;
         width: 216px;
     }
@@ -296,6 +310,10 @@ ul#tabs {
     display: none;
 }
 
+.close-tab {
+    display: none;
+}
+
 .section {
     width: 320px;
     float: left;
@@ -323,7 +341,6 @@ ul#tabs {
 
 .list {
     overflow: hidden;
-    margin: 0 -10px;
 
     .toolbar {
         height: 32px;
@@ -331,7 +348,7 @@ ul#tabs {
         border-bottom: 1px solid #ccc;
     }
 
-    .filter {
+    .filter-wrapper {
         position: relative;
         float: right;
         height: 24px;
@@ -373,7 +390,7 @@ ul#tabs {
         }
     }
 
-    .head {
+    .table-head {
         margin-bottom: 1px;
 
         > div {
@@ -394,7 +411,7 @@ ul#tabs {
         }
     }
 
-    .body {
+    .table-body {
         clear: both;
         overflow: auto;
 
@@ -437,7 +454,7 @@ ul#tabs {
         }
     }
 
-    .head, .body > div {
+    .table-head, .table-body > div {
         > div {
             width: 150px;
             padding: 5px;
@@ -485,7 +502,8 @@ ul#tabs {
     }
 
     th {
-        width: 160px;
+        width: 100px;
+        max-width: 100px;
         font-weight: normal;
         vertical-align: top;
         border-right: 1px solid #f1f1f1;
@@ -500,20 +518,22 @@ ul#tabs {
     background-color: #1BA1E2 !important;
 }
 
+.modal {
+    padding: 0 !important;
+}
+
 .modal > div {
-    margin: 0 auto;
-    display: table;
+    display:table;
     height: 100%;
     width: 100%;
-    max-width: 1500px;
-    pointer-events: none;
+    pointer-events:none;
 }
 
 .modal-dialog {
     display: table-cell;
+    width: 1200px;
     vertical-align: middle;
-    pointer-events: none;
-    max-height: 80%;
+    pointer-events:none;
 }
 
 .modal-header {
@@ -526,7 +546,9 @@ ul#tabs {
 }
 
 .modal-content {
-    height: inherit;
+    width:inherit;
+    height:inherit;
+    margin: 0 auto;
     pointer-events: all;
     border-radius: 0;
     box-shadow: gray 0 0 30px;
@@ -564,7 +586,6 @@ ul#tabs {
     pre {
         width: 100%;
         height: 450px;
-        margin-right: 10px;
         border-radius: 0;
     }
 
@@ -698,7 +719,7 @@ header > div, #summary li > div {
     color: #FFF;
 }
 
-ul#tabs li span, ul.legend li, #latest li, #latest .type, #summary li > div .header, #summary li > div .body, #summary li > div .footer, .section > .head, .list td, .modal-header {
+ul#tabs li span, ul.legend li, #latest li, #latest td:first-child, #summary li > div .header, #summary li > div .body, #summary li > div .footer, .section > .head, .list td, .modal-header, .dictionary th {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

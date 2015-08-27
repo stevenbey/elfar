@@ -18,14 +18,10 @@ body {
   overflow: hidden;
   cursor: default;
 }
-body > div:first-child > div {
-  position: absolute;
-  top: 66px;
-  bottom: 36px;
-  left: 25px;
-  right: 0;
-  padding: 10px;
-  overflow: auto;
+main h1 {
+  display: none;
+  color: #888;
+  text-align: center;
 }
 header {
   font-size: 14px;
@@ -55,9 +51,6 @@ a {
 a:hover {
   text-decoration: underline;
   cursor: pointer;
-}
-div[id$='-template'] {
-  display: none;
 }
 pre {
   -ms-word-wrap: normal;
@@ -109,19 +102,43 @@ ul#tabs i {
 ul#tabs i:hover {
   background-color: #CCC;
 }
+#a,
+#b,
+#c,
+#d,
+#e,
+#f,
+#g,
+#h,
+#i {
+  display: none;
+}
+#content {
+  position: absolute;
+  top: 66px;
+  bottom: 36px;
+  left: 25px;
+  right: 0;
+  padding: 10px;
+  overflow: auto;
+}
 #aspnet-html iframe {
   border: none;
   margin: 0;
 }
 #aspnet-html > div,
-#aspnet-html .modal-content,
 #aspnet-html iframe {
   width: 100%;
   max-width: 100%;
   height: 100%;
 }
+#aspnet-html .modal-content {
+  width: 98%;
+  height: 98%;
+}
 #aspnet-html .modal-body {
   height: 91%;
+  padding: 0 5px;
 }
 #aspnet-html .modal-title {
   display: none;
@@ -129,18 +146,16 @@ ul#tabs i:hover {
 #sections {
   max-width: 1280px;
 }
-#frequent ul,
-#latest ul {
+#frequent ul {
   margin: 5px 0 0;
   padding: 0 0 0 4px;
   list-style-type: none;
 }
-#frequent ul li,
-#latest ul li {
+#frequent ul li {
   max-width: 308px;
   line-height: 19px;
 }
-#latest .type {
+#latest td:first-child {
   display: inline-block;
   width: 216px;
 }
@@ -243,6 +258,9 @@ ul#tabs i:hover {
 #dictionary {
   display: none;
 }
+.close-tab {
+  display: none;
+}
 .section {
   width: 320px;
   float: left;
@@ -266,31 +284,30 @@ ul#tabs i:hover {
 }
 .list {
   overflow: hidden;
-  margin: 0 -10px;
 }
 .list .toolbar {
   height: 32px;
   margin: 0 10px 5px 10px;
   border-bottom: 1px solid #ccc;
 }
-.list .filter {
+.list .filter-wrapper {
   position: relative;
   float: right;
   height: 24px;
   background-color: #F0F0F0;
   border: 1px solid transparent;
 }
-.list .filter.active,
-.list .filter.filtering {
+.list .filter-wrapper.active,
+.list .filter-wrapper.filtering {
   background-color: #FFFFFF;
   /* FIX */
   border-color: #F0F0F0;
   border: 1px solid #F0F0F0;
 }
-.list .filter.filtering span {
+.list .filter-wrapper.filtering span {
   background: url('icons/close') no-repeat 3px 50% !important;
 }
-.list .filter input {
+.list .filter-wrapper input {
   padding: 3px 3px 4px 3px;
   border-style: none;
   outline: 0;
@@ -299,11 +316,11 @@ ul#tabs i:hover {
   color: #7F7F7F;
   background-color: transparent;
 }
-.list .filter input::-ms-clear {
+.list .filter-wrapper input::-ms-clear {
   display: none;
   /* Prevents IE10 x (clear) icon from showing up as to not confuse users */
 }
-.list .filter span {
+.list .filter-wrapper span {
   width: 16px;
   height: 16px;
   position: absolute;
@@ -312,81 +329,81 @@ ul#tabs i:hover {
   cursor: pointer;
   background: url('icons/header') no-repeat -256px -16px !important;
 }
-.list .head {
+.list .table-head {
   margin-bottom: 1px;
 }
-.list .head > div {
+.list .table-head > div {
   display: inline-block;
   padding-left: 5px;
   padding-right: 12px;
   font-weight: normal;
   color: #8c8c8c;
 }
-.list .head > div.date,
-.list .head > div.time {
+.list .table-head > div.date,
+.list .table-head > div.time {
   padding: inherit 0;
   text-align: center;
 }
-.list .head > div:hover {
+.list .table-head > div:hover {
   background-color: #E6E6E6;
 }
-.list .body {
+.list .table-body {
   clear: both;
   overflow: auto;
 }
-.list .body > div {
+.list .table-body > div {
   clear: both;
   width: 100%;
 }
-.list .body > div > div {
+.list .table-body > div > div {
   display: inline-block;
   background-color: inherit;
 }
-.list .body > div > div.method {
+.list .table-body > div > div.method {
   text-align: center;
 }
-.list .body > div:hover {
+.list .table-body > div:hover {
   background-color: #F2F7FD;
 }
-.list .body > div:hover > div:first-child {
+.list .table-body > div:hover > div:first-child {
   background-color: #FFF;
 }
-.list .body > div.selected {
+.list .table-body > div.selected {
   background-color: #E6E6E6;
 }
-.list .body > div.selected.current,
-.list .body > div.selected.current:hover {
+.list .table-body > div.selected.current,
+.list .table-body > div.selected.current:hover {
   background-color: #DCEBFC;
 }
-.list .body > div.selected:hover {
+.list .table-body > div.selected:hover {
   background-color: #F2F7FD;
 }
-.list .body > div.selected > div:first-child {
+.list .table-body > div.selected > div:first-child {
   background: url('icons') no-repeat -1358px 50% #ffffff !important;
 }
-.list .head > div,
-.list .body > div > div {
+.list .table-head > div,
+.list .table-body > div > div {
   width: 150px;
   padding: 5px;
 }
-.list .head > div:first-child,
-.list .body > div > div:first-child {
+.list .table-head > div:first-child,
+.list .table-body > div > div:first-child {
   width: 20px;
 }
-.list .head > div.method,
-.list .body > div > div.method {
+.list .table-head > div.method,
+.list .table-body > div > div.method {
   width: 50px;
 }
-.list .head > div.type,
-.list .body > div > div.type {
+.list .table-head > div.type,
+.list .table-body > div > div.type {
   width: 300px;
 }
-.list .head > div.date,
-.list .body > div > div.date {
+.list .table-head > div.date,
+.list .table-body > div > div.date {
   width: 72px;
 }
-.list .head > div.time,
-.list .body > div > div.time {
+.list .table-head > div.time,
+.list .table-body > div > div.time {
   width: 39px;
 }
 .centre {
@@ -405,7 +422,8 @@ ul#tabs i:hover {
   border-bottom: 1px solid #f1f1f1;
 }
 .dictionary th {
-  width: 160px;
+  width: 100px;
+  max-width: 100px;
   font-weight: normal;
   vertical-align: top;
   border-right: 1px solid #f1f1f1;
@@ -417,19 +435,20 @@ ul#tabs i:hover {
 .lightblue-bg {
   background-color: #1BA1E2 !important;
 }
+.modal {
+  padding: 0 !important;
+}
 .modal > div {
-  margin: 0 auto;
   display: table;
   height: 100%;
   width: 100%;
-  max-width: 1500px;
   pointer-events: none;
 }
 .modal-dialog {
   display: table-cell;
+  width: 1200px;
   vertical-align: middle;
   pointer-events: none;
-  max-height: 80%;
 }
 .modal-header {
   padding: 12px 20px;
@@ -439,7 +458,9 @@ ul#tabs i:hover {
   color: #007acc;
 }
 .modal-content {
+  width: inherit;
   height: inherit;
+  margin: 0 auto;
   pointer-events: all;
   border-radius: 0;
   box-shadow: gray 0 0 30px;
@@ -473,7 +494,6 @@ ul#tabs i:hover {
 .modal-body pre {
   width: 100%;
   height: 450px;
-  margin-right: 10px;
   border-radius: 0;
 }
 .modal-body .row {
@@ -593,13 +613,14 @@ header > div,
 ul#tabs li span,
 ul.legend li,
 #latest li,
-#latest .type,
+#latest td:first-child,
 #summary li > div .header,
 #summary li > div .body,
 #summary li > div .footer,
 .section > .head,
 .list td,
-.modal-header {
+.modal-header,
+.dictionary th {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

@@ -1,53 +1,50 @@
-﻿<div id="dashboard-template">
-    <div id="dashboard" data-bind="foreach: sections">
-        <div class="section" data-bind="attr: { id: name }">
-            <div class="head" data-bind="text: title"></div>
-            <div class="body" data-bind="template: template"></div>
+﻿<div id="a">
+    <div id="sections">
+        <div class="section">
+            <div class="head"></div>
+            <div class="body section-content"></div>
         </div>
     </div>
 </div>
-<div id="summary-template">
-    <ul data-bind="foreach: tiles">
-        <li data-bind="template: { name: template, data: content }, css: size"></li>
+<div id="b">
+    <ul id="tiles">
+        <li class="tile"></li>
     </ul>
 </div>
-<div id="term-template">
-    <div data-bind="click: count ? $root.add : null, css: css">
-        <div class="head" data-bind="attr: { title: title }, text: title"></div>
-        <div class="body" data-bind="text: count"></div>
+<div id="c">
+    <div class="chart"></div>
+    <div class="title"></div>
+</div>
+<div id="d">
+    <div class="term">
+        <div class="head title(term)"></div>
+        <div class="body"></div>
         <div class="foot">Error Logs</div>
     </div>
 </div>
-<div id="donut-template">
-    <div class="chart" data-bind="attr: { id: id }"></div>
-    <div class="title" data-bind="text: id"></div>
-    <ul class="legend" data-bind="foreach: series[0].points">
-        <li data-bind="attr: { title: title }">
-            <span data-bind="style: { backgroundColor: colour }"></span>
-            <a data-bind="text: name, click: $root.add"></a>
+<div id="e">
+    <div class="chart"></div>
+    <div class="title"></div>
+    <ul class="legend">
+        <li class="title(legend)">
+            <span class="legend-colour"></span>
+            <a class="name link(tab)"></a>
         </li>
     </ul>
 </div>
-<div id="chart-template">
-    <div class="chart" data-bind="attr: { id: id }"></div>
-    <div class="title" data-bind="text: id"></div>
-</div>
-<div id="latest-template">
+<div id="f">
     <table class="latest">
-        <tbody data-bind="foreach: errorLogs">
+        <tbody class="errorLogs">
         <tr>
-            <td class="type" data-bind="attr: { title: Type }"><a data-bind="text: Type, click: $root.show" data-toggle="modal" data-target="#errorLog"></a></td>
-            <td class="date" data-bind="attr: { title: Date }, text: Date"></td>
-            <td class="time" data-bind="attr: { title: Time }, text: Time"></td>
+            <td class="title(Type)"><a class="type link(Type)" data-toggle="modal" data-target="#errorLog"></a></td>
+            <td class="date"></td>
+            <td class="time"></td>
         </tr>
         </tbody>
     </table>
-    @*<ul data-bind="foreach: errorLogs">
-        <li data-bind="attr: { title: Type }"></li>
-    </ul>*@
 </div>
-<div id="frequent-template">
-    <ul data-bind="foreach: items">
-        <li data-bind="attr: { title: name }"><a data-bind="text: name, click: $root.add"></a></li>
+<div id="g">
+    <ul class="items">
+        <li class="title(name)"><a class="name link(tab)"></a></li>
     </ul>
 </div>
