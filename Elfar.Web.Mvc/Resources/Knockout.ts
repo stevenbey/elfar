@@ -69,9 +69,9 @@ class Bindings {
                     }
                     Bindings.cache[key] = result;
                 }
-                if (result && location.hostname === "localhost") {
-                    node.setAttribute("data-bind", result);
-                }
+                //if (result && location.hostname === "localhost") {
+                //    node.setAttribute("data-bind", result);
+                //}
                 return result;
             }
         }

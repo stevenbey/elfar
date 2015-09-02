@@ -34,7 +34,7 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-6"><pre class="StackTrace">Stack Trace</pre></div>
-                        <div class="col-xs-6 override tabs">
+                        <div class="col-xs-6 ignore tabs">
                             <div role="tabpanel">
                                 <ul class="nav nav-pills" role="tablist">
                                     <li role="presentation" class="active"><a href="#routeData" aria-controls="routeData" role="tab" data-toggle="tab">Route Data</a></li>
@@ -47,7 +47,7 @@
                                     <li role="presentation"><a href="#serverVariables" aria-controls="serverVariables" role="tab" data-toggle="tab">Server Variables</a></li>
                                 </ul>
                             </div>
-                            <div class="override tab-content">
+                            <div class="tab-content">
                                 <div role="tabpanel" class="tab-pane active" id="routeData"></div>
                                 <div role="tabpanel" class="tab-pane" id="routeDefaults"></div>
                                 <div role="tabpanel" class="tab-pane" id="routeConstraints"></div>
@@ -61,7 +61,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button id="html" type="button" role="button" aria-disabled="false" data-toggle="modal" data-target="#aspnet-html"><span>ASP.NET HTML Error Page</span></button>
+                    <button class="show(HTML)" type="button" role="button" aria-disabled="false" data-toggle="modal" data-target="#aspnet-html"><span>ASP.NET HTML Error Page</span></button>
                     <div>
                         @*<button type="button" id="wit-dialog-save74" disabled="" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-disabled ui-state-disabled ui-button-text-only" role="button" aria-disabled="true"><span class="ui-button-text">Save</span></button>
                         <button type="button" id="wit-dialog-save-close75" disabled="" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-disabled ui-state-disabled ui-button-text-only" role="button" aria-disabled="true"><span class="ui-button-text">Save and close</span></button>*@
@@ -91,7 +91,7 @@
                     <h4 class="modal-title" id="aspnet-html-title"><span>ASP.NET HTML Error Message</span></h4>
                 </div>
                 <div class="modal-body">
-                    <iframe name="content(html)" scrolling="auto"></iframe>
+                    <iframe name="content(HTML)" scrolling="auto"></iframe>
                 </div>
                 <div class="modal-footer">
                     <div>

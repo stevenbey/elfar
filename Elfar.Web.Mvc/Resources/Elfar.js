@@ -105,34 +105,35 @@ var Elfar;
             ko.bindingProvider.instance = new unobtrusiveBindingsProvider({
                 "aspnet-html": "with: errorLog",
                 chart: "attr: { id: id }",
-                "content(html)": "content: Html",
+                "click(tab)": "click: $root.add",
+                "click(Type)": "click: $root.show",
+                "close(tab)": "visible: closeable, click: $root.remove",
+                "colour(legend)": "style: { backgroundColor: colour }",
+                "content(HTML)": "content: Html",
+                "content(section)": "template: template",
                 "content(tab)": "visible: selected, template: { name: template }",
                 "content(value)": "if: !(value instanceof Object)",
                 cookies: "template: { name: 'i', data: Cookies }",
                 dataTokens: "template: { name: 'i', data: DataTokens }",
                 "filter-wrapper": "css: { filtering: filter }",
                 form: "template: { name: 'i', data: Form }",
-                html: "visible: Html",
-                "legend-colour": "style: { backgroundColor: colour }",
-                "link(tab)": "click: $root.add",
-                "link(Type)": "click: $root.show",
+                ignore: { bindings: "", override: true },
                 list: "attr: { id: id }",
                 keys: "props: $data",
-                override: { bindings: "", override: true },
                 queryString: "template: { name: 'i', data: QueryString }",
                 routeData: "template: { name: 'i', data: RouteData }",
                 routeDefaults: "template: { name: 'i', data: RouteDefaults }",
                 routeConstraints: "template: { name: 'i', data: RouteConstraints }",
                 section: "attr: { id: name }",
-                "section-content": "template: template",
                 serverVariables: "template: { name: 'i', data: ServerVariables }",
+                "show(!rows)": "visible: !rows().length",
                 "show(Cookies)": "visible: show(Cookies)",
                 "show(DataTokens)": "visible: show(DataTokens)",
                 "show(Form)": "visible: show(Form)",
+                "show(HTML)": "visible: Html",
                 "show(QueryString)": "visible: show(QueryString)",
                 "show(RouteConstraints)": "visible: show(RouteConstraints)",
                 tab: "css:{selected:selected},click:$root.select,attr:{title:title}",
-                "tab(close)": "visible: closeable, click: $root.remove",
                 term: "click: count ? $root.add : null, css: css",
                 tile: "template: { name: template, data: content }, css: size",
                 "title(Action)": "attr: { title: Action }",
@@ -528,13 +529,14 @@ var Elfar;
             this._filter = ko.observable("").extend({ binding: "textInput" });
             this.rows = ko.computed(function () {
                 var filter = _this.filter().toLowerCase();
-                if (!filter || filter.length < 3) {
+                if (!filter || filter.length < 2) {
                     return _this.errorLogs;
                 }
                 var props = List.props;
+                var regex = new RegExp(filter, "g");
                 return _this.errorLogs.where(function (errorLog) {
                     for (var i = 0; i < props.length; i++) {
-                        if (errorLog[props[i]].toLowerCase().indexOf(filter) !== -1) {
+                        if (regex.test(errorLog[props[i]].toLowerCase())) {
                             return true;
                         }
                     }
@@ -725,9 +727,6 @@ var Bindings = (function () {
                         }
                     }
                     Bindings.cache[key] = result;
-                }
-                if (result && location.hostname === "localhost") {
-                    node.setAttribute("data-bind", result);
                 }
                 return result;
             }
