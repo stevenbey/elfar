@@ -120,7 +120,7 @@ class Bindings {
         }
         if (ko.isObservable(value)) {
             var v = value.peek();
-            if ("push" in value || v instanceof Array) {
+            if (v && "push" in v) {
                  binding = nodeName === "select" ? "selectedOptions" : "foreach";
             } else if (typeof v === "object") {
                 binding = "with";
