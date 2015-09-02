@@ -105,8 +105,8 @@ var Elfar;
             ko.bindingProvider.instance = new unobtrusiveBindingsProvider({
                 "aspnet-html": "with: errorLog",
                 chart: "attr: { id: id }",
+                "click(errorLog)": "click: $root.show",
                 "click(tab)": "click: $root.add",
-                "click(Type)": "click: $root.show",
                 "close(tab)": "visible: closeable, click: $root.remove",
                 "colour(legend)": "style: { backgroundColor: colour }",
                 "content(HTML)": "content: Html",
