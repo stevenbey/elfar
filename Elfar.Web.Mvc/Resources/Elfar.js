@@ -69,6 +69,7 @@ var Elfar;
                 });
             };
             this.add(this._dashboard = new Dashboard(callback));
+            this._errorLog.subscribe(function () { return $("#errorLog").modal("show"); });
         }
         App.init = function () {
             var timeout;
@@ -124,6 +125,7 @@ var Elfar;
                 routeData: "template: { name: 'i', data: RouteData }",
                 routeDefaults: "template: { name: 'i', data: RouteDefaults }",
                 routeConstraints: "template: { name: 'i', data: RouteConstraints }",
+                row: "event: { dblclick: function() { $root.show($data); } }",
                 section: "attr: { id: name }",
                 serverVariables: "template: { name: 'i', data: ServerVariables }",
                 "show(!rows)": "visible: !rows().length",
@@ -552,7 +554,7 @@ var Elfar;
         };
         List.prototype.clear = function () {
             if (this.row) {
-                this.row.removeClass("selected");
+                this.row.removeClass("current selected");
             }
         };
         Object.defineProperty(List.prototype, "filter", {

@@ -13,10 +13,6 @@ namespace Elfar
             var s = value as string;
             return string.IsNullOrWhiteSpace(s) ? null : Regex.Replace(s, @"^[a-z]", m => m.Value.ToUpper());
         }
-    }
-
-    static class GZip
-    {
         public static string Compress(this string value)
         {
             using (var msi = new MemoryStream(Encoding.GetBytes(value)))

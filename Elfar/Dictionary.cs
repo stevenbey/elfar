@@ -13,7 +13,7 @@ namespace Elfar
             foreach (var pair in dictionary)
             {
                 var value = pair.Value as string;
-                if (value != null) this.Add(pair.Key, value);
+                if (value != null) Add(pair.Key, value);
             }
         }
 

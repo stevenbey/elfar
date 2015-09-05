@@ -45,6 +45,7 @@ module Elfar {
         };
         constructor(callback: () => void) {
             this.add(this._dashboard = new Dashboard(callback));
+            this._errorLog.subscribe(() => $("#errorLog").modal("show"));
         }
         static init() {
             var timeout: number;
@@ -98,6 +99,7 @@ module Elfar {
                 routeData: "template: { name: 'i', data: RouteData }",
                 routeDefaults: "template: { name: 'i', data: RouteDefaults }",
                 routeConstraints: "template: { name: 'i', data: RouteConstraints }",
+                row: "event: { dblclick: function() { $root.show($data); } }",
                 section: "attr: { id: name }",
                 serverVariables: "template: { name: 'i', data: ServerVariables }",
                 "show(!rows)": "visible: !rows().length",
@@ -384,7 +386,7 @@ module Elfar {
             if (this.row) { this.row.removeClass("current"); }
         }
         clear() {
-            if (this.row) { this.row.removeClass("selected"); }
+            if (this.row) { this.row.removeClass("current selected"); }
         }
         get filter() {
             return this._filter;
