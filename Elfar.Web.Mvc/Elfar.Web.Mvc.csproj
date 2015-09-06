@@ -105,6 +105,8 @@
     <TypeScriptCompile Include="Resources\Date.ts" />
     <TypeScriptCompile Include="Resources\Elfar.ts" />
     <TypeScriptCompile Include="Resources\Knockout.ts" />
+    <TypeScriptCompile Include="Resources\Linq.ts" />
+    <TypeScriptCompile Include="Resources\Object.ts" />
     <TypeScriptCompile Include="Resources\typings\highcharts\highcharts.d.ts" />
     <TypeScriptCompile Include="Resources\typings\highcharts\highstock.d.ts" />
     <TypeScriptCompile Include="Resources\typings\jquery\jquery.d.ts" />
