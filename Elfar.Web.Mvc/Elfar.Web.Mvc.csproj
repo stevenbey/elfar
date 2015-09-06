@@ -112,13 +112,16 @@
     <TypeScriptCompile Include="Resources\typings\linq\linq.d.ts" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\ErrorLog\Dashboard.cshtml" />
+    <EmbeddedResource Include="Views\ErrorLog\Templates.cshtml" />
     <EmbeddedResource Include="Views\ErrorLog\Default.cshtml" />
     <EmbeddedResource Include="Views\ErrorLog\Header.cshtml" />
     <EmbeddedResource Include="Views\ErrorLog\Footer.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\ErrorLog\Modal.cshtml" />
+    <EmbeddedResource Include="Views\ErrorLog\Details.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ErrorLog\Html.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -22,6 +22,15 @@ ko.bindingHandlers.content = {
         document.write(ko.unwrap(valueAccessor()));
     }
 };
+ko.components.register("details", {
+    template: { view: "Details" }
+});
+ko.components.register("html", {
+    template: { view: "Html" }
+});
+ko.components.register("list", {
+    template: { view: "List" }
+});
 ko.extenders.binding = (target: any, binding: string) => {
     target.binding = binding;
     return target;
@@ -30,6 +39,15 @@ ko.extenders.bindings = (target: any, bindings: any) => {
     target.bindings = bindings;
     return target;
 };
+ko.components.loaders.unshift({
+    loadTemplate(name, templateConfig, callback) {
+        if (templateConfig.view) {
+            $.get(location.pathname + "/Template/" + templateConfig.view, html => ko.components.defaultLoader.loadTemplate(name, html, callback));
+        } else {
+            callback(null);
+        }
+    }
+});
 class Bindings {
     static for(node: any, bindingContext: KnockoutBindingContext, bindings: any) {
         if (node.nodeType === 1) {

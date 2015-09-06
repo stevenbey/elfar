@@ -20,10 +20,10 @@
             <div class="content(tab)"></div>
         </div>
         @Html.Partial("Footer")
-        @Html.Partial("Modal")
+        <div id="details"></div>
+        <div id="html"></div>
     </main>
-    @Html.Partial("Dashboard")
-    @Html.Partial("List")
+    @Html.Partial("Templates")
     @if (Request.IsLocal)
     {
         <script src="/Scripts/jquery-2.1.3.min.js"></script>

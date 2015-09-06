@@ -56,6 +56,10 @@ namespace Elfar.Web.Mvc
         {
             return Content(ErrorLogProvider.Summaries, "application/json");
         }
+        public PartialViewResult Template(string id)
+        {
+            return PartialView(id);
+        }
         public void Test()
         {
             throw new TestException();

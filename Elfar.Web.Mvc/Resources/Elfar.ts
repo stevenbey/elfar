@@ -85,10 +85,12 @@ module Elfar {
                 "content(value)": "if: !(value instanceof Object)",
                 cookies: "template: { name: 'i', data: Cookies }",
                 dataTokens: "template: { name: 'i', data: DataTokens }",
+                details: "component: { name: 'details', params: { errorLog: errorLog } }",
                 "filter-wrapper": "css: { filtering: filter }",
                 form: "template: { name: 'i', data: Form }",
+                html: "component: { name: 'html', params: { errorLog: errorLog } }",
                 ignore: { bindings: "", override: true },
-                list: "attr: { id: id }",
+                list: "attr: { id: id }, component: { name: 'list', params: $data }",
                 keys: "props: $data",
                 queryString: "template: { name: 'i', data: QueryString }",
                 routeData: "template: { name: 'i', data: RouteData }",
@@ -104,6 +106,7 @@ module Elfar {
                 "show(QueryString)": "visible: show(QueryString)",
                 "show(RouteConstraints)": "visible: show(RouteConstraints)",
                 tab: "css:{selected:selected},click:$root.select,attr:{title:title}",
+                tabs: "visible: tabs().length",
                 term: "click: count ? $root.add : null, css: css",
                 tile: "template: { name: template, data: content }, css: size",
                 "title(Action)": "attr: { title: Action }",
@@ -142,6 +145,7 @@ module Elfar {
         Controller: string;
         Date: string;
         DateTime: Date;
+        Html: string;
         HttpMethod: string;
         ID: string;
         Time: string;

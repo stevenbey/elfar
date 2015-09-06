@@ -111,10 +111,12 @@ var Elfar;
                 "content(value)": "if: !(value instanceof Object)",
                 cookies: "template: { name: 'i', data: Cookies }",
                 dataTokens: "template: { name: 'i', data: DataTokens }",
+                details: "component: { name: 'details', params: { errorLog: errorLog } }",
                 "filter-wrapper": "css: { filtering: filter }",
                 form: "template: { name: 'i', data: Form }",
+                html: "component: { name: 'html', params: { errorLog: errorLog } }",
                 ignore: { bindings: "", override: true },
-                list: "attr: { id: id }",
+                list: "attr: { id: id }, component: { name: 'list', params: $data }",
                 keys: "props: $data",
                 queryString: "template: { name: 'i', data: QueryString }",
                 routeData: "template: { name: 'i', data: RouteData }",
@@ -130,6 +132,7 @@ var Elfar;
                 "show(QueryString)": "visible: show(QueryString)",
                 "show(RouteConstraints)": "visible: show(RouteConstraints)",
                 tab: "css:{selected:selected},click:$root.select,attr:{title:title}",
+                tabs: "visible: tabs().length",
                 term: "click: count ? $root.add : null, css: css",
                 tile: "template: { name: template, data: content }, css: size",
                 "title(Action)": "attr: { title: Action }",
@@ -660,6 +663,15 @@ ko.bindingHandlers.content = {
         document.write(ko.unwrap(valueAccessor()));
     }
 };
+ko.components.register("details", {
+    template: { view: "Details" }
+});
+ko.components.register("html", {
+    template: { view: "Html" }
+});
+ko.components.register("list", {
+    template: { view: "List" }
+});
 ko.extenders.binding = function (target, binding) {
     target.binding = binding;
     return target;
@@ -668,6 +680,16 @@ ko.extenders.bindings = function (target, bindings) {
     target.bindings = bindings;
     return target;
 };
+ko.components.loaders.unshift({
+    loadTemplate: function (name, templateConfig, callback) {
+        if (templateConfig.view) {
+            $.get(location.pathname + "/Template/" + templateConfig.view, function (html) { return ko.components.defaultLoader.loadTemplate(name, html, callback); });
+        }
+        else {
+            callback(null);
+        }
+    }
+});
 var Bindings = (function () {
     function Bindings() {
     }
