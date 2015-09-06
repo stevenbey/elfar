@@ -365,30 +365,10 @@ ul#tabs i:hover {
 .list .table-body > div:hover {
   background-color: #F2F7FD;
 }
-.list .table-body > div:hover > div:first-child {
-  background-color: #FFF;
-}
-.list .table-body > div.selected {
-  background-color: #E6E6E6;
-}
-.list .table-body > div.selected.current,
-.list .table-body > div.selected.current:hover {
-  background-color: #DCEBFC;
-}
-.list .table-body > div.selected:hover {
-  background-color: #F2F7FD;
-}
-.list .table-body > div.selected > div:first-child {
-  background: url('icons') no-repeat -1358px 50% #ffffff !important;
-}
 .list .table-head > div,
 .list .table-body > div > div {
   width: 150px;
   padding: 5px;
-}
-.list .table-head > div:first-child,
-.list .table-body > div > div:first-child {
-  width: 20px;
 }
 .list .table-head > div.method,
 .list .table-body > div > div.method {
@@ -592,18 +572,6 @@ ul#tabs i:hover {
 .modal-backdrop.in {
   background-color: #aaa;
   opacity: .3;
-}
-.row {
-  margin-right: 0;
-  margin-left: 0;
-  -webkit-user-select: none;
-  /* webkit (safari, chrome) browsers */
-  -moz-user-select: none;
-  /* mozilla browsers */
-  -khtml-user-select: none;
-  /* webkit (konqueror) browsers */
-  -ms-user-select: none;
-  /* IE10+ */
 }
 header > div,
 .blue-bg {

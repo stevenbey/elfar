@@ -52,7 +52,6 @@ var Elfar;
                 var i = tabs.indexOf(tab);
                 if (tab instanceof List) {
                     tab.filter("");
-                    tab.clear();
                 }
                 tabs.remove(tab);
                 if (tab.selected()) {
@@ -98,10 +97,6 @@ var Elfar;
                     }
                     $(".filter-wrapper input").focus();
                 }
-            }).on("click", ".list .table-body > div", function () {
-                var parent = ko.contextFor(this).$parent;
-                parent.clear();
-                parent.row = $(this).addClass("current selected");
             });
             ko.bindingProvider.instance = new unobtrusiveBindingsProvider({
                 "aspnet-html": "with: errorLog",
@@ -125,7 +120,6 @@ var Elfar;
                 routeData: "template: { name: 'i', data: RouteData }",
                 routeDefaults: "template: { name: 'i', data: RouteDefaults }",
                 routeConstraints: "template: { name: 'i', data: RouteConstraints }",
-                row: "event: { dblclick: function() { $root.show($data); } }",
                 section: "attr: { id: name }",
                 serverVariables: "template: { name: 'i', data: ServerVariables }",
                 "show(!rows)": "visible: !rows().length",
@@ -546,17 +540,6 @@ var Elfar;
                 });
             });
         }
-        List.prototype.blur = function () {
-            _super.prototype.blur.call(this);
-            if (this.row) {
-                this.row.removeClass("current");
-            }
-        };
-        List.prototype.clear = function () {
-            if (this.row) {
-                this.row.removeClass("current selected");
-            }
-        };
         Object.defineProperty(List.prototype, "filter", {
             get: function () {
                 return this._filter;

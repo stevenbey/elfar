@@ -29,7 +29,6 @@ module Elfar {
             var i = tabs.indexOf(tab);
             if (tab instanceof List) {
                 tab.filter("");
-                tab.clear();
             }
             tabs.remove(tab);
             if (tab.selected()) { this.select(tabs()[--i]); }
@@ -72,10 +71,6 @@ module Elfar {
                     if ($(this).parent().hasClass("active")) { clearTimeout(timeout); }
                     $(".filter-wrapper input").focus();
                 }
-            }).on("click", ".list .table-body > div", function () {
-                var parent = ko.contextFor(this).$parent;
-                parent.clear();
-                parent.row = $(this).addClass("current selected");
             });
             ko.bindingProvider.instance = new unobtrusiveBindingsProvider({
                 "aspnet-html": "with: errorLog",
@@ -99,7 +94,6 @@ module Elfar {
                 routeData: "template: { name: 'i', data: RouteData }",
                 routeDefaults: "template: { name: 'i', data: RouteDefaults }",
                 routeConstraints: "template: { name: 'i', data: RouteConstraints }",
-                row: "event: { dblclick: function() { $root.show($data); } }",
                 section: "attr: { id: name }",
                 serverVariables: "template: { name: 'i', data: ServerVariables }",
                 "show(!rows)": "visible: !rows().length",
@@ -380,13 +374,6 @@ module Elfar {
                     return false;
                 });
             });
-        }
-        blur() {
-            super.blur();
-            if (this.row) { this.row.removeClass("current"); }
-        }
-        clear() {
-            if (this.row) { this.row.removeClass("current selected"); }
         }
         get filter() {
             return this._filter;
