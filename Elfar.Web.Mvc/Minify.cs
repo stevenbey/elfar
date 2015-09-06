@@ -70,7 +70,7 @@ namespace Elfar.Web.Mvc
             }
 
             readonly Stream inner;
-            const string pattern = @"((?<=\s)\s+(?![^<>]*</pre>))|(<!--.*?-->)|(<!--.*?$)|(^[^<>].*?-->)";
+            const string pattern = @"((?<=\s)\s+(?![^<>]*</pre>))|(<!--.*?-->)|(<!--.*?$)|(^[^<>].*?-->)|(\r?\n)+";
         }
     }
 }
