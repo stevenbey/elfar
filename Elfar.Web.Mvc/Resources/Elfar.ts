@@ -73,58 +73,56 @@ module Elfar {
                 }
             });
             ko.bindingProvider.instance = new unobtrusiveBindingsProvider({
-                "aspnet-html": "with: errorLog",
-                chart: "attr: { id: id }",
-                "click(errorLog)": "click: $root.show",
-                "click(tab)": "click: $root.add",
-                "close(tab)": "visible: closeable, click: $root.remove",
-                "colour(legend)": "style: { backgroundColor: colour }",
-                "content(HTML)": "content: Html",
-                "content(section)": "template: template",
-                "content(tab)": "visible: selected, template: { name: template }",
-                "content(value)": "if: !(value instanceof Object)",
-                cookies: "template: { name: 'i', data: Cookies }",
-                dataTokens: "template: { name: 'i', data: DataTokens }",
-                details: "component: { name: 'details', params: { errorLog: errorLog } }",
-                "filter-wrapper": "css: { filtering: filter }",
-                form: "template: { name: 'i', data: Form }",
-                html: "component: { name: 'html', params: { errorLog: errorLog } }",
-                ignore: { bindings: "", override: true },
-                list: "attr: { id: id }, component: { name: 'list', params: $data }",
-                keys: "props: $data",
-                queryString: "template: { name: 'i', data: QueryString }",
-                routeData: "template: { name: 'i', data: RouteData }",
-                routeDefaults: "template: { name: 'i', data: RouteDefaults }",
-                routeConstraints: "template: { name: 'i', data: RouteConstraints }",
-                section: "attr: { id: name }",
-                serverVariables: "template: { name: 'i', data: ServerVariables }",
-                "show(!rows)": "visible: !rows().length",
-                "show(Cookies)": "visible: show(Cookies)",
-                "show(DataTokens)": "visible: show(DataTokens)",
-                "show(Form)": "visible: show(Form)",
-                "show(HTML)": "visible: Html",
-                "show(QueryString)": "visible: show(QueryString)",
-                "show(RouteConstraints)": "visible: show(RouteConstraints)",
-                tab: "css:{selected:selected},click:$root.select,attr:{title:title}",
-                tabs: "visible: tabs().length",
-                term: "click: count ? $root.add : null, css: css",
-                tile: "template: { name: template, data: content }, css: size",
-                "title(Action)": "attr: { title: Action }",
-                "title(Area)": "attr: { title: Area }",
-                "title(Controller)": "attr: { title: Controller }",
-                "title(Date)": "attr: { title: Date }",
-                "title(key)": "attr: { title: key }",
-                "title(legend)": "attr: { title: title }",
-                "title(Method)": "attr: { title: HttpMethod }",
-                "title(name)": "attr: { title: name }",
-                "title(term)": "attr: { title: title }",
-                "title(Time)": "attr: { title: Time }",
-                "title(Type)": "attr: { title: Type }"
+                "aspnet-html":"with:errorLog",
+                chart:"attr:{id:id},chart:options",
+                "click(errorLog)":"click:$root.show",
+                "click(tab)":"click:$root.add",
+                "close(tab)":"visible:closeable,click:$root.remove",
+                "colour(legend)":"style:{backgroundColor:colour}",
+                content:"component:{name:'content',params:$data}",
+                "content(HTML)":"content:Html",
+                "content(section)":"component:{name:template,params:$data}",
+                "content(tab)":"visible:selected,component:{name:template,params:$data}",
+                "content(value)":"if:!(valueinstanceofObject)",
+                cookies:"component:{name:'dictionary',params:Cookies}",
+                dataTokens:"component:{name:'dictionary',params:DataTokens}",
+                details:"component:{name:'details',params:{errorLog:errorLog}}",
+                "filter-wrapper":"css:{filtering:filter}",
+                form:"component:{name:'dictionary',params:Form}",
+                html:"component:{name:'html',params:{errorLog:errorLog}}",
+                ignore:{bindings:"",override:true},
+                list:"attr:{id:id}",
+                keys:"props:$data",
+                queryString:"component:{name:'dictionary',params:QueryString}",
+                routeData:"component:{name:'dictionary',params:RouteData}",
+                routeDefaults:"component:{name:'dictionary',params:RouteDefaults}",
+                routeConstraints:"component:{name:'dictionary',params:RouteConstraints}",
+                section:"attr:{id:name}",
+                serverVariables:"component:{name:'dictionary',params:ServerVariables}",
+                "show(!rows)":"visible:!rows().length",
+                "show(Cookies)":"visible:show(Cookies)",
+                "show(DataTokens)":"visible:show(DataTokens)",
+                "show(Form)":"visible:show(Form)",
+                "show(HTML)":"visible:Html",
+                "show(QueryString)":"visible:show(QueryString)",
+                "show(RouteConstraints)":"visible:show(RouteConstraints)",
+                tab:"css:{selected:selected},click:$root.select,attr:{title:title},component:{name:'tab',params:$data}",
+                tabs:"visible:tabs().length",
+                term:"click:count?$root.add:null,css:css",
+                tile:"component:{name:template,params:content},css:size",
+                "title(Action)":"attr:{title:Action}",
+                "title(Area)":"attr:{title:Area}",
+                "title(Controller)":"attr:{title:Controller}",
+                "title(Date)":"attr:{title:Date}",
+                "title(key)":"attr:{title:key}",
+                "title(legend)":"attr:{title:title}",
+                "title(Method)":"attr:{title:HttpMethod}",
+                "title(name)":"attr:{title:name}",
+                "title(term)":"attr:{title:title}",
+                "title(Time)":"attr:{title:Time}",
+                "title(Type)":"attr:{title:Type}"
             });
             app = new App(() => ko.applyBindings(app, $("main")[0]));
-        }
-        get content() {
-            return this._tabs;
         }
         get dashboard() {
             return this._dashboard;
@@ -218,7 +216,7 @@ module Elfar {
         private _sections = ko.observableArray<Section>();
         private _summary: Summary;
         constructor(callback: () => void) {
-            super("dashboard", "Dashboard", "a", true);
+            super("dashboard", "Dashboard", null, true);
             $.get(App.path + "Summaries",(data: any[]) => {
                 data = data.reverse().select((i: any) => new ErrorLog(i));
                 this.add(this._summary = new Summary(data));
@@ -255,16 +253,16 @@ module Elfar {
     export class Summary extends Section {
         private _tiles = ko.observableArray<Tile>();
         constructor(errorLogs: ErrorLog[]) {
-            super("summary", "Summary", "b");
-            this.add(new Timeline("Timeline", errorLogs.length ? errorLogs.groupBy((e: ErrorLog) => e.Date) : [errorLogs], 90), "c", TileSize.ExtraWide);
+            super("summary", "Summary");
+            this.add(new Timeline("Timeline", errorLogs.length ? errorLogs.groupBy((e: ErrorLog) => e.Date) : [errorLogs], 90), "timeline", TileSize.ExtraWide);
             var today = new Date().setHours(0, 0, 0, 0), logs = errorLogs;
-            this.add(new Term(90, logs = logs.where((e: ErrorLog) => today <= e.DateTime.addDays(90))), "d");
-            this.add(new Term(30, logs = logs.where((e: ErrorLog) => today <= e.DateTime.addDays(30))), "d");
-            this.add(new Term(7, logs = logs.where((e: ErrorLog) => today <= e.DateTime.addDays(7))), "d");
-            this.add(new Term(1, logs.where((e: ErrorLog) => today <= e.DateTime.valueOf())), "d");
+            this.add(new Term(90, logs = logs.where((e: ErrorLog) => today <= e.DateTime.addDays(90))), "term");
+            this.add(new Term(30, logs = logs.where((e: ErrorLog) => today <= e.DateTime.addDays(30))), "term");
+            this.add(new Term(7, logs = logs.where((e: ErrorLog) => today <= e.DateTime.addDays(7))), "term");
+            this.add(new Term(1, logs.where((e: ErrorLog) => today <= e.DateTime.valueOf())), "term");
             if (errorLogs.length) {
-                this.add(new Donut("Actions", errorLogs.groupBy((e: ErrorLog) => new key(e.Area, e.Controller, e.Action))), "e", TileSize.Large);
-                this.add(new Donut("Controllers", errorLogs.groupBy((e: ErrorLog) => new key(e.Area, e.Controller))), "e", TileSize.Large);
+                this.add(new Donut("Actions", errorLogs.groupBy((e: ErrorLog) => new key(e.Area, e.Controller, e.Action))), "donut", TileSize.Large);
+                this.add(new Donut("Controllers", errorLogs.groupBy((e: ErrorLog) => new key(e.Area, e.Controller))), "donut", TileSize.Large);
                 //this.add(new Donut("Areas", errorLogs.groupBy((e: ErrorLog) => new key(e.Area))), "e", TileSize.Large);
             }
         }
@@ -293,11 +291,12 @@ module Elfar {
         }
     }
     class Donut {
+        options: HighchartsOptions;
         series: Series[];
         constructor(public id: string, groups: ErrorLog[][]) {
             var series = (this.series = [new Series(id, groups)])[0];
             var click = (event: HighchartsAreaClickEvent) => app.add(series.points.first((p: Point) => p.title === event.point.name));
-            var options: HighchartsOptions = {
+            this.options = {
                 chart: { type: "pie", backgroundColor: "#F1F1F1", animation: false },
                 credits: { enabled: false },
                 tooltip: { enabled: false },
@@ -305,7 +304,6 @@ module Elfar {
                 plotOptions: { pie: { shadow: false, center: ["50%", "56%"], cursor: "pointer", events: { click: click } }, series: { animation: false, states: { hover: { enabled: false } } } },
                 series: [{ name: id, data: series.data, size: "64%", innerSize: "53%", dataLabels: { color: "#FFF", format: "{y}", distance: -24, style: { fontWeight: "normal", textShadow: "none" } } } ]
             };
-            setTimeout(() => $(`#${id}`).highcharts(options), 1);
         }
         get legend() {
             return this.series[0].points;
@@ -315,10 +313,11 @@ module Elfar {
         }
     }
     class Timeline {
+        options: HighchartsOptions;
         private start: number;
         constructor(public id: string, private groups: ErrorLog[][], private days: number) {
             this.start = new Date().addDays(-days);
-            var options: HighchartsOptions = {
+            this.options = {
                 chart: { backgroundColor: "#F1F1F1" },
                 credits: { enabled: false },
                 xAxis: { type: "datetime", labels: { enabled: false }, lineWidth: 0, tickLength: 0 },
@@ -329,7 +328,6 @@ module Elfar {
                 tooltip: { enabled: false /*formatter() { return `${new Date(this.x).toISOString().split("T")[0]}:<b>${this.y}</b>`; }*/ },
                 series: [{ type: "area", name: "Error Logs", pointInterval: 86400000, pointStart: this.start, data: this.data }]
             };
-            setTimeout(() => $(`#${id}`).highcharts(options), 1);
         }
         get data() {
             var values = [], date = new Date(this.start);
@@ -359,12 +357,11 @@ module Elfar {
         }
     }
     class List extends Tab {
-        row: JQuery;
         rows: KnockoutComputed<ErrorLog[]>;
-        static props = ["Type", "Action", "Controller", "Area", "HttpMethod", "Date"];
         private _filter: KnockoutObservable<string>;
+        private static props = ["Type", "Action", "Controller", "Area", "HttpMethod", "Date"];
         constructor(public errorLogs: ErrorLog[], name: string, title?: string) {
-            super(name, title, "h");
+            super(name, title, "list");
             this._filter = ko.observable("").extend({ binding: "textInput" });
             this.rows = ko.computed(() => {
                 var filter = this.filter().toLowerCase();
@@ -414,14 +411,14 @@ module Elfar {
     class Latest extends Section {
         errorLogs: ErrorLog[];
         constructor(errorLogs: ErrorLog[]) {
-            super("latest", "Most recent", "f");
+            super("latest", "Most recent");
             this.errorLogs = errorLogs.take(10);
         }
     }
     class Frequent extends Section {
         items: Tab[];
         constructor(type: string, errorLogs: ErrorLog[], keySelector: (item: ErrorLog) => any) {
-            super("frequent", `Most frequent (by ${type})`, "g");
+            super("frequent", `Most frequent (by ${type})`);
             this.items = errorLogs.groupBy(keySelector).orderByDescending((g: any[]) => g.length).take(10).select((g: ErrorLog[]) => new List(g, g.key));
         }
     }

@@ -617,23 +617,3 @@ ul.legend li,
 .modal-title {
   font-family: Segoe UI Light,Segoe UI,Tahoma,Arial,Verdana;
 }
-/*#list{position:absolute;top:80px;bottom:0;width:300px;border-right:5px solid #f1f1f1;padding:2px;overflow:auto}
-#item{position:absolute;top:80px;right:0;bottom:0;left:300px;border-left:1px solid #999;overflow:hidden}
-#summary{position:absolute;left:0;right:0;height:100px;padding:2px}
-#detail{position:absolute;top:100px;left:0;right:0;bottom:0;padding:2px;overflow:auto}
-pre .t{color:blue}
-pre .m{color:green}
-pre .p{color:red}
-pre .f{color:magenta}
-pre .l{color:aqua}
-.green-bg{background-color:#217167 !important}
-.lightpurple-bg{background-color:#9f00A7 !important}
-.purple-bg{background-color:#68217A !important}
-.darkpurple-bg{background-color:#571C75 !important}
-.magenta-bg{background-color:#A83A95 !important}
-.grey-bg{background-color:#748189 !important}
-.lime-bg{background-color:#9ACD32 !important}
-.orange-bg{background-color:#F2700F !important}
-.red-bg{background-color:#FF3B3B !important}
-.darkblue-bg{background-color:#3673B8 !important}
-*/

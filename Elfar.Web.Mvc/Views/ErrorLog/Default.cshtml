@@ -16,14 +16,11 @@
 <body>
     <main>
         @Html.Partial("Header")
-        <div id="content">
-            <div class="content(tab)"></div>
-        </div>
+        <div id="content"></div>
         @Html.Partial("Footer")
         <div id="details"></div>
         <div id="html"></div>
     </main>
-    @Html.Partial("Templates")
     @if (Request.IsLocal)
     {
         <script src="/Scripts/jquery-2.1.3.min.js"></script>
