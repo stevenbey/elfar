@@ -101,6 +101,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\app.js" />
     <TypeScriptCompile Include="Resources\Convert.ts" />
     <TypeScriptCompile Include="Resources\Date.ts" />
     <TypeScriptCompile Include="Resources\Elfar.ts" />

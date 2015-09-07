@@ -44,9 +44,16 @@ namespace Elfar.Web.Mvc
         {
             return FileStream("Elfar.Web.Mvc/Resources/" + (string.IsNullOrWhiteSpace(id) ? "icons" : id) + ".png", "image/png");
         }
-        public FileStreamResult Script()
+        public ContentResult Script()
         {
-            return FileStream("Elfar.Web.Mvc/Resources/Elfar.min.js", "text/javascript");
+            return Content
+            (
+                string.Concat(
+                    HostingEnvironment.VirtualPathProvider.GetFile("Elfar.Web.Mvc/Resources/app.js").ToString(),
+                    HostingEnvironment.VirtualPathProvider.GetFile("Elfar.Web.Mvc/Resources/Elfar.min.js").ToString()
+                ),
+                "text/javascript"
+            );
         }
         public FileStreamResult Styles()
         {

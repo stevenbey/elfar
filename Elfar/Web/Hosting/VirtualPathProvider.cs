@@ -60,6 +60,11 @@ namespace Elfar.Web.Hosting
             {
                 return getManifestResourceStream(manifestResourceName);
             }
+            public override string ToString()
+            {
+                using (var reader = new StreamReader(Open()))
+                    return reader.ReadToEnd();
+            }
 
             readonly string manifestResourceName;
             readonly Func<string, Stream> getManifestResourceStream;
