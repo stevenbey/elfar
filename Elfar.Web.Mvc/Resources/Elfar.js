@@ -118,6 +118,7 @@ var Elfar;
                 html: "component:{name:'html',params:{errorLog:errorLog}}",
                 ignore: { bindings: "", override: true },
                 list: "attr:{id:id}",
+                modals: "component:{name:'modals',params:$data}",
                 keys: "props:$data",
                 queryString: "component:{name:'dictionary',params:QueryString}",
                 routeData: "component:{name:'dictionary',params:RouteData}",
@@ -669,6 +670,7 @@ ko.components.register("frequent", { template: "<ul class='items'><li class='tit
 ko.components.register("html", { template: { view: "Html" } });
 ko.components.register("latest", { template: "<table class='latest'><tbody class='errorLogs'><tr><td class='title(Type)'><a class='type click(errorLog)'></a></td><td class='date'></td><td class='time'></td></tr></tbody></table>" });
 ko.components.register("list", { template: { view: "List" } });
+ko.components.register("modals", { template: "<div id='details'></div><div id='html'></div>" });
 ko.components.register("tab", { template: "<span class='title'></span>&nbsp; <i class='close(tab)'>&times;</i>" });
 ko.components.register("term", { template: "<div class='term'><div class='head title(term)'></div><div class='body'></div><div class='foot'>Error Logs</div></div>" });
 ko.components.register("summary", { template: "<ul id='tiles'><li class='tile'></li></ul>" });
