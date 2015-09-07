@@ -472,7 +472,7 @@ var Elfar;
             get: function () {
                 var values = [], date = new Date(this.start);
                 if (this.groups.length) {
-                    for (var i = -this.days; i < 0; i++) {
+                    for (var i = -this.days; i < 1; i++) {
                         var group = this.groups.first(function (g) { return g.key === date.toISOString().split("T")[0]; });
                         values.push(group ? group.length : 0);
                         date.setDate(date.getDate() + 1);
