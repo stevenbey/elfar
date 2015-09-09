@@ -20,10 +20,10 @@ namespace Elfar.IO
         {
             Summaries = Regex.Replace(Regex.Replace(Summaries, string.Format(format, id), ""), @"\[,|,,|,]", m => replacements[m.Value]);
         }
-        public void Save(ErrorLog.Storage errorLog)
+        public void Save(ErrorLog.Data data)
         {
-            Summaries = string.Concat("[", string.Join(",", new List<string>(Summaries.Trim('[', ']').Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)) { errorLog.Summary }), "]");
-            this[errorLog.ID] = errorLog.Detail;
+            Summaries = string.Concat("[", string.Join(",", new List<string>(Summaries.Trim('[', ']').Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)) { data.Summary }), "]");
+            this[data.ID] = data.Details;
         }
 
         protected abstract string Read(string fileName);
@@ -47,6 +47,6 @@ namespace Elfar.IO
         const string format = @"\{{.*?""ID"":""{0}"".*?}}";
         const string summaries = "summaries" + Ext;
         
-        static readonly Dictionary replacements = new Dictionary { { "[,", "[" }, { ",,", "," }, { ",]", "]" } };
+        static readonly IDictionary<string, string> replacements = new Dictionary<string, string> { { "[,", "[" }, { ",,", "," }, { ",]", "]" } };
     }
 }

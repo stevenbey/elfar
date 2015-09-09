@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Web.Http.Controllers;
+using System.Net.Http;
 using System.Web.Http.Filters;
+using System.Web.Http.Routing;
 
 namespace Elfar.Web.Http
 {
@@ -10,11 +11,11 @@ namespace Elfar.Web.Http
         {
             if (Exclude(actionExecutedContext)) return;
 
-            OnException(actionExecutedContext.Exception, actionExecutedContext.ActionContext.ControllerContext);
+            OnException(actionExecutedContext.Exception, actionExecutedContext.ActionContext.ControllerContext.RouteData, actionExecutedContext.ActionContext.Request);
         }
-        public static void OnException(Exception exception, HttpControllerContext context = null)
+        public static void OnException(Exception exception, IHttpRouteData routeData = null, HttpRequestMessage request = null)
         {
-            ErrorLogProvider.Save(new ErrorLog(exception, context));
+            ErrorLogProvider.Save(new ErrorLog(exception, routeData, request));
         }
 
         public static Predicate<HttpActionExecutedContext> Exclude

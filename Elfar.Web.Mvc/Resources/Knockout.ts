@@ -1,4 +1,19 @@
 ﻿// ReSharper disable InconsistentNaming
+class unobtrusiveBindingsProvider implements KnockoutBindingProvider {
+    constructor(bindings: any = {}) {
+        this.inner["getBindingsString"] = (node: Node, bindingContext: KnockoutBindingContext) => Bindings.for(node, bindingContext, bindings);
+    }
+    nodeHasBindings(node: any) {
+        return node.nodeType === 1 && (node.id || node.name || node.className);
+    }
+    getBindingAccessors(node: Node, bindingContext: KnockoutBindingContext) {
+        return this.inner.getBindingAccessors(node, bindingContext);
+    }
+    getBindings(node: Node, bindingContext: KnockoutBindingContext) {
+        return this.inner.getBindings(node, bindingContext);
+    }
+    private inner = ko.bindingProvider.instance;
+}
 interface KnockoutBindingHandlers {
     chart: KnockoutBindingHandler;
     content: KnockoutBindingHandler;
@@ -8,57 +23,61 @@ interface KnockoutExtenders {
     binding(target: any, binding: string): any;
     bindings(target: any, bindings: string): any;
 }
-ko.bindingHandlers.chart = {
+var handlers = ko.bindingHandlers;
+handlers.chart = {
     init(element: any, valueAccessor: () => any) {
         setTimeout(() => $(element).highcharts(ko.unwrap(valueAccessor())), 1);
     }
 };
-ko.bindingHandlers.content = {
+handlers.content = {
     init(element: any, valueAccessor: () => any) {
         var document = element.contentWindow.document;
         document.close();
         document.write(ko.unwrap(valueAccessor()));
     }
 };
-ko.bindingHandlers.props = {
-    init(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+handlers.props = {
+    init(element: any, valueAccessor: () => any, allBindingsAccessor?: KnockoutAllBindingsAccessor, viewModel?: any, bindingContext?: KnockoutBindingContext) {
         var value = ko.utils.unwrapObservable(valueAccessor()),
-            properties = Convert.toDictionary(value).orderBy(o => o.key);
+            properties = Convert.toDictionary(value).orderBy((o: any) => o.key);
         ko.applyBindingsToNode(element, { foreach: properties }, bindingContext);
         return { controlsDescendantBindings: true };
     }
 };
-ko.components.register("content", { template: "<div class='tabs'><div class='content(tab)'></div></div>" });
-ko.components.register("dashboard", { template: "<div id='sections'><div class='section'><div class='head'></div><div class='body content(section)'></div></div></div>" });
-ko.components.register("details", { template: { view: "Details" } });
-ko.components.register("dictionary", { template: "<table class='dictionary'><tbody class='keys'><tr class='content(value)'><th class='key title(key)'></th><td class='value'></td></tr></tbody></table>" });
-ko.components.register("donut", { template: "<div class='chart'></div><div class='title'></div><ul class='legend'><li class='title(legend)'><span class='colour(legend)'></span><a class='name click(tab)'></a></li></ul>" });
-ko.components.register("frequent", { template: "<ul class='items'><li class='title(name)'><a class='name click(tab)'></a></li></ul>" });
-ko.components.register("html", { template: { view: "Html" } });
-ko.components.register("latest", { template: "<table class='latest'><tbody class='errorLogs'><tr><td class='title(Type)'><a class='type click(errorLog)'></a></td><td class='date'></td><td class='time'></td></tr></tbody></table>" });
-ko.components.register("list", { template: { view: "List" } });
-ko.components.register("modals", { template: "<div id='details'></div><div id='html'></div>" });
-ko.components.register("tab", { template: "<span class='title'></span>&nbsp; <i class='close(tab)'>&times;</i>" });
-ko.components.register("term", { template: "<div class='term'><div class='head title(term)'></div><div class='body'></div><div class='foot'>Error Logs</div></div>" });
-ko.components.register("summary", { template: "<ul id='tiles'><li class='tile'></li></ul>" });
-ko.components.register("timeline", { template: "<div class='chart'></div><div class='title'></div>" });
-ko.extenders.binding = (target: any, binding: string) => {
-    target.binding = binding;
-    return target;
-};
-ko.extenders.bindings = (target: any, bindings: any) => {
-    target.bindings = bindings;
-    return target;
-};
-ko.components.loaders.unshift({
-    loadTemplate(name, templateConfig, callback) {
+var components = ko.components;
+components.loaders.unshift({
+    loadTemplate(componentName: string, templateConfig: any, callback: (result: Node[]) => void) {
         if (templateConfig.view) {
-            $.get(location.pathname + "/Template/" + templateConfig.view, html => ko.components.defaultLoader.loadTemplate(name, html, callback));
+            $.get(location.pathname + "/Template/" + templateConfig.view, (html: string) => ko.components.defaultLoader.loadTemplate(name, html, callback));
         } else {
             callback(null);
         }
     }
 });
+var register = components.register;
+register("content", { template: "<div class='tabs'><div class='content(tab)'></div></div>" });
+register("dashboard", { template: "<div id='sections'><div class='section'><div class='head'></div><div class='body content(section)'></div></div></div>" });
+register("details", { template: { view: "Details" } });
+register("dictionary", { template: "<table class='dictionary'><tbody class='keys'><tr><th class='key title(key)'></th><td class='value'></td></tr></tbody></table>" });
+register("donut", { template: "<div class='chart'></div><div class='title'></div><ul class='legend'><li class='title(legend)'><span class='colour(legend)'></span><a class='name click(tab)'></a></li></ul>" });
+register("frequent", { template: "<ul class='items'><li class='title(name)'><a class='name click(tab)'></a></li></ul>" });
+register("html", { template: { view: "Html" } });
+register("latest", { template: "<table class='latest'><tbody class='errorLogs'><tr><td class='title(Type)'><a class='type click(errorLog)'></a></td><td class='date'></td><td class='time'></td></tr></tbody></table>" });
+register("list", { template: { view: "List" } });
+register("modals", { template: "<div id='details'></div><div id='html'></div>" });
+register("tab", { template: "<span class='title'></span>&nbsp; <i class='close(tab)'>&times;</i>" });
+register("term", { template: "<div class='term'><div class='head title(term)'></div><div class='body'></div><div class='foot'>Error Logs</div></div>" });
+register("summary", { template: "<ul id='tiles'><li class='tile'></li></ul>" });
+register("timeline", { template: "<div class='chart'></div><div class='title'></div>" });
+var extenders = ko.extenders;
+extenders.binding = (target: any, binding: string) => {
+    target.binding = binding;
+    return target;
+};
+extenders.bindings = (target: any, bindings: any) => {
+    target.bindings = bindings;
+    return target;
+};
 class Bindings {
     static for(node: any, bindingContext: KnockoutBindingContext, bindings: any) {
         if (node.nodeType === 1) {
@@ -192,19 +211,4 @@ class Bindings {
         }, "");
     }
     private static cache = {};
-}
-class unobtrusiveBindingsProvider implements KnockoutBindingProvider {
-    constructor(bindings: any = {}) {
-        this.inner["getBindingsString"] = (node: Node, bindingContext: KnockoutBindingContext) => Bindings.for(node, bindingContext, bindings);
-    }
-    nodeHasBindings(node: any) {
-        return node.nodeType === 1 && (node.id || node.name || node.className);
-    }
-    getBindingAccessors(node: Node, bindingContext: KnockoutBindingContext) {
-        return this.inner.getBindingAccessors(node, bindingContext);
-    }
-    getBindings(node: Node, bindingContext: KnockoutBindingContext) {
-        return this.inner.getBindings(node, bindingContext);
-    }
-    private inner = ko.bindingProvider.instance;
 }

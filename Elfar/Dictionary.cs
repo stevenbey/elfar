@@ -1,40 +1,62 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Web;
 
 namespace Elfar
 {
     // ReSharper disable LoopCanBePartlyConvertedToQuery
-    // ReSharper disable InvertIf
     public sealed class Dictionary : Dictionary<string, string>
     {
-        public Dictionary(IDictionary<string, object> dictionary)
+        internal Dictionary(IDictionary<string, object> dictionary)
         {
+            if (dictionary == null) return;
             foreach (var pair in dictionary)
             {
                 var value = pair.Value as string;
-                if (value != null) Add(pair.Key, value);
+                if (value != null) base.Add(pair.Key, value);
             }
         }
 
-        internal Dictionary() { }
-
-        public static explicit operator Dictionary(NameValueCollection nvc)
+        Dictionary() { }
+        Dictionary(NameValueCollection nvc)
         {
-            var dictionary = new Dictionary();
-            if (nvc != null) foreach (string key in nvc) dictionary.Add(key ?? "", nvc[key]);
-            return dictionary;
+            if (nvc == null) return;
+            foreach (string key in nvc)
+            {
+                base.Add(key ?? "", nvc[key]);
+            }
         }
-        public static explicit operator Dictionary(HttpCookieCollection cookies)
+
+        public static implicit operator Dictionary(NameValueCollection nvc)
         {
+            return new Dictionary(nvc);
+        }
+        public static implicit operator Dictionary(HttpCookieCollection cookies)
+        {
+            // This method ensures that multiple cookies, with the same name,
+            // are combined into a single entry.
             var nvc = new NameValueCollection();
-            if(cookies != null)
-                foreach (string name in cookies)
-                {
-                    var cookie = cookies[name];
-                    if (cookie != null) nvc.Add(cookie.Name, cookie.Value);
-                }
-            return (Dictionary) nvc;
+            if (cookies == null) return nvc;
+            foreach (var name in cookies.AllKeys)
+            {
+                var cookie = cookies[name];
+                if (cookie != null) nvc.Add(cookie.Name, cookie.Value);
+            }
+            return nvc;
+        }
+
+        public new void Add(string key, string value)
+        {
+            throw new InvalidOperationException();
+        }
+        public new void Clear()
+        {
+            throw new InvalidOperationException();
+        }
+        public new bool Remove(string key)
+        {
+            throw new InvalidOperationException();
         }
 
         public static Dictionary Empty = new Dictionary();

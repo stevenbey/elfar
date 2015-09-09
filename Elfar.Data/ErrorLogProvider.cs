@@ -22,9 +22,9 @@ namespace Elfar.Data
         {
             errorLogs.Delete(ID: id);
         }
-        public void Save(ErrorLog.Storage errorLog)
+        public void Save(ErrorLog.Data data)
         {
-            errorLogs.Insert(errorLog.Compress());
+            errorLogs.Insert(data.Compress());
         }
 
         public string Summaries

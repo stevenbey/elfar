@@ -83,7 +83,6 @@ module Elfar {
                 "content(HTML)":"content:Html",
                 "content(section)":"component:{name:template,params:$data}",
                 "content(tab)":"visible:selected,component:{name:template,params:$data}",
-                "content(value)":"if:!(valueinstanceofObject)",
                 cookies:"component:{name:'dictionary',params:Cookies}",
                 dataTokens:"component:{name:'dictionary',params:DataTokens}",
                 details:"component:{name:'details',params:{errorLog:errorLog}}",
@@ -106,7 +105,8 @@ module Elfar {
                 "show(Form)":"visible:show(Form)",
                 "show(HTML)":"visible:Html",
                 "show(QueryString)":"visible:show(QueryString)",
-                "show(RouteConstraints)":"visible:show(RouteConstraints)",
+                "show(RouteConstraints)": "visible:show(RouteConstraints)",
+                "show(ServerVariables)": "visible:show(ServerVariables)",
                 tab:"css:{selected:selected},click:$root.select,attr:{title:title},component:{name:'tab',params:$data}",
                 tabs:"visible:tabs().length",
                 term:"click:count?$root.add:null,css:css",
@@ -158,7 +158,7 @@ module Elfar {
             }
         }
         show(obj: any) {
-            return Object.keys(obj).where(key => !(obj[key] instanceof Object)).length;
+            return Object.keys(obj).where((key: string) => !(obj[key] instanceof Object)).length;
         }
         get action() {
             return this.Action;

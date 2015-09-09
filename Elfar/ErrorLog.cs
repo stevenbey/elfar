@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Security;
 using System.Threading;
 using System.Web.Script.Serialization;
@@ -29,42 +28,52 @@ namespace Elfar
             Type = @base.GetType().ToString();
 
             User = Thread.CurrentPrincipal.Identity.Name;
+
+            RouteConstraints = 
+            RouteDefaults = 
+            RouteData = 
+            DataTokens = 
+            Cookies =
+            Form =
+            QueryString =
+            ServerVariables = Dictionary.Empty;
+
         }
 
-        public string Action { get; set; }
-        public string Area { get; set; }
-        public int? Code { get; set; }
-        public string Controller { get; set; }
-        public Dictionary Cookies { get; set; }
-        public Dictionary DataTokens { get; set; }
+        public string Action { get; protected set; }
+        public string Area { get; protected set; }
+        public int? Code { get; protected set; }
+        public string Controller { get; protected set; }
+        public Dictionary Cookies { get; protected set; }
+        public Dictionary DataTokens { get; protected set; }
         public string Date { get; private set; }
-        public Dictionary Form { get; set; }
+        public Dictionary Form { get; protected set; }
         public string Host { get; protected set; }
-        public string Html { get; set; }
-        public string HttpMethod { get; set; }
+        public string Html { get; protected set; }
+        public string HttpMethod { get; protected set; }
         public Guid ID { get; private set; }
         public string Message { get; private set; }
-        public Dictionary QueryString { get; set; }
-        public Dictionary RouteConstraints { get; set; }
-        public Dictionary RouteData { get; set; }
-        public Dictionary RouteDefaults { get; set; }
-        public string RouteUrl { get; set; }
-        public Dictionary ServerVariables { get; set; }
+        public Dictionary QueryString { get; protected set; }
+        public Dictionary RouteConstraints { get; protected set; }
+        public Dictionary RouteData { get; protected set; }
+        public Dictionary RouteDefaults { get; protected set; }
+        public string RouteUrl { get; protected set; }
+        public Dictionary ServerVariables { get; protected set; }
         public string Source { get; private set; }
         public string StackTrace { get; private set; }
         public string Time { get; private set; }
         public string Type { get; private set; }
-        public Uri Url { get; set; }
+        public Uri Url { get; protected set; }
         public string User { get; protected set; }
 
-        public class Storage
+        public class Data
         {
-            public Storage() { }
-            
-            Storage(ErrorLog errorLog)
+            public Data() { }
+
+            Data(ErrorLog errorLog)
             {
                 ID = errorLog.ID.ToString("N");
-                Detail = serializer.Serialize(new
+                Details = serializer.Serialize(new
                 {
                     errorLog.Code,
                     errorLog.Cookies,
@@ -97,27 +106,27 @@ namespace Elfar
                 });
             }
 
-            public static implicit operator Storage(ErrorLog errorLog)
+            public static implicit operator Data(ErrorLog errorLog)
             {
-                return new Storage(errorLog);
+                return new Data(errorLog);
             }
 
-            internal Storage Decompress()
+            internal Data Decompress()
             {
-                Detail = Detail.Decompress();
+                Details = Details.Decompress();
                 Summary = Summary.Decompress();
                 return this;
             }
-            internal Storage Compress()
+            internal Data Compress()
             {
-                Detail = Detail.Compress();
+                Details = Details.Compress();
                 Summary = Summary.Compress();
                 return this;
             }
 
-            public string Detail { get; set; }
-            public string ID { get; protected set; }
-            public string Summary { get; set; }
+            public string Details { get; private set; }
+            public string ID { get; private set; }
+            public string Summary { get; private set; }
 
             static readonly JavaScriptSerializer serializer = new JavaScriptSerializer();
         }
