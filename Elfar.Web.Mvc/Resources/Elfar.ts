@@ -72,6 +72,9 @@ module Elfar {
                     $(".filter-wrapper input").focus();
                 }
             });
+            $("#modals").on("focus", "a", function () {
+                $(this).blur();
+            });
             ko.bindingProvider.instance = new unobtrusiveBindingsProvider({
                 "aspnet-html":"with:errorLog",
                 chart:"attr:{id:id},chart:options",
