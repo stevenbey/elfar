@@ -780,16 +780,27 @@ var Bindings = (function () {
                 for (var j = 0, m = names.length; j < m; j++) {
                     name = names[j];
                     value = data[name];
-                    if (ko.isObservable(value)) {
+                    if (value === undefined) {
+                        break;
+                    }
+                    else if (ko.isObservable(value)) {
                         names[j] += "()";
                         data = ko.unwrap(value);
                     }
-                    else if (typeof value === "object") {
-                        data = value;
+                    else if (j < m - 1) {
+                        if (typeof value === "object") {
+                            data = value;
+                        }
+                        else {
+                            value = undefined;
+                            break;
+                        }
                     }
-                    else {
-                        value = undefined;
-                        break;
+                    else if (typeof value === "object") {
+                        value = "with";
+                    }
+                    else if (typeof value === "function") {
+                        value = "click";
                     }
                 }
                 name = names.join(".");
