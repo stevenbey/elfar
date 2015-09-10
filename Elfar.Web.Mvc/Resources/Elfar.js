@@ -762,6 +762,9 @@ var Bindings = (function () {
                     }
                     Bindings.cache[key] = result;
                 }
+                if (result && location.hostname === "localhost") {
+                    node.setAttribute("data-bind", result);
+                }
                 return result;
             }
         }
@@ -784,7 +787,8 @@ var Bindings = (function () {
                     else if (typeof value === "object") {
                         data = value;
                     }
-                    else if (value === undefined) {
+                    else {
+                        value = undefined;
                         break;
                     }
                 }

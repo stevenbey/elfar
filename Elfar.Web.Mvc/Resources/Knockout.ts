@@ -117,9 +117,9 @@ class Bindings {
                     }
                     Bindings.cache[key] = result;
                 }
-                //if (result && location.hostname === "localhost") {
-                //    node.setAttribute("data-bind", result);
-                //}
+                if (result && location.hostname === "localhost") {
+                    node.setAttribute("data-bind", result);
+                }
                 return result;
             }
         }
@@ -139,8 +139,11 @@ class Bindings {
                         names[j] += "()";
                         data = ko.unwrap(value);
                     } else if (typeof value === "object") {
-                         data = value;
-                    } else if (value === undefined) { break; }
+                        data = value;
+                    } else {
+                        value = undefined;
+                        break;
+                    }
                 }
                 name = names.join(".");
             }
