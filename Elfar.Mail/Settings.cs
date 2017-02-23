@@ -8,8 +8,8 @@ namespace Elfar.Mail
             {
                 if(!attachOriginalError.HasValue)
                 {
-                    bool setting;
-                    var value = GetAppSetting("Mail.AttachOriginalError");
+                    bool setting = false;
+                    var value = this["Mail.AttachOriginalError"];
                     attachOriginalError = !string.IsNullOrWhiteSpace(value) && bool.TryParse(value, out setting) && setting;
                 }
                 return (bool) attachOriginalError;
@@ -17,15 +17,15 @@ namespace Elfar.Mail
         }
         public string From
         {
-            get { return from ?? (from = GetAppSetting("Mail.From")); }
+            get { return from ?? (from = this["Mail.From"]); }
         }
         public string SubjectFormat
         {
-            get { return subjectFormat ?? (subjectFormat = GetAppSetting("Mail.SubjectFormat")); }
+            get { return subjectFormat ?? (subjectFormat = this["Mail.SubjectFormat"]); }
         }
         public string To
         {
-            get { return to ?? (to = GetAppSetting("Mail.To")); }
+            get { return to ?? (to = this["Mail.To"]); }
         }
 
         bool? attachOriginalError;
