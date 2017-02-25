@@ -8,7 +8,7 @@ namespace Elfar.Mail
             {
                 if(!attachOriginalError.HasValue)
                 {
-                    var setting = false;
+                    bool setting;
                     var value = this["Mail.AttachOriginalError"];
                     attachOriginalError = !string.IsNullOrWhiteSpace(value) && bool.TryParse(value, out setting) && setting;
                 }
