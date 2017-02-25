@@ -299,15 +299,15 @@ module Elfar {
         series: Series[];
         constructor(public id: string, groups: ErrorLog[][]) {
             var series = (this.series = [new Series(id, groups)])[0];
-            var click = (event: HighchartsAreaClickEvent) => app.add(series.points.first((p: Point) => p.title === event.point.name));
+            const click = (event: HighchartsAreaClickEvent) => app.add(series.points.first((p: Point) => p.title === event.point.name));
             this.options = {
                 chart: { type: "pie", backgroundColor: "#F1F1F1", animation: false },
                 credits: { enabled: false },
                 tooltip: { enabled: false },
                 title: { text: series.count.toString(), y: 27, verticalAlign: "middle", style: { fontSize: "33px" } },
                 plotOptions: { pie: { shadow: false, center: ["50%", "56%"], cursor: "pointer", events: { click: click } }, series: { animation: false, states: { hover: { enabled: false } } } },
-                series: [{ name: id, data: series.data, size: "64%", innerSize: "53%", dataLabels: { color: "#FFF", format: "{y}", distance: -24, style: { fontWeight: "normal", textShadow: "none" } } } ]
-            };
+                series: [{ name: id, data: series.data, size: "64%", innerSize: "53%", dataLabels: { color: "#FFF", format: "{y}", distance: -24, style: { fontWeight: "normal", textShadow: "none" } } } as HighchartsIndividualSeriesOptions]
+            } as HighchartsOptions;
         }
         get legend() {
             return this.series[0].points;
@@ -330,8 +330,8 @@ module Elfar {
                 plotOptions: { area: { color: "#BBB", marker: { enabled: false, states: { hover: { enabled: false }, select: { enabled: false } } } }, series: { animation: false, states: { hover: { enabled: false } } } },
                 title: { text: "" },
                 tooltip: { enabled: false /*formatter() { return `${new Date(this.x).toISOString().split("T")[0]}:<b>${this.y}</b>`; }*/ },
-                series: [{ type: "area", name: "Error Logs", pointInterval: 86400000, pointStart: this.start, data: this.data }]
-            };
+                series: [{ type: "area", name: "Error Logs", pointInterval: 86400000, pointStart: this.start, data: this.data } as HighchartsIndividualSeriesOptions]
+            } as HighchartsOptions;
         }
         get data() {
             var values = [], date = new Date(this.start);

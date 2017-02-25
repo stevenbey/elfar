@@ -1,4 +1,4 @@
-﻿[assembly: WebActivator.PreApplicationStartMethod(typeof(Elfar.WebApi.Host.App_Start.Elfar), "Init")]
+﻿//[assembly: WebActivator.PreApplicationStartMethod(typeof(Elfar.WebApi.Host.App_Start.Elfar), "Init")]
 namespace Elfar.WebApi.Host.App_Start
 {
     public static class Elfar

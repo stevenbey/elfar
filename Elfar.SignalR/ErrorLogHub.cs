@@ -1,7 +1,8 @@
-﻿using SignalR.Hubs;
-
-namespace Elfar.SignalR
+﻿namespace Elfar.SignalR
 {
+    using Microsoft.AspNet.SignalR;
+    using Microsoft.AspNet.SignalR.Hubs;
+
     [HubName("errorLogHub")]
     public class ErrorLogHub : Hub {}
 }

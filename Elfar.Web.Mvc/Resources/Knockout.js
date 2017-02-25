@@ -1,55 +1,48 @@
-﻿// ReSharper disable InconsistentNaming
-class unobtrusiveBindingsProvider implements KnockoutBindingProvider {
-    constructor(bindings: any = {}) {
-        this.inner["getBindingsString"] = (node: Node, bindingContext: KnockoutBindingContext) => Bindings.for(node, bindingContext, bindings);
+// ReSharper disable InconsistentNaming
+var unobtrusiveBindingsProvider = (function () {
+    function unobtrusiveBindingsProvider(bindings) {
+        if (bindings === void 0) { bindings = {}; }
+        this.inner = ko.bindingProvider.instance;
+        this.inner["getBindingsString"] = function (node, bindingContext) { return Bindings.for(node, bindingContext, bindings); };
     }
-    nodeHasBindings(node: any) {
+    unobtrusiveBindingsProvider.prototype.nodeHasBindings = function (node) {
         return node.nodeType === 1 && (node.id || node.name || node.className);
-    }
-    getBindingAccessors(node: Node, bindingContext: KnockoutBindingContext) {
+    };
+    unobtrusiveBindingsProvider.prototype.getBindingAccessors = function (node, bindingContext) {
         return this.inner.getBindingAccessors(node, bindingContext);
-    }
-    getBindings(node: Node, bindingContext: KnockoutBindingContext) {
+    };
+    unobtrusiveBindingsProvider.prototype.getBindings = function (node, bindingContext) {
         return this.inner.getBindings(node, bindingContext);
-    }
-    private inner = ko.bindingProvider.instance;
-}
-interface KnockoutBindingHandlers {
-    chart: KnockoutBindingHandler;
-    content: KnockoutBindingHandler;
-    props: KnockoutBindingHandler;
-}
-interface KnockoutExtenders {
-    binding(target: any, binding: string): any;
-    bindings(target: any, bindings: string): any;
-}
+    };
+    return unobtrusiveBindingsProvider;
+}());
 var handlers = ko.bindingHandlers;
 handlers.chart = {
-    init(element: any, valueAccessor: () => any) {
-        setTimeout(() => $(element).highcharts(ko.unwrap(valueAccessor())), 1);
+    init: function (element, valueAccessor) {
+        setTimeout(function () { return $(element).highcharts(ko.unwrap(valueAccessor())); }, 1);
     }
 };
 handlers.content = {
-    init(element: any, valueAccessor: () => any) {
+    init: function (element, valueAccessor) {
         var document = element.contentWindow.document;
         document.close();
         document.write(ko.unwrap(valueAccessor()));
     }
 };
 handlers.props = {
-    init(element: any, valueAccessor: () => any, allBindingsAccessor?: KnockoutAllBindingsAccessor, viewModel?: any, bindingContext?: KnockoutBindingContext) {
-        var value = ko.utils.unwrapObservable(valueAccessor()),
-            properties = Convert.toDictionary(value).orderBy((o: any) => o.key);
+    init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+        var value = ko.utils.unwrapObservable(valueAccessor()), properties = Convert.toDictionary(value).orderBy(function (o) { return o.key; });
         ko.applyBindingsToNode(element, { foreach: properties }, bindingContext);
         return { controlsDescendantBindings: true };
     }
 };
 var components = ko.components;
 components.loaders.unshift({
-    loadTemplate(componentName: string, templateConfig: any, callback: (result: Node[]) => void) {
+    loadTemplate: function (componentName, templateConfig, callback) {
         if (templateConfig.view) {
-            $.get(location.pathname + "/Template/" + templateConfig.view, (html: string) => ko.components.defaultLoader.loadTemplate(name, html, callback));
-        } else {
+            $.get(location.pathname + "/Template/" + templateConfig.view, function (html) { return ko.components.defaultLoader.loadTemplate(name, html, callback); });
+        }
+        else {
             callback(null);
         }
     }
@@ -70,16 +63,18 @@ register("term", { template: "<div class='term'><div class='head title(term)'></
 register("summary", { template: "<ul id='tiles'><li class='tile'></li></ul>" });
 register("timeline", { template: "<div class='chart'></div><div class='title'></div>" });
 var extenders = ko.extenders;
-extenders.binding = (target: any, binding: string) => {
+extenders.binding = function (target, binding) {
     target.binding = binding;
     return target;
 };
-extenders.bindings = (target: any, bindings: any) => {
+extenders.bindings = function (target, bindings) {
     target.bindings = bindings;
     return target;
 };
-class Bindings {
-    static for(node: any, bindingContext: KnockoutBindingContext, bindings: any) {
+var Bindings = (function () {
+    function Bindings() {
+    }
+    Bindings.for = function (node, bindingContext, bindings) {
         if (node.nodeType === 1) {
             var name = node.id || node.name || node.className;
             if (name) {
@@ -89,8 +84,9 @@ class Bindings {
                     if (p.value !== undefined) {
                         var v = p.value;
                         if (typeof v === "string") {
-                             result = v;
-                        } else {
+                            result = v;
+                        }
+                        else {
                             if ("bindings" in v) {
                                 overridden = v.override;
                                 v = v.bindings;
@@ -104,15 +100,18 @@ class Bindings {
                         for (var i = 0, l = parents.length; i < l && p.value === undefined; i++) {
                             p = Bindings.find(name, parents[i]);
                             if (p.value !== undefined) {
-                                p.key = `$parents[${i}].${p.key}`;
+                                p.key = "$parents[" + i + "]." + p.key;
                                 break;
                             }
                         }
                         if (p.value !== undefined) {
                             var s = Bindings.get(p, nodeName);
                             if (result) {
-                                 result += `,${s}`;
-                            } else { result = s; }
+                                result += "," + s;
+                            }
+                            else {
+                                result = s;
+                            }
                         }
                     }
                     Bindings.cache[key] = result;
@@ -124,8 +123,8 @@ class Bindings {
             }
         }
         return undefined;
-    }
-    private static find(name: string, data: any) {
+    };
+    Bindings.find = function (name, data) {
         var p = { key: null, value: undefined }, classes = name.split(" "), value = undefined;
         for (var i = 0, l = classes.length; i < l && value === undefined; i++) {
             name = classes[i];
@@ -137,19 +136,24 @@ class Bindings {
                     value = data[name];
                     if (value === undefined) {
                         break;
-                    } else if (ko.isObservable(value)) {
+                    }
+                    else if (ko.isObservable(value)) {
                         names[j] += "()";
                         data = ko.unwrap(value);
-                    } else if (j < m - 1) {
+                    }
+                    else if (j < m - 1) {
                         if (typeof value === "object") {
                             data = value;
-                        } else {
+                        }
+                        else {
                             value = undefined;
                             break;
                         }
-                    } else if (typeof value === "object") {
+                    }
+                    else if (typeof value === "object") {
                         value = "with";
-                    } else if (typeof value === "function") {
+                    }
+                    else if (typeof value === "function") {
                         value = "click";
                     }
                 }
@@ -161,12 +165,11 @@ class Bindings {
             p.value = value;
         }
         return p;
-    }
-    private static from(value: any) {
+    };
+    Bindings.from = function (value) {
         return typeof value === "string" ? value : (value = ko.toJSON(value)).substr(1, value.length - 2);
-    }
-
-    private static get(kvp: { key: string; value: any }, nodeName: string) {
+    };
+    Bindings.get = function (kvp, nodeName) {
         var key = kvp.key, value = kvp.value, binding = "text";
         switch (nodeName) {
             case "input":
@@ -176,46 +179,56 @@ class Bindings {
         if (ko.isObservable(value)) {
             var v = value.peek();
             if (v && "push" in v) {
-                 binding = nodeName === "select" ? "selectedOptions" : "foreach";
-            } else if (typeof v === "object") {
+                binding = nodeName === "select" ? "selectedOptions" : "foreach";
+            }
+            else if (typeof v === "object") {
                 binding = "with";
             }
             var b = value.binding;
-            if (b && (nodeName === "input" || b !== "textInput")) { binding = b; }
+            if (b && (nodeName === "input" || b !== "textInput")) {
+                binding = b;
+            }
             b = value.bindings;
             if (b) {
                 if (typeof b !== "string") {
-                    if (b.override) { return b.value; }
+                    if (b.override) {
+                        return b.value;
+                    }
                     b = Bindings.from(b.value);
                 }
-                key += `,${b}`;
+                key += "," + b;
             }
-        } else if (value instanceof Function) {
-             binding = "click";
-        } else if (value instanceof Array) {
-             binding = nodeName === "select" ? "selectedOptions" : "foreach";
-        } else if (typeof value === "object") {
+        }
+        else if (value instanceof Function) {
+            binding = "click";
+        }
+        else if (value instanceof Array) {
+            binding = nodeName === "select" ? "selectedOptions" : "foreach";
+        }
+        else if (typeof value === "object") {
             binding = "with";
         }
         return binding + ":" + key;
-    }
-    private static path(node: any) {
-        return $(node).parents().addBack().toArray().reduce((s: string, e: any) => {
+    };
+    Bindings.path = function (node) {
+        return $(node).parents().addBack().toArray().reduce(function (s, e) {
             var name = e.nodeName.toLowerCase();
             if (name !== "html" && name !== "body") {
-                s += `/${name}`;
+                s += "/" + name;
                 if (e.id !== "") {
-                    s += `#${e.id}`;
+                    s += "#" + e.id;
                 }
                 if (e.name !== "") {
-                    s += `:${e.name}`;
+                    s += ":" + e.name;
                 }
                 if (e.className !== "") {
-                    s += `.${e.className}`;
+                    s += "." + e.className;
                 }
             }
             return s;
         }, "");
-    }
-    private static cache = {};
-}
+    };
+    Bindings.cache = {};
+    return Bindings;
+}());
+//# sourceMappingURL=Knockout.js.map
