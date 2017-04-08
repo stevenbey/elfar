@@ -228,7 +228,7 @@ var Bindings = (function () {
             return s;
         }, "");
     };
-    Bindings.cache = {};
     return Bindings;
 }());
+Bindings.cache = {};
 //# sourceMappingURL=Knockout.js.map

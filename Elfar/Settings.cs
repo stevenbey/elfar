@@ -5,21 +5,25 @@ namespace Elfar
 {
     public class Settings
     {
+        private string application;
+
         public string Application
         {
-            get { return application ?? (application = this["Application"]); }
-            set { application = value; }
+            get
+            {
+                return this.application ?? (this.application = this["Application"]);
+            }
+
+            set
+            {
+                this.application = value;
+            }
         }
 
-        protected string this[string name]
-        {
-            get { return ConfigurationManager.AppSettings["elfar:" + name]; }
-        }
+        protected string this[string name] => ConfigurationManager.AppSettings["elfar:" + name];
 
-        internal static string AppDomainAppId
-        {
-            get { return string.Concat("[AppDomainAppId: ", HttpRuntime.AppDomainAppId.Trim('/'), "]"); }
-        }
+        internal static string AppDomainAppId => string.Concat("[AppDomainAppId: ", HttpRuntime.AppDomainAppId.Trim('/'), "]");
+
         internal static string AppDomainAppVirtualPath
         {
             get
@@ -28,7 +32,5 @@ namespace Elfar
                 return string.IsNullOrWhiteSpace(appDomainAppVirtualPath) ? null : string.Concat("[AppDomainAppVirtualPath: ", appDomainAppVirtualPath, "]");
             }
         }
-
-        string application;
     }
 }

@@ -2,33 +2,27 @@ namespace Elfar.Mail
 {
     public class Settings : Elfar.Settings
     {
+        bool? attachOriginalError;
+        string to, from, subjectFormat;
+
         public bool AttachOriginalError
         {
             get
             {
-                if(!attachOriginalError.HasValue)
+                if(!this.attachOriginalError.HasValue)
                 {
-                    bool setting = false;
+                    bool setting;
                     var value = this["Mail.AttachOriginalError"];
-                    attachOriginalError = !string.IsNullOrWhiteSpace(value) && bool.TryParse(value, out setting) && setting;
+                    this.attachOriginalError = !string.IsNullOrWhiteSpace(value) && bool.TryParse(value, out setting) && setting;
                 }
-                return (bool) attachOriginalError;
+
+                return (bool)this.attachOriginalError;
             }
         }
-        public string From
-        {
-            get { return from ?? (from = this["Mail.From"]); }
-        }
-        public string SubjectFormat
-        {
-            get { return subjectFormat ?? (subjectFormat = this["Mail.SubjectFormat"]); }
-        }
-        public string To
-        {
-            get { return to ?? (to = this["Mail.To"]); }
-        }
+        public string From => this.@from ?? (this.@from = this["Mail.From"]);
 
-        bool? attachOriginalError;
-        string from, subjectFormat, to;
+        public string SubjectFormat => this.subjectFormat ?? (this.subjectFormat = this["Mail.SubjectFormat"]);
+
+        public string To => this.to ?? (this.to = this["Mail.To"]);
     }
 }

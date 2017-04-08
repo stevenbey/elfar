@@ -173,9 +173,9 @@ var Elfar;
             enumerable: true,
             configurable: true
         });
-        App._path = location.pathname + "/";
         return App;
     }());
+    App._path = location.pathname + "/";
     Elfar.App = App;
     var ErrorLog = (function () {
         function ErrorLog(obj) {
@@ -265,8 +265,9 @@ var Elfar;
         __extends(Tab, _super);
         function Tab(name, title, template, selected) {
             if (selected === void 0) { selected = false; }
-            _super.call(this, name, title, template);
-            this._selected = ko.observable(selected);
+            var _this = _super.call(this, name, title, template) || this;
+            _this._selected = ko.observable(selected);
+            return _this;
         }
         Tab.prototype.blur = function () {
             this.selected(false);
@@ -294,9 +295,8 @@ var Elfar;
     var Dashboard = (function (_super) {
         __extends(Dashboard, _super);
         function Dashboard(callback) {
-            var _this = this;
-            _super.call(this, "dashboard", "Dashboard", null, true);
-            this._sections = ko.observableArray();
+            var _this = _super.call(this, "dashboard", "Dashboard", null, true) || this;
+            _this._sections = ko.observableArray();
             $.get(App.path + "Summaries", function (data) {
                 data = data.reverse().select(function (i) { return new ErrorLog(i); });
                 _this.add(_this._summary = new Summary(data));
@@ -306,6 +306,7 @@ var Elfar;
                 }
                 callback();
             });
+            return _this;
         }
         Dashboard.prototype.add = function (item) {
             if (item instanceof Section) {
@@ -344,8 +345,9 @@ var Elfar;
     var Section = (function (_super) {
         __extends(Section, _super);
         function Section(name, head, template) {
-            _super.call(this, name, head, template);
-            this.head = head;
+            var _this = _super.call(this, name, head, template) || this;
+            _this.head = head;
+            return _this;
         }
         return Section;
     }(_Object));
@@ -353,18 +355,19 @@ var Elfar;
     var Summary = (function (_super) {
         __extends(Summary, _super);
         function Summary(errorLogs) {
-            _super.call(this, "summary", "Summary");
-            this._tiles = ko.observableArray();
-            this.add(new Timeline("Timeline", errorLogs.length ? errorLogs.groupBy(function (e) { return e.Date; }) : [errorLogs], 90), "timeline", TileSize.ExtraWide);
+            var _this = _super.call(this, "summary", "Summary") || this;
+            _this._tiles = ko.observableArray();
+            _this.add(new Timeline("Timeline", errorLogs.length ? errorLogs.groupBy(function (e) { return e.Date; }) : [errorLogs], 90), "timeline", TileSize.ExtraWide);
             var today = new Date().setHours(0, 0, 0, 0), logs = errorLogs;
-            this.add(new Term(90, logs = logs.where(function (e) { return today <= e.DateTime.addDays(90); })), "term");
-            this.add(new Term(30, logs = logs.where(function (e) { return today <= e.DateTime.addDays(30); })), "term");
-            this.add(new Term(7, logs = logs.where(function (e) { return today <= e.DateTime.addDays(7); })), "term");
-            this.add(new Term(1, logs.where(function (e) { return today <= e.DateTime.valueOf(); })), "term");
+            _this.add(new Term(90, logs = logs.where(function (e) { return today <= e.DateTime.addDays(90); })), "term");
+            _this.add(new Term(30, logs = logs.where(function (e) { return today <= e.DateTime.addDays(30); })), "term");
+            _this.add(new Term(7, logs = logs.where(function (e) { return today <= e.DateTime.addDays(7); })), "term");
+            _this.add(new Term(1, logs.where(function (e) { return today <= e.DateTime.valueOf(); })), "term");
             if (errorLogs.length) {
-                this.add(new Donut("Actions", errorLogs.groupBy(function (e) { return new key(e.Area, e.Controller, e.Action); })), "donut", TileSize.Large);
-                this.add(new Donut("Controllers", errorLogs.groupBy(function (e) { return new key(e.Area, e.Controller); })), "donut", TileSize.Large);
+                _this.add(new Donut("Actions", errorLogs.groupBy(function (e) { return new key(e.Area, e.Controller, e.Action); })), "donut", TileSize.Large);
+                _this.add(new Donut("Controllers", errorLogs.groupBy(function (e) { return new key(e.Area, e.Controller); })), "donut", TileSize.Large);
             }
+            return _this;
         }
         Summary.prototype.add = function (content, template, size) {
             if (size === void 0) { size = TileSize.Small; }
@@ -387,9 +390,10 @@ var Elfar;
         __extends(Tile, _super);
         function Tile(content, template, size) {
             if (size === void 0) { size = TileSize.Small; }
-            _super.call(this, null, null, template);
-            this.content = content;
-            this._size = size;
+            var _this = _super.call(this, null, null, template) || this;
+            _this.content = content;
+            _this._size = size;
+            return _this;
         }
         Object.defineProperty(Tile.prototype, "size", {
             get: function () {
@@ -411,9 +415,9 @@ var Elfar;
             enumerable: true,
             configurable: true
         });
-        Chart._colours = ["#68217A", "#007ACC", "#217167", "#A83A95", "#1BA1E2", "#571C75", "#009CCC", "#9ACD32", "#F2700F", "#748189"].concat(Highcharts.getOptions().colors);
         return Chart;
     }());
+    Chart._colours = ["#68217A", "#007ACC", "#217167", "#A83A95", "#1BA1E2", "#571C75", "#009CCC", "#9ACD32", "#F2700F", "#748189"].concat(Highcharts.getOptions().colors);
     var Donut = (function () {
         function Donut(id, groups) {
             this.id = id;
@@ -509,11 +513,10 @@ var Elfar;
     var List = (function (_super) {
         __extends(List, _super);
         function List(errorLogs, name, title) {
-            var _this = this;
-            _super.call(this, name, title, "list");
-            this.errorLogs = errorLogs;
-            this._filter = ko.observable("").extend({ binding: "textInput" });
-            this.rows = ko.computed(function () {
+            var _this = _super.call(this, name, title, "list") || this;
+            _this.errorLogs = errorLogs;
+            _this._filter = ko.observable("").extend({ binding: "textInput" });
+            _this.rows = ko.computed(function () {
                 var filter = _this.filter().toLowerCase();
                 if (!filter || filter.length < 2) {
                     return _this.errorLogs;
@@ -529,6 +532,7 @@ var Elfar;
                     return false;
                 });
             });
+            return _this;
         }
         Object.defineProperty(List.prototype, "filter", {
             get: function () {
@@ -544,14 +548,15 @@ var Elfar;
             enumerable: true,
             configurable: true
         });
-        List.props = ["Type", "Action", "Controller", "Area", "HttpMethod", "Date"];
         return List;
     }(Tab));
+    List.props = ["Type", "Action", "Controller", "Area", "HttpMethod", "Date"];
     var Point = (function (_super) {
         __extends(Point, _super);
         function Point(name, errorLogs, colour) {
-            _super.call(this, errorLogs, errorLogs.key[name.slice(0, -1)] || "[root]", errorLogs.key.toString());
-            this.colour = colour;
+            var _this = _super.call(this, errorLogs, errorLogs.key[name.slice(0, -1)] || "[root]", errorLogs.key.toString()) || this;
+            _this.colour = colour;
+            return _this;
         }
         Object.defineProperty(Point.prototype, "value", {
             get: function () {
@@ -565,7 +570,7 @@ var Elfar;
     var Term = (function (_super) {
         __extends(Term, _super);
         function Term(length, errorLogs) {
-            _super.call(this, errorLogs, "term-" + length, length === 1 ? "Today" : "Last " + length + " days");
+            return _super.call(this, errorLogs, "term-" + length, length === 1 ? "Today" : "Last " + length + " days") || this;
         }
         Object.defineProperty(Term.prototype, "body", {
             get: function () {
@@ -600,16 +605,18 @@ var Elfar;
     var Latest = (function (_super) {
         __extends(Latest, _super);
         function Latest(errorLogs) {
-            _super.call(this, "latest", "Most recent");
-            this.errorLogs = errorLogs.take(10);
+            var _this = _super.call(this, "latest", "Most recent") || this;
+            _this.errorLogs = errorLogs.take(10);
+            return _this;
         }
         return Latest;
     }(Section));
     var Frequent = (function (_super) {
         __extends(Frequent, _super);
         function Frequent(type, errorLogs, keySelector) {
-            _super.call(this, "frequent", "Most frequent (by " + type + ")");
-            this.items = errorLogs.groupBy(keySelector).orderByDescending(function (g) { return g.length; }).take(10).select(function (g) { return new List(g, g.key); });
+            var _this = _super.call(this, "frequent", "Most frequent (by " + type + ")") || this;
+            _this.items = errorLogs.groupBy(keySelector).orderByDescending(function (g) { return g.length; }).take(10).select(function (g) { return new List(g, g.key); });
+            return _this;
         }
         return Frequent;
     }(Section));
@@ -623,12 +630,12 @@ var Elfar;
         key.prototype.toString = function () {
             return "~" + key.prefix(this.Area, !this.Controller) + key.prefix(this.Controller) + key.prefix(this.Action) + (this.Method ? " [" + this.Method + "]" : "");
         };
-        key.prefix = function (value, enforce) {
-            if (enforce === void 0) { enforce = false; }
-            return value ? "/" + value : (enforce ? "/" : "");
-        };
         return key;
     }());
+    key.prefix = function (value, enforce) {
+        if (enforce === void 0) { enforce = false; }
+        return value ? "/" + value : (enforce ? "/" : "");
+    };
     var TileSize;
     (function (TileSize) {
         TileSize[TileSize["Large"] = 0] = "Large";
@@ -636,6 +643,8 @@ var Elfar;
         TileSize[TileSize["Wide"] = 2] = "Wide";
         TileSize[TileSize["ExtraWide"] = 3] = "ExtraWide";
     })(TileSize || (TileSize = {}));
+    //export interface IErrorLogPlugin { }
+    //export function register(plugin: IErrorLogPlugin): void {}
 })(Elfar || (Elfar = {}));
 $(Elfar.App.init);
 //# sourceMappingURL=Elfar.js.map
