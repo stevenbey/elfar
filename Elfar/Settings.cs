@@ -9,18 +9,13 @@ namespace Elfar
 
         public string Application
         {
-            get
-            {
-                return this.application ?? (this.application = this["Application"]);
-            }
+            get => this.application ?? (this.application = this[nameof(Application)]);
 
-            set
-            {
-                this.application = value;
-            }
+            set => this.application = value;
         }
 
         protected string this[string name] => ConfigurationManager.AppSettings["elfar:" + name];
+        protected string this[string name, string plugin] => this[plugin + "." + name];
 
         internal static string AppDomainAppId => string.Concat("[AppDomainAppId: ", HttpRuntime.AppDomainAppId.Trim('/'), "]");
 

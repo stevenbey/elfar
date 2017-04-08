@@ -4,7 +4,29 @@ namespace Elfar.Data
 {
     public class Settings : Elfar.Settings
     {
-        static string Resolve(string value)
+        private string connectionString, schema, table;
+
+        public string ConnectionString
+        {
+            get => connectionString ?? (connectionString = Resolve(this[nameof(ConnectionString)]));
+            set => connectionString = Resolve(value);
+        }
+        public string Schema
+        {
+            get => schema ?? (Schema = this[nameof(Schema)]);
+            set => schema = string.IsNullOrWhiteSpace(value) ? "dbo" : value;
+        }
+        public string Table
+        {
+            get => table ?? (Table = this[nameof(Table)]);
+            set => table = string.IsNullOrWhiteSpace(value) ? "Elfar_ErrorLogs" : value;
+        }
+
+        private static ConnectionStringSettingsCollection ConnectionStrings => ConfigurationManager.ConnectionStrings;
+
+        private static string DefaultConnectionString => ConnectionStrings.Count == 0 ? null : ConnectionStrings[0].ConnectionString;
+
+        private static string Resolve(string value)
         {
             if (string.IsNullOrWhiteSpace(value)) value = null;
             var settings = ConnectionStrings[value ?? "Elfar"];
@@ -12,32 +34,5 @@ namespace Elfar.Data
             if (string.IsNullOrWhiteSpace(value)) value = DefaultConnectionString;
             return value;
         }
-
-        public string ConnectionString
-        {
-            get { return connectionString ?? (connectionString = Resolve(this["ConnectionString"])); }
-            set { connectionString = Resolve(value); }
-        }
-        public string Schema
-        {
-            get { return schema ?? (Schema = this["Schema"]); }
-            set { schema = string.IsNullOrWhiteSpace(value) ? "dbo" : value; }
-        }
-        public string Table
-        {
-            get { return table ?? (Table = this["Table"]); }
-            set { table = string.IsNullOrWhiteSpace(value) ? "Elfar_ErrorLogs" : value; }
-        }
-        
-        static ConnectionStringSettingsCollection ConnectionStrings
-        {
-            get { return ConfigurationManager.ConnectionStrings; }
-        }
-        static string DefaultConnectionString
-        {
-            get { return ConnectionStrings.Count == 0 ? null : ConnectionStrings[0].ConnectionString; }
-        }
-
-        string connectionString, schema, table;
     }
 }
