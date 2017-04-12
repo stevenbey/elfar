@@ -11,3 +11,4 @@ packages*
 
 # mstest test results
 TestResults
+*.map
